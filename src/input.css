@@ -1,3 +1,130 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bodyContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* font-family: "Chakra Petch", sans-serif; */
+}
+
+.categories {
+  display: flex;
+  width: 50vw;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: aliceblue;
+  margin-bottom: 16px;
+  font-size: 10px;
+}
+.catHeader {
+  padding-right: 16px;
+}
+.catHeader2 {
+  margin-right: 60px;
+}
+.titleContainer {
+  color: aliceblue;
+  font-weight: bold;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+.addIntBtnContainer {
+  margin-top: 16px;
+  margin-bottom: 48px;
+}
+
+.addIntBtn {
+  filter: invert(28%) sepia(100%) hue-rotate(-170deg) saturate(7);
+  margin-top: 20px;
+}
+.input {
+  margin-right: 20px;
+  text-align: center;
+}
+.inputSection {
+  margin-top: 24px;
+  margin-bottom: 48px;
+}
+
+.btnImage {
+  width: 40px;
+  overflow: hidden;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInButton {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-button {
+  animation: fadeInButton 1.5s ease-in-out; /* Adjust the animation duration as needed */
+}
+
+/* CSS */
+.button-10 {
+  margin-left: 20px;
+
+  width: 80px;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  background: linear-gradient(180deg, #2076f8 0%, #0359fa 100%);
+  background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-10:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2),
+    0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+.button-11 {
+  margin-left: 20px;
+
+  width: 100px;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+  color: #fff;
+  background: linear-gradient(180deg, #2076f8 0%, #0359fa 100%);
+  background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-11:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2),
+    0px 0.5px 1.5px rgba(54, 122, 246, 0.25),
+    0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
