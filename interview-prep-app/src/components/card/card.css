@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.add-card-btn {
+  min-width: 200px;
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  border-radius: 25px;
+}
+
+.card {
+  min-width: 600px;
+  max-width: 400px;
+  width: 25%;
+  height: 400px;
+  border: 2px solid black;
+  border-radius: 25px;
+  margin: 1em;
+  font-size: var(--step--5);
+}
+
+.card-question {
+  border: transparent;
+  padding: 0.5rem;
+  margin: 1rem;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.card-top-right {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.drop-category {
+  position: relative;
+  display: inline-block;
+  margin: 0.5em;
+}
+
+.drop-btn {
+  background-color: #101010;
+  color: white;
+  padding: 1rem;
+  font-size: var(--step--7);
+  border: none;
+  min-width: 300px;
+  height: 100%;
+  border-radius: 25px;
+}
+
+.drop-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  /* min-width: 200px; */
+  z-index: 1;
+}
+
+.drop-content li {
+  padding: 12px 16px;
+  display: block;
+}
+
+.drop-content li:hover {
+  background-color: #ddd;
+}
+
+.drop-category:hover .drop-content {
+  display: block;
+}

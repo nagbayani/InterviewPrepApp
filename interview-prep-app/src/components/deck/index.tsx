@@ -4,23 +4,32 @@ import React, { useState } from "react";
 import Card from "../card";
 
 const Deck = () => {
+  // retrieve list of cards
+  
   const [cards, setCards] = useState<{ id: string }[]>([]);
+  const [prevCardQuestionEmpty, setPrevCardQuestionEmpty] = useState(true);
 
   const addCard = () => {
-    // Generate a unique ID for the new card
+
     const id = Math.random().toString();
 
-    // Add a new card object to the cards array
     setCards([...cards, { id }]);
   };
+
   return (
-    <div className='w-[full] h-[full] border-red border-2'>
-      {cards.map((card) => (
-        <Card key={card.id} />
-      ))}
-      <button className='w-[100px] border-black border-4' onClick={addCard}>
-        Click Me
+    <div className='flex w-auto h-full items-center'>
+      <button
+        className='flex add-card-btn w-100px flex-col justify-center items-center'
+        onClick={addCard}
+      >
+        <span>+</span>
+        <span>Write a Question</span>
       </button>
+      <div className='flex flex-wrap justify-start h-5/6'>
+        {cards.map((card, index) => (
+          <Card key={card.id} isLastCard={index === cards.length - 1} />
+        ))}
+      </div>
     </div>
   );
 };

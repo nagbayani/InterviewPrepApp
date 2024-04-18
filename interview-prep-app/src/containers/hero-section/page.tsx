@@ -3,7 +3,7 @@ import Deck from "@/components/deck";
 
 const HeroSection = () => {
   return (
-    <section className='w-full flex justify-center'>
+    <section className='w-[100%] ml-[40px] flex relative'>
       <Deck />
     </section>
   );
