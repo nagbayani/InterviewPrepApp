@@ -8,7 +8,7 @@ interface CardProps {
   isLastCard: boolean;
 }
 
-const Card: React.FC<CardProps> = ({}) => {
+const Card = ({}) => {
   const [details, setDetails] = useState({
     question: "",
     answer: "",
