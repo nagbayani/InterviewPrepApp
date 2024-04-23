@@ -1,10 +1,10 @@
 "use client";
 
-import { useFormStatus, useFormState } from "react-dom";
+interface SignupButtonProps {
+  pending: boolean;
+}
 
-export function SignupButton() {
-  const { pending } = useFormStatus();
-
+export function SignupButton({ pending }: SignupButtonProps) {
   return (
     <button
       className='mb-3 inline-block w-[60%]'
