@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Card from "../card";
+import Card from "../card/card";
 
 const Deck = () => {
   // retrieve list of cards

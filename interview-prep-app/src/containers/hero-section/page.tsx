@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Deck from "@/components/deck";
+import Deck from "@/components/deck/deck";
 
 const HeroSection = () => {
   return (

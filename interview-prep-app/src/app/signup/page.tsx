@@ -1,5 +1,5 @@
-import SignupPage from "@/containers/auth-page/signup-page";
+import SignupForm from "@/containers/auth-page/signup-form";
 
 export default function Signup() {
-  return <SignupPage />;
+  return <SignupForm />;
 }
