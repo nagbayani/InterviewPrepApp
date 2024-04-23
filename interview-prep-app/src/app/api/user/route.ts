@@ -5,14 +5,7 @@ export async function GET() {
   return NextResponse.json({ success: true });
 }
 
-export async function POST(req: Request) {
-  try {
-    const body = await req.json();
-    return NextResponse.json(body);
-  } catch (err) {}
-}
-
-export async function POSThandler(req: Request) {
+export async function registerPOST(req: Request) {
   // Insert the user into the database
   try {
     const body = await req.json();
@@ -34,7 +27,22 @@ export async function POSThandler(req: Request) {
       );
     }
 
-    const createdUser = await prisma.user.create({
+    // check if email exists
+    const existingUserByUsername = await prisma.user.findUnique({
+      where: { username: username },
+    });
+
+    if (existingUserByUsername) {
+      return NextResponse.json(
+        {
+          user: null,
+          message: "User with this username already exists.",
+        },
+        { status: 409 }
+      );
+    }
+
+    const newUser = await prisma.user.create({
       data: {
         username: username,
         email: email,
