@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { signOut } from "next-auth/react";
-import { Button } from "../ui/button";
+import { Button } from "./ui/button";
 
 const UserAccountNav = () => {
   return (

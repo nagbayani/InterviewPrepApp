@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { buttonVariants } from "../ui/button";
+import { buttonVariants } from "./ui/button";
 
 import { authOptions } from "@/lib/auth";
-import UserAccountNav from "../user-nav/UserAccountNav";
+import UserAccountNav from "./UserAccountNav";
 const Navbar = async () => {
   const session = await getServerSession(authOptions);
   return (

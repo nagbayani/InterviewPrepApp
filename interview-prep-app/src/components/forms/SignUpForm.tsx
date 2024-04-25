@@ -7,11 +7,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
+} from "../ui/form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

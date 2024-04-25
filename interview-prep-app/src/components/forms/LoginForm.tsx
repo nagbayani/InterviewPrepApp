@@ -8,11 +8,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form";
+} from "../ui/form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../../../components/ui/input";
-import { Button } from "../../../components/ui/button";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import Link from "next/link";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { signIn } from "next-auth/react";
@@ -40,13 +40,14 @@ const LoginForm = () => {
     const signInData = await signIn("credentials", {
       email: values.email,
       password: values.password,
+      redirect: false,
     });
     if (signInData?.error) {
       console.log("SIGN IN ERROR", signInData.error);
     } else if (signInData?.ok) {
       console.log("LOGIN SUCCESS");
-      router.refresh();
       router.push("/admin");
+      router.refresh();
     }
   };
 
@@ -85,7 +86,7 @@ const LoginForm = () => {
             )}
           />
         </div>
-        <Button className='w-full mt-6 bg-black text-white' type='submit'>
+        <Button className='w-full mt-6' type='submit'>
           Sign in
         </Button>
       </form>
