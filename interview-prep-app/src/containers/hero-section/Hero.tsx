@@ -1,5 +1,7 @@
+"use client";
+
 import React, { FC } from "react";
-import Deck from "@/components/deck/deck";
+import Deck from "@/components/deck/Deck";
 
 const HeroSection = () => {
   return (

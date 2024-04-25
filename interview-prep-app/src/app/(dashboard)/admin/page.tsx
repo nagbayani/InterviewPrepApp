@@ -1,4 +1,4 @@
-import HeroSection from "../../../containers/hero-section/page";
+import HeroSection from "../../../containers/hero-section/Hero";
 import Sidebar from "../../../containers/sidebar-section/Sidebar";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";

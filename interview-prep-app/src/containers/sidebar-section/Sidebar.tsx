@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import "./Sidebar.css";
 
 const Sidebar = () => {
   // get user information
