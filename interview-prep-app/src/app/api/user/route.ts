@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
+import { hash } from "bcrypt";
+import * as z from "zod";
 
-export async function GET() {
-  return NextResponse.json({ success: true });
-}
+const FormSchema = z.object({
+  username: z.string().min(1, "Username is required").max(100),
+  email: z.string().min(1, "Email is required").email("Invalid email"),
+  password: z
+    .string()
+    .min(1, "Password is required")
+    .min(8, "Password must have than 8 characters"),
+});
 
-export async function registerPOST(req: Request) {
+export async function POST(req: Request) {
   // Insert the user into the database
   try {
     const body = await req.json();
-    const { username, email, password } = body;
+    const { username, email, password } = FormSchema.parse(body);
     console.log("Request Body:", body);
 
     // check if email exists
@@ -27,7 +34,7 @@ export async function registerPOST(req: Request) {
       );
     }
 
-    // check if email exists
+    // check if username exists
     const existingUserByUsername = await prisma.user.findUnique({
       where: { username: username },
     });
@@ -42,14 +49,28 @@ export async function registerPOST(req: Request) {
       );
     }
 
+    const hashPassword = await hash(password, 10);
+
     const newUser = await prisma.user.create({
       data: {
         username: username,
         email: email,
-        password: password,
+        password: hashPassword,
       },
     });
 
-    return NextResponse.json(body);
-  } catch (error) {}
+    // SECURITY: take out password in response
+    const { password: newUserPassword, ...rest } = newUser;
+
+    return NextResponse.json(
+      { user: rest, message: "User created successfully" },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return NextResponse.json(
+      { message: "An error occurred while creating the user." },
+      { status: 500 }
+    );
+  }
 }
