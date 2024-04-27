@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { username, email, password } = FormSchema.parse(body);
-    console.log("Request Body:", body);
+    // console.log("Request Body:", body);
 
     // check if email exists
     const existingUserByEmail = await prisma.user.findUnique({

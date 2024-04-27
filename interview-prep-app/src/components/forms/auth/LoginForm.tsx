@@ -8,16 +8,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../ui/form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import Link from "next/link";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "../../ui/use-toast";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -52,7 +52,7 @@ const LoginForm = () => {
       });
     } else if (signInData?.ok) {
       console.log("LOGIN SUCCESS");
-      router.push("/admin");
+      router.push("/home");
       router.refresh();
     }
   };

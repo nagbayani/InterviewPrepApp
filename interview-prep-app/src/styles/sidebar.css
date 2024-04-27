@@ -1,0 +1,42 @@
+.sidebar-container {
+  height: 100%;
+  position: sticky;
+  top: 50px;
+  left: 0;
+  background: #f1f1f1;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+/* .container span {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+} */
+
+/* .sidebar-link {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+} */
+
+/* When you mouse over the navigation links, change their color */
+/* .container span:hover {
+  color: #f1f1f1;
+} */
+
+.cat {
+  color: #818181;
+  font-weight: bold;
+  font-size: 13px;
+  margin: 10px 0px;
+}
+
+.sidebar-list {
+  list-style: none;
+}

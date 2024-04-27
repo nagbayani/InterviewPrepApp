@@ -1,8 +1,8 @@
-import SignupForm from "@/components/forms/SignUpForm";
+import SignupForm from "@/components/forms/auth/SignUpForm";
 
 export default function Signup() {
   return (
-    <div className='items-center'>
+    <div className='flex flex-col self-center justify-center w-[50%] h-full'>
       <SignupForm />
     </div>
   );

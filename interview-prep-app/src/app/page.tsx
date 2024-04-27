@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main className='flex  flex-col w-full h-full items-center justify-center '>
       <h1>Please login to see admin</h1>
-      <Link className={buttonVariants()} href='/admin'>
+      <Link className={buttonVariants()} href='/home'>
         Open my Admin
       </Link>
       <h2>Client Session</h2>

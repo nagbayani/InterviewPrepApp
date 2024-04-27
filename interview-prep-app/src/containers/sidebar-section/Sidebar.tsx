@@ -1,15 +1,33 @@
 "use client";
 import React from "react";
-import "./Sidebar.css";
+
+import "../../styles/sidebar.css";
+import SideLink from "./sideLink/sideLink";
+
+const sideItems = [
+  { name: "Home", path: "/home" },
+  { name: "Decks", path: "/home/decks" },
+  { name: "Interviews", path: "/interviews" },
+];
 
 const Sidebar = () => {
   // get user information
   // retrieve list of decks, show decks
   return (
-    <div className='sidenav'>
-      <a href='#'>Home</a>
-      <a href='#'>Decks</a>
-      <a href='#'>Jobs</a>
+    <div className='sidebar-container'>
+      {/* <Link href='/home' passHref>
+        <span>Home</span>
+      </Link>
+      <Link href='/decks' passHref>
+        <span>Decks</span>
+      </Link> */}
+      <ul className='sidebar-list'>
+        {sideItems.map((item) => (
+          <li key={item.name}>
+            <SideLink key={item.name} item={item} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

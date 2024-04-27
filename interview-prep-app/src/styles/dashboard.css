@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.dashboard-container {
+  display: flex;
+}
+
+.sidebar-menu {
+  flex: 1;
+  background-color: #f1f1f1;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.dashboard-content {
+  flex: 4;
+  padding: 20px;
+}
+
+.dashboard-wrapper {
+  display: flex;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.dashboard-main {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.dashboard-side {
+  flex: 1;
+}

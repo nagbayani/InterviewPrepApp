@@ -7,15 +7,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
+} from "../../ui/form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useToast } from "../ui/use-toast";
+import { useToast } from "../../ui/use-toast";
 
 const FormSchema = z
   .object({

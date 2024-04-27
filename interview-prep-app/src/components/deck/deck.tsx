@@ -16,7 +16,7 @@ const Deck = () => {
   };
 
   return (
-    <div className='flex w-[100%] h-[100%] ml-[100px] items-center'>
+    <div className='flex relative h-[100%] ml-[100px] items-center'>
       <button
         className='flex add-card-btn w-100px flex-col justify-center items-center'
         onClick={addCard}

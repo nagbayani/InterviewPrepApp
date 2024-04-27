@@ -1,8 +1,8 @@
-import LoginForm from "@/components/forms/LoginForm";
+import LoginForm from "@/components/forms/auth/LoginForm";
 
 export default function Login() {
   return (
-    <div className='items-center'>
+    <div className='flex flex-col self-center justify-center w-[50%] h-full'>
       <LoginForm />;
     </div>
   );
