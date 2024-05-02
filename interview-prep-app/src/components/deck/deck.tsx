@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import Card from "../card/card";
+import Card from "../card/Card";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 
 const Deck = () => {
   // retrieve list of cards

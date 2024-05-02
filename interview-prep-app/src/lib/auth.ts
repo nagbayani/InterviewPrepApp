@@ -3,6 +3,12 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./db";
 import { compare } from "bcrypt";
+import type {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
+import { getServerSession } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -29,6 +35,7 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
@@ -69,7 +76,7 @@ export const authOptions: NextAuthOptions = {
     // authorize (returns id, username, email) -> jwt -> session
     async jwt({ token, user }) {
       if (user) {
-        return { ...token, username: user.username };
+        return { ...token, username: user.username, userId: user.id };
       }
       return token;
     },
@@ -79,9 +86,22 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           username: token.username,
+          userId: token.userId,
         },
       };
-      return session;
     },
+    // async redirect({ url, baseUrl }) {
+    //   return url.startsWith(baseUrl) ? url : baseUrl;
+    // },
   },
 };
+
+// Use it in server contexts
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions);
+}

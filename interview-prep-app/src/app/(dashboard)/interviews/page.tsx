@@ -1,15 +1,11 @@
 import React from "react";
-import HomeBoard from "../../../containers/dashboard/HomeBoard";
-import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { authOptions } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import "../../../styles/dashboard.css";
 import { redirect } from "next/navigation";
 
-// import Layout from "./layout";
-
-const HomePage = async () => {
+const Interviews = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session) {
@@ -20,13 +16,12 @@ const HomePage = async () => {
     return (
       <div className='dashboard-wrapper'>
         <h1 className='ml-[0]'>
-          Dashboard - Welcome Back {session?.user.username}{" "}
+          Dashboard - Welcome Back {session?.user.username}
         </h1>
-        <HomeBoard />
+        <h1>Hi Interviews! </h1>
       </div>
     );
   }
-
   return (
     <h2 className='items-center text-2xl mt-[50px]'>
       Please Login to see this admin page
@@ -37,4 +32,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default Interviews;

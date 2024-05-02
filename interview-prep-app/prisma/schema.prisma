@@ -31,10 +31,10 @@ model Card {
   question  String
   answer    String
   category  String
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
-  deck      Deck?    @relation(fields: [deckId], references: [id])
-  deckId    String?
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  String
+  deck      Deck    @relation(fields: [deckId], references: [id])
+  deckId    String
 }
 
 model Deck {
@@ -43,6 +43,6 @@ model Deck {
   updatedAt DateTime @updatedAt
   title     String
   cards     Card[]
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  String
 }
