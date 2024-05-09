@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import { signOut } from "next-auth/react";
+import { signOut } from "../../auth";
 import { Button } from "./ui/button";
 
+// 2:49:34
 const UserAccountNav = () => {
   return (
     <div>
@@ -10,7 +11,6 @@ const UserAccountNav = () => {
         onClick={() =>
           signOut({
             redirect: true,
-            callbackUrl: `${window.location.origin}/login`,
           })
         }
         variant='destructive'
@@ -22,3 +22,4 @@ const UserAccountNav = () => {
 };
 
 export default UserAccountNav;
+// callbackUrl: `${window.location.origin}/login`,

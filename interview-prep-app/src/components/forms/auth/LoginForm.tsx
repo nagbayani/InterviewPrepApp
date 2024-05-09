@@ -15,9 +15,14 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import Link from "next/link";
 import GoogleSignInButton from "@/components/GoogleSignInButton";
-import { signIn } from "next-auth/react";
+
+import { AuthError } from "next-auth";
+// import { signIn } from "next-auth/react";
+
+import { signIn } from "../../../../auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "../../ui/use-toast";
+import { DEFAULT_LOGIN_REDIRECT } from "../../../../routes";
 
 const FormSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email"),
@@ -39,22 +44,40 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const signInData = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false,
-    });
-    if (signInData?.error) {
-      toast({
-        title: "Error",
-        description: "Oops! Something went wrong!",
-        variant: "destructive",
+    try {
+      await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirectTo: DEFAULT_LOGIN_REDIRECT,
       });
-    } else if (signInData?.ok) {
-      console.log("LOGIN SUCCESS");
-      router.push("/home");
-      router.refresh();
+    } catch (error) {
+      if (error instanceof AuthError) {
+        switch (error.type) {
+          case "CredentialsSignin":
+            toast({
+              title: "Error",
+              description: "Invalid credentials",
+              variant: "destructive",
+            });
+            return { error: "Invalid credentials" };
+          default:
+            toast({
+              title: "Error",
+              description: "Something went wrong",
+              variant: "destructive",
+            });
+            return { error: "Something went wrong!" };
+        }
+      }
+      throw error;
     }
+    // if (signInData?.error) {
+
+    // } else if (signInData?.ok) {
+    //   console.log("LOGIN SUCCESS");
+    //   router.push("/home");
+    //   router.refresh();
+    // }
   };
 
   return (

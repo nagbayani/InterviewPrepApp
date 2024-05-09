@@ -4,6 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+//  q: Why aren't there any colors on this page?
+//a: 
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,20 +17,56 @@ datasource db {
 }
   //url      = env("DATABASE_URL")
 
+//   enum UserRole {
+//   ADMIN
+//   USER
+// }
+
 
 model User {
   id        String  @id @default(cuid())
-  username  String  @unique
+  username  String  
   email     String  @unique
-  password  String  @unique
+  password  String  
   decks     Deck[]
   cards     Card[]
+  accounts  Account[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // emailVerified DateTime?
+  // role          UserRole @default(USER)
+  // isTwoFactorEnabled Boolean @default(false)
+  // twoFactorConfirmation TwoFactorConfirmation?
 }
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String? 
+  id_token          String?
+  session_state     String?
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+
 
 model Card {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt 
   question  String
   answer    String
   category  String
@@ -46,3 +85,4 @@ model Deck {
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
 }
+

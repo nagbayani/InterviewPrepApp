@@ -32,7 +32,7 @@ const FormSchema = z
     message: "Password do not match",
   });
 
-const SignUpForm = () => {
+const RegisterForm = () => {
   const router = useRouter();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -151,4 +151,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default RegisterForm;

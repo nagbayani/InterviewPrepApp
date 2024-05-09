@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/testAuth";
 import { getServerSession } from "next-auth";
 import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/testAuth";
 import { NextRequestWithAuth } from "next-auth/middleware";
 
 // export async function GET(req: NextRequest, res: NextResponse) {

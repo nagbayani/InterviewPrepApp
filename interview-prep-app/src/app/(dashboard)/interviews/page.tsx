@@ -1,13 +1,12 @@
 import React from "react";
-import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/testAuth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
+import { auth } from "../../../../auth";
 
 const Interviews = async () => {
-  const session = await getServerSession(authOptions);
-
+  const session = await auth();
   if (!session) {
     return redirect("/login");
   }

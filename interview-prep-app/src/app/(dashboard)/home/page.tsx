@@ -1,20 +1,15 @@
 import React from "react";
 import HomeBoard from "../../../containers/dashboard/HomeBoard";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/testAuth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import "../../../styles/dashboard.css";
 import { redirect } from "next/navigation";
-
+import { auth } from "../../../../auth";
 // import Layout from "./layout";
 
 const HomePage = async () => {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    return redirect("/login");
-  }
+  const session = await auth();
 
   if (session?.user) {
     return (

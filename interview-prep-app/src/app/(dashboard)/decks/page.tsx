@@ -1,8 +1,8 @@
 import React from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/testAuth";
 import { redirect } from "next/navigation";
 import DecksTab from "@/containers/dashboard/DecksTab";
+import { auth } from "../../../../auth";
 
 interface Deck {
   id: string;
@@ -38,11 +38,8 @@ const getData = async () => {
 
 const Decks = async () => {
   // const session = await getServerSession(authOptions);
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
-  if (!session) {
-    return redirect("/login");
-  }
   let decks: Deck[] = [];
   if (session) {
     // console.log(session, "Client Session");
