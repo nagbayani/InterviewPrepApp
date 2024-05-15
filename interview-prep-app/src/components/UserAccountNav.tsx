@@ -1,20 +1,13 @@
 "use client";
 import React from "react";
-import { signOut } from "../../auth";
 import { Button } from "./ui/button";
+import { logout } from "@/actions/logout";
 
 // 2:49:34
 const UserAccountNav = () => {
   return (
     <div>
-      <Button
-        onClick={() =>
-          signOut({
-            redirect: true,
-          })
-        }
-        variant='destructive'
-      >
+      <Button onClick={() => logout()} variant='destructive'>
         Sign out
       </Button>
     </div>

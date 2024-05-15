@@ -23,63 +23,60 @@ import { signIn } from "../../../../auth";
 import { useRouter } from "next/navigation";
 import { useToast } from "../../ui/use-toast";
 import { DEFAULT_LOGIN_REDIRECT } from "../../../../routes";
+import { useSearchParams } from "next/navigation";
 
-const FormSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Invalid email"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(8, "Password must have than 8 characters"),
-});
+import { useTransition } from "react";
+import { LoginFormSchema } from "@/lib/validateSchema";
+import { login } from "@/actions/login";
 
 const LoginForm = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const [isPending, startTransition] = useTransition();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+
+  const form = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof LoginFormSchema>) => {
     try {
-      await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-        redirectTo: DEFAULT_LOGIN_REDIRECT,
+      startTransition(() => {
+        login(values, callbackUrl).then((data) => {
+          if (data?.error) {
+            toast({
+              title: "Error",
+              description: "Login Failed. Invalid credentials",
+              variant: "destructive",
+            });
+            form.reset();
+          }
+
+          // if (data?.success) {
+          //   console.log("LOGIN SUCCESS", data.success);
+          //   form.reset();
+          //   router.push("/home");
+          //   router.refresh();
+          // }
+        });
       });
     } catch (error) {
-      if (error instanceof AuthError) {
-        switch (error.type) {
-          case "CredentialsSignin":
-            toast({
-              title: "Error",
-              description: "Invalid credentials",
-              variant: "destructive",
-            });
-            return { error: "Invalid credentials" };
-          default:
-            toast({
-              title: "Error",
-              description: "Something went wrong",
-              variant: "destructive",
-            });
-            return { error: "Something went wrong!" };
-        }
-      }
-      throw error;
+      console.log(error, "LOGIN ERROR");
     }
-    // if (signInData?.error) {
-
-    // } else if (signInData?.ok) {
-    //   console.log("LOGIN SUCCESS");
-    //   router.push("/home");
-    //   router.refresh();
-    // }
   };
+  // if (signInData?.error) {
 
+  // } else if (signInData?.ok) {
+  //   console.log("LOGIN SUCCESS");
+  //   router.push("/home");
+  //   router.refresh();
+  // }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
@@ -125,7 +122,7 @@ const LoginForm = () => {
       <GoogleSignInButton>Sign in with Google</GoogleSignInButton>
       <p className='text-center text-sm text-gray-600 mt-2'>
         If you don&apos;t have an account, please&nbsp;
-        <Link className='text-blue-500 hover:underline' href='/signup'>
+        <Link className='text-blue-500 hover:underline' href='/register'>
           Sign up
         </Link>
       </p>
@@ -134,3 +131,30 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+// try {
+//   await signIn("credentials", {
+//     email: values.email,
+//     password: values.password,
+//     redirectTo: DEFAULT_LOGIN_REDIRECT,
+//   });
+// } catch (error) {
+//   if (error instanceof AuthError) {
+//     switch (error.type) {
+//       case "CredentialsSignin":
+//         toast({
+//           title: "Error",
+//           description: "Invalid credentials",
+//           variant: "destructive",
+//         });
+//         return { error: "Invalid credentials" };
+//       default:
+//         toast({
+//           title: "Error",
+//           description: "Something went wrong",
+//           variant: "destructive",
+//         });
+//         return { error: "Something went wrong!" };
+//     }
+//   }
+//   throw error;

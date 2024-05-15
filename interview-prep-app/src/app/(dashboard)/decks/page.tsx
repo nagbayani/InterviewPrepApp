@@ -42,7 +42,7 @@ const Decks = async () => {
 
   let decks: Deck[] = [];
   if (session) {
-    // console.log(session, "Client Session");
+    console.log(session, "Client Session");
     // console.log(session.user.userId.toString(), "Client User");
     const userData = await getData();
     if (userData) {

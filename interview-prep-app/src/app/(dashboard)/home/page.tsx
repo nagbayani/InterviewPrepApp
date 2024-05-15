@@ -12,10 +12,11 @@ const HomePage = async () => {
   const session = await auth();
 
   if (session?.user) {
+    console.log(session, "SESSION HOME");
     return (
       <div className='dashboard-wrapper'>
         <h1 className='ml-[0]'>
-          Dashboard - Welcome Back {session?.user.username}{" "}
+          Dashboard - Welcome Back {session?.user.name}{" "}
         </h1>
         <HomeBoard />
       </div>

@@ -16,27 +16,17 @@ import GoogleSignInButton from "@/components/GoogleSignInButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "../../ui/use-toast";
-
-const FormSchema = z
-  .object({
-    username: z.string().min(1, "Username is required").max(100),
-    email: z.string().min(1, "Email is required").email("Invalid email"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .min(8, "Password must have than 8 characters"),
-    confirmPassword: z.string().min(1, "Password confirmation is required"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Password do not match",
-  });
+import { RegisterFormSchema } from "@/lib/validateSchema";
+import { useTransition } from "react";
+import { register } from "@/actions/register";
 
 const RegisterForm = () => {
   const router = useRouter();
   const { toast } = useToast();
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const [isPending, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof RegisterFormSchema>>({
+    resolver: zodResolver(RegisterFormSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -45,27 +35,56 @@ const RegisterForm = () => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: values.username,
-        email: values.email,
-        password: values.password,
-      }),
-    });
-    if (response.ok) {
-      router.push("/login");
-    } else {
+  const onSubmit = async (values: z.infer<typeof RegisterFormSchema>) => {
+    try {
+      startTransition(() => {
+        register(values).then((data) => {
+          console.log("data", data);
+          if (data?.error) {
+            toast({
+              title: "Error",
+              description: "Failed to register user.",
+              variant: "destructive",
+            });
+            form.reset();
+          }
+          if (data?.success) {
+            toast({
+              title: "RegisterSuccess",
+              description: "User created!",
+            });
+            form.reset();
+            router.push("/login");
+          }
+        });
+      });
+    } catch (error) {
       toast({
         title: "Error",
-        description: "Oops! Something went wrong!",
+        description: "Oops! Something went wrong with registering!",
         variant: "destructive",
       });
     }
+    // const response = await fetch("/api/user", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     username: values.username,
+    //     email: values.email,
+    //     password: values.password,
+    //   }),
+    // });
+    // if (response.ok) {
+    //   router.push("/login");
+    // } else {
+    //   toast({
+    //     title: "Error",
+    //     description: "Oops! Something went wrong!",
+    //     variant: "destructive",
+    //   });
+    // }
   };
 
   return (
@@ -133,7 +152,11 @@ const RegisterForm = () => {
             )}
           />
         </div>
-        <Button className='w-full mt-6 bg-black text-white' type='submit'>
+        <Button
+          className='w-full mt-6 bg-black text-white'
+          type='submit'
+          disabled={isPending}
+        >
           Sign up
         </Button>
       </form>
