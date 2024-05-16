@@ -15,7 +15,7 @@ const Interviews = async () => {
     return (
       <div className='dashboard-wrapper'>
         <h1 className='ml-[0]'>
-          Dashboard - Welcome Back {session?.user.username}
+          Dashboard - Welcome Back {session?.user.name}
         </h1>
         <h1>Hi Interviews! </h1>
       </div>

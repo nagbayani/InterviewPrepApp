@@ -3,10 +3,12 @@
 import { getUserByEmail } from "@/data/user";
 import { LoginFormSchema } from "@/lib/validateSchema";
 import * as z from "zod";
-import { compare } from "bcrypt";
 import { DEFAULT_LOGIN_REDIRECT } from "../../routes";
 import { signIn } from "../../auth";
 import { AuthError } from "next-auth";
+
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 
 // async function
 // call authorize function from  auth.config.ts (will validate with database)
@@ -26,19 +28,23 @@ export const login = async (
   // validate Email
   const user = await getUserByEmail(email);
 
+  // If user does not exist / no email / no password
   if (!user || !user.email || !user.password) {
     return { error: "Invalid User / No existing Email." };
   }
 
-  const passwordMatch = await compare(password, user.password);
-  // validate Password
+  // User needs to verify email
+  if (!user.emailVerified) {
+    console.log("User needs to verify email.");
+    const verificationToken = await generateVerificationToken(user.email);
 
-  if (!passwordMatch) {
-    return { error: "Invalid Password." };
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    );
   }
 
   // call signIn function from auth.config.ts
-
   try {
     await signIn("credentials", {
       email,

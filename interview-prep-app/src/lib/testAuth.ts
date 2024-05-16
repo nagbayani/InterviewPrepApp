@@ -80,7 +80,7 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: `${existingUser.id}`,
-          username: existingUser.username,
+          name: existingUser.name,
           email: existingUser.email,
         };
       },
@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
     // authorize (returns id, username, email) -> jwt -> session
     async jwt({ token, user }) {
       if (user) {
-        return { ...token, username: user.username, userId: user.id };
+        return { ...token, name: user.name, userId: user.id };
       }
       return token;
     },
@@ -99,7 +99,7 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          username: token.username,
+          name: token.name,
           userId: token.userId,
         },
       };

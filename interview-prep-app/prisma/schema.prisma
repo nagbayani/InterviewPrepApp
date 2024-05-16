@@ -17,25 +17,20 @@ datasource db {
 }
   //url      = env("DATABASE_URL")
 
-//   enum UserRole {
-//   ADMIN
-//   USER
-// }
-
-
 model User {
   id        String  @id @default(cuid())
-  username  String  
+  name      String?  
   email     String  @unique
-  password  String  
+  password  String?  
+  image     String?  
   decks     Deck[]
   cards     Card[]
   accounts  Account[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // emailVerified DateTime?
-  // role          UserRole @default(USER)
+  emailVerified DateTime?
+  // role      UserRole @default(USER)
   // isTwoFactorEnabled Boolean @default(false)
   // twoFactorConfirmation TwoFactorConfirmation?
 }
@@ -61,6 +56,15 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+
+model VerificationToken {
+  id String @id @default(cuid())
+  email String
+  token String @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
 
 
 model Card {

@@ -1,9 +1,12 @@
 "use server";
 import prisma from "@/lib/db";
-import { getUserByEmail } from "@/data/user";
 import { RegisterFormSchema } from "@/lib/validateSchema";
 import * as z from "zod";
 import bcrypt from "bcrypt";
+
+import { getUserByEmail } from "@/data/user";
+import { sendVerificationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/tokens";
 
 // async function
 // validate fields
@@ -17,7 +20,7 @@ export const register = async (values: z.infer<typeof RegisterFormSchema>) => {
   if (!validateFields) {
     return { error: "Invalid fields!" };
   }
-  const { username, email, password } = validateFields;
+  const { name, email, password } = validateFields;
 
   const existingUser = await getUserByEmail(email);
 
@@ -29,11 +32,15 @@ export const register = async (values: z.infer<typeof RegisterFormSchema>) => {
 
   await prisma.user.create({
     data: {
-      username,
+      name,
       email,
       password: hashedPassword,
     },
   });
+
+  // Generate verification token, send email
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return { success: "User created!" };
 };

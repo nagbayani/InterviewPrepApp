@@ -10,6 +10,7 @@ export const {
   auth,
   signIn,
   signOut,
+  unstable_update,
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
@@ -18,16 +19,26 @@ export const {
     signOut: "/",
     error: "/login",
   },
+  events: {
+    async linkAccount({ user }) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
     async signIn({ user, account }) {
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
+
+      if (!user) return false;
+
       if (user.id) {
         const existingUser = await getUserById(user?.id); // Add a check for user.id
+        // Prevent sign in without email verification
+        if (!existingUser?.emailVerified) return false;
       }
-
-      // Prevent sign in without email verification
-      // if (!existingUser?.emailVerified) return false;
 
       return true;
     },
@@ -47,7 +58,7 @@ export const {
       if (session.user) {
         session.user.name = token.name;
         session.user.email = token.email ?? "";
-        // session.user.isOAuth = token.isOAuth as boolean;
+        session.user.isOAuth = token.isOAuth as boolean;
       }
 
       return session;
@@ -62,7 +73,7 @@ export const {
       const existingAccount = await getAccountByUserId(existingUser.id);
 
       token.isOAuth = !!existingAccount;
-      token.name = existingUser.username;
+      token.name = existingUser.name;
       token.email = existingUser.email;
       // token.role = existingUser.role;
       // token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
