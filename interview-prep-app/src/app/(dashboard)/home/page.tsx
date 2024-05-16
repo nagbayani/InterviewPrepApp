@@ -1,19 +1,22 @@
+import React from "react";
 import HomeBoard from "../../../containers/dashboard/HomeBoard";
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/testAuth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import "../../../styles/dashboard.css";
-
+import { redirect } from "next/navigation";
+import { auth } from "../../../../auth";
 // import Layout from "./layout";
 
-const Dashboard = async () => {
-  const session = await getServerSession(authOptions);
+const HomePage = async () => {
+  const session = await auth();
+
   if (session?.user) {
+    console.log(session, "SESSION HOME");
     return (
       <div className='dashboard-wrapper'>
         <h1 className='ml-[0]'>
-          Dashboard - Welcome Back {session?.user.username}{" "}
+          Dashboard - Welcome Back {session?.user.name}{" "}
         </h1>
         <HomeBoard />
       </div>
@@ -30,4 +33,4 @@ const Dashboard = async () => {
   );
 };
 
-export default Dashboard;
+export default HomePage;

@@ -6,7 +6,7 @@ import SideLink from "./sideLink/sideLink";
 
 const sideItems = [
   { name: "Home", path: "/home" },
-  { name: "Decks", path: "/home/decks" },
+  { name: "Decks", path: "/decks" },
   { name: "Interviews", path: "/interviews" },
 ];
 
