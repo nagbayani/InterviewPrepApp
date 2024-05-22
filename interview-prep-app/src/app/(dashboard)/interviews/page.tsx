@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { authOptions } from "@/lib/testAuth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";

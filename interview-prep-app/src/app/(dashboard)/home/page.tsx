@@ -1,6 +1,5 @@
 import React from "react";
 import HomeBoard from "../../../containers/dashboard/HomeBoard";
-import { authOptions } from "@/lib/testAuth";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import "../../../styles/dashboard.css";
