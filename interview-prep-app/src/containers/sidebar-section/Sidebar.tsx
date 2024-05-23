@@ -12,7 +12,7 @@ import { PiIdentificationCard } from "react-icons/pi";
 import { FaRegUserCircle } from "react-icons/fa";
 
 import { Session } from "next-auth";
-
+import UserAccountNav from "@/components/UserAccountNav";
 /*
 import NextAuth from "next-auth";
 
@@ -54,9 +54,6 @@ interface SidebarProps {
   user: Session["user"] | null | undefined;
 }
 
-// usePathname to get current path
-// useSearchParams to get current search params
-
 const Sidebar = ({ decks, user }: SidebarProps) => {
   // get user information
   // retrieve list of decks, show decks
@@ -75,19 +72,14 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
       console.error("Expected 'decks' to be an array, but received:", decks);
       setDeckList([]);
     }
-  }, [decks, username]);
+  }, [decks, user]);
 
   return (
     <div className='sidebar-container'>
       <div className='sideitem-container'>
         <FaRegUserCircle color='#f1f1f1' /> {username}
       </div>
-      {/* <Link href='/home' passHref>
-        <span>Home</span>
-      </Link>
-      <Link href='/decks' passHref>
-        <span>Decks</span>
-      </Link> */}
+
       <ul className='sidebar-list'>
         {sideItems.map((item) => (
           <li key={item.name}>
@@ -107,6 +99,7 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
           </li>
         ))}
       </ul>
+      <UserAccountNav user={user} />
     </div>
   );
 };

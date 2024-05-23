@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.decklink-container {
+  padding-top: 15px;
+  padding-left: 20px;
+  width: 300px;
+  height: 100px;
+  display: flex;
+  justify-content: start;
+  /* align-items: center; */
+  background-color: #bcb6cc;
+  gap: 5px;
+  margin: 5px 0px;
+  border-radius: 10px;
+  -webkit-text-fill-color: #101010;
+}
+
+.decklink-container:hover {
+  background-color: green;
+}

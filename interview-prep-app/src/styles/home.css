@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.home-section {
+  width: auto;
+  height: auto;
+  position: relative;
+  display: block;
+  padding: 40px;
+  background: #e6deff;
+}
+
+.home-section-grid {
+  display: grid;
+  position: static;
+  width: auto;
+  height: auto;
+  --min-column-size: 1em;
+  overflow: visible;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--min-column-size), 100%), 1fr)
+  );
+  align-items: stretch;
+
+  justify-content: center;
+  /* gap: 5px; */
+}
+
+.home-text {
+  position: relative;
+  display: block;
+  width: auto;
+  height: auto;
+  align-items: stretch;
+  font-weight: 400;
+  max-width: 500px;
+}
+.home-text h1 {
+  display: block;
+  width: auto;
+  /* font-size: var(--step-3); */
+  height: auto;
+  line-height: 1.05em;
+  font-size: 40px;
+  font-weight: 600;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.home-text p {
+  display: block;
+  width: auto;
+  /* font-size: var(--step-3); */
+  height: auto;
+  line-height: 1.5em;
+  font-size: 20px;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.home-section-grid img {
+  position: auto;
+  max-width: 100%;
+  align-self: baseline;
+  justify-self: center;
+}

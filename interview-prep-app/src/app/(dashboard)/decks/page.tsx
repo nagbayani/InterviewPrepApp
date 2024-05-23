@@ -4,6 +4,7 @@ import DecksTab from "@/containers/dashboard/DecksTab";
 import { auth } from "../../../../auth";
 import { Session } from "next-auth";
 import { cookies } from "next/headers";
+import DeckLink from "@/components/deck/DeckLink";
 
 const getData = async (cookieHeader: string) => {
   // fetch data using api route
@@ -38,20 +39,44 @@ const Decks = async () => {
 
     const data = await getData(cookieHeader);
     console.log("DATA", data);
+    const decks = data.decks.map((deck: any) => {
+      console.log("DECK", deck.title);
+    });
 
+    console.log("DECKS", decks);
+
+    //   <ul className='sidebar-list'>
+    //   {sideItems.map((item) => (
+    //     <li key={item.title}>
+    //       <SideLink key={item.name} item={item} />
+    //     </li>
+    //   ))}
+    // </ul>
     return (
       <div className='dashboard-wrapper'>
-        <h1 className='ml-[0]'>
-          Dashboard - Welcome Back {session?.user.name}{" "}
+        <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
+          Decks
         </h1>
-        <h1>Hi this is a list of all your Decks</h1>
-        {data.decks.map((deck: any) => {
+        <ul className='h-[100vh] flex flex-row gap-4'>
+          {data.decks.map((deck: any) => {
+            return (
+              <li key={deck.id}>
+                <DeckLink
+                  id={deck.id}
+                  title={deck.title}
+                  path={`/decks/${deck.id}`}
+                />
+              </li>
+            );
+          })}
+        </ul>
+        {/* {data.decks.map((deck: any) => {
           return (
             <div key={deck.id}>
               <h2>{deck.title}</h2>
             </div>
           );
-        })}
+        })} */}
       </div>
     );
   }

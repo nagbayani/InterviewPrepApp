@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../../containers/sidebar-section/Sidebar";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import "../../styles/dashboard.css";
 import { auth } from "../../../auth";
 import { fetchAllDecks } from "@/utils/fetch";
@@ -42,7 +42,7 @@ export default async function Layout({ children }: LayoutProps) {
       </div>
 
       <main className='dashboard-content'>
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
       </main>
     </div>

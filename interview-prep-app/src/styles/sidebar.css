@@ -12,7 +12,6 @@
 .sideitem-container {
   padding: 15px;
   padding-left: 20px;
-
   display: flex;
   align-items: center;
   gap: 10px;
@@ -20,28 +19,6 @@
   border-radius: 10px;
   -webkit-text-fill-color: #f1f1f1;
 }
-
-/* The navigation menu links */
-/* .container span {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-} */
-
-/* .sidebar-link {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-} */
-
-/* When you mouse over the navigation links, change their color */
-/* .container span:hover {
-  color: #f1f1f1;
-} */
 
 .cat {
   color: #cabeff;

@@ -17,6 +17,9 @@ const HomePage = async () => {
         <h1 className='ml-[0]'>
           Dashboard - Welcome Back {session?.user.name}{" "}
         </h1>
+        <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
+          Board
+        </h1>
         <HomeBoard />
       </div>
     );
