@@ -2,18 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-.sidelink-container {
+.worklink-container {
   padding: 15px;
   padding-left: 20px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   margin: 5px 0px;
   border-radius: 10px;
   -webkit-text-fill-color: #f1f1f1;
 }
 
-.sidelink-container:hover,
+.worklink-container:hover,
 .active {
   background-color: #642eff;
   -webkit-text-fill-color: aliceblue;

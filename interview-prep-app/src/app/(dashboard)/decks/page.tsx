@@ -38,6 +38,7 @@ const Decks = async () => {
 
     const data = await getData(cookieHeader);
     console.log("DATA", data);
+
     return (
       <div className='dashboard-wrapper'>
         <h1 className='ml-[0]'>

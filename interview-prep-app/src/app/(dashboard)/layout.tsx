@@ -19,20 +19,26 @@ const authCheck = async () => {
       .map((cookie) => `${cookie.name}=${cookie.value}`)
       .join("; ");
     const decksData = await fetchAllDecks(cookieHeader);
-    console.log(decksData, "Decks Data in Layout");
-    return decksData;
+    // console.log(decksData, "Decks Data in Layout");
+    const userData = {
+      decksData,
+      session,
+    };
+    // return decksData;
+    return userData;
   }
   return null;
 };
 
 export default async function Layout({ children }: LayoutProps) {
   const data = await authCheck();
-  const decks = data?.decks;
-  console.log(decks, "DECKS in Layout");
+  const decks = data?.decksData.decks;
+  const user = data?.session?.user;
+  // console.log(decks, "DECKS in Layout");
   return (
     <div className='dashboard-container'>
       <div className='sidebar-menu'>
-        <Sidebar decks={decks} />
+        <Sidebar decks={decks} user={user} />
       </div>
 
       <main className='dashboard-content'>

@@ -3,13 +3,43 @@ import React from "react";
 
 import "../../styles/sidebar.css";
 import SideLink from "./sideLink/sideLink";
+import WorkLink from "./workspaceLink/workLink";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { SiContentstack } from "react-icons/si";
+import { PiIdentificationCard } from "react-icons/pi";
+import { FaRegUserCircle } from "react-icons/fa";
+
+import { Session } from "next-auth";
+
+/*
+import NextAuth from "next-auth";
+
+declare module "next-auth" {
+  interface User {
+    name: string;
+  }
+    Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
+  interface Session {
+    user: User & {
+      name: string;
+    };
+    token: {
+      name: string;
+    };
+  }
+}
+*/
 
 const sideItems = [
-  { name: "Home", path: "/home" },
-  { name: "Decks", path: "/decks" },
-  { name: "Interviews", path: "/interviews" },
+  { name: "Home", path: "/home", icon: <AiOutlineHome color='#f1f1f1' /> },
+  { name: "Decks", path: "/decks", icon: <SiContentstack color='#f1f1f1' /> },
+  {
+    name: "Interviews",
+    path: "/interviews",
+    icon: <PiIdentificationCard color='#f1f1f1' />,
+  },
 ];
 
 interface Deck {
@@ -18,31 +48,40 @@ interface Deck {
   updatedAt: string;
   title: string;
 }
-
-interface DecksList {
+//SidebarProps
+interface SidebarProps {
   decks: Deck[];
+  user: Session["user"] | null | undefined;
 }
 
 // usePathname to get current path
 // useSearchParams to get current search params
 
-const Sidebar = ({ decks }: DecksList) => {
+const Sidebar = ({ decks, user }: SidebarProps) => {
   // get user information
   // retrieve list of decks, show decks
   // retrieve session, if user, pass userID
   const [deckList, setDeckList] = useState<Deck[]>(decks);
+  const [username, setUsername] = useState<string>("");
+
+  // const username = user.user?.name;
+  // console.log("SIDEBAR username ", username);
 
   useEffect(() => {
     if (Array.isArray(decks)) {
       setDeckList(decks);
+      setUsername(user?.name || "");
     } else {
       console.error("Expected 'decks' to be an array, but received:", decks);
       setDeckList([]);
     }
-  }, [decks]);
+  }, [decks, username]);
 
   return (
     <div className='sidebar-container'>
+      <div className='sideitem-container'>
+        <FaRegUserCircle color='#f1f1f1' /> {username}
+      </div>
       {/* <Link href='/home' passHref>
         <span>Home</span>
       </Link>
@@ -58,10 +97,10 @@ const Sidebar = ({ decks }: DecksList) => {
       </ul>
 
       <ul>
-        Workspace
+        <strong className='pl-[10px]'>Workspace</strong>
         {deckList?.map((deck) => (
           <li key={deck.id}>
-            <SideLink
+            <WorkLink
               key={deck.title}
               item={{ name: deck.title, path: `/decks/${deck.id}` }}
             />

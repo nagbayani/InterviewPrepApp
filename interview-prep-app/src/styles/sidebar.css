@@ -3,9 +3,22 @@
   position: sticky;
   top: 50px;
   left: 0;
-  background: #f1f1f1;
+  background: #1d0061;
   overflow-x: hidden;
   padding-top: 20px;
+  -webkit-text-fill-color: aliceblue;
+}
+
+.sideitem-container {
+  padding: 15px;
+  padding-left: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0px;
+  border-radius: 10px;
+  -webkit-text-fill-color: #f1f1f1;
 }
 
 /* The navigation menu links */
@@ -31,10 +44,10 @@
 } */
 
 .cat {
-  color: #818181;
+  color: #cabeff;
   font-weight: bold;
   font-size: 13px;
-  margin: 10px 0px;
+  margin: 5px 0px;
 }
 
 .sidebar-list {

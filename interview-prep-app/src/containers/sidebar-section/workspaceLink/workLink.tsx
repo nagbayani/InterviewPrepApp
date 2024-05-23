@@ -1,32 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import "../../../styles/sideLink.css";
+import "../../../styles/workLink.css";
 import { usePathname } from "next/navigation";
 
 interface Item {
   name: string;
-  icon: React.ReactNode;
+  // icon: React.ReactNode;
   path: string;
 }
 
-interface SideLinkProps {
+interface WorkLinkProps {
   item: Item;
 }
-const SideLink = ({ item }: SideLinkProps) => {
+const WorkLink = ({ item }: WorkLinkProps) => {
   const pathname = usePathname();
 
   return (
     <Link
       href={item.path}
-      className={`sidelink-container ${
-        pathname === item.path && "sidelink-container active"
+      className={`worklink-container ${
+        pathname === item.path && "worklink-container active"
       }`}
     >
-      {item.icon}
+      {/* {item.icon} */}
       {item.name}
     </Link>
   );
 };
 
-export default SideLink;
+export default WorkLink;

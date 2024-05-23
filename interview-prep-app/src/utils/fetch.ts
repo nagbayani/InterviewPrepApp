@@ -15,11 +15,19 @@ export const fetchAllDecks = async (cookieHeader: string) => {
   }
 };
 
-export const fetchSingleDeck = async (deckId: string) => {
+export const fetchSingleDeck = async (deckId: string, cookieHeader: string) => {
   try {
-    const res = await fetch(`${process.env.AUTH_URL}/api/decks/${deckId}`);
+    const res = await fetch(`${process.env.AUTH_URL}/api/decks/${deckId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieHeader,
+      },
+    });
     const data = await res.json();
-    // console.log("In Page, Decks Data: ", data);
+    console.log("FETCH Decks Data: ", data);
+    console.log(data.data.deck, "FETCH DECK DATA");
+    console.log(data.data.cards, "FETCH DECK CARDS");
+
     return data;
   } catch (error) {
     console.log(error, "Something Went Wrong retrieving the deck.");

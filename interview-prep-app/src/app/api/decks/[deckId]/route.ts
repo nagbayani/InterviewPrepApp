@@ -12,11 +12,16 @@ export async function GET(
   const deck = await getDeckByDeckId(deckId);
   const cards = await getCardsByDeckId(deckId);
 
-  //json the decks
+  //json the decks & card data
+
+  const data = {
+    deck,
+    cards,
+  };
+
+  console.log("API ROUTE SINGLE DECK DATA", data);
 
   return NextResponse.json({
-    message: `This is for a single deck, DeckId: ${deckId}!, ${
-      deck?.title
-    }, ${cards.map((card) => card.question)}`,
+    data,
   });
 }
