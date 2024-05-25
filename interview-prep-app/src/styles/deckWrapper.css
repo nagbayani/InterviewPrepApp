@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.deck-wrapper-container {
+  width: auto;
+  height: auto;
+  position: relative;
+}
+
+.deck-wrapper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  background: #e6deff;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  /* margin-bottom: 20px; */
+}

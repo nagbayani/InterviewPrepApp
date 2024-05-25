@@ -16,7 +16,7 @@ import GoogleSignInButton from "@/components/GoogleSignInButton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "../../ui/use-toast";
-import { RegisterFormSchema } from "@/lib/validateSchema";
+import { RegisterFormSchema } from "@/schemas/validateSchema";
 import { useTransition } from "react";
 import { register } from "@/actions/register";
 import { CardWrapper } from "./card-wrapper";

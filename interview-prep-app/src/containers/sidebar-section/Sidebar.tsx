@@ -6,10 +6,12 @@ import SideLink from "./sideLink/sideLink";
 import WorkLink from "./workspaceLink/workLink";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+
 import { AiOutlineHome } from "react-icons/ai";
 import { SiContentstack } from "react-icons/si";
 import { PiIdentificationCard } from "react-icons/pi";
 import { FaRegUserCircle } from "react-icons/fa";
+import { TbCards } from "react-icons/tb";
 
 import { Session } from "next-auth";
 import UserAccountNav from "@/components/UserAccountNav";
@@ -61,9 +63,6 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
   const [deckList, setDeckList] = useState<Deck[]>(decks);
   const [username, setUsername] = useState<string>("");
 
-  // const username = user.user?.name;
-  // console.log("SIDEBAR username ", username);
-
   useEffect(() => {
     if (Array.isArray(decks)) {
       setDeckList(decks);
@@ -76,6 +75,18 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
 
   return (
     <div className='sidebar-container'>
+      <div className='sideitem-container'>
+        <TbCards color='#f1f1f1' size={40} />
+        <span
+          style={{
+            fontSize: "20px",
+            fontWeight: "400",
+            letterSpacing: "-0.05em",
+          }}
+        >
+          Smooth Prep
+        </span>
+      </div>
       <div className='sideitem-container'>
         <FaRegUserCircle color='#f1f1f1' /> {username}
       </div>

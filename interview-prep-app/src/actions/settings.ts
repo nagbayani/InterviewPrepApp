@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 
 import { unstable_update } from "../../auth";
 import prisma from "@/lib/db";
-import { SettingsSchema } from "@/lib/validateSchema";
+import { SettingsSchema } from "@/schemas/validateSchema";
 import { getUserByEmail, getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { generateVerificationToken } from "@/lib/tokens";

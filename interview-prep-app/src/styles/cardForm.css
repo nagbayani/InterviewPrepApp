@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card-form-container {
+  width: auto;
+  height: auto;
+  max-width: 400px;
+  max-height: 400px;
+  position: relative;
+  display: block;
+  padding: 20px;
+  border: 2px solid black;
+  /* background: #e6deff; */
+}
+
+.clickable-label {
+  display: inline-block; /* Makes the label block-like while keeping it inline */
+  padding: 0.5rem 1rem; /* Adjust padding as needed */
+  cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+}
+
+.header-button {
+  display: inline-block; /* Makes the label block-like while keeping it inline */
+  padding: 10px; /* Adjust padding as needed */
+}
+
+.header-button:hover {
+  background-color: #bcb6cc;
+  border-radius: 5px;
+}

@@ -4,7 +4,8 @@ import DecksTab from "@/containers/dashboard/DecksTab";
 import { auth } from "../../../../auth";
 import { Session } from "next-auth";
 import { cookies } from "next/headers";
-import DeckLink from "@/components/deck/DeckLink";
+import DeckLink from "@/components/deck-link/DeckLink";
+import CardForm from "@/components/forms/card/CardForm";
 
 const getData = async (cookieHeader: string) => {
   // fetch data using api route
@@ -70,6 +71,7 @@ const Decks = async () => {
             );
           })}
         </ul>
+
         {/* {data.decks.map((deck: any) => {
           return (
             <div key={deck.id}>

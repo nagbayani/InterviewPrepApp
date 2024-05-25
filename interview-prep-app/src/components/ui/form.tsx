@@ -11,7 +11,7 @@ import {
 } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
-import { Label } from "@/components/ui/label";
+import { Label, CardLabel } from "@/components/ui/label";
 
 const Form = FormProvider;
 
@@ -96,6 +96,23 @@ const FormLabel = React.forwardRef<
 });
 FormLabel.displayName = "FormLabel";
 
+const CardFormLabel = React.forwardRef<
+  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
+>(({ className, ...props }, ref) => {
+  const { error, formItemId } = useFormField();
+
+  return (
+    <CardLabel
+      ref={ref}
+      className={className}
+      htmlFor={formItemId}
+      {...props}
+    />
+  );
+});
+CardFormLabel.displayName = "CardFormLabel";
+
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
@@ -165,6 +182,7 @@ export {
   Form,
   FormItem,
   FormLabel,
+  CardFormLabel,
   FormControl,
   FormDescription,
   FormMessage,

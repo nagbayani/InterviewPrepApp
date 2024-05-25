@@ -1,7 +1,7 @@
 // import GitHub from "next-auth/providers/github";
 import type { NextAuthConfig } from "next-auth";
 import credentials from "next-auth/providers/credentials";
-import { LoginFormSchema } from "@/lib/validateSchema";
+import { LoginFormSchema } from "@/schemas/validateSchema";
 import bcrypt from "bcryptjs";
 import Google from "next-auth/providers/google";
 
