@@ -19,7 +19,10 @@ import { CardSchema } from "@/schemas/cardSchema";
 import "../../../styles/cardForm.css";
 import { useState } from "react";
 
-import { SlOptions } from "react-icons/sl";
+import { HiViewGrid } from "react-icons/hi";
+import { HiOutlinePlusSmall } from "react-icons/hi2";
+
+import PromptAnswer from "./PromptAnswer";
 
 const CardForm = () => {
   const [isEditing, setIsEditing] = useState({
@@ -96,6 +99,9 @@ const CardForm = () => {
     <div className='card-form-container'>
       <Form {...form}>
         <div className='flex flex-row justify-between'>
+          <button className='header-button'>
+            <HiViewGrid size={32} color={"#cccccd"} />
+          </button>
           <FormField
             control={form.control}
             name='question'
@@ -128,8 +134,8 @@ const CardForm = () => {
               </FormItem>
             )}
           />
-          <button className='header-button justify-content-end'>
-            <SlOptions />
+          <button className='add-button'>
+            <HiOutlinePlusSmall size={32} />
           </button>
         </div>
 
@@ -160,6 +166,8 @@ const CardForm = () => {
           )}
         /> */}
       </Form>
+
+      <PromptAnswer />
     </div>
   );
 };
