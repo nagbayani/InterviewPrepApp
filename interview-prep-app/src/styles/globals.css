@@ -4,6 +4,20 @@
 
 @layer base {
   :root {
+    --step--7: clamp(0.5132rem, 0.4032rem + 0.5498vi, 0.898rem);
+    --step--6: clamp(0.5645rem, 0.4435rem + 0.6048vi, 0.9878rem);
+    --step--5: clamp(0.6209rem, 0.4879rem + 0.6653vi, 1.0866rem);
+    --step--4: clamp(0.683rem, 0.5367rem + 0.7318vi, 1.1953rem);
+    --step--3: clamp(0.7513rem, 0.5903rem + 0.805vi, 1.3148rem);
+    --step--2: clamp(0.8264rem, 0.6494rem + 0.8855vi, 1.4463rem);
+    --step--1: clamp(0.9091rem, 0.7143rem + 0.974vi, 1.5909rem);
+    --step-0: clamp(1rem, 0.7857rem + 1.0714vi, 1.75rem);
+    --step-1: clamp(1.1rem, 0.8643rem + 1.1786vi, 1.925rem);
+    --step-2: clamp(1.21rem, 0.9507rem + 1.2964vi, 2.1175rem);
+    --step-3: clamp(1.331rem, 1.0458rem + 1.4261vi, 2.3293rem);
+    --step-4: clamp(1.4641rem, 1.1504rem + 1.5687vi, 2.5622rem);
+    --step-5: clamp(1.6105rem, 1.2654rem + 1.7255vi, 2.8184rem);
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 

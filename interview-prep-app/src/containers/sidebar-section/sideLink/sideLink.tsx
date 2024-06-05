@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 interface Item {
   name: string;
+  icon: React.ReactNode;
   path: string;
 }
 
@@ -22,7 +23,7 @@ const SideLink = ({ item }: SideLinkProps) => {
         pathname === item.path && "sidelink-container active"
       }`}
     >
-      {/* {item.icon} */}
+      {item.icon}
       {item.name}
     </Link>
   );

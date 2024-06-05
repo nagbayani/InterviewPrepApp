@@ -25,7 +25,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "../../../../routes";
 import { useSearchParams } from "next/navigation";
 
 import { useTransition } from "react";
-import { LoginFormSchema } from "@/lib/validateSchema";
+import { LoginFormSchema } from "@/schemas/validateSchema";
 import { login } from "@/actions/login";
 
 import { CardWrapper } from "./card-wrapper";
@@ -38,6 +38,7 @@ const LoginForm = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
+  // pass in form schema
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {

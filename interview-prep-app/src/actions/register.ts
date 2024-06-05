@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/db";
-import { RegisterFormSchema } from "@/lib/validateSchema";
+import { RegisterFormSchema } from "@/schemas/validateSchema";
 import * as z from "zod";
 import bcrypt from "bcrypt";
 

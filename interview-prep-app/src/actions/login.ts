@@ -1,7 +1,7 @@
 "use server";
 
 import { getUserByEmail } from "@/data/user";
-import { LoginFormSchema } from "@/lib/validateSchema";
+import { LoginFormSchema } from "@/schemas/validateSchema";
 import * as z from "zod";
 import { DEFAULT_LOGIN_REDIRECT } from "../../routes";
 import { signIn } from "../../auth";

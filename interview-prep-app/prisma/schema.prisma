@@ -28,7 +28,6 @@ model User {
   accounts  Account[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   emailVerified DateTime?
   // role      UserRole @default(USER)
   // isTwoFactorEnabled Boolean @default(false)

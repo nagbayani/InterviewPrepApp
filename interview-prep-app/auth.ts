@@ -27,6 +27,17 @@ export const {
       });
     },
   },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `__Host-next-auth.session-token`,
+  //     options: {
+  //       httpOnly: true,
+  //       sameSite: "lax",
+  //       path: "/",
+  //     },
+  //   },
+  // },
+
   callbacks: {
     async signIn({ user, account }) {
       // Allow OAuth without email verification

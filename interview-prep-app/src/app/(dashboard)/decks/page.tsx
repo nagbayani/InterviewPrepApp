@@ -1,69 +1,94 @@
 import React from "react";
-import { authOptions } from "@/lib/testAuth";
 import { redirect } from "next/navigation";
 import DecksTab from "@/containers/dashboard/DecksTab";
 import { auth } from "../../../../auth";
+import { Session } from "next-auth";
+import { cookies } from "next/headers";
+import DeckLink from "@/components/deck-link/DeckLink";
+import CardForm from "@/components/forms/card/CardForm";
 
-interface Deck {
-  id: string;
-  title: string;
-}
-interface DecksProps {
-  decks: Deck[];
-}
-const getData = async () => {
-  // LOOK AT THIS
-  // const   response = await fetch(`/api/decks?userId=${userId}`, {
-  // const url = new URL(`${process.env.NEXTAUTH_URL}/api/u-decks`);
-  // url.searchParams.append("userId", userId);
 
+const getData = async (cookieHeader: string) => {
+  // fetch data using api route
   try {
-    // const response = await fetch(`${process.env.NEXTAUTH_URL}/api/u-decks`, {
-    const response = await fetch(`http://localhost:3000/api/u-decks`, {
-      method: "GET",
-      credentials: "include",
+    const res = await fetch(`${process.env.AUTH_URL}/api/decks`, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieHeader,
+      },
     });
-    if (!response.ok) {
-      console.error(`HTTP error! Status: ${response.status}`);
-    } else {
-      const data = await response.json();
-      console.log("DATA DECKS", data);
-      return data.decks;
-    }
+    const data = await res.json();
+    // console.log("In Page, Decks Data: ", data);
+    return data;
   } catch (error) {
-    console.error("Failed to retrieve decks:", error);
-    throw error;
+    console.log(error, "Something Went Wrong retrieving Decks.");
   }
 };
 
 const Decks = async () => {
-  // const session = await getServerSession(authOptions);
+  // retrieve session, if user, pass userID
   const session = await auth();
 
-  let decks: Deck[] = [];
+  // console.log("DECK 1", data.decks[0].title);
   if (session) {
-    console.log(session, "Client Session");
-    // console.log(session.user.userId.toString(), "Client User");
-    const userData = await getData();
-    if (userData) {
-      console.log("USER DATA", userData);
-    } else {
-      console.log("NO USER DATA");
-    }
+    const cookieStore = cookies();
+    const cookieHeader = cookieStore
+      .getAll()
+      .map((cookie) => `${cookie.name}=${cookie.value}`)
+      .join("; ");
+    // console.log("Cookie Header", cookieHeader);
+    // console.log(cookieStore, "Cookie Store");
+
+    const data = await getData(cookieHeader);
+    console.log("DATA", data);
+
+    
+    const decks = data.decks.map((deck: any) => {
+      console.log("DECK", deck.title);
+    });
+
+    console.log("DECKS", decks);
+
+    //   <ul className='sidebar-list'>
+    //   {sideItems.map((item) => (
+    //     <li key={item.title}>
+    //       <SideLink key={item.name} item={item} />
+    //     </li>
+    //   ))}
+    // </ul>
+    return (
+      <div className='dashboard-wrapper'>
+        <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
+          Decks
+        </h1>
+        <ul className='h-[100vh] flex flex-row gap-4'>
+          {data.decks.map((deck: any) => {
+            return (
+              <li key={deck.id}>
+                <DeckLink
+                  id={deck.id}
+                  title={deck.title}
+                  path={`/decks/${deck.id}`}
+                />
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* {data.decks.map((deck: any) => {
+          return (
+            <div key={deck.id}>
+              <h2>{deck.title}</h2>
+            </div>
+          );
+        })} */}
+      </div>
+    );
   }
-  // console.log("JSON USER DATA", JSON.parse(userData.toString()));
-  // if (userData) {
-  //   console.log("USER DATA", userData);
-  // }
   return (
     <div className='dashboard-wrapper'>
-      <h1 className='ml-[0]'>
-        Dashboard - Welcome Back {session?.user.name}{" "}
-      </h1>
-      <h1>Hi this is a list of all your Decks</h1>
-      <DecksTab decks={decks} />
+      <h1 className='ml-[0]'>Decks List - you must sign in.</h1>
     </div>
   );
 };
-
 export default Decks;

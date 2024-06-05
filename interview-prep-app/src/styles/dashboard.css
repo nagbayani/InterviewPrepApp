@@ -8,20 +8,23 @@
 
 .sidebar-menu {
   flex: 1;
-  background-color: #f1f1f1;
-  padding: 20px;
+  background-color: #1d0061;
+  padding: 10px;
   min-height: 100vh;
 }
 
 .dashboard-content {
   flex: 4;
-  padding: 20px;
+  /* padding-left: 20px; */
+  /* padding-right: 20px; */
+  padding-bottom: 20px;
 }
 
 .dashboard-wrapper {
   display: flex;
+  flex-direction: column;
   gap: 20px;
-  margin-top: 50px;
+  /* margin-top: 50px; */
 }
 
 .dashboard-main {
