@@ -13,7 +13,6 @@ export async function GET(
   const cards = await getCardsByDeckId(deckId);
 
   //json the decks & card data
-
   const data = {
     deck,
     cards,

@@ -7,20 +7,33 @@ import { EditorState } from "@tiptap/pm/state";
 import Document from "@tiptap/extension-document";
 import Text from "@tiptap/extension-text";
 import Dropcursor from "@tiptap/extension-dropcursor";
+import { Underline } from "@tiptap/extension-underline";
+import { Link } from "@tiptap/extension-link";
 import { useState } from "react";
+import { Button, buttonVariants } from "../ui/button";
+
 // import { EditorState } from "@tiptap/pm/state";
 
+// import custom Document
 const Tiptap = () => {
   const [isEdit, setEdit] = useState(true);
   const editor = useEditor({
     extensions: [Document, Text, Dropcursor, NodeExtension],
-    content: `<div data-type="custom-node">Editable content here</div>
+    content: `
+    <div> 
+      <div data-type="custom-node">Editable content here</div>
+    </div>
     `,
+
     onCreate({ editor }) {
       // Ensure the initial content structure only contains custom nodes
       if (editor && !editor.isDestroyed) {
         editor.commands.setContent(
-          '<div data-type="custom-node">Editable content here</div>'
+          `
+          <div> 
+            <div data-type="custom-node">Editable content here</div>
+          </div>
+          `
         );
       }
     },
@@ -33,6 +46,16 @@ const Tiptap = () => {
     }
   };
 
+  // configure IDS for every node
+  // pass them ass props
+
+  const handleNodeDelete = () => {
+    if (editor) {
+      // Deletes a single node
+      editor.chain().focus().deleteNode("customNode").run();
+    }
+  };
+
   if (!editor) {
     return null;
   }
@@ -41,7 +64,13 @@ const Tiptap = () => {
     <div>
       <EditorContent editor={editor} />
       <>
-        {isEdit ? <button onClick={handleDestroy}>Destroy Editor</button> : ""}
+        {isEdit ? (
+          <Button variant='destructive' onClick={handleDestroy}>
+            Destroy Editor
+          </Button>
+        ) : (
+          ""
+        )}
       </>
     </div>
   );

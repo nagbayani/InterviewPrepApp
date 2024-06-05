@@ -30,6 +30,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const { authorId, ...safeDeck } = deck;
     return safeDeck;
   });
+  // data= { decks: data}
 
   return NextResponse.json({ decks });
 }

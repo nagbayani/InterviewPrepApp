@@ -20,7 +20,7 @@ import {
 } from "react-beautiful-dnd";
 
 //tiptap imports
-import Tiptap from "@/components/tiptap/Tiptap";
+import Tiptap from "@/components/test/Tiptap";
 import Answer from "@/components/tiptap/Answer";
 
 // implement a stack

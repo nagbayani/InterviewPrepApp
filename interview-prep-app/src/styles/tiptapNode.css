@@ -8,7 +8,7 @@
 }
 /* toggle this for blue border around focused editor */
 .ProseMirror-focused {
-  /* outline: none; */
+  outline: none;
 }
 
 .react-component {

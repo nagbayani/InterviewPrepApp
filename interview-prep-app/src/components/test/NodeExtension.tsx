@@ -1,5 +1,6 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { ReactNodeViewRenderer } from "@tiptap/react";
+import { EditorState, Transaction } from "@tiptap/pm/state";
 
 import { NodeComponent } from "./NodeComponent";
 
@@ -9,12 +10,13 @@ export default Node.create({
   content: "inline*",
   // content: "block+",
   draggable: true,
+  selectable: true,
   // atom: true,
 
   parseHTML() {
     return [
       {
-        tag: "div[data-type='custom-node']",
+        tag: `div[data-type='custom-node']`,
       },
     ];
   },
@@ -32,6 +34,31 @@ export default Node.create({
       },
     };
   },
+
+  // addCommands() {
+  //   return {
+  //     deleteCustomNode:
+  //       () =>
+  //       ({
+  //         state,
+  //         dispatch,
+  //       }: {
+  //         state: EditorState;
+  //         dispatch: Transaction;
+  //       }) => {
+  //         const { selection } = state;
+  //         if (
+  //           selection instanceof NodeSelection &&
+  //           selection.head === "customNode"
+  //         ) {
+  //           const tr = state.tr.delete(selection.from, selection.to);
+  //           dispatch(tr);
+  //           return true;
+  //         }
+  //         return false;
+  //       },
+  //   };
+  // },
 
   renderHTML({ HTMLAttributes }) {
     return [
