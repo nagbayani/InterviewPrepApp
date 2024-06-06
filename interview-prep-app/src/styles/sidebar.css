@@ -12,6 +12,7 @@
 .sideitem-container {
   padding: 15px;
   padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   align-items: center;
   gap: 10px;

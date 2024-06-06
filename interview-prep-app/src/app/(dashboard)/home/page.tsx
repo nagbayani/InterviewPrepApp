@@ -17,12 +17,12 @@ const HomePage = async () => {
         <h1
           className='ml-[0]'
           style={{
-            fontSize: "40px",
-            fontWeight: "400",
+            fontSize: "var(--step-1)",
+            fontWeight: "200",
             letterSpacing: "-0.05em",
           }}
         >
-          Welcome Back {session?.user.name}{" "}
+          Welcome back, {session?.user.name}{" "}
         </h1>
         <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
           Board

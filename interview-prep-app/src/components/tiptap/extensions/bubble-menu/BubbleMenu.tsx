@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import React, { useEffect, useState } from "react";
 
-import { BubbleMenuPlugin, BubbleMenuPluginProps } from "./BubblePlugin";
+import { BubbleMenuPlugin, BubbleMenuPluginProps } from "./bubble-plug";
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
 
@@ -12,7 +12,6 @@ export type BubbleMenuProps = Omit<
   className?: string;
   children: React.ReactNode;
 };
-
 
 export const BubbleMenu: React.FC<BubbleMenuProps> = ({
   editor,
