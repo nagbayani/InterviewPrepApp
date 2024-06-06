@@ -120,8 +120,8 @@ export const DBlock = Node.create<DragBlockOptions>({
         // Get the parent node of the current selection
         const parent = $head.node($head.depth - 1);
 
-        // If the parent node is not of type dBlock, do nothing
-        if (parent.type.name !== "dBlock") return false;
+        // If the parent node is not of type dragBlock, do nothing
+        if (parent.type.name !== "dragBlock") return false;
 
         let currentActiveNodeTo = -1;
 

@@ -2,6 +2,7 @@ import { NodeViewWrapper, NodeViewProps, NodeViewContent } from "@tiptap/react";
 import React from "react";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { GoPlus } from "react-icons/go";
+import "../../../../styles/tiptapNode.css";
 
 // Pass in TipTap's NodeViewProps - destruct {node, getPos, editor}
 export const DragBlock: React.FC<NodeViewProps> = ({
@@ -26,10 +27,10 @@ export const DragBlock: React.FC<NodeViewProps> = ({
   };
 
   return (
-    <NodeViewWrapper as='div' className='flex gap-2 group relative'>
+    <NodeViewWrapper as='div' className='flex gap-2 group w-full relative'>
       {/* Left menu */}
       <section
-        className='flex mt-2 pt-[2px] gap-1'
+        className='flex pt-[2px] gap-1'
         contentEditable='false'
         aria-label='left menu'
       >

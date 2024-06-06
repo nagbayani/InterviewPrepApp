@@ -1,3 +1,6 @@
+"use client";
+import "../../../styles/tiptapBubbleMenu.css";
+
 import { Editor } from "@tiptap/core";
 import { useState } from "react";
 import Tippy from "@tippyjs/react";

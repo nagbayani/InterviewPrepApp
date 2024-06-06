@@ -2,6 +2,7 @@ import { BubbleMenu, Editor } from "@tiptap/react";
 import { BubbleButtons } from "./bubble-buttons";
 import React from "react";
 import { NodeTypes } from "./selection-menu";
+import "../../../styles/tiptapBubbleMenu.css";
 
 interface CustomBubbleMenuProps {
   editor: Editor;

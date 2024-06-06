@@ -7,6 +7,7 @@ import { useCallback } from "react";
 import { getExtensions } from "./extensions";
 import { Content } from "@tiptap/react";
 import { CustomBubbleMenu } from "./menu-components/bubble-menu";
+import "../../styles/tiptapNode.css";
 
 const content: Content = {
   type: "doc",
@@ -62,3 +63,5 @@ export const TextEditor = () => {
     )
   );
 };
+
+export default TextEditor;
