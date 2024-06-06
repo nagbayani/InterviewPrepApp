@@ -48,6 +48,8 @@
     --ring: 215 20.2% 65.1%;
 
     --radius: 0.5rem;
+    font-size: var(--step--7);
+    letter-spacing: -0.025em;
   }
 
   .dark {

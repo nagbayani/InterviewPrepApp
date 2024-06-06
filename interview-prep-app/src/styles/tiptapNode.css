@@ -1,82 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.ProseMirror {
+  p.is-empty::before {
+    content: attr(data-placeholder);
+    color: #94a3b8; /* equivalent to text-slate-400 */
+    float: left;
+    height: 0;
+    pointer-events: none;
+    position: absolute;
+    margin-left: 2px;
+  }
 
-/* Basic editor styles */
-.tiptap > * + * {
-  margin-top: 0.75em;
-}
-/* toggle this for blue border around focused editor */
-.ProseMirror-focused {
-  outline: none;
-}
+  .drag-add-button {
+    background-color: #e5e7eb; /* equivalent to bg-gray-200 */
+    transition: background-color 0.2s;
+    border-radius: 0.125rem; /* equivalent to rounded */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    font-size: 1.125rem; /* equivalent to text-lg */
+    padding-top: 0.25rem; /* equivalent to py-1 */
+    padding-bottom: 0.25rem; /* equivalent to py-1 */
+    opacity: 0;
+    color: black;
+    height: fit-content;
+  }
 
-.react-component {
-  background: #faf594;
-  border: 3px solid #0d0d0d;
-  border-radius: 0.5rem;
-  margin: 1rem 0;
-  position: relative;
-}
+  .drag-handle {
+    opacity: 0;
+    background-color: #e5e7eb; /* equivalent to bg-gray-200 */
 
-.react-component .label {
-  margin-left: 1rem;
-  background-color: #0d0d0d;
-  font-size: 0.6rem;
-  letter-spacing: 1px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  position: absolute;
-  top: 0;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0 0 0.5rem 0.5rem;
-}
+    transition: background-color 0.2s;
+  }
 
-.react-component .content {
-  margin-top: 1.5rem;
-  padding: 1rem;
-}
+  .drag-handle:hover {
+    background-color: #d1d5db; /* equivalent to hover:bg-gray-300 */
+  }
 
-.drag-handle {
-  flex: 0 0 auto;
-  position: relative;
-  width: 1rem;
-  height: 1rem;
-  top: 0.3rem;
-  margin-right: 0.5rem;
-  cursor: grab;
-  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 16"><path fill-opacity="0.2" d="M4 14c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM2 6C.9 6 0 6.9 0 8s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" /></svg>');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-}
-
-.react-component-with-content {
-  background: #faf594;
-  border: 3px solid #0d0d0d;
-  border-radius: 0.5rem;
-  margin: 1rem 0;
-  position: relative;
-}
-
-.react-component-with-content .label {
-  margin-left: 1rem;
-  background-color: #0d0d0d;
-  font-size: 0.6rem;
-  letter-spacing: 1px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
-  position: absolute;
-  top: 0;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0 0 0.5rem 0.5rem;
-}
-
-.react-component-with-content .content {
-  margin: 2.5rem 1rem 1rem;
-  padding: 0.5rem;
-  border: 2px dashed #0d0d0d20;
-  border-radius: 0.5rem;
+  .drag-block-content {
+  }
 }

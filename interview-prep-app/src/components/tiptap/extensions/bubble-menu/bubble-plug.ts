@@ -88,8 +88,6 @@ export class BubbleMenuView {
    * - @event `focus` on editor: Updates the menu position when the editor gains focus.
    * - @event `blur` on editor: Hides the menu when the editor loses focus.
    *
-   * Methods:
-   *
    */
   constructor({
     editor,

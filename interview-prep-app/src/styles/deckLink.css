@@ -5,18 +5,26 @@
 .decklink-container {
   padding-top: 15px;
   padding-left: 20px;
-  width: 300px;
-  height: 100px;
+  min-width: 350px;
+  min-height: 400px;
   display: flex;
   justify-content: start;
   /* align-items: center; */
-  background-color: #bcb6cc;
+  /* background-color: #bcb6cc; */
   gap: 5px;
   margin: 5px 0px;
-  border-radius: 10px;
+  border: 0.1em solid #d8d8d8;
+  border-radius: 5px;
   -webkit-text-fill-color: #101010;
+  transition: box-shadow 0.2s,
+    border-color 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition-duration: 0.2s, 0.2s;
+  transition-timing-function: ease, cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition-delay: 0s, 0s;
+  transition-property: box-shadow, border-color;
 }
 
 .decklink-container:hover {
-  background-color: green;
+  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+  border-color: white;
 }

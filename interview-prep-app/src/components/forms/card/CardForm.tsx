@@ -18,11 +18,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "../../../styles/cardForm.css";
 import { useState } from "react";
-
+import TextEditor from "@/components/tiptap/TextEditor";
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-
-import PromptAnswer from "./PromptAnswer";
 
 const CardForm = () => {
   const [isEditing, setIsEditing] = useState({
@@ -167,7 +165,9 @@ const CardForm = () => {
         /> */}
       </Form>
 
-      <PromptAnswer />
+      <div className='border-black border-2 h-[200px]'>
+        <TextEditor />
+      </div>
     </div>
   );
 };
