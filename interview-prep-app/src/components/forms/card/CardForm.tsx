@@ -21,6 +21,7 @@ import { useState } from "react";
 import TextEditor from "@/components/tiptap/TextEditor";
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
+import TailwindAdvancedEditor from "@/components/novel/advanced-editor";
 
 const CardForm = () => {
   const [isEditing, setIsEditing] = useState({
@@ -164,10 +165,6 @@ const CardForm = () => {
           )}
         /> */}
       </Form>
-
-      <div className='border-black border-2 h-[200px]'>
-        <TextEditor />
-      </div>
     </div>
   );
 };

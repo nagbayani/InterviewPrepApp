@@ -2,6 +2,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 
+import { Editor } from "novel";
+
 import { useEffect, useState } from "react";
 
 //tiptap imports
@@ -23,7 +25,7 @@ const PromptAnswer = () => {
           <Button>Add Group</Button>
         </li>
       </ul>
-      <TextEditor />
+      {/* <TextEditor /> */}
     </div>
   );
 };
