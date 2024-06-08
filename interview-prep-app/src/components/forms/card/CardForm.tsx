@@ -18,12 +18,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "../../../styles/cardForm.css";
 import { useState } from "react";
-import TextEditor from "@/components/tiptap/TextEditor";
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import TailwindAdvancedEditor from "@/components/novel/advanced-editor";
 
-const CardForm = () => {
+/*
+Decide which props will be passed 
+    ** id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt 
+    ** question  String
+    ** answer    String
+    category  String
+    author    User    @relation(fields: [authorId], references: [id])
+    authorId  String
+    deck      Deck    @relation(fields: [deckId], references: [id])
+    deckId    String
+  */
+
+const CardForm = ({ question }: { question: string }) => {
   const [isEditing, setIsEditing] = useState({
     question: false,
     answer: false,
@@ -31,7 +43,7 @@ const CardForm = () => {
   });
 
   const [details, setDetails] = useState({
-    question: "Your Question",
+    question: question || "Your Question",
     answer: "Your Answer",
     category: "Category",
   });
@@ -95,7 +107,7 @@ const CardForm = () => {
   // Checklist
 
   return (
-    <div className='card-form-container'>
+    <div className='card-form-container w-full mx-4'>
       <Form {...form}>
         <div className='flex flex-row justify-between'>
           <button className='header-button'>
