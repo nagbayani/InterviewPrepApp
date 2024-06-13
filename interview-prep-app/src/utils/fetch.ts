@@ -24,9 +24,9 @@ export const fetchSingleDeck = async (deckId: string, cookieHeader: string) => {
       },
     });
     const data = await res.json();
-    console.log("FETCH Decks Data: ", data);
-    console.log(data.data.deck, "FETCH DECK DATA");
-    console.log(data.data.cards, "FETCH DECK CARDS");
+    // console.log("FETCH Decks Data: ", data);
+    // console.log(data.data.deck, "FETCH DECK DATA");
+    // console.log(data.data.cards, "FETCH DECK CARDS");
 
     return data;
   } catch (error) {

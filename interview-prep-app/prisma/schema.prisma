@@ -71,7 +71,7 @@ model Card {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
   question  String
-  answer    String
+  answer    String 
   category  String
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String

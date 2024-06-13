@@ -4,7 +4,7 @@
 
 .card-form-container {
   height: auto;
-  max-height: 1000px;
+  max-height: 200px;
   max-width: 1000px;
   position: relative;
   display: block;
@@ -12,7 +12,13 @@
   border-radius: 15px;
   border: 2px solid #f2f2f2;
   margin: auto;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+
   /* background: #f9fafb; */
+}
+
+.card-form-container.expanded {
+  min-height: 500px;
 }
 
 .clickable-label {

@@ -18,7 +18,7 @@ export async function GET(
     cards,
   };
 
-  console.log("API ROUTE SINGLE DECK DATA", data);
+  // console.log("API ROUTE SINGLE DECK DATA", data);
 
   return NextResponse.json({
     data,

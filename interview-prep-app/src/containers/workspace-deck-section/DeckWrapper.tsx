@@ -48,10 +48,10 @@ const DeckWrapper = ({ deck, cards }: DeckWrapperProps) => {
 
   const [deckData, setDeck] = useState(deck);
   const [cardsData, setCards] = useState(cards);
-  const [testCards, setTestCards] = useState<CardData[]>([cards]);
+  // const [testCards, setTestCards] = useState(cards);
 
   const addCard = () => {
-    setTestCards([...testCards, { id: cuid(), question: "" }]);
+    // setTestCards([...testCards, { id: cuid(), question: "" }]);
   };
 
   useEffect(() => {
@@ -66,7 +66,18 @@ const DeckWrapper = ({ deck, cards }: DeckWrapperProps) => {
         <h1>{deck?.title}</h1>
       </div>
       {cards.map((card) => {
-        return <CardForm key={card.id} question={card.question} />;
+        const data = {
+          id: card.id,
+          createdAt: card.createdAt,
+          updatedAt: card.updatedAt,
+          question: card.question,
+          answer: card.answer,
+          category: card.category,
+          authorId: card.authorId,
+          deckId: card.deckId,
+        };
+
+        return <CardForm key={card.id} data={data} />;
       })}
       <button className='add-card-btn w-full' onClick={addCard}>
         Add Card

@@ -37,9 +37,8 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   );
 
   const { deck, cards } = data.data;
-  console.log(deck, "DECK IN DECKID SERVER COMPONENT");
-  console.log(cards, "CARDS IN DECKID SERVER COMPONENT");
-
+  // console.log(deck, "DECK IN DECKID SERVER COMPONENT");
+  // console.log(cards, "CARDS IN DECKID SERVER COMPONENT");
   // console.log(params.deckId, "PARAMS IN DECKID SERVER COMPONENT");
 
   return (
