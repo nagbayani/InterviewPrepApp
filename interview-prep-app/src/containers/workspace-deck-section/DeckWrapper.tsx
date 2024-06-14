@@ -5,41 +5,12 @@ import "../../styles/deckWrapper.css";
 import { useState, useEffect } from "react";
 import CardForm from "@/components/forms/card/CardForm";
 import cuid from "cuid";
-
-interface DeckData {
-  deck: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    title: string;
-    authorId: string;
-  };
-  cards: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    question: string;
-    answer: string;
-    category: string;
-    authorId: string;
-    deckId: string;
-  }[];
-}
+import { DeckData } from "@/types/CardData";
+import CardDisplay from "@/app/(dashboard)/decks/[deckId]/c/[cardId]/CardDisplay";
 
 interface DeckWrapperProps {
   deck: DeckData["deck"];
   cards: DeckData["cards"];
-}
-
-interface CardData {
-  id: string;
-  createdAt: string;
-  updatedAt: string;
-  question: string;
-  answer: string;
-  category: string;
-  authorId: string;
-  deckId: string;
 }
 
 const DeckWrapper = ({ deck, cards }: DeckWrapperProps) => {
@@ -76,8 +47,8 @@ const DeckWrapper = ({ deck, cards }: DeckWrapperProps) => {
           authorId: card.authorId,
           deckId: card.deckId,
         };
-
-        return <CardForm key={card.id} data={data} />;
+        return <CardDisplay key={card.id} cardData={data} />;
+        // return <CardForm key={card.id} data={data} />;
       })}
       <button className='add-card-btn w-full' onClick={addCard}>
         Add Card

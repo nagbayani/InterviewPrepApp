@@ -8,7 +8,6 @@ import { cookies } from "next/headers";
 
 interface LayoutProps {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }
 
 const authCheck = async () => {
@@ -31,7 +30,7 @@ const authCheck = async () => {
   return null;
 };
 
-export default async function Layout({ children, modal }: LayoutProps) {
+export default async function Layout({ children }: LayoutProps) {
   const data = await authCheck();
   const decks = data?.decksData.decks;
   const user = data?.session?.user;
@@ -41,11 +40,7 @@ export default async function Layout({ children, modal }: LayoutProps) {
       <div className='sidebar-menu'>
         <Sidebar decks={decks} user={user} />
       </div>
-
-      <main className='dashboard-content'>
-        {modal}
-        {children}
-      </main>
+      <main className='dashboard-content'>{children}</main>
     </div>
   );
 }

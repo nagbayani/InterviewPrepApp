@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const handleOpenChange = () => {
+    console.log("handle change modal");
     router.back();
   };
 
