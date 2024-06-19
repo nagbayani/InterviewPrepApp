@@ -1,3 +1,4 @@
+"use client";
 // import a type of data for props
 import { CardData } from "@/types/CardData";
 import Link from "next/link";
@@ -11,6 +12,9 @@ import {
   CardFormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { CardInput } from "@/components/ui/cardinput";
+import EditorWrapper from "@/components/novel/Editor-wrapper";
+
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +42,12 @@ export default function CardDisplay({ data }: Props) {
 
   const [lastNonEmptyQuestion, setLastNonEmptyQuestion] =
     useState("Your Question");
+
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpansion = () => {
+    setIsExpanded((prev) => !prev);
+  };
 
   // Form hook
   const form = useForm<z.infer<typeof CardSchema>>({
@@ -72,6 +82,22 @@ export default function CardDisplay({ data }: Props) {
 
     // Set isEditing to false
     setIsEditing((prev) => ({ ...prev, [field]: false }));
+  };
+
+  /**
+   * Keydown event handler triggers handleInputBlur on Enter
+   * @param e Keyboard event
+   * @param field Field to update
+   */
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: string
+  ) => {
+    // If Enter is pressed, blur input
+    if (e.key === "Enter" || e.key === "Return") {
+      e.preventDefault();
+      handleInputBlur(field);
+    }
   };
 
   /**
@@ -131,53 +157,65 @@ export default function CardDisplay({ data }: Props) {
   };
 
   return (
-    <div className='flex flex-col gap-4 w-64 mx-auto'>
-      <Form {...form}>
-        <div className='flex flex-row justify-between'>
-          <button className='header-button'>
-            <HiViewGrid size={32} color={"#cccccd"} />
-          </button>
-          <FormField
-            control={form.control}
-            name='question'
-            render={({ field }) => (
-              <FormItem>
-                {isEditing.question ? (
-                  <>
-                    <FormControl>
-                      <CardInput
-                        id='question'
-                        placeholder='Write a Question'
-                        {...field}
-                        onBlur={() => {
-                          handleInputBlur("question");
-                        }}
-                        onChange={handleChange}
-                        value={details.question}
-                        onKeyDown={(e) => handleKeyDown(e, "question")}
-                      />
-                    </FormControl>
-                  </>
-                ) : (
-                  <>
-                    <CardFormLabel onClick={() => handleLabelClick("question")}>
-                      {field.value || details.question}
-                    </CardFormLabel>
-                  </>
-                )}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <button className='add-button' onClick={toggleExpansion}>
-            <HiOutlinePlusSmall size={32} />
-          </button>
-        </div>
-      </Form>
+    <div className='flex flex-col gap-4 mx-auto'>
       <Link href={`/decks/${data.deckId}/c/${data.id}`}>
         {/* Display here */}
-        <div className='border-2 rounded-xl overflow-hidden w-64 h-64 relative'>
+        {/* <div className='border-2 rounded-xl overflow-hidden w-64 h-64 relative'>
           <h1>{data.question}</h1>
+        </div> */}
+
+        <div
+          className={`card-form-container w-full mx-4 ${
+            isExpanded ? "expanded" : ""
+          }`}
+        >
+          {" "}
+          <Form {...form}>
+            <div className='flex flex-row justify-between'>
+              <button className='header-button'>
+                <HiViewGrid size={32} color={"#cccccd"} />
+              </button>
+              <FormField
+                control={form.control}
+                name='question'
+                render={({ field }) => (
+                  <FormItem>
+                    {isEditing.question ? (
+                      <>
+                        <FormControl>
+                          <CardInput
+                            id='question'
+                            placeholder='Write a Question'
+                            {...field}
+                            onBlur={() => {
+                              handleInputBlur("question");
+                            }}
+                            onChange={handleChange}
+                            value={details.question}
+                            onKeyDown={(e) => handleKeyDown(e, "question")}
+                          />
+                        </FormControl>
+                      </>
+                    ) : (
+                      <>
+                        <CardFormLabel
+                          onClick={() => handleLabelClick("question")}
+                        >
+                          {field.value || details.question}
+                        </CardFormLabel>
+                      </>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <button className='add-button' onClick={toggleExpansion}>
+                {" "}
+                <HiOutlinePlusSmall size={32} />
+              </button>
+            </div>
+          </Form>
+          {isExpanded && <EditorWrapper data={data} />}
         </div>
       </Link>
     </div>

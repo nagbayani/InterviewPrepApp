@@ -2,6 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import DecksTab from "@/containers/dashboard/DecksTab";
 import { auth } from "../../../../auth";
+import "@/styles/dashboard.css";
 import { Session } from "next-auth";
 import { cookies } from "next/headers";
 import DeckLink from "@/components/deck-link/DeckLink";
@@ -44,9 +45,7 @@ const Decks = async () => {
 
     return (
       <div className='dashboard-wrapper'>
-        <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
-          Decks
-        </h1>
+        <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
         <ul className='h-[100vh] flex flex-row gap-4'>
           {data.decks.map((deck: any) => {
             return (

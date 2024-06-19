@@ -3,19 +3,23 @@
 @tailwind utilities;
 
 .decklink-container {
-  padding-top: 15px;
-  padding-left: 20px;
-  min-width: 350px;
-  min-height: 300px;
+  padding-top: 25px;
+  padding-left: 25px;
+  padding: 12px 12px 16px;
+  width: 200px;
+  min-height: 100px;
   display: flex;
   justify-content: start;
+  text-align: start;
   /* align-items: center; */
-  /* background-color: #bcb6cc; */
   gap: 5px;
   margin: 5px 0px;
-  border: 0.1em solid #d8d8d8;
+  border: 0.1em solid rgb(16, 16, 16, 0.5);
   border-radius: 5px;
   -webkit-text-fill-color: #101010;
+  font-weight: 300;
+  font-size: var(--step--4);
+
   transition: box-shadow 0.2s,
     border-color 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition-duration: 0.2s, 0.2s;
@@ -24,7 +28,14 @@
   transition-property: box-shadow, border-color;
 }
 
+.decklink-container .span {
+  margin: auto;
+  padding: 0px;
+}
+
 .decklink-container:hover {
   box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
-  border-color: white;
+  border: 0.1em solid black;
+  /* background-color: #bcb6cc; */
+  background-color: #e6e9dd opacity 0.5;
 }

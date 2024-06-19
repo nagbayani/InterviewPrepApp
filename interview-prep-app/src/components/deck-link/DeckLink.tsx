@@ -20,7 +20,7 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
         pathname === path && "decklink-container "
       }`}
     >
-      <strong>{title}</strong>
+      <span>{title}</span>
     </Link>
   );
 };
