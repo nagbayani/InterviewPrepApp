@@ -2,8 +2,8 @@ import CardDisplay from "./CardDisplay";
 import { CardData } from "@/types/CardData";
 import { currentUser } from "@/lib/auth";
 import { fetchSingleCard } from "@/utils/fetch";
-import { Modal } from "@/containers/modal/Modal";
-import { ModalProvider } from "@/containers/modal/ModalContext";
+// import { Modal } from "@/containers/modal/Modal";
+// import { ModalProvider } from "@/containers/modal/ModalContext";
 
 type Props = {
   params: {
@@ -25,11 +25,7 @@ export default async function Card({ params: { cardId } }: Props) {
   }
   return (
     <div className='mt-2 grid place-content-center'>
-      <ModalProvider>
-        <Modal key={cardData.id} data={cardData}>
-          <CardDisplay data={cardData} />
-        </Modal>
-      </ModalProvider>
+      <CardDisplay data={cardData} />
     </div>
   );
 }

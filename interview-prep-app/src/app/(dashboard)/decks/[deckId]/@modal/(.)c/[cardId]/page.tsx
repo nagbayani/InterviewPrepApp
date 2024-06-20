@@ -1,9 +1,11 @@
 import { Modal } from "@/containers/modal/Modal";
 import { ModalProvider } from "@/containers/modal/ModalContext";
+import CardModalContent from "./CardModalContent";
 import CardDisplay from "../../../c/[cardId]/CardDisplay";
 import { fetchSingleCard } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
 import type { CardData } from "@/types/CardData";
+
 type Props = {
   params: {
     cardId: string;
@@ -24,13 +26,9 @@ const Card = async ({ params: { cardId } }: Props) => {
 
   return (
     <>
-      <ModalProvider>
-        <Modal key={cardData.id} data={cardData}>
-          <CardDisplay data={cardData} />
-        </Modal>
-      </ModalProvider>
-
-      {/* // <ModalWrapper data={cardData} /> */}
+      <Modal data={cardData}>
+        <CardModalContent cardData={cardData} />
+      </Modal>
     </>
   );
 };

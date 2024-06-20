@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { fetchSingleDeck } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
-import CardDisplay from "./c/[cardId]/CardDisplay";
-import type { CardData } from "@/types/CardData";
-import { Modal } from "@/containers/modal/Modal";
-import { ModalProvider } from "@/containers/modal/ModalContext";
-import { DeckData } from "@/types/CardData";
+// import CardDisplay from "./c/[cardId]/CardDisplay";
+// import { Modal } from "@/containers/modal/Modal";
+// import { ModalProvider } from "@/containers/modal/ModalContext";
+import { DeckData, CardData } from "@/types/CardData";
+import { useModal } from "@/containers/modal/ModalContext";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { DeckCard } from "./DeckCard";
 
 interface DeckDataResponse {
   data: DeckData;
@@ -27,13 +30,12 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
 
   return (
     <div className='dashboard-wrapper'>
-      <ModalProvider>
-        {cards.map((card) => (
-          <Modal key={card.id} data={card}>
-            <CardDisplay data={card} />
-          </Modal>
-        ))}
-      </ModalProvider>
+      {cards.map((card) => (
+        // <Modal key={card.id} data={card}>
+        //   <CardDisplay data={card} />
+        // </Modal>
+        <DeckCard key={card.id} card={card} deckId={deck.id} />
+      ))}
     </div>
   );
 };

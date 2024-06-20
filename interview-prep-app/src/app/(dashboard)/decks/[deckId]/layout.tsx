@@ -1,4 +1,5 @@
 import React from "react";
+import { ModalProvider } from "@/containers/modal/ModalContext";
 
 const DeckLayout = ({
   children,
@@ -9,8 +10,10 @@ const DeckLayout = ({
 }>) => {
   return (
     <section>
-      {children}
-      {modal}
+      <ModalProvider>
+        {children}
+        {modal}
+      </ModalProvider>
     </section>
   );
 };

@@ -23,17 +23,27 @@ export function Modal({
   children: React.ReactNode;
   data: CardData;
 }) {
-  // const { open, closeModal, cardId, deckId } = useModal();
+  const { open, closeModal, openModal } = useModal();
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const handleOpenChange = (open: boolean) => {
-    setOpen(open);
-    if (open) {
+  // const handleOpenChange = (open: boolean) => {
+  //   setOpen(open);
+  //   if (open) {
+  //     router.push(`/decks/${data.deckId}/c/${data.id}`);
+  //   } else if (!open) {
+  //     // router.push(`/decks/${data.deckId}`);
+  //     router.back();
+  //   }
+  // };
+
+  const handleOpenChange = (isOpen: boolean) => {
+    if (isOpen) {
+      openModal(data.id, data.deckId);
       router.push(`/decks/${data.deckId}/c/${data.id}`);
-    } else if (!open) {
-      // router.push(`/decks/${data.deckId}`);
+    } else if (!isOpen) {
+      closeModal();
       router.back();
     }
   };
@@ -52,9 +62,9 @@ export function Modal({
         onOpenChange={handleOpenChange}
       > */}
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogTrigger asChild>
+        {/* <DialogTrigger asChild>
           <Button variant='outline'>{data.question}</Button>
-        </DialogTrigger>
+        </DialogTrigger> */}
         <DialogOverlay>
           <DialogContent className='lg:max-w-screen-lg overflow-y-scroll max-h-screen'>
             {children}
