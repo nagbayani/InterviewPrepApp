@@ -107,7 +107,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
       </div>
       <EditorRoot>
         <EditorContent
-          className='border p-8 rounded-xl'
+          className='border p-8 rounded-xl overflow-y-auto h-[500px] min-h-full bg-background shadow-xl'
           {...(initialValue && { initialContent: initialValue })}
           extensions={extensions}
           editorProps={{

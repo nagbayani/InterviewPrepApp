@@ -11,7 +11,7 @@ const labelVariants = cva(
 );
 
 const cardLabelVariants = cva(
-  "text-sm w-[300px] h-full font-medium leading-none "
+  "text-sm w-full h-full font-medium leading-none "
 );
 
 const Label = React.forwardRef<

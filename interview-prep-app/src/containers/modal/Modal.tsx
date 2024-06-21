@@ -24,25 +24,15 @@ export function Modal({
   data: CardData;
 }) {
   const { open, closeModal, openModal } = useModal();
-
-  // const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  // const handleOpenChange = (open: boolean) => {
-  //   setOpen(open);
-  //   if (open) {
-  //     router.push(`/decks/${data.deckId}/c/${data.id}`);
-  //   } else if (!open) {
-  //     // router.push(`/decks/${data.deckId}`);
-  //     router.back();
-  //   }
-  // };
-
+  // Possible Security Risk -- if hacker saves malicious code in the answer field to execute in database
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
       openModal(data.id, data.deckId);
       router.push(`/decks/${data.deckId}/c/${data.id}`);
     } else if (!isOpen) {
+      // need to update [deckId] page content dynamically and not just refresh -- state management?
       closeModal();
       router.back();
     }
@@ -55,16 +45,7 @@ export function Modal({
    */
   return (
     <>
-      {/* <Dialog
-        defaultOpen={true}
-        modal
-        open={isOpen}
-        onOpenChange={handleOpenChange}
-      > */}
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        {/* <DialogTrigger asChild>
-          <Button variant='outline'>{data.question}</Button>
-        </DialogTrigger> */}
         <DialogOverlay>
           <DialogContent className='lg:max-w-screen-lg overflow-y-scroll max-h-screen'>
             {children}
@@ -74,3 +55,14 @@ export function Modal({
     </>
   );
 }
+
+/* <Dialog
+        defaultOpen={true}
+        modal
+        open={isOpen}
+        onOpenChange={handleOpenChange}
+      > */
+
+/* <DialogTrigger asChild>
+          <Button variant='outline'>{data.question}</Button>
+        </DialogTrigger> */

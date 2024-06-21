@@ -2,9 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.card-section {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  min-height: 100%;
+  /* align-items: center; */
+  gap: 0.75rem;
+}
+
 .card-form-container {
-  height: auto;
-  max-height: 200px;
+  height: 600px;
+  /* max-height: 100%; */
   max-width: 1000px;
   position: relative;
   display: block;
@@ -13,12 +22,12 @@
   border: 2px solid #f2f2f2;
   margin: auto;
   transition: max-height 0.3s ease, padding 0.3s ease;
-
   /* background: #f9fafb; */
 }
 
-.card-form-container.expanded {
-  min-height: 500px;
+.card-question {
+  display: flex;
+  flex-direction: row;
 }
 
 .clickable-label {

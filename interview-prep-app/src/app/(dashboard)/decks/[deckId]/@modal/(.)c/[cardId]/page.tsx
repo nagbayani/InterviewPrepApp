@@ -1,7 +1,5 @@
 import { Modal } from "@/containers/modal/Modal";
-import { ModalProvider } from "@/containers/modal/ModalContext";
 import CardModalContent from "./CardModalContent";
-import CardDisplay from "../../../c/[cardId]/CardDisplay";
 import { fetchSingleCard } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
 import type { CardData } from "@/types/CardData";

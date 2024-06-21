@@ -20,7 +20,6 @@ interface Data {
 export default function EditorWrapper({ data }: { data: Data }) {
   // console.log("DATA ANSWER", data.answer);
   // convert data.answer to JSONContent
-  // convert data.answer to JSONContent
   let initialContent: JSONContent;
   try {
     initialContent = JSON.parse(data.answer);
@@ -60,13 +59,16 @@ export default function EditorWrapper({ data }: { data: Data }) {
     // const content = window.localStorage.getItem("novel-content");
     // console.log("CONTENT", content); // this works
     // if (content) setInitialContent(JSON.parse(content));
+    if (value) console.log("VALUE", value);
     // else setInitialContent(defaultValue);
     // console.log("WRAPPER VALUE", value);
     // console.log("WRAPPER VALUE STRINGIFY", JSON.stringify(value));
   }, [value, data]);
 
   return (
-    <div className='flex flex-col p-6 border  w-full gap-6 rounded-md bg-card'>
+    // <div className=' w-full h-full p-6 border gap-6 rounded-md bg-card'>
+    // {/* </div> */}
+    <>
       <Editor initialValue={value} onChange={setValue} />
       <button
         onClick={handleSave}
@@ -74,6 +76,6 @@ export default function EditorWrapper({ data }: { data: Data }) {
       >
         Save Card
       </button>
-    </div>
+    </>
   );
 }

@@ -43,11 +43,11 @@ export default function CardDisplay({ data }: Props) {
   const [lastNonEmptyQuestion, setLastNonEmptyQuestion] =
     useState("Your Question");
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  // const [isExpanded, setIsExpanded] = useState(false);
 
-  const toggleExpansion = () => {
-    setIsExpanded((prev) => !prev);
-  };
+  // const toggleExpansion = () => {
+  //   setIsExpanded((prev) => !prev);
+  // };
 
   // Form hook
   const form = useForm<z.infer<typeof CardSchema>>({
@@ -78,7 +78,7 @@ export default function CardDisplay({ data }: Props) {
       setDetails((prev) => ({ ...prev, question: lastNonEmptyQuestion }));
     }
 
-    handleSave(field);
+    handleSaveQuestion(field);
 
     // Set isEditing to false
     setIsEditing((prev) => ({ ...prev, [field]: false }));
@@ -119,7 +119,7 @@ export default function CardDisplay({ data }: Props) {
    * Save function to save the field to the database
    * @param field Field to save
    */
-  const handleSave = async (field: string) => {
+  const handleSaveQuestion = async (field: string) => {
     switch (field) {
       case "question":
         try {
@@ -157,32 +157,22 @@ export default function CardDisplay({ data }: Props) {
   };
 
   return (
-    <div className='flex flex-col gap-4 mx-auto'>
+    // Card Form Holding entire card
+    // <section className='flex flex-col gap-4'>
+    <section className='card-section h-[100%] w-full'>
       <Link href={`/decks/${data.deckId}/c/${data.id}`}>
-        {/* Display here */}
-        {/* <div className='border-2 rounded-xl overflow-hidden w-64 h-64 relative'>
-          <h1>{data.question}</h1>
-        </div> */}
-
-        <div
-          className={`card-form-container w-full mx-4 ${
-            isExpanded ? "expanded" : ""
-          }`}
-        >
-          {" "}
+        <div className={`card-form-container w-full h-fullmx-4`}>
           <Form {...form}>
-            <div className='flex flex-row justify-between'>
-              <button className='header-button'>
-                <HiViewGrid size={32} color={"#cccccd"} />
-              </button>
+            {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
+            <div className='card-question w-full'>
               <FormField
                 control={form.control}
                 name='question'
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className='w-full'>
                     {isEditing.question ? (
                       <>
-                        <FormControl>
+                        <FormControl className='w-full'>
                           <CardInput
                             id='question'
                             placeholder='Write a Question'
@@ -209,15 +199,13 @@ export default function CardDisplay({ data }: Props) {
                   </FormItem>
                 )}
               />
-              <button className='add-button' onClick={toggleExpansion}>
-                {" "}
-                <HiOutlinePlusSmall size={32} />
-              </button>
             </div>
+
+            {/* Novel Rich Text Editor - User writes answer. */}
+            <EditorWrapper data={data} />
           </Form>
-          {isExpanded && <EditorWrapper data={data} />}
         </div>
       </Link>
-    </div>
+    </section>
   );
 }

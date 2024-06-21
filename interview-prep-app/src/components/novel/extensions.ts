@@ -15,11 +15,12 @@ import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
 import { UploadImagesPlugin } from "novel/plugins";
 
 import { cx } from "class-variance-authority";
-import { HTMLAttributeAnchorTarget } from "react";
-import { Html } from "next/document";
+// import { HTMLAttributeAnchorTarget } from "react";
+// import { Html } from "next/document";
 
 const aiHighlight = AIHighlight;
 const placeholder = Placeholder;
+
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
     class: cx(
@@ -68,18 +69,6 @@ const horizontalRule = HorizontalRule.configure({
 });
 
 const starterKit = StarterKit.configure({
-  // heading: {
-  //   levels: [1, 2, 3],
-  //   HTMLAttributes: (attrs: any) => {
-  //     return {
-  //       class: cx("font-title", {
-  //         "text-4xl": attrs.level === 1,
-  //         "text-3xl": attrs.level === 2,
-  //         "text-2xl": attrs.level === 3,
-  //       }),
-  //     };
-  //   },
-  // },
   bulletList: {
     HTMLAttributes: {
       class: cx("list-disc list-outside leading-3 -mt-2"),
@@ -129,7 +118,8 @@ const globalDragHandle = GlobalDragHandle.configure({
   // scrolling to take place. For example, scrollTreshold = 100 means that scrolling starts automatically when the user drags an
   // element to a position that is max. 99px away from the edge of the screen
   // You can set this to 0 to prevent auto scrolling caused by this extension
-  scrollTreshold: 100, // default
+  // scrollTreshold: 100, // default
+  scrollTreshold: 100,
   HtmlAttributes: {
     class: cx("drag-handle"),
   },
