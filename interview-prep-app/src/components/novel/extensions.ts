@@ -11,6 +11,7 @@ import {
   GlobalDragHandle,
 } from "novel/extensions";
 import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
+import { InputRule } from "@tiptap/core";
 
 import { UploadImagesPlugin } from "novel/plugins";
 
@@ -19,7 +20,17 @@ import { cx } from "class-variance-authority";
 // import { Html } from "next/document";
 
 const aiHighlight = AIHighlight;
-const placeholder = Placeholder;
+// const placeholder = Placeholder;
+
+const placeholder = Placeholder.configure({
+  placeholder: ({ node }) => {
+    if (node.type.name === "heading") {
+      return `Heading ${node.attrs.level}`;
+    }
+    return "Press '/' for commands, or '++' for AI autocomplete...";
+  },
+  includeChildren: true,
+});
 
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
@@ -62,9 +73,34 @@ const taskItem = TaskItem.configure({
   nested: true,
 });
 
-const horizontalRule = HorizontalRule.configure({
+// const horizontalRule = HorizontalRule.configure({
+//   HTMLAttributes: {
+//     class: cx("mt-4 mb-6 border-t border-muted-foreground"),
+//   },
+// });
+const horizontalRule = HorizontalRule.extend({
+  addInputRules() {
+    return [
+      new InputRule({
+        find: /^(?:---|—-|___\s|\*\*\*\s)$/,
+        handler: ({ state, range, match }) => {
+          const attributes = {};
+
+          const { tr } = state;
+          const start = range.from;
+          let end = range.to;
+
+          tr.insert(start - 1, this.type.create(attributes)).delete(
+            tr.mapping.map(start),
+            tr.mapping.map(end)
+          );
+        },
+      }),
+    ];
+  },
+}).configure({
   HTMLAttributes: {
-    class: cx("mt-4 mb-6 border-t border-muted-foreground"),
+    class: "mt-4 mb-6 border-t border-stone-300",
   },
 });
 
@@ -103,12 +139,12 @@ const starterKit = StarterKit.configure({
       spellcheck: "false",
     },
   },
-  // horizontalRule: true,
+  horizontalRule: false,
   // dropcursor: {
   //   color: "#DBEAFE",
   //   width: 4,
   // },
-  // gapcursor: false,
+  gapcursor: false,
 });
 
 const globalDragHandle = GlobalDragHandle.configure({

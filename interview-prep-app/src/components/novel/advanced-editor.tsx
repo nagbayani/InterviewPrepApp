@@ -21,13 +21,13 @@ import { TextButtons } from "./selectors/text-buttons";
 import { useDebouncedCallback } from "use-debounce";
 import GenerativeMenuSwitch from "./generative/generative-menu-switch";
 
-import { slashCommand, suggestionItems } from "./slash-command";
+import { slashCommand, suggestionItems } from "./old-command";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./image-upload";
 import { Separator } from "../ui/separator";
 import { defaultValue } from "@/lib/content";
 import "../../styles/prosemirror.css";
-import { TiptapEditorProps } from "./props";
+import { TiptapEditorProps } from "./new/props";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -61,27 +61,6 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     return new XMLSerializer().serializeToString(doc);
   };
 
-  // const debouncedUpdates = useDebouncedCallback(
-  //   async (editor: EditorInstance) => {
-  //     const json = editor.getJSON();
-  //     // console.log(editor.storage, "editor.storage");
-  //     // error here
-  //     // setCharsCount(editor.storage.characterCount.words());
-  //     window.localStorage.setItem(
-  //       "html-content",
-  //       highlightCodeblocks(editor.getHTML())
-  //     );
-  //     // console.log("HTML-CONTENT", window.localStorage.getItem("html-content"));
-  //     window.localStorage.setItem("novel-content", JSON.stringify(json));
-  //     window.localStorage.setItem(
-  //       "markdown",
-  //       editor.storage.markdown.getMarkdown()
-  //     );
-  //     setSaveStatus("Saved");
-  //   },
-  //   500
-  // );
-
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     setSaveStatus("Saving...");
     // Simulate a delay in saving.
@@ -105,7 +84,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
         <div className='rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground'>
           {saveStatus}
         </div>
-        <div
+        {/* <div
           className={
             charsCount
               ? "rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground"
@@ -113,7 +92,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
           }
         >
           {charsCount} Words
-        </div>
+        </div> */}
       </div>
       <EditorRoot>
         <EditorContent
@@ -122,9 +101,16 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
           extensions={extensions}
           editorProps={TiptapEditorProps}
           onUpdate={({ editor }) => {
-            debouncedUpdates(editor);
-            onChange(editor.getJSON());
             setSaveStatus("Unsaved");
+            // onChange(editor.getJSON());
+            /** FOR ++ or / commands */
+            // const selection = editor.state.selection;
+            // const lastTwo = editor.state.doc.textBetween(
+            //   selection.from - 2,
+            //   selection.from,
+            //   "\n"
+            // );
+            debouncedUpdates(editor);
           }}
           // onUpdate={({ editor }) => {
           //   debouncedUpdates(editor);
@@ -242,3 +228,24 @@ export default Editor;
             },
           }
                */
+
+// const debouncedUpdates = useDebouncedCallback(
+//   async (editor: EditorInstance) => {
+//     const json = editor.getJSON();
+//     // console.log(editor.storage, "editor.storage");
+//     // error here
+//     // setCharsCount(editor.storage.characterCount.words());
+//     window.localStorage.setItem(
+//       "html-content",
+//       highlightCodeblocks(editor.getHTML())
+//     );
+//     // console.log("HTML-CONTENT", window.localStorage.getItem("html-content"));
+//     window.localStorage.setItem("novel-content", JSON.stringify(json));
+//     window.localStorage.setItem(
+//       "markdown",
+//       editor.storage.markdown.getMarkdown()
+//     );
+//     setSaveStatus("Saved");
+//   },
+//   500
+// );
