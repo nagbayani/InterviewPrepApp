@@ -96,6 +96,11 @@ interface ColorSelectorProps {
   onOpenChange: (open: boolean) => void;
 }
 
+/**
+ *
+ * @param param0
+ * @returns Button to select text color
+ */
 export const ColorSelector = ({ open, onOpenChange }: ColorSelectorProps) => {
   const { editor } = useEditor();
 

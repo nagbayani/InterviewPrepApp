@@ -16,6 +16,7 @@ import { EditorBubbleItem, useEditor } from "novel";
 import { Button } from "@/components/ui/button";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Popover } from "@radix-ui/react-popover";
+import { useEffect } from "react";
 
 export type SelectorItem = {
   name: string;
@@ -28,7 +29,10 @@ const items: SelectorItem[] = [
   {
     name: "Text",
     icon: TextIcon,
-    command: (editor) => editor?.chain().focus().clearNodes().run(),
+    command: (editor) => {
+      console.log("SELECTED TEXT TO CHAIN");
+      editor?.chain().focus().clearNodes().run();
+    },
     // I feel like there has to be a more efficient way to do this – feel free to PR if you know how!
     isActive: (editor) =>
       editor!.isActive("paragraph") &&
@@ -97,12 +101,22 @@ interface NodeSelectorProps {
   onOpenChange: (open: boolean) => void;
 }
 
+/**
+ *
+ *
+ * @returns Dropdown list of node selectors
+ */
 export const NodeSelector = ({ open, onOpenChange }: NodeSelectorProps) => {
   const { editor } = useEditor();
   if (!editor) return null;
   const activeItem = items.filter((item) => item.isActive(editor)).pop() ?? {
     name: "Multiple",
   };
+  // if (open) {
+  //   console.log("OPEN");
+  // } else {
+  //   console.log("CLOSE");
+  // }
 
   return (
     <Popover modal={true} open={open} onOpenChange={onOpenChange}>

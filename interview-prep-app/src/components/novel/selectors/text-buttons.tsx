@@ -10,6 +10,10 @@ import {
 import { EditorBubbleItem, useEditor } from "novel";
 import type { SelectorItem } from "./node-selector";
 
+/**
+ *
+ * @returns Buttons for bold, italic, underline, strikethrough, and code
+ */
 export const TextButtons = () => {
   const { editor } = useEditor();
   if (!editor) return null;

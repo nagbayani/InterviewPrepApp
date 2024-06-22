@@ -110,7 +110,9 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
           </li>
         ))}
       </ul>
-      <UserAccountNav user={user} />
+      <div className='sidebar-auth-btn '>
+        <UserAccountNav user={user} />
+      </div>
     </div>
   );
 };

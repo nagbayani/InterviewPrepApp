@@ -103,12 +103,12 @@ const starterKit = StarterKit.configure({
       spellcheck: "false",
     },
   },
-  horizontalRule: false,
-  dropcursor: {
-    color: "#DBEAFE",
-    width: 4,
-  },
-  gapcursor: false,
+  // horizontalRule: true,
+  // dropcursor: {
+  //   color: "#DBEAFE",
+  //   width: 4,
+  // },
+  // gapcursor: false,
 });
 
 const globalDragHandle = GlobalDragHandle.configure({

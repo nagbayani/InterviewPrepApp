@@ -27,6 +27,7 @@ import { uploadFn } from "./image-upload";
 import { Separator } from "../ui/separator";
 import { defaultValue } from "@/lib/content";
 import "../../styles/prosemirror.css";
+import { TiptapEditorProps } from "./props";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -60,29 +61,38 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     return new XMLSerializer().serializeToString(doc);
   };
 
-  const debouncedUpdates = useDebouncedCallback(
-    async (editor: EditorInstance) => {
-      const json = editor.getJSON();
-      console.log(editor.storage, "editor.storage");
-      // error here
-      // setCharsCount(editor.storage.characterCount.words());
-      window.localStorage.setItem(
-        "html-content",
-        highlightCodeblocks(editor.getHTML())
-      );
-      window.localStorage.setItem("novel-content", JSON.stringify(json));
-      window.localStorage.setItem(
-        "markdown",
-        editor.storage.markdown.getMarkdown()
-      );
+  // const debouncedUpdates = useDebouncedCallback(
+  //   async (editor: EditorInstance) => {
+  //     const json = editor.getJSON();
+  //     // console.log(editor.storage, "editor.storage");
+  //     // error here
+  //     // setCharsCount(editor.storage.characterCount.words());
+  //     window.localStorage.setItem(
+  //       "html-content",
+  //       highlightCodeblocks(editor.getHTML())
+  //     );
+  //     // console.log("HTML-CONTENT", window.localStorage.getItem("html-content"));
+  //     window.localStorage.setItem("novel-content", JSON.stringify(json));
+  //     window.localStorage.setItem(
+  //       "markdown",
+  //       editor.storage.markdown.getMarkdown()
+  //     );
+  //     setSaveStatus("Saved");
+  //   },
+  //   500
+  // );
+
+  const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
+    setSaveStatus("Saving...");
+    // Simulate a delay in saving.
+    setTimeout(() => {
       setSaveStatus("Saved");
-    },
-    500
-  );
+    }, 500);
+  }, 750);
 
   useEffect(() => {
     const content = window.localStorage.getItem("novel-content");
-    console.log("CONTENT", content); // this works
+    // console.log("CONTENT", content); // this works
     if (content) setInitialContent(JSON.parse(content));
     else setInitialContent(defaultValue);
   }, []);
@@ -110,18 +120,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
           className='border p-8 rounded-xl overflow-y-auto h-[500px] min-h-full bg-background shadow-xl'
           {...(initialValue && { initialContent: initialValue })}
           extensions={extensions}
-          editorProps={{
-            handleDOMEvents: {
-              keydown: (_view, event) => handleCommandNavigation(event),
-            },
-            handlePaste: (view, event) =>
-              handleImagePaste(view, event, uploadFn),
-            handleDrop: (view, event, _slice, moved) =>
-              handleImageDrop(view, event, moved, uploadFn),
-            attributes: {
-              class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
-            },
-          }}
+          editorProps={TiptapEditorProps}
           onUpdate={({ editor }) => {
             debouncedUpdates(editor);
             onChange(editor.getJSON());
@@ -169,7 +168,6 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
             <Separator orientation='vertical' />
             <NodeSelector open={openNode} onOpenChange={setOpenNode} />
             <Separator orientation='vertical' />
-
             <LinkSelector open={openLink} onOpenChange={setOpenLink} />
             <Separator orientation='vertical' />
             <TextButtons />
@@ -184,3 +182,63 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
 };
 
 export default Editor;
+
+/**
+ *  mousedown: (_view, event) => {
+                console.log("event", event);
+                // event.preventDefault();
+
+                console.log("Highlight start", event.pageX, event.pageY, {
+                  type: event.type,
+                  typeValue: event.type.valueOf(),
+                  srcElement: event.srcElement,
+                  toElement: event.toElement,
+                  defaultPrevented: event.defaultPrevented,
+                });
+
+                if (event.button == 1) {
+                  // Only act on left mouse button
+                  event.preventDefault();
+                  return true;
+                }
+                return false;
+              },
+              mousemove: (_view, event) => {
+                if (event.buttons === 1) {
+                  console.log(
+                    "Highlight in progress",
+                    event.pageX,
+                    event.pageY,
+                    {
+                      type: event.type,
+                      typeValue: event.type.valueOf(),
+                      srcElement: event.srcElement,
+                      toElement: event.toElement,
+                      defaultPrevented: event.defaultPrevented,
+                    }
+                  );
+                  if (event.button == 1) {
+                    // Only act on left mouse button
+                    event.preventDefault();
+                    return true;
+                  }
+                  return false;
+                }
+              },
+ */
+
+/**
+               * {
+            handleDOMEvents: {
+              keydown: (_view, event) => handleCommandNavigation(event),
+            },
+            handlePaste: (view, event) =>
+              handleImagePaste(view, event, uploadFn),
+
+            handleDrop: (view, event, _slice, moved) =>
+              handleImageDrop(view, event, moved, uploadFn),
+            attributes: {
+              class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
+            },
+          }
+               */
