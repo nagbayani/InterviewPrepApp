@@ -21,6 +21,20 @@
   -webkit-text-fill-color: #f1f1f1;
 }
 
+.sidebar-auth-btn {
+  display: flex;
+  position: sticky;
+  /* justify-content: center; */
+  /* justify-items: center; */
+  /* align-items: center; */
+  position: bottom;
+  margin-top: 95%;
+  /* padding-left: 10px; */
+  /* padding-left: 45%; */
+  /* padding: 10px; */
+  /* bottom: 25%; */
+}
+
 .cat {
   color: #cabeff;
   font-weight: bold;

@@ -1,52 +1,46 @@
 import React from "react";
 import { fetchSingleDeck } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
+import { DeckData, CardData } from "@/types/CardData";
+import { DeckCard } from "./DeckCard";
 
-import DeckWrapper from "@/containers/workspace-deck-section/DeckWrapper";
-
-interface DeckData {
-  deck: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    title: string;
-    authorId: string;
-  };
-  cards: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    question: string;
-    answer: string;
-    category: string;
-    authorId: string;
-    deckId: string;
-  }[];
-}
-
-interface DeckWrapperProps {
+interface DeckDataResponse {
   data: DeckData;
 }
 // Get Data with all Cards Data for this specific Deck
 const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   const userSession = await currentUser();
 
-  const data: DeckWrapperProps = await fetchSingleDeck(
+  const response: DeckDataResponse = await fetchSingleDeck(
     params.deckId,
     userSession.cookieHeader
   );
 
-  const { deck, cards } = data.data;
-  console.log(deck, "DECK IN DECKID SERVER COMPONENT");
-  console.log(cards, "CARDS IN DECKID SERVER COMPONENT");
+  const { deck, cards } = response.data;
 
-  // console.log(params.deckId, "PARAMS IN DECKID SERVER COMPONENT");
+  if (!cards.length) {
+    return <h1>No Cards to Display</h1>;
+  }
 
   return (
     <div className='dashboard-wrapper'>
-      <DeckWrapper deck={deck} cards={cards} />
+      {cards.map((card) => (
+        <DeckCard key={card.id} card={card} deckId={deck.id} />
+      ))}
     </div>
   );
 };
 
 export default DeckIdPage;
+
+/**
+ *  import { useModal } from "@/containers/modal/ModalContext";
+    import { useRouter } from "next/navigation";
+    import { Button } from "@/components/ui/button";
+ * 
+    <Modal key={card.id} data={card}>
+    <CardDisplay data={card} />
+    </Modal>
+ * 
+ * 
+ */

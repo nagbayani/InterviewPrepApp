@@ -40,11 +40,7 @@ export default async function Layout({ children }: LayoutProps) {
       <div className='sidebar-menu'>
         <Sidebar decks={decks} user={user} />
       </div>
-
-      <main className='dashboard-content'>
-        {/* <Navbar /> */}
-        {children}
-      </main>
+      <main className='dashboard-content'>{children}</main>
     </div>
   );
 }

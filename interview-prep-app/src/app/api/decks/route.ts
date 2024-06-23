@@ -7,8 +7,6 @@ import { getDecksByUserId } from "@/data/decks";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   // check session
-  // const session = await auth(req, res);
-  // console.log(session, "SESSION");
   const user = await currentUser();
   // console.log(user, "API ENDPOINT USER");
   // console.log(req.cookies, "API ENDPOINT COOKIES");
@@ -24,7 +22,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
   }
 
-  const decksDb = await getDecksByUserId(user?.id);
+  const decksDb = await getDecksByUserId(user.session?.user.id);
   // Filter out sensitive information
   const decks = decksDb.map((deck) => {
     const { authorId, ...safeDeck } = deck;
@@ -34,5 +32,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
   return NextResponse.json({ decks });
 }
+// DELETE deck
+export async function DELETE(req: NextRequest, res: NextResponse) {}
 
 // add deck settings

@@ -6,6 +6,7 @@ import { auth } from "../../../../auth";
 
 // Card Imports:
 import CardForm from "@/components/forms/card/CardForm";
+import EditorWrapper from "@/components/novel/Editor-wrapper";
 
 const Interviews = async () => {
   const session = await auth();
@@ -23,6 +24,7 @@ const Interviews = async () => {
           Interviews
         </h1>
         <CardForm />
+        <EditorWrapper />
       </div>
     );
   }

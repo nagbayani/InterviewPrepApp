@@ -5,6 +5,7 @@ import { logout } from "@/actions/logout";
 import { Session } from "next-auth";
 import { buttonVariants } from "./ui/button";
 import Link from "next/link";
+import "@/styles/sidebar.css";
 
 // 2:49:34
 
@@ -13,7 +14,7 @@ interface User {
 }
 const UserAccountNav = ({ user }: User) => {
   return (
-    <div>
+    <>
       {user ? (
         <Button onClick={() => logout()} variant='destructive'>
           Sign out
@@ -23,7 +24,7 @@ const UserAccountNav = ({ user }: User) => {
           Sign in
         </Link>
       )}
-    </div>
+    </>
   );
 };
 

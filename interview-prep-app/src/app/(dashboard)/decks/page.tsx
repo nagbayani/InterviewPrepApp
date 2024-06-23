@@ -2,11 +2,11 @@ import React from "react";
 import { redirect } from "next/navigation";
 import DecksTab from "@/containers/dashboard/DecksTab";
 import { auth } from "../../../../auth";
+import "@/styles/dashboard.css";
 import { Session } from "next-auth";
 import { cookies } from "next/headers";
 import DeckLink from "@/components/deck-link/DeckLink";
 import CardForm from "@/components/forms/card/CardForm";
-
 
 const getData = async (cookieHeader: string) => {
   // fetch data using api route
@@ -36,31 +36,16 @@ const Decks = async () => {
       .getAll()
       .map((cookie) => `${cookie.name}=${cookie.value}`)
       .join("; ");
-    // console.log("Cookie Header", cookieHeader);
-    // console.log(cookieStore, "Cookie Store");
 
     const data = await getData(cookieHeader);
-    console.log("DATA", data);
 
-    
-    const decks = data.decks.map((deck: any) => {
-      console.log("DECK", deck.title);
-    });
+    // const decks = data.decks.map((deck: any) => {
+    //   console.log("DECK", deck.title);
+    // });
 
-    console.log("DECKS", decks);
-
-    //   <ul className='sidebar-list'>
-    //   {sideItems.map((item) => (
-    //     <li key={item.title}>
-    //       <SideLink key={item.name} item={item} />
-    //     </li>
-    //   ))}
-    // </ul>
     return (
       <div className='dashboard-wrapper'>
-        <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
-          Decks
-        </h1>
+        <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
         <ul className='h-[100vh] flex flex-row gap-4'>
           {data.decks.map((deck: any) => {
             return (

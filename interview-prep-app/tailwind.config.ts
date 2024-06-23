@@ -16,6 +16,11 @@ module.exports = {
       },
     },
     extend: {
+      fontSize: {
+        "4xl": "2.25rem", // 36px
+        "3xl": "1.875rem",
+        "2xl": "1.5rem",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -72,5 +77,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };
