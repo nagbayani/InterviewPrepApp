@@ -160,52 +160,52 @@ export default function CardDisplay({ data }: Props) {
     // Card Form Holding entire card
     // <section className='flex flex-col gap-4'>
     <section className='card-section h-[100%] w-full'>
-      <Link href={`/decks/${data.deckId}/c/${data.id}`}>
-        <div className={`card-form-container w-full h-fullmx-4`}>
-          <Form {...form}>
-            {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
-            <div className='card-question w-full'>
-              <FormField
-                control={form.control}
-                name='question'
-                render={({ field }) => (
-                  <FormItem className='w-full'>
-                    {isEditing.question ? (
-                      <>
-                        <FormControl className='w-full'>
-                          <CardInput
-                            id='question'
-                            placeholder='Write a Question'
-                            {...field}
-                            onBlur={() => {
-                              handleInputBlur("question");
-                            }}
-                            onChange={handleChange}
-                            value={details.question}
-                            onKeyDown={(e) => handleKeyDown(e, "question")}
-                          />
-                        </FormControl>
-                      </>
-                    ) : (
-                      <>
-                        <CardFormLabel
-                          onClick={() => handleLabelClick("question")}
-                        >
-                          {field.value || details.question}
-                        </CardFormLabel>
-                      </>
-                    )}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+      {/* <Link href={`/decks/${data.deckId}/c/${data.id}`}> */}
+      <div className={`card-form-container w-full h-fullmx-4`}>
+        <Form {...form}>
+          {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
+          <div className='card-question w-full'>
+            <FormField
+              control={form.control}
+              name='question'
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  {isEditing.question ? (
+                    <>
+                      <FormControl className='w-full'>
+                        <CardInput
+                          id='question'
+                          placeholder='Write a Question'
+                          {...field}
+                          onBlur={() => {
+                            handleInputBlur("question");
+                          }}
+                          onChange={handleChange}
+                          value={details.question}
+                          onKeyDown={(e) => handleKeyDown(e, "question")}
+                        />
+                      </FormControl>
+                    </>
+                  ) : (
+                    <>
+                      <CardFormLabel
+                        onClick={() => handleLabelClick("question")}
+                      >
+                        {field.value || details.question}
+                      </CardFormLabel>
+                    </>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
-            {/* Novel Rich Text Editor - User writes answer. */}
-            <EditorWrapper data={data} />
-          </Form>
-        </div>
-      </Link>
+          {/* Novel Rich Text Editor - User writes answer. */}
+          <EditorWrapper data={data} />
+        </Form>
+      </div>
+      {/* </Link> */}
     </section>
   );
 }
