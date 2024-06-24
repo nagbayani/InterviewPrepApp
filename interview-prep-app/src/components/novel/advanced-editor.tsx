@@ -21,7 +21,7 @@ import { TextButtons } from "./selectors/text-buttons";
 import { useDebouncedCallback } from "use-debounce";
 import GenerativeMenuSwitch from "./generative/generative-menu-switch";
 
-import { slashCommand, suggestionItems } from "./slash-command";
+// import { slashCommand, suggestionItems } from "./slash-command";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./image-upload";
 import { Separator } from "../ui/separator";
@@ -29,7 +29,7 @@ import { defaultValue } from "@/lib/content";
 import "../../styles/prosemirror.css";
 import { TiptapEditorProps } from "./props";
 
-const extensions = [...defaultExtensions, slashCommand];
+const extensions = [...defaultExtensions];
 
 interface EditorProp {
   initialValue?: JSONContent;
@@ -132,7 +132,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
           // }}
           slotAfter={<ImageResizer />}
         >
-          <EditorCommand className='z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-4 py-2 shadow-md transition-all'>
+          {/* <EditorCommand className='z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-4 py-2 shadow-md transition-all'>
             <EditorCommandEmpty className='px-2 text-muted-foreground'>
               No results
             </EditorCommandEmpty>
@@ -156,7 +156,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
                 </EditorCommandItem>
               ))}
             </EditorCommandList>
-          </EditorCommand>
+          </EditorCommand> */}
 
           <EditorBubble
             tippyOptions={{

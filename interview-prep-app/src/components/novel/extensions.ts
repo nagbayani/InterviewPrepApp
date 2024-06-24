@@ -11,6 +11,7 @@ import {
   GlobalDragHandle,
 } from "novel/extensions";
 import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
+import SlashCommand from "./slash";
 
 import { UploadImagesPlugin } from "novel/plugins";
 
@@ -141,4 +142,5 @@ export const defaultExtensions = [
   aiHighlight,
   globalDragHandle,
   autoJoiner,
+  SlashCommand,
 ];
