@@ -27,7 +27,7 @@ import LoadingCircle from "@/components/ui/icons/loading-circle";
 import { toast } from "sonner";
 import va from "@vercel/analytics";
 import Magic from "@/components/ui/icons/magic";
-import { handleImageUpload } from "./image";
+import { handleImageUpload } from "@/components/novel/image";
 
 interface CommandItemProps {
   title: string;
@@ -72,6 +72,24 @@ const Command = Extension.create({
 
 const suggestionItems = ({ query }: { query: string }) => {
   return [
+    {
+      title: "Insert Paragraph Below",
+      description: "Insert a new paragraph below the current one.",
+      icon: <Text size={18} />,
+      command: ({ editor, range }: Command) => {
+        const endPos = range.to;
+
+        editor.commands.focus("start");
+
+        editor
+          .chain()
+          .insertContentAt(endPos, { type: "paragraph" })
+          .focus(endPos)
+          .selectNodeForward()
+          .scrollIntoView()
+          .run();
+      },
+    },
     {
       title: "Continue writing",
       description: "Use AI to expand your thoughts.",
@@ -201,6 +219,11 @@ const suggestionItems = ({ query }: { query: string }) => {
   });
 };
 
+/**
+ * Adjusts the scroll position of a container element to ensure a selected item is visible.
+ * @param container
+ * @param item
+ */
 export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   const containerHeight = container.offsetHeight;
   const itemHeight = item ? item.offsetHeight : 0;
@@ -215,6 +238,14 @@ export const updateScrollView = (container: HTMLElement, item: HTMLElement) => {
   }
 };
 
+/**
+ * Command List component - Displays a list of command items as a dropdown menu.
+ * @param items
+ * @param command
+ * @param editor
+ * @param range
+ * @constructor
+ */
 const CommandList = ({
   items,
   command,
@@ -251,6 +282,9 @@ const CommandList = ({
     },
   });
 
+  /**
+   * Memoizes the selectItem function.
+   */
   const selectItem = useCallback(
     (index: number) => {
       const item = items[index];
@@ -269,6 +303,9 @@ const CommandList = ({
     [complete, command, editor, items]
   );
 
+  /**
+   *  Handles keyboard navigation and resets the selected index when items change.
+   */
   useEffect(() => {
     const navigationKeys = ["ArrowUp", "ArrowDown", "Enter"];
     const onKeyDown = (e: KeyboardEvent) => {
@@ -299,14 +336,23 @@ const CommandList = ({
     setSelectedIndex(0);
   }, [items]);
 
+  // References the command list container.
   const commandListContainer = useRef<HTMLDivElement>(null);
 
+  /**
+   * Click to choose the command from '/' command list
+   * @param e Mouse Click event
+   * @param index Chosen Command index via click
+   */
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>, index: any) => {
     e.preventDefault();
-    console.log("COMMAND CLICKED", selectedIndex, items[selectedIndex]);
+    // console.log("COMMAND CLICKED", selectedIndex, items[selectedIndex]);
     selectItem(index);
   };
 
+  /**
+   *  Ensures the selected item is scrolled into view.
+   */
   useLayoutEffect(() => {
     const container = commandListContainer?.current;
 
@@ -351,6 +397,10 @@ const CommandList = ({
   ) : null;
 };
 
+/**
+ * Function for suggestion items that handles their display and behavior in the dropdown menu.
+ * @returns
+ */
 const renderItems = () => {
   let component: ReactRenderer | null = null;
   let popup: any | null = null;

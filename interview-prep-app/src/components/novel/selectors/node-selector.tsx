@@ -30,7 +30,6 @@ const items: SelectorItem[] = [
     name: "Text",
     icon: TextIcon,
     command: (editor) => {
-      console.log("SELECTED TEXT TO CHAIN");
       editor?.chain().focus().clearNodes().run();
     },
     // I feel like there has to be a more efficient way to do this – feel free to PR if you know how!

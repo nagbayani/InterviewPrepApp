@@ -1,6 +1,6 @@
 "use client";
 
-import Editor from "@/components/novel/advanced-editor";
+import Editor from "./advanced-editor";
 // import { ThemeToggle } from "@/components/theme-toggle";
 import { JSONContent } from "novel";
 import { useState, useEffect, use } from "react";
@@ -59,7 +59,7 @@ export default function EditorWrapper({ data }: { data: Data }) {
     // const content = window.localStorage.getItem("novel-content");
     // console.log("CONTENT", content); // this works
     // if (content) setInitialContent(JSON.parse(content));
-    if (value) console.log("VALUE", value);
+    // if (value) console.log("VALUE", value);
     // else setInitialContent(defaultValue);
     // console.log("WRAPPER VALUE", value);
     // console.log("WRAPPER VALUE STRINGIFY", JSON.stringify(value));

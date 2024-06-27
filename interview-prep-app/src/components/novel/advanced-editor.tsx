@@ -17,13 +17,13 @@ import { NodeSelector } from "./selectors/node-selector";
 import { LinkSelector } from "./selectors/link-selector";
 import { ColorSelector } from "./selectors/color-selector";
 import { TextButtons } from "./selectors/text-buttons";
+import { useEditor } from "@tiptap/react";
 
 import { useDebouncedCallback } from "use-debounce";
 import GenerativeMenuSwitch from "./generative/generative-menu-switch";
-
-// import { slashCommand, suggestionItems } from "./slash-command";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./image-upload";
+
 import { Separator } from "../ui/separator";
 import { defaultValue } from "@/lib/content";
 import "../../styles/prosemirror.css";
@@ -36,6 +36,7 @@ interface EditorProp {
   onChange: (value: JSONContent) => void;
 }
 const Editor = ({ initialValue, onChange }: EditorProp) => {
+  console.log(initialValue, "VALUE");
   const [openNode, setOpenNode] = useState(false);
   const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
@@ -44,8 +45,8 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
   const [openAI, setOpenAI] = useState(false);
 
   // SAVE CONTENT
-  const [initialContent, setInitialContent] = useState<null | JSONContent>(
-    null
+  const [initialContent, setInitialContent] = useState<undefined | JSONContent>(
+    initialValue
   );
   const [saveStatus, setSaveStatus] = useState("Saved");
   const [charsCount, setCharsCount] = useState();
@@ -61,27 +62,6 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     return new XMLSerializer().serializeToString(doc);
   };
 
-  // const debouncedUpdates = useDebouncedCallback(
-  //   async (editor: EditorInstance) => {
-  //     const json = editor.getJSON();
-  //     // console.log(editor.storage, "editor.storage");
-  //     // error here
-  //     // setCharsCount(editor.storage.characterCount.words());
-  //     window.localStorage.setItem(
-  //       "html-content",
-  //       highlightCodeblocks(editor.getHTML())
-  //     );
-  //     // console.log("HTML-CONTENT", window.localStorage.getItem("html-content"));
-  //     window.localStorage.setItem("novel-content", JSON.stringify(json));
-  //     window.localStorage.setItem(
-  //       "markdown",
-  //       editor.storage.markdown.getMarkdown()
-  //     );
-  //     setSaveStatus("Saved");
-  //   },
-  //   500
-  // );
-
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     setSaveStatus("Saving...");
     // Simulate a delay in saving.
@@ -90,6 +70,17 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     }, 500);
   }, 750);
 
+  // const editor = useEditor({
+  //   extensions,
+  //   content: initialValue || defaultValue,
+  //   onUpdate: ({ editor }) => {
+  //     debouncedUpdates(editor);
+  //     onChange(editor.getJSON());
+  //     setSaveStatus("Unsaved");
+  //   },
+  //   editorProps: TiptapEditorProps,
+  // });
+
   useEffect(() => {
     const content = window.localStorage.getItem("novel-content");
     // console.log("CONTENT", content); // this works
@@ -97,7 +88,20 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     else setInitialContent(defaultValue);
   }, []);
 
-  if (!initialContent) return null;
+  // useEffect(() => {
+  //   console.log(editor?.$nodes, "EDITOR");
+  //   const content = window.localStorage.getItem("novel-content");
+  //   if (initialValue) {
+  //     console.log("initialValue provided!", initialValue);
+  //     setInitialContent(initialValue);
+  //   } else if (content) {
+  //     setInitialContent(JSON.parse(content));
+  //   } else {
+  //     setInitialContent(defaultValue);
+  //   }
+  // }, [initialValue]);
+
+  // if (!initialContent) return null;
 
   return (
     <div className='relative w-full max-w-screen-lg'>
@@ -125,14 +129,39 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
             debouncedUpdates(editor);
             onChange(editor.getJSON());
             setSaveStatus("Unsaved");
+            // slotAfter={<ImageResizer />}
           }}
-          // onUpdate={({ editor }) => {
-          //   debouncedUpdates(editor);
-          //   setSaveStatus("Unsaved");
-          // }}
-          slotAfter={<ImageResizer />}
         >
-          {/* <EditorCommand className='z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-4 py-2 shadow-md transition-all'>
+          {/* <EditorContent
+          editor={editor}
+          className='border p-8 rounded-xl overflow-y-auto h-[500px] min-h-full bg-background shadow-xl'
+        /> */}
+
+          <EditorBubble
+            tippyOptions={{
+              placement: "top",
+            }}
+            className='flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-background shadow-xl'
+          >
+            <Separator orientation='vertical' />
+            <NodeSelector open={openNode} onOpenChange={setOpenNode} />
+            <Separator orientation='vertical' />
+            <LinkSelector open={openLink} onOpenChange={setOpenLink} />
+            <Separator orientation='vertical' />
+            <TextButtons />
+            <Separator orientation='vertical' />
+            <ColorSelector open={openColor} onOpenChange={setOpenColor} />
+          </EditorBubble>
+        </EditorContent>
+      </EditorRoot>
+    </div>
+  );
+};
+
+export default Editor;
+
+{
+  /* <EditorCommand className='z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-4 py-2 shadow-md transition-all'>
             <EditorCommandEmpty className='px-2 text-muted-foreground'>
               No results
             </EditorCommandEmpty>
@@ -156,32 +185,8 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
                 </EditorCommandItem>
               ))}
             </EditorCommandList>
-          </EditorCommand> */}
-
-          <EditorBubble
-            tippyOptions={{
-              placement: "top",
-            }}
-            className='flex w-fit max-w-[90vw] overflow-hidden rounded-md border border-muted bg-background shadow-xl'
-          >
-            {/* <GenerativeMenuSwitch open={openAI} onOpenChange={setOpenAI}> */}
-            <Separator orientation='vertical' />
-            <NodeSelector open={openNode} onOpenChange={setOpenNode} />
-            <Separator orientation='vertical' />
-            <LinkSelector open={openLink} onOpenChange={setOpenLink} />
-            <Separator orientation='vertical' />
-            <TextButtons />
-            <Separator orientation='vertical' />
-            <ColorSelector open={openColor} onOpenChange={setOpenColor} />
-            {/* </GenerativeMenuSwitch> */}
-          </EditorBubble>
-        </EditorContent>
-      </EditorRoot>
-    </div>
-  );
-};
-
-export default Editor;
+          </EditorCommand> */
+}
 
 /**
  *  mousedown: (_view, event) => {
@@ -242,3 +247,24 @@ export default Editor;
             },
           }
                */
+
+// const debouncedUpdates = useDebouncedCallback(
+//   async (editor: EditorInstance) => {
+//     const json = editor.getJSON();
+//     // console.log(editor.storage, "editor.storage");
+//     // error here
+//     // setCharsCount(editor.storage.characterCount.words());
+//     window.localStorage.setItem(
+//       "html-content",
+//       highlightCodeblocks(editor.getHTML())
+//     );
+//     // console.log("HTML-CONTENT", window.localStorage.getItem("html-content"));
+//     window.localStorage.setItem("novel-content", JSON.stringify(json));
+//     window.localStorage.setItem(
+//       "markdown",
+//       editor.storage.markdown.getMarkdown()
+//     );
+//     setSaveStatus("Saved");
+//   },
+//   500
+// );
