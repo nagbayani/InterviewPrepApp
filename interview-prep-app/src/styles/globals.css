@@ -67,7 +67,7 @@
     --novel-stone-200: #e7e5e4; /* Medium light stone shade */
     --novel-stone-800: #57534e; /* Dark stone shade */
     font-size: var(--step--7);
-    letter-spacing: -0.025em;
+    /* letter-spacing: -0.025em; */
   }
 
   .dark {

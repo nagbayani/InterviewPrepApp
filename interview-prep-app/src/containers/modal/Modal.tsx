@@ -12,7 +12,7 @@ import { useDialog } from "./useDialog";
 import Card from "@/app/(dashboard)/decks/[deckId]/c/[cardId]/page";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import type { CardData } from "@/types/CardData";
+import type { CardData } from "@/types/data-types";
 
 import { useModal } from "./ModalContext";
 
@@ -47,7 +47,7 @@ export function Modal({
     <>
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogOverlay>
-          <DialogContent className='lg:max-w-screen-lg overflow-y-auto max-h-screen'>
+          <DialogContent className='lg:max-w-screen-lg overflow-y-auto max-h-screen min-w-[750px]'>
             {children}
           </DialogContent>
         </DialogOverlay>

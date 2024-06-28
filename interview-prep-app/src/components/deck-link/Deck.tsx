@@ -1,44 +1,128 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import { DeckDataResponse, CardData } from "@/types/data-types";
+import { DeckCard } from "@/app/(dashboard)/decks/[deckId]/DeckCard";
+import "../../styles/deckWrapper.css";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { LuPlus } from "react-icons/lu";
+import { CardInput } from "../ui/cardinput";
+import { useCardStore } from "@/_store/index";
 
-import React, { useState } from "react";
-import Card from "../card/Card";
-import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-
-const Deck = () => {
+/**
+ *
+ * Deck Client Component that holds all rendered cards, and will add new cards.
+ *
+ */
+const Deck = ({ deck, cards }: DeckDataResponse) => {
   // retrieve list of cards
-
-  const [cards, setCards] = useState<{ id: string }[]>([]);
+  const {
+    cards: cardsData,
+    addCard,
+    setCards,
+  } = useCardStore((state) => ({
+    cards: state.cards,
+    addCard: state.addCard,
+    setCards: state.setCards,
+  }));
+  const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [newCardQuestion, setNewCardQuestion] = useState("");
   const [prevCardQuestionEmpty, setPrevCardQuestionEmpty] = useState(true);
 
-  const addCard = () => {
-    const id = Math.random().toString();
+  useEffect(() => {
+    // Initialize Zustand store with the fetched cards
+    setCards(cards);
+    console.log("New Cards set in store: ", cards);
+  }, [cards, setCards]);
 
-    setCards([...cards, { id }]);
+  /**
+   * Handles card form question input changes
+   * @param e
+   */
+  const handleCardForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setNewCardQuestion(value);
+  };
+
+  /**
+   * Submits the new card to database, updates state with new card.
+   * If card question is empty, do not submit.
+   */
+  const submitAddCard = async () => {
+    if (newCardQuestion.trim() === "") {
+      console.log("Card question is empty.");
+      setShowForm(false);
+    } else {
+      try {
+        const response = await fetch(`/api/cards`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            question: newCardQuestion,
+            answer: "",
+            deckId: deck.id,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const newCard: CardData = data.card;
+
+          // Add card to Zustand store
+          addCard(newCard);
+        }
+      } catch {
+        console.error("Error adding card to deck.");
+      } finally {
+        setLoading(false);
+        setNewCardQuestion("");
+        setShowForm(false);
+      }
+    }
   };
 
   return (
-    <div className='flex relative h-[100%] ml-[100px] items-center'>
-      <button
-        className='flex add-card-btn w-100px flex-col justify-center items-center'
-        onClick={addCard}
-      >
-        <span>+</span>
-        <span>Write a Question</span>
-      </button>
-      <div className='flex flex-wrap justify-start h-5/6'>
-        {cards.map((card, index) => (
-          <Card key={index} />
-        ))}
+    <section className='deck-wrapper-container'>
+      <div className='deck-wrapper-header'>
+        <h1>{deck?.title}</h1>
       </div>
-    </div>
+
+      {/* Render cards from Zustand state */}
+      {Object.values(cardsData).map((card) => (
+        <DeckCard key={card.id} card={card} deckId={deck.id} />
+      ))}
+      {showForm ? (
+        <div
+          className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
+          style={{ background: "#fefcf6" }}
+        >
+          <CardInput
+            id='question'
+            placeholder='Write a Question'
+            onChange={handleCardForm}
+            onSubmit={submitAddCard}
+            onBlur={submitAddCard}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitAddCard();
+              }
+            }}
+          />
+        </div>
+      ) : (
+        <Button
+          // size='lg'
+          variant='outline'
+          className='w-[400px] flex p-4 rounded-lg justify-center items-center'
+          onClick={() => setShowForm(true)}
+        >
+          <LuPlus />
+          <span>Add a card</span>
+        </Button>
+      )}
+    </section>
   );
 };
 

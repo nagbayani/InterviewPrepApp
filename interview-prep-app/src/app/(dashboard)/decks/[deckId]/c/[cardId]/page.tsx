@@ -1,4 +1,4 @@
-import CardDisplay from "./CardDisplay";
+import CardDisplay from "./Card-Display";
 import { CardData } from "@/types/CardData";
 import { currentUser } from "@/lib/auth";
 import { fetchSingleCard } from "@/utils/fetch";

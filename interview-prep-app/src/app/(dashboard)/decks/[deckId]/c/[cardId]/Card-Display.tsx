@@ -1,6 +1,6 @@
 "use client";
 // import a type of data for props
-import { CardData } from "@/types/CardData";
+import { CardData } from "@/types/data-types";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -20,6 +20,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "@/styles/cardForm.css";
+import { useCardStore } from "@/_store/index";
+
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 
@@ -28,6 +30,10 @@ type Props = {
 };
 
 export default function CardDisplay({ data }: Props) {
+  const { updateCard } = useCardStore((state) => ({
+    updateCard: state.updateCard,
+  }));
+
   const [isEditing, setIsEditing] = useState({
     question: false,
     answer: false,
@@ -44,7 +50,6 @@ export default function CardDisplay({ data }: Props) {
     useState("Your Question");
 
   // const [isExpanded, setIsExpanded] = useState(false);
-
   // const toggleExpansion = () => {
   //   setIsExpanded((prev) => !prev);
   // };
@@ -138,7 +143,9 @@ export default function CardDisplay({ data }: Props) {
           });
 
           if (response.ok) {
-            // Handle successful save
+            // UPDATE Card in Zustand Store
+            updateCard(data.id, { question: details.question });
+
             console.log("CardForm.tsx component - SAVE SUCCESS");
           }
         } catch {

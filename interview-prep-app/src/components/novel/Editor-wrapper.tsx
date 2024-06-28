@@ -5,6 +5,7 @@ import Editor from "./advanced-editor";
 import { JSONContent } from "novel";
 import { useState, useEffect, use } from "react";
 import { defaultValue } from "@/lib/content";
+import { useCardStore } from "@/_store";
 
 interface Data {
   id: string; // cardID
@@ -18,6 +19,9 @@ interface Data {
 }
 
 export default function EditorWrapper({ data }: { data: Data }) {
+  const { updateCard } = useCardStore((state) => ({
+    updateCard: state.updateCard,
+  }));
   // console.log("DATA ANSWER", data.answer);
   // convert data.answer to JSONContent
   let initialContent: JSONContent;
@@ -48,6 +52,7 @@ export default function EditorWrapper({ data }: { data: Data }) {
       }),
     });
     if (response.ok) {
+      updateCard(data.id, { answer: JSON.stringify(value) });
       // Handle successful save
       console.log("successful save");
     } else {

@@ -2,7 +2,7 @@ import { Modal } from "@/containers/modal/Modal";
 import CardModalContent from "./CardModalContent";
 import { fetchSingleCard } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
-import type { CardData } from "@/types/CardData";
+import type { CardData } from "@/types/data-types";
 
 type Props = {
   params: {

@@ -88,6 +88,24 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     else setInitialContent(defaultValue);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      const dragHandles = document.querySelectorAll(".drag-handle");
+      console.log(`Found ${dragHandles.length} drag handles`);
+
+      dragHandles.forEach((handle) => {
+        handle.addEventListener("click", (event) => {
+          event.preventDefault();
+          console.log("Drag handle clicked");
+        });
+
+        handle.addEventListener("dragstart", () => {
+          console.log("Drag handle dragging");
+        });
+      });
+    }, 500); // Adjust delay if needed
+  }, []);
+
   // useEffect(() => {
   //   console.log(editor?.$nodes, "EDITOR");
   //   const content = window.localStorage.getItem("novel-content");

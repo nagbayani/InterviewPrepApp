@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import "../../styles/deckLink.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Button } from "../ui/button";
 
 interface DeckLinkProps {
   id: string;
@@ -14,14 +15,16 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
   const pathname = usePathname();
 
   return (
-    <Link
-      href={path}
+    <div
       className={`decklink-container ${
         pathname === path && "decklink-container "
       }`}
     >
       <span>{title}</span>
-    </Link>
+      <Link href={path}>
+        <Button className='float-left bottom-2  m-4'>Go</Button>
+      </Link>
+    </div>
   );
 };
 

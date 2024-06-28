@@ -8,11 +8,11 @@ import {
   StarterKit,
   Placeholder,
   AIHighlight,
-  // GlobalDragHandle,
 } from "novel/extensions";
 import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
 import SlashCommand from "./custom-extensions/slash-command";
 
+// import { GlobalDragHandle } from "tiptap-extension-global-drag-handle";
 import { DBlock } from "./custom-extensions/drag-block";
 import { Paragraph } from "./custom-extensions/paragraph";
 import { Document } from "./custom-extensions/document";
@@ -142,12 +142,12 @@ const autoJoiner = AutoJoiner.configure({
 });
 
 export const defaultExtensions = [
-  document,
-  paragraph,
-  dBlock,
+  // GlobalDragHandle,
+  // document,
+  // paragraph,
+  // dBlock,
   // trailingNode,
-  // globalDragHandle,
-  // CustomGlobalDrag,
+  CustomGlobalDrag,
   starterKit,
   placeholder,
   tiptapLink,

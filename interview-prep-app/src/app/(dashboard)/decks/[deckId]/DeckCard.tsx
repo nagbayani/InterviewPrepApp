@@ -6,7 +6,9 @@
 import { useModal } from "@/containers/modal/ModalContext";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { DeckData, CardData } from "@/types/CardData";
+import { CardData } from "@/types/data-types";
+import { useCardStore } from "@/_store/index";
+import { useEffect } from "react";
 
 export const DeckCard = ({
   card,
@@ -17,6 +19,10 @@ export const DeckCard = ({
 }) => {
   const router = useRouter();
   const { openModal } = useModal();
+  const { cards: cardsData, deleteCard } = useCardStore((state) => ({
+    cards: state.cards,
+    deleteCard: state.deleteCard,
+  }));
 
   // push, should be intercepted by @modal route and open the modal
   const handleOpenModal = () => {
@@ -24,9 +30,43 @@ export const DeckCard = ({
     router.push(`/decks/${deckId}/c/${card.id}`);
   };
 
+  const handleDeleteCard = async () => {
+    try {
+      const response = await fetch(`/api/cards/${card.id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        deleteCard(card.id); // Remove card from Zustand store
+        console.log("Card deleted from deck.", cardsData);
+      }
+    } catch {
+      console.error("Error deleting card from deck.");
+    }
+  };
+
   return (
-    <Button variant='outline' onClick={handleOpenModal}>
-      {card.question}
-    </Button>
+    <div
+      className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
+      style={{ background: "#fefcf6" }}
+    >
+      <div>{card.question}</div>
+      <div className='flex justify-evenly'>
+        <Button
+          variant='outline'
+          onClick={handleOpenModal}
+          className='w-[40px] mx-2'
+        >
+          EDIT
+        </Button>
+        <Button
+          variant='destructive'
+          className='w-[40px]'
+          onClick={handleDeleteCard}
+        >
+          DELETE
+        </Button>
+      </div>
+    </div>
   );
 };
