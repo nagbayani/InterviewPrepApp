@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import "../../styles/deckLink.css";
+import "../../styles/deck/deckLink.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Button } from "../ui/button";

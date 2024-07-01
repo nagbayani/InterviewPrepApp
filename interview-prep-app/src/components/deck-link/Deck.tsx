@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { DeckDataResponse, CardData } from "@/types/data-types";
 import { DeckCard } from "@/app/(dashboard)/decks/[deckId]/DeckCard";
-import "../../styles/deckWrapper.css";
+import "../../styles/deck/deckWrapper.css";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { CardInput } from "../ui/cardinput";
@@ -90,8 +90,13 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
       </div>
 
       {/* Render cards from Zustand state */}
-      {Object.values(cardsData).map((card) => (
-        <DeckCard key={card.id} card={card} deckId={deck.id} />
+      {Object.values(cardsData).map((card, index) => (
+        <DeckCard
+          key={card.id}
+          card={card}
+          deckId={deck.id}
+          index={index + 1}
+        />
       ))}
       {showForm ? (
         <div

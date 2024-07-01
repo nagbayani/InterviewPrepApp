@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.deck-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  position: relative;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 24px 16px 16px;
+  font-size: var(--step--4);
+  background: #fefcf6;
+}
+
+.left-dc-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.top-dc-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
