@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { DeckDataResponse, CardData } from "@/types/data-types";
-import { DeckCard } from "@/app/(dashboard)/decks/[deckId]/DeckCard";
+import { DeckCard } from "@/app/(dashboard)/decks/[deckId]/Card";
 import "../../styles/deck/deckWrapper.css";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { CardInput } from "../ui/cardinput";
-import { useCardStore } from "@/_store/index";
+import { useCardStore, useDeckStore } from "@/_store/index";
 
 /**
  *
@@ -24,11 +24,14 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
     addCard: state.addCard,
     setCards: state.setCards,
   }));
+
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [newCardQuestion, setNewCardQuestion] = useState("");
-  const [prevCardQuestionEmpty, setPrevCardQuestionEmpty] = useState(true);
 
+  /**
+   * Set the cards in the store when the component mounts
+   */
   useEffect(() => {
     // Initialize Zustand store with the fetched cards
     setCards(cards);
@@ -46,9 +49,10 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
 
   /**
    * Submits the new card to database, updates state with new card.
-   * If card question is empty, do not submit.
+   * If card question is empty, do not submit. 
    */
   const submitAddCard = async () => {
+    // Check if card question is empty
     if (newCardQuestion.trim() === "") {
       console.log("Card question is empty.");
       setShowForm(false);
@@ -89,7 +93,7 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
         <h1>{deck?.title}</h1>
       </div>
 
-      {/* Render cards from Zustand state */}
+      {/* Render cards from Zustand state to Card components */}
       {Object.values(cardsData).map((card, index) => (
         <DeckCard
           key={card.id}

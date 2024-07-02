@@ -32,6 +32,30 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
   return NextResponse.json({ decks });
 }
+
+export async function POST(req: NextRequest, res: NextResponse) {
+  const { title } = (await req.json()) as { title: string };
+
+  const user = await currentUser();
+
+  try {
+    const deck = await prisma.deck.create({
+      data: {
+        title,
+        authorId: user.session?.user.id ?? "",
+      },
+    });
+
+    return NextResponse.json({
+      message: `Deck created`,
+      status: 200,
+      deck,
+    });
+  } catch {
+    return NextResponse.json({ message: "Error creating deck", status: 400 });
+  }
+}
+
 // DELETE deck
 export async function DELETE(req: NextRequest, res: NextResponse) {}
 

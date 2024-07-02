@@ -5,6 +5,7 @@ import "../../../styles/dashboard.css";
 import { cookies } from "next/headers";
 import DeckLink from "@/components/deck-link/DeckLink";
 import CardForm from "@/components/forms/card/CardForm";
+import DeckWrapper from "@/containers/deck-wrapper/DeckWrapper";
 
 const getData = async (cookieHeader: string) => {
   // fetch data using api route
@@ -38,7 +39,7 @@ const Decks = async () => {
 
     return (
       <section className='dashboard-wrapper'>
-        <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
+        {/* <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
         <ul className='h-[100vh] flex flex-row gap-4'>
           {data.decks.map((deck: any) => {
             return (
@@ -51,7 +52,8 @@ const Decks = async () => {
               </li>
             );
           })}
-        </ul>
+        </ul> */}
+        <DeckWrapper decks={data.decks} />
       </section>
     );
   }

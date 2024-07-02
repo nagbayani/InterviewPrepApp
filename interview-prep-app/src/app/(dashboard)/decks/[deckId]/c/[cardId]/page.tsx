@@ -1,5 +1,5 @@
 import CardDisplay from "./Card-Display";
-import { CardData } from "@/types/CardData";
+import { CardData } from "@/types/data-types";
 import { currentUser } from "@/lib/auth";
 import { fetchSingleCard } from "@/utils/fetch";
 // import { Modal } from "@/containers/modal/Modal";

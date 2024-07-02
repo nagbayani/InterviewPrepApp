@@ -15,3 +15,18 @@ export const getDeckByDeckId = async (deckId: string) => {
 
   return deck;
 };
+
+export const updateDeck = async (data: {
+  title: string;
+  authorId: string;
+  deckId: string;
+}) => {
+  const deck = await prisma.deck.update({
+    where: { id: data.deckId },
+    data: {
+      title: data.title,
+    },
+  });
+
+  return deck;
+};

@@ -1,0 +1,129 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import DeckLink from "@/components/deck-link/DeckLink";
+import { useDeckStore } from "@/_store/index";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { LuPlus } from "react-icons/lu";
+import { DeckData } from "@/types/data-types";
+
+interface Props {
+  decks: DeckData[];
+}
+
+const DeckWrapper = ({ decks }: { decks: any }) => {
+  const {
+    decks: decksData,
+    addDeck,
+    setDecks,
+  } = useDeckStore((state) => ({
+    decks: state.decks,
+    addDeck: state.addDeck,
+    setDecks: state.setDecks,
+  }));
+
+  const [showForm, setShowForm] = useState(false);
+  const [newDeckTitle, setNewDeckTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setDecks(decks);
+  }, [decks, setDecks]);
+
+  /**
+   * Handles deck form title input changes
+   * @param e
+   */
+  const handleDeckForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setNewDeckTitle(value);
+  };
+
+  /**
+   * Submits the new deck to the database, updates state with new deck.
+   * If deck title is empty, do not submit.
+   */
+  const submitAddDeck = async () => {
+    if (newDeckTitle.trim() === "") {
+      console.log("Deck title is empty.");
+      setShowForm(false);
+    } else {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/decks`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: newDeckTitle,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const newDeck: DeckData = data.deck;
+
+          // Add deck to Zustand store
+          addDeck(newDeck);
+        }
+      } catch {
+        console.error("Error adding deck.");
+      } finally {
+        setLoading(false);
+        setNewDeckTitle("");
+        setShowForm(false);
+      }
+    }
+  };
+
+  return (
+    <>
+      <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
+      <ul className='h-full flex flex-col gap-4'>
+        {Object.values(decksData).map((deck: any) => {
+          return (
+            <li key={deck.id}>
+              <DeckLink
+                id={deck.id}
+                title={deck.title}
+                path={`/decks/${deck.id}`}
+              />
+            </li>
+          );
+        })}
+      </ul>
+      {showForm ? (
+        <div
+          className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
+          style={{ background: "#fefcf6" }}
+        >
+          <input
+            id='title'
+            placeholder='Deck Title'
+            value={newDeckTitle}
+            onChange={handleDeckForm}
+            onBlur={submitAddDeck}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitAddDeck();
+              }
+            }}
+            className='input'
+          />
+        </div>
+      ) : (
+        <Button
+          variant='outline'
+          className='w-[400px] flex p-4 rounded-lg justify-center items-center'
+          onClick={() => setShowForm(true)}
+        >
+          <LuPlus />
+          <span>Add a deck</span>
+        </Button>
+      )}
+    </>
+  );
+};
+
+export default DeckWrapper;

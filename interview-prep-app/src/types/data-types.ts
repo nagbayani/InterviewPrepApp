@@ -34,5 +34,5 @@ export interface DeckData {
   createdAt: string;
   updatedAt: string;
   title: string;
-  authorId: string;
+  // authorId: string;
 }
