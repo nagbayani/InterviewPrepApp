@@ -12,7 +12,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
   }
 
-  const cardsDb = await getCardsByUserId(user.session?.user.id);
+  const cardsDb = await getCardsByUserId(user.session?.user.id ?? "");
   const cards = cardsDb.map((card) => {
     const { authorId, ...safeCard } = card;
     return safeCard;

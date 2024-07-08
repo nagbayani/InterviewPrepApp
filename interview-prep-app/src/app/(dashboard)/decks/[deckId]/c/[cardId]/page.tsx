@@ -1,7 +1,7 @@
 import CardDisplay from "./Card-Display";
 import { CardData } from "@/types/data-types";
 import { currentUser } from "@/lib/auth";
-import { fetchSingleCard } from "@/utils/fetch";
+import { fetchSingleCard, fetchAllDecks } from "@/utils/fetch";
 // import { Modal } from "@/containers/modal/Modal";
 // import { ModalProvider } from "@/containers/modal/ModalContext";
 
@@ -11,13 +11,19 @@ type Props = {
   };
 };
 
-export default async function Card({ params: { cardId } }: Props) {
+export default async function CardPage({ params: { cardId } }: Props) {
   const userSession = await currentUser();
 
   const cardData: CardData = await fetchSingleCard(
     cardId,
     userSession.cookieHeader
   );
+
+  // const allDecks = await fetchAllDecks(userSession.cookieHeader);
+
+  // if (allDecks) {
+  //   console.log("All Decks in Card Page", allDecks);
+  // }
   // console.log(cardData, "CARD DATA IN CARD PAGE");
 
   if (!cardData?.id) {
@@ -25,7 +31,7 @@ export default async function Card({ params: { cardId } }: Props) {
   }
   return (
     <div className='mt-2 grid place-content-center'>
-      <CardDisplay data={cardData} />
+      <CardDisplay card={cardData} />
     </div>
   );
 }

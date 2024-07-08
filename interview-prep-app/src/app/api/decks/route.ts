@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/db";
-import { auth } from "../../../../auth";
 import { currentUser } from "@/lib/auth";
 import { getDecksByUserId } from "@/data/decks";
 
@@ -12,7 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   // console.log(req.cookies, "API ENDPOINT COOKIES");
 
   // Extract cookies from the request
-  const cookieHeader = req.headers.get("cookie");
+  // const cookieHeader = req.headers.get("cookie");
 
   // console.log(req.headers.get("Cookie"), "API ENDPOINT COOKIE HEADER");
   if (!user) {

@@ -24,12 +24,13 @@ import { useCardStore } from "@/_store/index";
 
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
+import Card from "../../@modal/(.)c/[cardId]/page";
 
 type Props = {
-  data: CardData;
+  card: CardData;
 };
 
-export default function CardDisplay({ data }: Props) {
+export default function CardDisplay({ card }: Props) {
   const { updateCard } = useCardStore((state) => ({
     updateCard: state.updateCard,
   }));
@@ -41,8 +42,8 @@ export default function CardDisplay({ data }: Props) {
   });
 
   const [details, setDetails] = useState({
-    question: data.question || "Your Question",
-    answer: data.answer || "Your Answer",
+    question: card.question || "Your Question",
+    answer: card.answer || "Your Answer",
     category: "Category",
   });
 
@@ -128,23 +129,23 @@ export default function CardDisplay({ data }: Props) {
     switch (field) {
       case "question":
         try {
-          const response = await fetch(`/api/cards/${data.id}`, {
+          const response = await fetch(`/api/cards/${card.id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               question: details.question,
-              deckId: data.deckId,
-              authorId: data.authorId,
-              answer: data.answer,
-              cardId: data.id,
+              deckId: card.deckId,
+              authorId: card.authorId,
+              answer: card.answer,
+              cardId: card.id,
             }),
           });
 
           if (response.ok) {
             // UPDATE Card in Zustand Store
-            updateCard(data.id, { question: details.question });
+            updateCard(card.id, { question: details.question });
 
             console.log("CardForm.tsx component - SAVE SUCCESS");
           }
@@ -209,7 +210,7 @@ export default function CardDisplay({ data }: Props) {
           </div>
 
           {/* Novel Rich Text Editor - User writes answer. */}
-          <EditorWrapper data={data} />
+          <EditorWrapper data={card} />
         </Form>
       </div>
       {/* </Link> */}

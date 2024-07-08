@@ -84,7 +84,7 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
             // letterSpacing: "-0.05em",
           }}
         >
-          Smooth Prep
+          Interfluent
         </span>
       </div>
       <div className='sideitem-container'>

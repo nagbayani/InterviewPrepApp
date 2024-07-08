@@ -10,7 +10,7 @@ type Props = {
   };
 };
 
-const Card = async ({ params: { cardId } }: Props) => {
+const CardPage = async ({ params: { cardId } }: Props) => {
   const userSession = await currentUser();
 
   const cardData: CardData = await fetchSingleCard(
@@ -31,4 +31,4 @@ const Card = async ({ params: { cardId } }: Props) => {
   );
 };
 
-export default Card;
+export default CardPage;

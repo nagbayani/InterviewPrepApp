@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
 import { getDeckByDeckId, updateDeck } from "@/data/decks";
 import { getCardsByDeckId } from "@/data/cards";
+import { currentUser } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
@@ -25,12 +26,22 @@ export async function GET(
 }
 
 export async function PUT(req: NextRequest, res: NextResponse) {
-  const { deckId, title, authorId } = await req.json();
-  const data = { deckId, title, authorId };
+  const user = await currentUser();
+
+  const { deckId, title } = (await req.json()) as {
+    deckId: string;
+    title: string;
+  };
+  const data = { deckId, title, authorId: user.session?.user.id ?? "" };
   try {
     const deck = await updateDeck(data);
+    console.log("API ENDPOINT DECK", deck);
     return NextResponse.json({ message: "Deck updated", status: 200, deck });
-  } catch {
-    return NextResponse.json({ message: "Error updating deck", status: 400 });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Error updating deck",
+      status: 400,
+      error: error,
+    });
   }
 }

@@ -23,7 +23,9 @@ export default function EditorWrapper({ data }: { data: Data }) {
     updateCard: state.updateCard,
   }));
   // console.log("DATA ANSWER", data.answer);
-  // convert data.answer to JSONContent
+
+
+  // *** Convert data.answer to JSONContent ***
   let initialContent: JSONContent;
   try {
     initialContent = JSON.parse(data.answer);

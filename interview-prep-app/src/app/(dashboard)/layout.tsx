@@ -5,11 +5,16 @@ import "../../styles/dashboard.css";
 import { auth } from "../../../auth";
 import { fetchAllDecks } from "@/utils/fetch";
 import { cookies } from "next/headers";
+import { useDeckStore, useCardStore } from "@/_store";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
+/**
+ * Access cookie store to verify user session
+ * @returns
+ */
 const authCheck = async () => {
   const session = await auth();
   if (session) {
@@ -19,7 +24,7 @@ const authCheck = async () => {
       .map((cookie) => `${cookie.name}=${cookie.value}`)
       .join("; ");
     const decksData = await fetchAllDecks(cookieHeader);
-    // console.log(decksData, "Decks Data in Layout");
+    console.log(decksData, "Decks Data in Layout");
     const userData = {
       decksData,
       session,
@@ -33,8 +38,22 @@ const authCheck = async () => {
 export default async function Layout({ children }: LayoutProps) {
   const data = await authCheck();
   const decks = data?.decksData.decks;
+  console.log("DECKS in Layout", decks);
   const user = data?.session?.user;
+
+  // Zustand State Management
+  // const { setDecks } = useDeckStore((state) => ({
+  //   setDecks: state.setDecks,
+  // }));
+
+  // const { setCards } = useCardStore((state) => ({
+  //   setCards: state.setCards,
+  // }));
+
+  // setDecks(decks);
+
   // console.log(decks, "DECKS in Layout");
+
   return (
     <div className='dashboard-container'>
       <div className='sidebar-menu'>

@@ -1,10 +1,7 @@
 import React from "react";
-import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import "../../../styles/dashboard.css";
 import { cookies } from "next/headers";
-import DeckLink from "@/components/deck-link/DeckLink";
-import CardForm from "@/components/forms/card/CardForm";
 import DeckWrapper from "@/containers/deck-wrapper/DeckWrapper";
 
 const getData = async (cookieHeader: string) => {
@@ -24,7 +21,7 @@ const getData = async (cookieHeader: string) => {
   }
 };
 
-const Decks = async () => {
+const DecksPage = async () => {
   // retrieve session, if user, pass userID
   const session = await auth();
 
@@ -39,20 +36,6 @@ const Decks = async () => {
 
     return (
       <section className='dashboard-wrapper'>
-        {/* <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
-        <ul className='h-[100vh] flex flex-row gap-4'>
-          {data.decks.map((deck: any) => {
-            return (
-              <li key={deck.id}>
-                <DeckLink
-                  id={deck.id}
-                  title={deck.title}
-                  path={`/decks/${deck.id}`}
-                />
-              </li>
-            );
-          })}
-        </ul> */}
         <DeckWrapper decks={data.decks} />
       </section>
     );
@@ -63,4 +46,4 @@ const Decks = async () => {
     </section>
   );
 };
-export default Decks;
+export default DecksPage;

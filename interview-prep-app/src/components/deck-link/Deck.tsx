@@ -13,7 +13,7 @@ import { useCardStore, useDeckStore } from "@/_store/index";
  * Deck Client Component that holds all rendered cards, and will add new cards.
  *
  */
-const Deck = ({ deck, cards }: DeckDataResponse) => {
+const Deck = ({ deck, cards, decks }: any) => {
   // retrieve list of cards
   const {
     cards: cardsData,
@@ -23,6 +23,10 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
     cards: state.cards,
     addCard: state.addCard,
     setCards: state.setCards,
+  }));
+
+  const { setDecks } = useDeckStore((state) => ({
+    setDecks: state.setDecks,
   }));
 
   const [loading, setLoading] = useState(false);
@@ -38,6 +42,11 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
     console.log("New Cards set in store: ", cards);
   }, [cards, setCards]);
 
+  useEffect(() => {
+    setDecks(decks);
+    console.log("New Decks set in store: ", decks);
+  }, [decks, setDecks]);
+
   /**
    * Handles card form question input changes
    * @param e
@@ -49,7 +58,7 @@ const Deck = ({ deck, cards }: DeckDataResponse) => {
 
   /**
    * Submits the new card to database, updates state with new card.
-   * If card question is empty, do not submit. 
+   * If card question is empty, do not submit.
    */
   const submitAddCard = async () => {
     // Check if card question is empty

@@ -14,6 +14,25 @@ import { useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import { PenLine } from "lucide-react";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown";
+import { Ellipsis } from "lucide-react";
+import MoveCardMenu from "@/components/menus/MoveCardMenu";
+import { currentUser } from "@/lib/auth";
+import { fetchAllDecks } from "@/utils/fetch";
+
 export const DeckCard = ({
   card,
   deckId,
@@ -66,13 +85,10 @@ export const DeckCard = ({
           >
             <PenLine size={12} />
           </Button>
-          <Button
-            variant='destructive'
-            className='w-[35px] p-0'
-            onClick={handleDeleteCard}
-          >
-            <Trash2 size={12} />
-          </Button>
+          <MoveCardMenu
+            handleDeleteCard={handleDeleteCard}
+            user={card.authorId}
+          />
         </div>
       </div>
       <div className='p-4 font-medium'>{card.question}</div>

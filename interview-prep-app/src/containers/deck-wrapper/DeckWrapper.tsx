@@ -6,7 +6,21 @@ import { useDeckStore } from "@/_store/index";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { DeckData } from "@/types/data-types";
-
+import "../../styles/deck/deckWrapper.css";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown";
 interface Props {
   decks: DeckData[];
 }
@@ -76,53 +90,77 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
       }
     }
   };
+  /**
+   * COLORS:
+   *
+   * #DBF9F0
+   *
+   */
 
   return (
-    <>
+    <section className='deck-wrapper-container'>
       <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
-      <ul className='h-full flex flex-col gap-4'>
-        {Object.values(decksData).map((deck: any) => {
-          return (
-            <li key={deck.id}>
-              <DeckLink
-                id={deck.id}
-                title={deck.title}
-                path={`/decks/${deck.id}`}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <div className=' w-[250px] rounded-md m-auto text-center place-self-center bg-[#642eff] px-0 py-2 hover:bg-black text-white  transition-colors duration-300 ease-in-out flex items-center justify-center'>
+            Filter
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onSelect={() => console.log("Send")}>
+            Send
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <ul className='decks-list h-full gap-4'>
+        <li className='add-wrapper'>
+          {showForm ? (
+            <div
+              className='justify-self-center flex justify-between w-full p-4 rounded-lg'
+              // style={{ background: "#fefcf6" }}
+            >
+              <input
+                id='title'
+                placeholder='Deck Title'
+                value={newDeckTitle}
+                onChange={handleDeckForm}
+                onBlur={submitAddDeck}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    submitAddDeck();
+                  }
+                }}
+                className='input'
               />
-            </li>
-          );
-        })}
+            </div>
+          ) : (
+            <Button
+              variant='create'
+              className='add-card-btn  hover:bg-black hover:border-black hover:text-white flex rounded-lg self-center place-self-center justify-self-center  align-center align-items-center'
+              onClick={() => setShowForm(true)}
+            >
+              {/* <LuPlus /> */}
+              <span>Add a deck</span>
+            </Button>
+          )}
+        </li>
+        {Object.values(decksData)
+          .reverse()
+          .map((deck: any) => {
+            return (
+              <li key={deck.id}>
+                <DeckLink
+                  id={deck.id}
+                  title={deck.title}
+                  path={`/decks/${deck.id}`}
+                />
+              </li>
+            );
+          })}
       </ul>
-      {showForm ? (
-        <div
-          className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
-          style={{ background: "#fefcf6" }}
-        >
-          <input
-            id='title'
-            placeholder='Deck Title'
-            value={newDeckTitle}
-            onChange={handleDeckForm}
-            onBlur={submitAddDeck}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                submitAddDeck();
-              }
-            }}
-            className='input'
-          />
-        </div>
-      ) : (
-        <Button
-          variant='outline'
-          className='w-[400px] flex p-4 rounded-lg justify-center items-center'
-          onClick={() => setShowForm(true)}
-        >
-          <LuPlus />
-          <span>Add a deck</span>
-        </Button>
-      )}
-    </>
+    </section>
   );
 };
 

@@ -61,7 +61,7 @@ export async function PUT(
   const data = { question, answer, deckId, category, authorId, cardId };
   try {
     const card = await updateCard(data);
-    console.log("API ENDPOINT PUT, CARD SAVED", card);
+    // console.log("API ENDPOINT PUT, CARD SAVED", card);
     return NextResponse.json({
       message: `Card updated`,
       status: 200,

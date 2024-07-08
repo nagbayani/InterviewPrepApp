@@ -1,6 +1,8 @@
 export const fetchAllDecks = async (cookieHeader: string) => {
   // fetch data using api route
+  console.log(process.env.AUTH_URL, "AUTH URL");
   try {
+    // const res = await fetch(`http://localhost:3000/api/decks`, {
     const res = await fetch(`${process.env.AUTH_URL}/api/decks`, {
       headers: {
         "Content-Type": "application/json",
@@ -15,6 +17,7 @@ export const fetchAllDecks = async (cookieHeader: string) => {
   }
 };
 
+// get single deck
 export const fetchSingleDeck = async (deckId: string, cookieHeader: string) => {
   try {
     const res = await fetch(`${process.env.AUTH_URL}/api/decks/${deckId}`, {
@@ -34,6 +37,7 @@ export const fetchSingleDeck = async (deckId: string, cookieHeader: string) => {
   }
 };
 
+// get all cards
 export const fetchAllCards = async (cookieHeader: string) => {
   try {
     const res = await fetch(`${process.env.AUTH_URL}/api/cards`, {
@@ -50,6 +54,7 @@ export const fetchAllCards = async (cookieHeader: string) => {
   }
 };
 
+// get single card
 export const fetchSingleCard = async (cardId: string, cookieHeader: string) => {
   try {
     const res = await fetch(`${process.env.AUTH_URL}/api/cards/${cardId}`, {
@@ -65,3 +70,26 @@ export const fetchSingleCard = async (cardId: string, cookieHeader: string) => {
     console.log(error, "Something Went Wrong retrieving the card.");
   }
 };
+
+export const moveCardPUT = async (cardId: string, newDeckId: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.AUTH_URL}/api/cards/move/${cardId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cardId, newDeckId }),
+      }
+    );
+    const data = await response.json();
+    console.log("Move Card Data: ", data);
+    return data;
+  } catch (error) {
+    console.error(error, "Something Went Wrong moving the card.");
+    alert("Failed to move the card. Please try again.");
+  }
+};
+
+export const updateDeckPUT = async () => {};
