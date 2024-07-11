@@ -37,10 +37,14 @@ export const DeckCard = ({
   card,
   deckId,
   index,
+  onUpdateCard,
+  onMoveCard,
 }: {
   card: CardData;
   deckId: string;
   index: number;
+  onUpdateCard: (cardId: string, newDeckId: string) => void;
+  onMoveCard: (cardId: string, newDeckId: string, oldDeckId: string) => void;
 }) => {
   const router = useRouter();
   const { openModal } = useModal();
@@ -88,6 +92,9 @@ export const DeckCard = ({
           <MoveCardMenu
             handleDeleteCard={handleDeleteCard}
             user={card.authorId}
+            cardId={card.id}
+            deckId={deckId}
+            onMoveCard={onMoveCard}
           />
         </div>
       </div>

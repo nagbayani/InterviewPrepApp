@@ -40,6 +40,9 @@ import { ChooseDeckMenu } from "./ChooseDeckMenu";
 interface Props {
   handleDeleteCard: () => void;
   user: string;
+  cardId: string;
+  deckId: string;
+  onMoveCard: (cardId: string, newDeckId: string, oldDeckId: string) => void;
 }
 
 const labels = [
@@ -53,7 +56,12 @@ const labels = [
 ];
 
 // Need to get the data of all the decks
-const MoveCardMenu = ({ handleDeleteCard }: Props) => {
+const MoveCardMenu = ({
+  handleDeleteCard,
+  onMoveCard,
+  cardId,
+  deckId,
+}: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className='w-8 h-8 bg-inherit px-0 py-0 hover:bg-gray-300 text-white font-bold rounded-lg transition-colors duration-300 ease-in-out flex items-center justify-center'>
@@ -68,7 +76,11 @@ const MoveCardMenu = ({ handleDeleteCard }: Props) => {
                 and allow the user to select a deck to move the card to.
                 Need to retrieve the deck data.
                */}
-              <ChooseDeckMenu />
+              <ChooseDeckMenu
+                cardId={cardId}
+                onMoveCard={onMoveCard}
+                deckId={deckId}
+              />
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>

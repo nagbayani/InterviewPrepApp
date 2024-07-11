@@ -21,10 +21,7 @@ export default async function CardPage({ params: { cardId } }: Props) {
 
   // const allDecks = await fetchAllDecks(userSession.cookieHeader);
 
-  // if (allDecks) {
-  //   console.log("All Decks in Card Page", allDecks);
-  // }
-  // console.log(cardData, "CARD DATA IN CARD PAGE");
+  console.log(cardData, "CARD DATA IN CARD PAGE");
 
   if (!cardData?.id) {
     return <h1 className='text-center'>No Data Found for that Card ID.</h1>;

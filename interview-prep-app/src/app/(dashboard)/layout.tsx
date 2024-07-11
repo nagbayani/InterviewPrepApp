@@ -41,18 +41,6 @@ export default async function Layout({ children }: LayoutProps) {
   console.log("DECKS in Layout", decks);
   const user = data?.session?.user;
 
-  // Zustand State Management
-  // const { setDecks } = useDeckStore((state) => ({
-  //   setDecks: state.setDecks,
-  // }));
-
-  // const { setCards } = useCardStore((state) => ({
-  //   setCards: state.setCards,
-  // }));
-
-  // setDecks(decks);
-
-  // console.log(decks, "DECKS in Layout");
 
   return (
     <div className='dashboard-container'>

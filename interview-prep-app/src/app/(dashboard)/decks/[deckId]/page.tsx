@@ -4,6 +4,7 @@ import { currentUser } from "@/lib/auth";
 import { DeckDataResponse, CardData, DeckData } from "@/types/data-types";
 import { DeckCard } from "./Card";
 import Deck from "@/components/deck-link/Deck";
+import HydrateStore from "@/_store/HydrateStore";
 interface Response {
   data: DeckDataResponse;
 }
@@ -25,6 +26,7 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
     <div className='dashboard-wrapper'>
       {/* Pass data response to Deck client component */}
       <Deck deck={deck} cards={cards} decks={decks} />
+      <HydrateStore decks={decks} cards={cards} />
     </div>
   );
 };

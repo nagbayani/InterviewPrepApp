@@ -71,16 +71,21 @@ export const fetchSingleCard = async (cardId: string, cookieHeader: string) => {
   }
 };
 
-export const moveCardPUT = async (cardId: string, newDeckId: string) => {
+export const moveCardPUT = async (
+  cardId: string,
+  newDeckId: string,
+  oldDeckId: string
+) => {
   try {
+    console.log(process.env.NEXT_PUBLIC_AUTH_URL, "NEXT_AUTH_URL");
     const response = await fetch(
-      `${process.env.AUTH_URL}/api/cards/move/${cardId}`,
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/cards/move`,
       {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ cardId, newDeckId }),
+        body: JSON.stringify({ cardId, newDeckId, oldDeckId }),
       }
     );
     const data = await response.json();

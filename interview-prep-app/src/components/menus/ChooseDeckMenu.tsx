@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -30,7 +31,8 @@ import {
 } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
 import { DeckData } from "@/types/data-types";
-import { useDeckStore } from "@/_store";
+import { useDeckStore, useCardStore } from "@/_store";
+import { moveCardPUT } from "@/utils/fetch";
 
 const FormSchema = z.object({
   deck: z.string({
@@ -38,7 +40,15 @@ const FormSchema = z.object({
   }),
 });
 
-export function ChooseDeckMenu({}) {
+export function ChooseDeckMenu({
+  cardId,
+  onMoveCard,
+  deckId,
+}: {
+  cardId: string;
+  deckId: string;
+  onMoveCard: (cardId: string, newDeckId: string, oldDeckId: string) => void;
+}) {
   const {
     decks: decksData,
     addDeck,
@@ -50,22 +60,33 @@ export function ChooseDeckMenu({}) {
     setDecks: state.setDecks,
     updateDeck: state.updateDeck,
   }));
+
+  const decksArray = Object.values(decksData);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    const selectedDeck = decksArray.filter((deck) => deck.title === data.deck);
+    try {
+      onMoveCard(cardId, selectedDeck[0].id, deckId);
+      toast({
+        title: "You submitted the following values:",
+        description: (
+          <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+            <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      });
+    } catch {
+      toast({
+        title: "Error",
+        description: "An error occurred. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
-
-  const decksArray = Object.values(decksData);
 
   return (
     <Form {...form}>

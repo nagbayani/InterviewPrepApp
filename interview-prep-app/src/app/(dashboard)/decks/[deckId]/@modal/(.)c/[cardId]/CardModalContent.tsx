@@ -12,7 +12,7 @@ const CardModalContent = ({ cardData }: { cardData: CardData }) => {
     openModal(cardData.id, cardData.deckId);
   }, [cardData, openModal]);
 
-  return <CardDisplay data={cardData} />;
+  return <CardDisplay card={cardData} />;
 };
 
 export default CardModalContent;

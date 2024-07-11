@@ -4,7 +4,7 @@ import "../../../styles/dashboard.css";
 import { cookies } from "next/headers";
 import DeckWrapper from "@/containers/deck-wrapper/DeckWrapper";
 
-const getData = async (cookieHeader: string) => {
+const getDeckData = async (cookieHeader: string) => {
   // fetch data using api route
   try {
     const res = await fetch(`${process.env.AUTH_URL}/api/decks`, {
@@ -32,7 +32,7 @@ const DecksPage = async () => {
       .map((cookie) => `${cookie.name}=${cookie.value}`)
       .join("; ");
 
-    const data = await getData(cookieHeader);
+    const data = await getDeckData(cookieHeader);
 
     return (
       <section className='dashboard-wrapper'>

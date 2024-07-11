@@ -7,6 +7,9 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { CardInput } from "../ui/cardinput";
 import { useCardStore, useDeckStore } from "@/_store/index";
+import { fetchAllCards, moveCardPUT } from "@/utils/fetch";
+import { set } from "zod";
+import { toast } from "@/components/ui/use-toast";
 
 /**
  *
@@ -18,34 +21,24 @@ const Deck = ({ deck, cards, decks }: any) => {
   const {
     cards: cardsData,
     addCard,
+    updateCard,
+    deleteCard,
     setCards,
   } = useCardStore((state) => ({
     cards: state.cards,
     addCard: state.addCard,
+    updateCard: state.updateCard,
+    deleteCard: state.deleteCard,
     setCards: state.setCards,
   }));
 
-  const { setDecks } = useDeckStore((state) => ({
-    setDecks: state.setDecks,
+  const { decks: decksData } = useDeckStore((state) => ({
+    decks: state.decks,
   }));
 
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [newCardQuestion, setNewCardQuestion] = useState("");
-
-  /**
-   * Set the cards in the store when the component mounts
-   */
-  useEffect(() => {
-    // Initialize Zustand store with the fetched cards
-    setCards(cards);
-    console.log("New Cards set in store: ", cards);
-  }, [cards, setCards]);
-
-  useEffect(() => {
-    setDecks(decks);
-    console.log("New Decks set in store: ", decks);
-  }, [decks, setDecks]);
 
   /**
    * Handles card form question input changes
@@ -96,6 +89,27 @@ const Deck = ({ deck, cards, decks }: any) => {
     }
   };
 
+  const handleCardUpdate = (cardId: string, newDeckId: string) => {
+    updateCard(cardId, { deckId: newDeckId });
+  };
+
+  const handleCardMove = async (
+    cardId: string,
+    newDeckId: string,
+    oldDeckId: string
+  ) => {
+    handleCardUpdate(cardId, newDeckId);
+    const response = await moveCardPUT(cardId, newDeckId, oldDeckId);
+    console.log(response, "HandleCardMove Response");
+    if (response) {
+      try {
+        setCards(response.cards);
+      } catch {
+        console.log("Error fetching updated cards in Deck component.");
+      }
+    }
+  };
+
   return (
     <section className='deck-wrapper-container'>
       <div className='deck-wrapper-header'>
@@ -109,6 +123,8 @@ const Deck = ({ deck, cards, decks }: any) => {
           card={card}
           deckId={deck.id}
           index={index + 1}
+          onUpdateCard={handleCardUpdate}
+          onMoveCard={handleCardMove}
         />
       ))}
       {showForm ? (
