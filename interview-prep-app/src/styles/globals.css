@@ -64,7 +64,12 @@
     --novel-highlight-pink: #faf1f5;
     --novel-highlight-gray: #f1f1ef;
     --novel-stone-100: #f5f5f4; /* Light stone shade */
-    --novel-stone-200: #e7e5e4; /* Medium light stone shade */
+    --novel-stone-200: #e7e5e4;
+    --novel-stone-300: #d6d3d1;
+    --novel-stone-400: #b8b3b0;
+    --novel-stone-500: #a29e99; /* Mid stone shade */
+    --novel-stone-600: #8c8780;
+    --novel-stone-700: #726b63;
     --novel-stone-800: #57534e; /* Dark stone shade */
     font-size: var(--step--7);
     /* letter-spacing: -0.025em; */

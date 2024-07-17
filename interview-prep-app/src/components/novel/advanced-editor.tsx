@@ -106,20 +106,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
     }, 500); // Adjust delay if needed
   }, []);
 
-  // useEffect(() => {
-  //   console.log(editor?.$nodes, "EDITOR");
-  //   const content = window.localStorage.getItem("novel-content");
-  //   if (initialValue) {
-  //     console.log("initialValue provided!", initialValue);
-  //     setInitialContent(initialValue);
-  //   } else if (content) {
-  //     setInitialContent(JSON.parse(content));
-  //   } else {
-  //     setInitialContent(defaultValue);
-  //   }
-  // }, [initialValue]);
 
-  // if (!initialContent) return null;
 
   return (
     <div className='relative w-full max-w-screen-lg'>

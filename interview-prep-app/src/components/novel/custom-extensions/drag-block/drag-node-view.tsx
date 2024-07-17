@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import React, { useMemo } from "react";
 import { NodeViewWrapper, NodeViewProps, NodeViewContent } from "@tiptap/react";
 import { useEditor } from "novel";
+import { GripVertical } from "lucide-react";
 
 import "../../../../styles/prosemirror.css";
 
@@ -35,7 +36,7 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
   return (
     <NodeViewWrapper as='div' className='flex gap-2 group w-full relative'>
       <section
-        className='flex mt-2 pt-[2px] gap-1'
+        className='flex  mr-2 pt-[2px] gap-1'
         aria-label='left-menu'
         contentEditable={false}
       >
@@ -44,11 +45,11 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
           onClick={createNodeAfter}
         >
           {/* <i className='i-mdi-plus' /> */}
-          <Plus />
+          <Plus className='custom-icon-color' />
         </button>
         <div
           // className='d-block-button group-hover:opacity-100'
-          className='drag-handle group-hover:opacity-100'
+          className='d-block-button group-hover:opacity-100'
           contentEditable={false}
           draggable='true'
           data-drag-handle
@@ -56,7 +57,10 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
           role='button'
         >
           {/* <i className='i-ic-baseline-drag-indicator' /> */}
-          <i className='drag-handle' />
+          {/* <i className='drag-handle' /> */}
+          <i className='drag-handle h-full'>
+            <GripVertical className='custom-icon-color' />
+          </i>
         </div>
       </section>
 

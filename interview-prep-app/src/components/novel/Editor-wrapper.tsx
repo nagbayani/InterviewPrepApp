@@ -6,6 +6,7 @@ import { JSONContent } from "novel";
 import { useState, useEffect, use } from "react";
 import { defaultValue } from "@/lib/content";
 import { useCardStore } from "@/_store";
+import { TipTapEditor } from "./Editor";
 
 interface Data {
   id: string; // cardID
@@ -23,7 +24,6 @@ export default function EditorWrapper({ data }: { data: Data }) {
     updateCard: state.updateCard,
   }));
   // console.log("DATA ANSWER", data.answer);
-
 
   // *** Convert data.answer to JSONContent ***
   let initialContent: JSONContent;
@@ -76,7 +76,8 @@ export default function EditorWrapper({ data }: { data: Data }) {
     // <div className=' w-full h-full p-6 border gap-6 rounded-md bg-card'>
     // {/* </div> */}
     <>
-      <Editor initialValue={value} onChange={setValue} />
+      {/* <Editor initialValue={value} onChange={setValue} /> */}
+      <TipTapEditor initialValue={value} onChange={setValue} />
       <button
         onClick={handleSave}
         className='w-[100px] mt-4 p-2 bg-blue-500 text-white rounded-md'

@@ -1,4 +1,3 @@
-import { GlobalDragHandle } from "novel/extensions";
 import React, {
   useState,
   useEffect,

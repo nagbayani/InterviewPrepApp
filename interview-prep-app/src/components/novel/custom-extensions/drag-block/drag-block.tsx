@@ -23,10 +23,10 @@ export const DBlock = Node.create<DBlockOptions>({
   name: "dBlock",
 
   priority: 1000,
-  // group: "dBlock",
-  // content: "block",
-  group: "block",
-  content: "block+",
+  group: "dBlock",
+  content: "block",
+  // group: "block",
+  // content: "block+",
   draggable: true,
 
   selectable: false,

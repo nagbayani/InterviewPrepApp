@@ -10,7 +10,7 @@ import {
   AIHighlight,
 } from "novel/extensions";
 import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
-import SlashCommand from "./custom-extensions/slash-command";
+import SlashCommand from "./do-not-use/slash-command";
 
 // import { GlobalDragHandle } from "tiptap-extension-global-drag-handle";
 import { DBlock } from "./custom-extensions/drag-block";
