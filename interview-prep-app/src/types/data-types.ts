@@ -9,7 +9,7 @@ export type CardData = {
   deckId: string;
 };
 
-export interface DeckData {
+export interface DeckDataResponse {
   deck: {
     id: string;
     createdAt: string;
@@ -27,4 +27,12 @@ export interface DeckData {
     authorId: string;
     deckId: string;
   }[];
+}
+
+export interface DeckData {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  // authorId: string;
 }

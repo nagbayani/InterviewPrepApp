@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { CardData } from "@/types/CardData";
-import CardDisplay from "../../../c/[cardId]/CardDisplay";
+import { CardData } from "@/types/data-types";
+import CardDisplay from "../../../c/[cardId]/Card-Display";
 import { useModal } from "@/containers/modal/ModalContext";
 
 const CardModalContent = ({ cardData }: { cardData: CardData }) => {
@@ -12,7 +12,7 @@ const CardModalContent = ({ cardData }: { cardData: CardData }) => {
     openModal(cardData.id, cardData.deckId);
   }, [cardData, openModal]);
 
-  return <CardDisplay data={cardData} />;
+  return <CardDisplay card={cardData} />;
 };
 
 export default CardModalContent;

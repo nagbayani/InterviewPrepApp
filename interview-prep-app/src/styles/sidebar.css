@@ -3,7 +3,8 @@
   position: sticky;
   top: 50px;
   left: 0;
-  background: #1d0061;
+  /* background-color: rgba(24, 24, 27, 0.5); */
+
   overflow-x: hidden;
   padding-top: 20px;
   -webkit-text-fill-color: aliceblue;

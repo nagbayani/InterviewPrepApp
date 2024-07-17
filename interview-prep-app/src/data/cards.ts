@@ -1,5 +1,13 @@
 import prisma from "@/lib/db";
 
+export const getCardsByUserId = async (userId: string) => {
+  const cards = await prisma.card.findMany({
+    where: { authorId: userId },
+  });
+
+  return cards;
+};
+
 export const getCardsByDeckId = async (deckId: string) => {
   const cards = await prisma.card.findMany({
     where: { deckId },
@@ -57,4 +65,8 @@ export const deleteCard = async (cardId: string) => {
   });
 
   return card;
+};
+
+
+export const moveCard = async (cardId: string, newDeckId: string) => {
 };

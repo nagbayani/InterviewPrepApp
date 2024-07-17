@@ -1,6 +1,6 @@
 "use client";
 // import a type of data for props
-import { CardData } from "@/types/CardData";
+import { CardData } from "@/types/data-types";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -20,14 +20,21 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "@/styles/cardForm.css";
+import { useCardStore } from "@/_store/index";
+
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
+import Card from "../../@modal/(.)c/[cardId]/page";
 
 type Props = {
-  data: CardData;
+  card: CardData;
 };
 
-export default function CardDisplay({ data }: Props) {
+export default function CardDisplay({ card }: Props) {
+  const { updateCard } = useCardStore((state) => ({
+    updateCard: state.updateCard,
+  }));
+
   const [isEditing, setIsEditing] = useState({
     question: false,
     answer: false,
@@ -35,8 +42,8 @@ export default function CardDisplay({ data }: Props) {
   });
 
   const [details, setDetails] = useState({
-    question: data.question || "Your Question",
-    answer: data.answer || "Your Answer",
+    question: card.question || "Your Question",
+    answer: card.answer || "Your Answer",
     category: "Category",
   });
 
@@ -44,7 +51,6 @@ export default function CardDisplay({ data }: Props) {
     useState("Your Question");
 
   // const [isExpanded, setIsExpanded] = useState(false);
-
   // const toggleExpansion = () => {
   //   setIsExpanded((prev) => !prev);
   // };
@@ -123,22 +129,24 @@ export default function CardDisplay({ data }: Props) {
     switch (field) {
       case "question":
         try {
-          const response = await fetch(`/api/cards/${data.id}`, {
+          const response = await fetch(`/api/cards/${card.id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               question: details.question,
-              deckId: data.deckId,
-              authorId: data.authorId,
-              answer: data.answer,
-              cardId: data.id,
+              deckId: card.deckId,
+              authorId: card.authorId,
+              answer: card.answer,
+              cardId: card.id,
             }),
           });
 
           if (response.ok) {
-            // Handle successful save
+            // UPDATE Card in Zustand Store
+            updateCard(card.id, { question: details.question });
+
             console.log("CardForm.tsx component - SAVE SUCCESS");
           }
         } catch {
@@ -202,7 +210,7 @@ export default function CardDisplay({ data }: Props) {
           </div>
 
           {/* Novel Rich Text Editor - User writes answer. */}
-          <EditorWrapper data={data} />
+          <EditorWrapper data={card} />
         </Form>
       </div>
       {/* </Link> */}

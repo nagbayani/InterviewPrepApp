@@ -1,10 +1,11 @@
 "use client";
 
-import Editor from "@/components/novel/advanced-editor";
+import Editor from "./advanced-editor";
 // import { ThemeToggle } from "@/components/theme-toggle";
 import { JSONContent } from "novel";
 import { useState, useEffect, use } from "react";
 import { defaultValue } from "@/lib/content";
+import { useCardStore } from "@/_store";
 
 interface Data {
   id: string; // cardID
@@ -18,8 +19,13 @@ interface Data {
 }
 
 export default function EditorWrapper({ data }: { data: Data }) {
+  const { updateCard } = useCardStore((state) => ({
+    updateCard: state.updateCard,
+  }));
   // console.log("DATA ANSWER", data.answer);
-  // convert data.answer to JSONContent
+
+
+  // *** Convert data.answer to JSONContent ***
   let initialContent: JSONContent;
   try {
     initialContent = JSON.parse(data.answer);
@@ -48,6 +54,7 @@ export default function EditorWrapper({ data }: { data: Data }) {
       }),
     });
     if (response.ok) {
+      updateCard(data.id, { answer: JSON.stringify(value) });
       // Handle successful save
       console.log("successful save");
     } else {
@@ -59,7 +66,7 @@ export default function EditorWrapper({ data }: { data: Data }) {
     // const content = window.localStorage.getItem("novel-content");
     // console.log("CONTENT", content); // this works
     // if (content) setInitialContent(JSON.parse(content));
-    if (value) console.log("VALUE", value);
+    // if (value) console.log("VALUE", value);
     // else setInitialContent(defaultValue);
     // console.log("WRAPPER VALUE", value);
     // console.log("WRAPPER VALUE STRINGIFY", JSON.stringify(value));

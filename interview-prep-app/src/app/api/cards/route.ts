@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { currentUser } from "@/lib/auth";
-import { createCard, getCardsByDeckId } from "@/data/cards";
+import { createCard, getCardsByDeckId, getCardsByUserId } from "@/data/cards";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const user = await currentUser();
@@ -11,6 +11,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
       status: 401,
     });
   }
+
+  const cardsDb = await getCardsByUserId(user.session?.user.id ?? "");
+  const cards = cardsDb.map((card) => {
+    const { authorId, ...safeCard } = card;
+    return safeCard;
+  });
+  return NextResponse.json(cards);
 }
 
 // POST

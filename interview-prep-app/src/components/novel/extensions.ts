@@ -8,9 +8,16 @@ import {
   StarterKit,
   Placeholder,
   AIHighlight,
-  GlobalDragHandle,
 } from "novel/extensions";
 import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
+import SlashCommand from "./custom-extensions/slash-command";
+
+// import { GlobalDragHandle } from "tiptap-extension-global-drag-handle";
+import { DBlock } from "./custom-extensions/drag-block";
+import { Paragraph } from "./custom-extensions/paragraph";
+import { Document } from "./custom-extensions/document";
+import { TrailingNode } from "./custom-extensions/trailing-node";
+import CustomGlobalDrag from "./custom-extensions/CustomGlobalDrag";
 
 import { UploadImagesPlugin } from "novel/plugins";
 
@@ -20,6 +27,11 @@ import { cx } from "class-variance-authority";
 
 const aiHighlight = AIHighlight;
 const placeholder = Placeholder;
+
+const document = Document;
+const paragraph = Paragraph;
+const dBlock = DBlock;
+const trailingNode = TrailingNode;
 
 const tiptapLink = TiptapLink.configure({
   HTMLAttributes: {
@@ -111,25 +123,31 @@ const starterKit = StarterKit.configure({
   // gapcursor: false,
 });
 
-const globalDragHandle = GlobalDragHandle.configure({
-  dragHandleWidth: 20, // default
+// const globalDragHandle = GlobalDragHandle.configure({
+//   dragHandleWidth: 20, // default
 
-  // The scrollTreshold specifies how close the user must drag an element to the edge of the lower/upper screen for automatic
-  // scrolling to take place. For example, scrollTreshold = 100 means that scrolling starts automatically when the user drags an
-  // element to a position that is max. 99px away from the edge of the screen
-  // You can set this to 0 to prevent auto scrolling caused by this extension
-  // scrollTreshold: 100, // default
-  scrollTreshold: 100,
-  HtmlAttributes: {
-    class: cx("drag-handle"),
-  },
-});
+//   // The scrollTreshold specifies how close the user must drag an element to the edge of the lower/upper screen for automatic
+//   // scrolling to take place. For example, scrollTreshold = 100 means that scrolling starts automatically when the user drags an
+//   // element to a position that is max. 99px away from the edge of the screen
+//   // You can set this to 0 to prevent auto scrolling caused by this extension
+//   // scrollTreshold: 100, // default
+//   scrollTreshold: 100,
+//   HtmlAttributes: {
+//     class: cx("drag-handle"),
+//   },
+// });
 
 const autoJoiner = AutoJoiner.configure({
   elementsToJoin: ["bulletList", "orderedList"], // default
 });
 
 export const defaultExtensions = [
+  // GlobalDragHandle,
+  // document,
+  // paragraph,
+  // dBlock,
+  // trailingNode,
+  CustomGlobalDrag,
   starterKit,
   placeholder,
   tiptapLink,
@@ -139,6 +157,6 @@ export const defaultExtensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  globalDragHandle,
   autoJoiner,
+  SlashCommand,
 ];

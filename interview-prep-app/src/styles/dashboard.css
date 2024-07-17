@@ -8,9 +8,10 @@
 
 .sidebar-menu {
   flex: 1;
-  background-color: #1d0061;
+  /* background-color: #1d0061; */
+  background-color: rgba(24, 24, 27, 0.95);
   padding: 5px;
-  min-height: 100vh;
+  height: 100%;
   max-width: 250px;
 }
 

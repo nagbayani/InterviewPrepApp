@@ -1,7 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/db";
-import { auth } from "../../../../auth";
 import { currentUser } from "@/lib/auth";
 import { getDecksByUserId } from "@/data/decks";
 
@@ -12,7 +10,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   // console.log(req.cookies, "API ENDPOINT COOKIES");
 
   // Extract cookies from the request
-  const cookieHeader = req.headers.get("cookie");
+  // const cookieHeader = req.headers.get("cookie");
 
   // console.log(req.headers.get("Cookie"), "API ENDPOINT COOKIE HEADER");
   if (!user) {
@@ -32,6 +30,30 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
   return NextResponse.json({ decks });
 }
+
+export async function POST(req: NextRequest, res: NextResponse) {
+  const { title } = (await req.json()) as { title: string };
+
+  const user = await currentUser();
+
+  try {
+    const deck = await prisma.deck.create({
+      data: {
+        title,
+        authorId: user.session?.user.id ?? "",
+      },
+    });
+
+    return NextResponse.json({
+      message: `Deck created`,
+      status: 200,
+      deck,
+    });
+  } catch {
+    return NextResponse.json({ message: "Error creating deck", status: 400 });
+  }
+}
+
 // DELETE deck
 export async function DELETE(req: NextRequest, res: NextResponse) {}
 

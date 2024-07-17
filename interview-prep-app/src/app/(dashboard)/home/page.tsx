@@ -19,14 +19,11 @@ const HomePage = async () => {
           style={{
             fontSize: "var(--step-1)",
             fontWeight: "200",
-            letterSpacing: "-0.05em",
           }}
         >
           Welcome back, {session?.user.name}{" "}
         </h1>
-        <h1 style={{ fontSize: "var(--step-1)", letterSpacing: "-0.05em" }}>
-          Board
-        </h1>
+        <h1 style={{ fontSize: "var(--step-1)" }}>Board</h1>
         <HomeBoard />
       </div>
     );
