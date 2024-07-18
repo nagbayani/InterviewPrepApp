@@ -12,6 +12,9 @@ import GapCursor from "@tiptap/extension-gapcursor";
 import History from "@tiptap/extension-history";
 import HardBreak from "@tiptap/extension-hard-break";
 import Heading from "@tiptap/extension-heading";
+import Color from "@tiptap/extension-color";
+import TextStyle from "@tiptap/extension-text-style";
+import Highlight from "@tiptap/extension-highlight";
 
 import { Node as ProsemirrorNode } from "prosemirror-model";
 import { Plugin } from "prosemirror-state";
@@ -134,6 +137,8 @@ export const getExtensions = ({
     Italic,
     Strike,
     Underline,
+    TextStyle,
+    Highlight,
     // Link.configure({
     //   autolink: true,
     //   linkOnPaste: true,
@@ -150,6 +155,7 @@ export const getExtensions = ({
       levels: [1, 2, 3],
     }),
     TrailingNode,
+    Color,
 
     // Table
     // ...SuperchargedTableExtensions,

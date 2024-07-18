@@ -1,7 +1,8 @@
 import { BubbleMenu, Editor } from "@tiptap/react";
 import { useState } from "react";
-import { generalButtons } from "./buttons";
-import { NodeTypeDropdown } from "./NodeTypeDropdown";
+import { generalButtons } from "./selectors/buttons";
+import { NodeTypeDropdown } from "./dropdowns/NodeTypeDropdown";
+import { ColorTypeDropDown } from "./dropdowns/ColorTypeDropDown";
 import "../../../../styles/text-editor/bubbleMenu.css";
 
 interface CustomBubbleMenuProps {
@@ -12,6 +13,7 @@ export const CustomBubbleMenu: React.FC<CustomBubbleMenuProps> = ({
   editor,
 }) => {
   const [openNode, setOpenNode] = useState(false);
+  const [openColor, setOpenColor] = useState(false);
 
   return (
     <BubbleMenu
@@ -43,6 +45,11 @@ export const CustomBubbleMenu: React.FC<CustomBubbleMenuProps> = ({
           </button>
         );
       })}
+      <ColorTypeDropDown
+        editor={editor}
+        open={openColor}
+        onOpenChange={setOpenColor}
+      />
     </BubbleMenu>
   );
 };

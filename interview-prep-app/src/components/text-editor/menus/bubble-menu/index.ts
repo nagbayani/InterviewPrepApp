@@ -1,2 +1,2 @@
 export * from "./CustomBubbleMenu";
-export * from "./buttons";
+export * from "./selectors/buttons";

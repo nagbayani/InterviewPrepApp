@@ -1,8 +1,8 @@
 import { Editor } from "@tiptap/react";
 import { useState } from "react";
 import Tippy from "@tippyjs/react";
-import "../../../../styles/text-editor/bubbleMenu.css";
-import { items } from "./node-items";
+import "../../../../../styles/text-editor/bubbleMenu.css";
+import { items } from "../selectors/node-items";
 import { Button } from "@/components/ui/button";
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Popover } from "@radix-ui/react-popover";
@@ -38,30 +38,30 @@ export const NodeTypeDropdown: React.FC<NodeTypeDropdownProps> = ({
     name: "Multiple",
   };
 
-  const buttonText = () => {
-    if (editor.isActive("heading", { level: 1 })) {
-      return "Heading 1";
-    }
-    if (editor.isActive("heading", { level: 2 })) {
-      return "Heading 2";
-    }
-    if (editor.isActive("heading", { level: 3 })) {
-      return "Heading 3";
-    }
-    if (editor.isActive("orderedList")) {
-      return "Numbered list";
-    }
-    if (editor.isActive("bulletList")) {
-      return "Bulleted list";
-    }
+  // const buttonText = () => {
+  //   if (editor.isActive("heading", { level: 1 })) {
+  //     return "Heading 1";
+  //   }
+  //   if (editor.isActive("heading", { level: 2 })) {
+  //     return "Heading 2";
+  //   }
+  //   if (editor.isActive("heading", { level: 3 })) {
+  //     return "Heading 3";
+  //   }
+  //   if (editor.isActive("orderedList")) {
+  //     return "Numbered list";
+  //   }
+  //   if (editor.isActive("bulletList")) {
+  //     return "Bulleted list";
+  //   }
 
-    return "Normal text";
-  };
+  //   return "Normal text";
+  // };
 
-  const isOnlyParagraph =
-    !editor.isActive("bulletList") &&
-    !editor.isActive("orderedList") &&
-    !editor.isActive("heading");
+  // const isOnlyParagraph =
+  //   !editor.isActive("bulletList") &&
+  //   !editor.isActive("orderedList") &&
+  //   !editor.isActive("heading");
 
   return (
     <Popover modal={true} open={open} onOpenChange={onOpenChange}>

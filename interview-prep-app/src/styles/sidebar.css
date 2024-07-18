@@ -1,5 +1,5 @@
 .sidebar-container {
-  height: 100%;
+  height: 100vh;
   position: sticky;
   top: 50px;
   left: 0;
