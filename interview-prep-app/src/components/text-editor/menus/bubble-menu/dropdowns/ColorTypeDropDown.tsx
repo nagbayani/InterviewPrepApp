@@ -52,7 +52,7 @@ export const ColorTypeDropDown = ({
 
       <PopoverContent
         sideOffset={5}
-        className='my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border p-1 shadow-xl '
+        className='cursor-pointer my-1 flex max-h-80 w-48 flex-col overflow-hidden overflow-y-auto rounded border p-1 shadow-xl '
         align='start'
       >
         <div className='flex flex-col'>
@@ -64,6 +64,7 @@ export const ColorTypeDropDown = ({
               key={index}
               onClick={() => {
                 editor.commands.unsetColor();
+                onOpenChange(false);
                 name !== "Default" &&
                   editor
                     .chain()
@@ -93,6 +94,7 @@ export const ColorTypeDropDown = ({
             <div
               key={index}
               onClick={() => {
+                onOpenChange(false);
                 editor.commands.unsetHighlight();
                 name !== "Default" && editor.commands.setHighlight({ color });
               }}
