@@ -11,7 +11,7 @@ import Suggestion from "@tiptap/suggestion";
 import { ReactRenderer } from "@tiptap/react";
 import { useCompletion } from "ai/react";
 import tippy from "tippy.js";
-import { handleImageUpload } from "../image";
+import { handleImageUpload } from "./image";
 
 import {
   Heading1,

@@ -10,14 +10,14 @@ import {
   AIHighlight,
 } from "novel/extensions";
 import AutoJoiner from "tiptap-extension-auto-joiner"; // optional
-import SlashCommand from "./do-not-use/slash-command";
+import SlashCommand from "./slash-command";
 
 // import { GlobalDragHandle } from "tiptap-extension-global-drag-handle";
-import { DBlock } from "./custom-extensions/drag-block";
-import { Paragraph } from "./custom-extensions/paragraph";
-import { Document } from "./custom-extensions/document";
-import { TrailingNode } from "./custom-extensions/trailing-node";
-import CustomGlobalDrag from "./custom-extensions/CustomGlobalDrag";
+import { DBlock } from "../custom-extensions/drag-block";
+import { Paragraph } from "../custom-extensions/paragraph";
+import { Document } from "../custom-extensions/document";
+import { TrailingNode } from "../custom-extensions/trailing-node";
+// import CustomGlobalDrag from "./custom-extensions/CustomGlobalDrag";
 
 import { UploadImagesPlugin } from "novel/plugins";
 

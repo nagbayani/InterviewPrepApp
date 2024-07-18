@@ -13,14 +13,14 @@ import {
 } from "novel";
 import { ImageResizer, handleCommandNavigation } from "novel/extensions";
 import { defaultExtensions } from "./extensions";
-import { NodeSelector } from "./selectors/node-selector";
-import { LinkSelector } from "./selectors/link-selector";
-import { ColorSelector } from "./selectors/color-selector";
-import { TextButtons } from "./selectors/text-buttons";
+import { NodeSelector } from "./do-not-use/selectors/node-selector";
+import { LinkSelector } from "./do-not-use/selectors/link-selector";
+import { ColorSelector } from "./do-not-use/selectors/color-selector";
+import { TextButtons } from "./do-not-use/selectors/text-buttons";
 import { useEditor } from "@tiptap/react";
 
 import { useDebouncedCallback } from "use-debounce";
-import GenerativeMenuSwitch from "./generative/generative-menu-switch";
+import GenerativeMenuSwitch from "./do-not-use/generative/generative-menu-switch";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./image-upload";
 

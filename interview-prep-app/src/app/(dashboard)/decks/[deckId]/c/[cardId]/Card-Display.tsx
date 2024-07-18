@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { CardInput } from "@/components/ui/cardinput";
-import EditorWrapper from "@/components/novel/Editor-wrapper";
+import EditorWrapper from "@/components/text-editor/Editor-wrapper";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";

@@ -1,6 +1,6 @@
 "use client";
 
-import Editor from "./advanced-editor";
+// import Editor from "./advanced-editor";
 // import { ThemeToggle } from "@/components/theme-toggle";
 import { JSONContent } from "novel";
 import { useState, useEffect, use } from "react";

@@ -20,7 +20,7 @@ import "../../../styles/cardForm.css";
 import { useState } from "react";
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import EditorWrapper from "@/components/novel/Editor-wrapper";
+import EditorWrapper from "@/components/text-editor/Editor-wrapper";
 
 interface Data {
   id: string;

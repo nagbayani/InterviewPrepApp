@@ -27,7 +27,8 @@ import LoadingCircle from "@/components/ui/icons/loading-circle";
 import { toast } from "sonner";
 import va from "@vercel/analytics";
 import Magic from "@/components/ui/icons/magic";
-import { handleImageUpload } from "@/components/novel/image";
+import { handleImageUpload } from "./image";
+import { PluginKey } from "prosemirror-state";
 
 interface CommandItemProps {
   title: string;
@@ -65,6 +66,7 @@ const Command = Extension.create({
       Suggestion({
         editor: this.editor,
         ...this.options.suggestion,
+        key: new PluginKey("slash-command-suggestion"),
       }),
     ];
   },
@@ -79,14 +81,15 @@ const suggestionItems = ({ query }: { query: string }) => {
       command: ({ editor, range }: Command) => {
         const endPos = range.to;
 
-        editor.commands.focus("start");
+        // editor.commands.focus("start");
 
         editor
           .chain()
           .insertContentAt(endPos, { type: "paragraph" })
-          .focus(endPos)
+          .focus(endPos + 1)
           .selectNodeForward()
           .scrollIntoView()
+          .focus()
           .run();
       },
     },
@@ -326,7 +329,9 @@ const CommandList = ({
         return false;
       }
     };
+
     document.addEventListener("keydown", onKeyDown);
+
     return () => {
       document.removeEventListener("keydown", onKeyDown);
     };
@@ -344,9 +349,12 @@ const CommandList = ({
    * @param e Mouse Click event
    * @param index Chosen Command index via click
    */
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>, index: any) => {
+  const handleClick = (e: React.MouseEvent, index: any) => {
     e.preventDefault();
+    e.stopPropagation();
+    // console.log("CONTAINER", commandListContainer);
     // console.log("COMMAND CLICKED", selectedIndex, items[selectedIndex]);
+    // console.log("e event", e);
     selectItem(index);
   };
 
@@ -358,14 +366,20 @@ const CommandList = ({
 
     const item = container?.children[selectedIndex] as HTMLElement;
 
-    if (item && container) updateScrollView(container, item);
+    console.log("Container", container);
+    console.log("Item", item);
+
+    if (item && container) {
+      // console.log("scroll view update", container);
+      updateScrollView(container, item);
+    }
   }, [selectedIndex]);
 
   return items.length > 0 ? (
     <div
       id='slash-command'
       ref={commandListContainer}
-      className='z-50 h-auto max-h-[330px] w-72 overflow-y-auto scroll-smooth rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all'
+      className='z-100 h-auto max-h-[330px] pointer-events-auto w-72 overflow-y-auto scroll-smooth rounded-md border border-stone-200 bg-white px-1 py-2 shadow-md transition-all'
     >
       {items.map((item: CommandItemProps, index: number) => {
         return (
@@ -375,9 +389,9 @@ const CommandList = ({
             }`}
             key={index}
             // onClick={() => selectItem(index)}
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-              handleClick(e, index)
-            }
+            onClick={(e: React.MouseEvent) => {
+              handleClick(e, index);
+            }}
           >
             <div className='flex h-10 w-10 items-center justify-center rounded-md border border-stone-200 bg-white'>
               {item.title === "Continue writing" && isLoading ? (
@@ -412,6 +426,11 @@ const renderItems = () => {
         editor: props.editor,
       });
 
+      // console.log("Render props editor", props.editor);
+      // console.log("Render Component ", component);
+      // console.log("Render Component Element", component.element);
+      // console.log("RENDER DOCUMENT", document.body);
+
       // @ts-ignore
       popup = tippy("body", {
         getReferenceClientRect: props.clientRect,
@@ -421,6 +440,12 @@ const renderItems = () => {
         interactive: true,
         trigger: "manual",
         placement: "bottom-start",
+        onShow(instance) {
+          instance.popper.setAttribute("aria-expanded", "true");
+        },
+        onHide(instance) {
+          instance.popper.setAttribute("aria-expanded", "false");
+        },
       });
     },
     onUpdate: (props: { editor: Editor; clientRect: DOMRect }) => {
