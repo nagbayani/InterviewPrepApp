@@ -48,7 +48,6 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
           <Plus className='custom-icon-color' />
         </button>
         <div
-          // className='d-block-button group-hover:opacity-100'
           className='d-block-button group-hover:opacity-100'
           contentEditable={false}
           draggable='true'

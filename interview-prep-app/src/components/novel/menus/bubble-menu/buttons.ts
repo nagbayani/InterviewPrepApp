@@ -1,11 +1,21 @@
 /* @unocss-include */
 import { Editor } from "@tiptap/react";
 
+import {
+  BoldIcon,
+  CodeIcon,
+  ItalicIcon,
+  StrikethroughIcon,
+  UnderlineIcon,
+  type LucideIcon,
+} from "lucide-react";
+
 interface BubbleMenuItem {
   tooltip: string;
   action: (editor: Editor) => boolean;
   isActive: (editor: Editor) => boolean;
-  iconClass: string;
+  // iconClass: string;
+  icon: LucideIcon;
 }
 
 export const generalButtons: BubbleMenuItem[] = [
@@ -13,21 +23,28 @@ export const generalButtons: BubbleMenuItem[] = [
     tooltip: "Bold",
     action: (editor: Editor) => editor.chain().focus().toggleBold().run(),
     isActive: (editor: Editor) => editor.isActive("bold"),
-    iconClass: "i-ri-bold",
+    icon: BoldIcon,
   },
   {
     tooltip: "Italic",
     action: (editor: Editor) => editor.chain().focus().toggleItalic().run(),
     isActive: (editor: Editor) => editor.isActive("italic"),
-    iconClass: "i-ri-italic",
+    icon: ItalicIcon,
   },
-  // {
-  //   name: "underline",
-  //   label: "Underline",
-  //   action: (editor: Editor) => editor.chain().focus().toggleUnderline().run(),
-  //   isActive: (editor: Editor) => editor.isActive("underline"),
-  //   icon: RiUnderline,
-  // },
+  {
+    tooltip: "underline",
+    action: (editor: Editor) => editor.chain().focus().toggleUnderline().run(),
+    isActive: (editor: Editor) => editor.isActive("underline"),
+    icon: UnderlineIcon,
+  },
+  {
+    tooltip: "strike",
+    action: (editor: Editor) => editor.chain().focus().toggleStrike().run(),
+    isActive: (editor: Editor) => editor.isActive("strike"),
+    icon: StrikethroughIcon,
+  },
+
+];
   // {
   //   name: "strike",
   //   label: "Strike",
@@ -193,4 +210,4 @@ export const generalButtons: BubbleMenuItem[] = [
   //   action: (editor: Editor) => editor.chain().focus().redo().run(),
   //   icon: RiArrowGoForwardLine,
   // }
-];
+

@@ -1,5 +1,5 @@
 import { BubbleMenu, Editor } from "@tiptap/react";
-
+import { useState } from "react";
 import { generalButtons } from "./buttons";
 import { NodeTypeDropdown } from "./NodeTypeDropdown";
 import "../../../../styles/text-editor/bubbleMenu.css";
@@ -11,6 +11,8 @@ interface CustomBubbleMenuProps {
 export const CustomBubbleMenu: React.FC<CustomBubbleMenuProps> = ({
   editor,
 }) => {
+  const [openNode, setOpenNode] = useState(false);
+
   return (
     <BubbleMenu
       editor={editor}
@@ -21,8 +23,14 @@ export const CustomBubbleMenu: React.FC<CustomBubbleMenuProps> = ({
         moveTransition: "transform 0.2s ease-in-out",
       }}
     >
-      <NodeTypeDropdown editor={editor} />
+      <NodeTypeDropdown
+        editor={editor}
+        open={openNode}
+        onOpenChange={setOpenNode}
+      />
       {generalButtons.map((btn) => {
+        const Icon = btn.icon;
+
         return (
           <button
             type='button'
@@ -30,7 +38,8 @@ export const CustomBubbleMenu: React.FC<CustomBubbleMenuProps> = ({
             onClick={() => btn.action(editor)}
             key={btn.tooltip}
           >
-            <i className={`${btn.iconClass} scale-150`} />
+            {/* <i className={`${btn.iconClass} scale-150`} /> */}
+            <Icon className='scale-50' />
           </button>
         );
       })}
