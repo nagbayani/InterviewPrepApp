@@ -2,7 +2,7 @@ import React from "react";
 import { fetchSingleDeck, fetchAllDecks } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
 import { DeckDataResponse, CardData, DeckData } from "@/types/data-types";
-import { DeckCard } from "./Card";
+import { DeckCard } from "../../../../components/card/Card";
 import Deck from "@/components/deck-link/Deck";
 import HydrateStore from "@/_store/HydrateStore";
 interface Response {

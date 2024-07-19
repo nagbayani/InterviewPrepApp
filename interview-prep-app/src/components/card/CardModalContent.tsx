@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { CardData } from "@/types/data-types";
-import CardDisplay from "../../../c/[cardId]/Card-Display";
+import CardDisplay from "./Card-Display";
 import { useModal } from "@/containers/modal/ModalContext";
 
 const CardModalContent = ({ cardData }: { cardData: CardData }) => {

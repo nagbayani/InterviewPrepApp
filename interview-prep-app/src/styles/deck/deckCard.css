@@ -10,9 +10,9 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 16px 24px 16px 16px;
-  font-size: var(--step--4);
+  font-size: var(--step--1);
   background: #fefcf6;
-  border-radius: 5px;
+  border-radius: 12px;
   /* border: 0.1em solid rgb(16, 16, 16, 0.5); */
 }
 

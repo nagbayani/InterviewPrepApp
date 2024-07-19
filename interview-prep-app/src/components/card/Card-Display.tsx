@@ -24,12 +24,16 @@ import { useCardStore } from "@/_store/index";
 
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import Card from "../../@modal/(.)c/[cardId]/page";
+import Card from "../../app/(dashboard)/decks/[deckId]/@modal/(.)c/[cardId]/page";
 
 type Props = {
   card: CardData;
 };
-
+/**
+ * Card Display Component that is rendered when you open a card from DeckID page.  Allows user to edit the question and answer.
+ * @param param0
+ * @returns
+ */
 export default function CardDisplay({ card }: Props) {
   const { updateCard } = useCardStore((state) => ({
     updateCard: state.updateCard,
