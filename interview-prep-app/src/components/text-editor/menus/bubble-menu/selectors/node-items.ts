@@ -20,12 +20,22 @@ export type SelectorItem = {
   isActive: (editor: Editor) => boolean;
 };
 
+const getSelectedNodes = (editor: Editor) => {
+  const { from, to } = editor.state.selection;
+  const nodes: any = [];
+  editor.state.doc.nodesBetween(from, to, (node, pos) => {
+    nodes.push({ node, pos });
+  });
+  return nodes;
+};
+
 export const items: SelectorItem[] = [
   {
     name: "Text",
     icon: TextIcon,
     command: (editor) => {
       editor.chain().focus().clearNodes().run();
+      //       editor.chain().focus().unsetNode('bulletList').unsetNode('orderedList').setParagraph().run();
     },
     isActive: (editor) =>
       editor.isActive("paragraph") &&
@@ -60,13 +70,49 @@ export const items: SelectorItem[] = [
       editor.chain().focus().clearNodes().toggleTaskList().run(),
     isActive: (editor) => editor.isActive("taskItem"),
   },
+
   {
     name: "Bullet List",
     icon: ListOrdered,
-    command: (editor) =>
-      editor.chain().focus().clearNodes().toggleBulletList().run(),
+    command: (editor) => {
+      // const { from, to } = editor.state.selection;
+      editor.chain().focus().clearNodes().toggleBulletList().run();
+    },
     isActive: (editor) => editor.isActive("bulletList"),
   },
+  // {
+  //   name: "Bullet List",
+  //   icon: ListOrdered,
+  //   command: (editor) => {
+  //     const { from, to } = editor.state.selection;
+  //     const nodes: { node: any; pos: number }[] = [];
+  //     editor.state.doc.nodesBetween(from, to, (node, pos) => {
+  //       nodes.push({ node, pos });
+  //     });
+  //     console.log("Command Selected Nodes", nodes);
+
+  //     // Apply the command to each selected node
+  //     nodes.forEach(({ node, pos }) => {
+  //       console.log("node", node, "node type", node.type.name);
+  //       // editor.commands.setTextSelection(pos);
+  //       // editor.commands.toggleBulletList();
+  //       // editor.commands.setTextSelection(pos);
+  //       // editor.commands.toggleBulletList();
+  //       if (node.type.name === "paragraph") {
+  //         editor
+  //           .chain()
+  //           .clearNodes()
+  //           .setTextSelection({ from: pos, to: pos + node.nodeSize })
+  //           .toggleBulletList()
+  //           .run();
+  //       }
+  //     });
+
+  //     // Restore the original selection
+  //     // editor.commands.setTextSelection({ from, to });
+  //   },
+  //   isActive: (editor) => editor.isActive("bulletList"),
+  // },
   {
     name: "Numbered List",
     icon: ListOrdered,

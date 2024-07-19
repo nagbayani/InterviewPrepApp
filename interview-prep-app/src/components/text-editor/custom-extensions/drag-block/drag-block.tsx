@@ -24,7 +24,7 @@ export const DBlock = Node.create<DBlockOptions>({
 
   priority: 1000,
   group: "dBlock",
-  content: "block",
+  content: "block+",
   // group: "block",
   // content: "block+",
   draggable: true,
@@ -62,6 +62,8 @@ export const DBlock = Node.create<DBlockOptions>({
 
           const pos =
             position !== undefined || position !== null ? from : position;
+          console.log("pos", pos);
+          console.log("selection state", state.selection);
 
           return chain()
             .insertContentAt(pos, {

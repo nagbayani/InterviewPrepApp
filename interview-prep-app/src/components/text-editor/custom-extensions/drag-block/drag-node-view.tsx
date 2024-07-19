@@ -3,7 +3,6 @@ import { Plus } from "lucide-react";
 
 import React, { useMemo } from "react";
 import { NodeViewWrapper, NodeViewProps, NodeViewContent } from "@tiptap/react";
-import { useEditor } from "novel";
 import { GripVertical } from "lucide-react";
 
 import "../../../../styles/prosemirror.css";
@@ -13,7 +12,7 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
   getPos,
   editor,
 }) => {
-  console.log("node", node);
+  // console.log("node", node);
   const isTable = useMemo(() => {
     const { content } = node.content as any;
 
@@ -22,6 +21,7 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
 
   const createNodeAfter = () => {
     const pos = getPos() + node.nodeSize;
+    console.log("pos after adding", pos);
 
     editor!.commands.insertContentAt(pos, {
       type: "dBlock",
@@ -36,7 +36,7 @@ export const DBlockNodeView: React.FC<NodeViewProps> = ({
   return (
     <NodeViewWrapper as='div' className='flex gap-2 group w-full relative'>
       <section
-        className='flex  mr-2 pt-[2px] gap-1'
+        className='flex  mr-2 mt-1 pt-[2px] gap-1'
         aria-label='left-menu'
         contentEditable={false}
       >

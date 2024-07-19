@@ -15,7 +15,8 @@ import Heading from "@tiptap/extension-heading";
 import Color from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import Highlight from "@tiptap/extension-highlight";
-
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
 import { Node as ProsemirrorNode } from "prosemirror-model";
 import { Plugin } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
@@ -71,6 +72,7 @@ export const Placeholder = Extension.create<PlaceholderOptions>({
             if (!active) {
               return null;
             }
+            // console.log("selection", selection);
 
             doc.descendants((node, pos) => {
               const hasAnchor = anchor >= pos && anchor <= pos + node.nodeSize;
@@ -80,6 +82,7 @@ export const Placeholder = Extension.create<PlaceholderOptions>({
                 const classes = [this.options.emptyNodeClass];
 
                 if (this.editor.isEmpty) {
+                  console.log("editor is empty");
                   classes.push(this.options.emptyEditorClass);
                 }
 
@@ -139,6 +142,7 @@ export const getExtensions = ({
     Underline,
     TextStyle,
     Highlight,
+    Color,
     // Link.configure({
     //   autolink: true,
     //   linkOnPaste: true,
@@ -155,7 +159,8 @@ export const getExtensions = ({
       levels: [1, 2, 3],
     }),
     TrailingNode,
-    Color,
+    TaskItem,
+    TaskList,
 
     // Table
     // ...SuperchargedTableExtensions,

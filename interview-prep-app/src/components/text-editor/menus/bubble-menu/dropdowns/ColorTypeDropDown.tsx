@@ -63,14 +63,15 @@ export const ColorTypeDropDown = ({
             <div
               key={index}
               onClick={() => {
-                editor.commands.unsetColor();
-                onOpenChange(false);
+                // editor.commands.unsetColor();
                 name !== "Default" &&
                   editor
                     .chain()
                     .focus()
+                    .clearNodes()
                     .setColor(color || "")
                     .run();
+                onOpenChange(false);
               }}
               className='flex cursor-pointer items-center justify-between px-2 py-1 text-sm hover:bg-accent'
             >
@@ -94,9 +95,16 @@ export const ColorTypeDropDown = ({
             <div
               key={index}
               onClick={() => {
+                // editor.commands.unsetHighlight();
+                name !== "Default" &&
+                  // editor.commands.setHighlight({ color });
+                  editor
+                    .chain()
+                    .focus()
+                    .clearNodes()
+                    .setHighlight({ color })
+                    .run();
                 onOpenChange(false);
-                editor.commands.unsetHighlight();
-                name !== "Default" && editor.commands.setHighlight({ color });
               }}
               className='flex cursor-pointer items-center justify-between px-2 py-1 text-sm hover:bg-accent'
             >

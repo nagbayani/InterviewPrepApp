@@ -76,11 +76,11 @@ export const TipTapEditor = ({ initialValue, onChange }: EditorProp) => {
     // }, 500),
   });
 
-  useEffect(() => {
-    if (editor && initialValue) {
-      editor.commands.setContent(initialValue);
-    }
-  }, [editor, initialValue]);
+  // useEffect(() => {
+  //   if (editor && initialValue) {
+  //     editor.commands.setContent(initialValue, false);
+  //   }
+  // }, [editor, initialValue]);
 
   // const addTable = () =>
   //   editor?.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: true });
