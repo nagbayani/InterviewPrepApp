@@ -35,8 +35,8 @@ import { fetchAllDecks } from "@/utils/fetch";
 
 /**
  * On DeckID page, this is a single card that is rendered
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
 export const DeckCard = ({
   card,
@@ -104,9 +104,7 @@ export const DeckCard = ({
         </div>
       </div>
       <div className='px-4 font-medium'>{card.question}</div>
-      <div className='card-content-wrapper w-full'>
-        
-      </div>
+      <div className='card-content-wrapper w-full'></div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { DeckDataResponse, CardData } from "@/types/data-types";
-import { DeckCard } from "@/app/(dashboard)/decks/[deckId]/Card";
+import { DeckCard } from "@/components/card/Card";
 import "../../styles/deck/deckWrapper.css";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
