@@ -26,6 +26,7 @@ model User {
   decks     Deck[]
   cards     Card[]
   accounts  Account[]
+  tags      Tag[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   emailVerified DateTime?
@@ -96,10 +97,12 @@ model Tag {
   id    String   @id @default(cuid())
   name  String
   color String  
+  authorId String   // No default value
+  author    User    @relation(fields: [authorId], references: [id])
   cards CardTags[]   // each tag can be associated with multiple cards
 }
 
-// Join table 
+// Join table for Card and Tag
 model CardTags {
   cardId String
   tagId  String

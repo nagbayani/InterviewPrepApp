@@ -67,6 +67,4 @@ export const deleteCard = async (cardId: string) => {
   return card;
 };
 
-
-export const moveCard = async (cardId: string, newDeckId: string) => {
-};
+export const moveCard = async (cardId: string, newDeckId: string) => {};

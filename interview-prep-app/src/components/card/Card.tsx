@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CardData } from "@/types/data-types";
 import { useCardStore } from "@/_store/index";
-import "../../../../styles/deck/deckCard.css";
+import "../../styles/deck/deckCard.css";
 import { useEffect } from "react";
 import { Trash2 } from "lucide-react";
 import { PenLine } from "lucide-react";
