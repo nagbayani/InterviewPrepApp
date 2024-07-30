@@ -64,8 +64,8 @@ const MoveCardMenu = ({
 }: Props) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='w-8 h-8 bg-inherit px-0 py-0 hover:bg-gray-300 text-white font-bold rounded-lg transition-colors duration-300 ease-in-out flex items-center justify-center'>
-        <Ellipsis size={20} className='text-black' />
+      <DropdownMenuTrigger className=' bg-inherit m-2 px-6 hover:bg-gray-300 text-white font-bold rounded-lg transition-colors duration-300 ease-in-out flex items-center justify-center'>
+        <Ellipsis className='text-black' />
       </DropdownMenuTrigger>
       <DropdownMenuContent sideOffset={5}>
         <DropdownMenuSub>

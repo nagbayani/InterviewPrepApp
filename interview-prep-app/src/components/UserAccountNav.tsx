@@ -16,7 +16,11 @@ const UserAccountNav = ({ user }: User) => {
   return (
     <>
       {user ? (
-        <Button onClick={() => logout()} variant='destructive'>
+        <Button
+          onClick={() => logout()}
+          variant='destructive'
+          className='w-30 justify-self-center'
+        >
           Sign out
         </Button>
       ) : (

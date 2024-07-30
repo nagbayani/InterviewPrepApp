@@ -25,6 +25,8 @@ import { useCardStore } from "@/_store/index";
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import Card from "../../app/(dashboard)/decks/[deckId]/@modal/(.)c/[cardId]/page";
+import { Button } from "../ui/button";
+import { LuPlus } from "react-icons/lu";
 
 type Props = {
   card: CardData;
@@ -213,6 +215,9 @@ export default function CardDisplay({ card }: Props) {
               )}
             />
           </div>
+          <Button>
+            <LuPlus />
+          </Button>
 
           {/* Novel Rich Text Editor - User writes answer. */}
           <EditorWrapper data={card} />

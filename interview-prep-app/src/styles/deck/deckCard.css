@@ -4,10 +4,9 @@
 
 .deck-card-container {
   display: flex;
-  flex-direction: column;
   width: 600px;
   position: relative;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   justify-content: space-between;
   padding: 16px 24px 16px 16px;
   font-size: var(--step--1);
@@ -28,12 +27,14 @@
   align-items: center;
 }
 
-.top-dc-wrapper {
+.main-dc-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
 }
 .bottom-dc-wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }

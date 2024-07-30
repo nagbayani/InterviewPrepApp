@@ -75,7 +75,7 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
 
   return (
     <div className='sidebar-container'>
-      <div className='sideitem-container'>
+      {/* <div className='sideitem-container'>
         <TbCards color='#f1f1f1' size={40} />
         <span
           style={{
@@ -86,7 +86,7 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
         >
           Interfluent
         </span>
-      </div>
+      </div> */}
       <div className='sideitem-container'>
         <FaRegUserCircle color='#f1f1f1' /> {username}
       </div>
@@ -110,9 +110,9 @@ const Sidebar = ({ decks, user }: SidebarProps) => {
           </li>
         ))}
       </ul>
-      <div className='sidebar-auth-btn '>
+      {/* <div className='sidebar-auth-btn '>
         <UserAccountNav user={user} />
-      </div>
+      </div> */}
     </div>
   );
 };

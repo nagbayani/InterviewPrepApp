@@ -81,30 +81,30 @@ export const DeckCard = ({
 
   return (
     <div
-      className='deck-card-container justify-self-center flex justify-between '
+      className='deck-card-container justify-self-center flex flex-row justify-between'
       style={{ background: "#fefcf6" }}
     >
-      <div className='top-dc-wrapper flex justify-between'>
+      <div className='main-dc-wrapper justify-self-start flex justify-between'>
         <div className='left-dc-wrapper'>{index}</div>
-        <div className='bottom-dc-wrapper'>
-          <Button
-            variant='outline'
-            onClick={handleOpenModal}
-            className='w-[35px] mx-2 p-0'
-          >
-            <PenLine size={12} />
-          </Button>
-          <MoveCardMenu
-            handleDeleteCard={handleDeleteCard}
-            user={card.authorId}
-            cardId={card.id}
-            deckId={deckId}
-            onMoveCard={onMoveCard}
-          />
-        </div>
+        <div className='px-4 font-medium'>{card.question}</div>
       </div>
-      <div className='px-4 font-medium'>{card.question}</div>
-      <div className='card-content-wrapper w-full'></div>
+      <div className='bottom-dc-wrapper justify-self-end'>
+        <MoveCardMenu
+          handleDeleteCard={handleDeleteCard}
+          user={card.authorId}
+          cardId={card.id}
+          deckId={deckId}
+          onMoveCard={onMoveCard}
+        />
+        <Button
+          variant='outline'
+          onClick={handleOpenModal}
+          className='mx-2 px-4'
+        >
+          <PenLine size={12} />
+        </Button>
+      </div>
+      {/* <div className='card-content-wrapper w-full'></div> */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../../containers/sidebar-section/Sidebar";
-// import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 import "../../styles/dashboard.css";
 import { auth } from "../../../auth";
 import { fetchAllDecks } from "@/utils/fetch";
@@ -41,13 +41,15 @@ export default async function Layout({ children }: LayoutProps) {
   console.log("DECKS in Layout", decks);
   const user = data?.session?.user;
 
-
   return (
     <div className='dashboard-container'>
-      <div className='sidebar-menu'>
-        <Sidebar decks={decks} user={user} />
+      <Navbar />
+      <div className='main-inner-wrapper flex h-full w-full'>
+        <div className='sidebar-menu'>
+          <Sidebar decks={decks} user={user} />
+        </div>
+        <main className='dashboard-content'>{children}</main>
       </div>
-      <main className='dashboard-content'>{children}</main>
     </div>
   );
 }
