@@ -16,7 +16,7 @@ import { toast } from "@/components/ui/use-toast";
  * Deck Client Component that holds all rendered cards, and will add new cards.
  *
  */
-const Deck = ({ deck, cards, decks }: any) => {
+const Deck = ({ deck, cards, decks, tags }: any) => {
   // retrieve list of cards
   const {
     cards: cardsData,

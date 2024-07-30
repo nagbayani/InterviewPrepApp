@@ -1,6 +1,6 @@
 "use client";
 // import a type of data for props
-import { CardData } from "@/types/data-types";
+import { CardData, TagData } from "@/types/data-types";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -28,6 +28,7 @@ import Card from "../../app/(dashboard)/decks/[deckId]/@modal/(.)c/[cardId]/page
 
 type Props = {
   card: CardData;
+  userTags: TagData[];
 };
 /**
  * Card Display Component that is rendered when you open a card from DeckID page.  Allows user to edit the question and answer.

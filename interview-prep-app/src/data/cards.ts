@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { CardData } from "@/types/data-types";
 
 export const getCardsByUserId = async (userId: string) => {
   const cards = await prisma.card.findMany({

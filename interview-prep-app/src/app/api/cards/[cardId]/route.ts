@@ -1,12 +1,17 @@
 import { NextResponse, NextRequest } from "next/server";
 import { createCard, getCardById, updateCard, deleteCard } from "@/data/cards";
+import { getTagsByCardId } from "@/data/tags";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { cardId: string } }
 ) {
   const cardId = params.cardId;
-  const card = await getCardById(cardId);
+  // need to get the card and the tags associated with the card
+  const cardDb = await getCardById(cardId);
+  const tagsDb = await getTagsByCardId(cardId);
+
+  const card = { ...cardDb, tags: tagsDb };
 
   return NextResponse.json({ card });
 }

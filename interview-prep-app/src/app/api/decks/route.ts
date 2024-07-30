@@ -20,7 +20,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     });
   }
 
-  const decksDb = await getDecksByUserId(user.session?.user.id);
+  const decksDb = await getDecksByUserId(user.session?.user.id || "");
   // Filter out sensitive information
   const decks = decksDb.map((deck) => {
     const { authorId, ...safeDeck } = deck;

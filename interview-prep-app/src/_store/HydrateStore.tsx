@@ -5,6 +5,7 @@ import { DeckData, CardData } from "@/types/data-types";
 
 interface HydrateStoreProps {
   decks: DeckData[];
+  // cards: CardData[];
   cards: CardData[];
 }
 

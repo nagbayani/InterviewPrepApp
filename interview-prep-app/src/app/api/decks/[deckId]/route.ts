@@ -2,21 +2,25 @@ import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
 import { getDeckByDeckId, updateDeck } from "@/data/decks";
 import { getCardsByDeckId } from "@/data/cards";
+import { getTagsByUserId } from "@/data/tags";
 import { currentUser } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { deckId: string } }
 ) {
+  const user = await currentUser();
   const deckId = params.deckId;
 
   const deck = await getDeckByDeckId(deckId);
   const cards = await getCardsByDeckId(deckId);
+  const tags = await getTagsByUserId(user.session?.user.id ?? "");
 
   //json the decks & card data
   const data = {
     deck,
     cards,
+    tags,
   };
 
   // console.log("API ROUTE SINGLE DECK DATA", data);

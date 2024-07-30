@@ -9,12 +9,18 @@ export type CardData = {
   category: string;
   authorId: string;
   deckId: string;
-  tags: CardTagData[] | null;
+  tags: TagData[] | null;
 };
 
 export type CardTagData = {
   cardId: string;
   tagId: string;
+};
+
+export type TagData = {
+  id: string;
+  name: string;
+  color: string;
 };
 
 export interface DeckDataResponse {
@@ -34,8 +40,9 @@ export interface DeckDataResponse {
     category: string;
     authorId: string;
     deckId: string;
-    tags: string[] | null;
+    tags: TagData[] | null;
   }[];
+  tags: TagData[];
 }
 
 export interface DeckData {

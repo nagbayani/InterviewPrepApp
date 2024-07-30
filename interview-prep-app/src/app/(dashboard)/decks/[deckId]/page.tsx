@@ -12,20 +12,24 @@ interface Response {
 const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   const userSession = await currentUser();
 
+  // fetch response for a single deck
   const response: Response = await fetchSingleDeck(
     params.deckId,
     userSession.cookieHeader
   );
 
+  // fetch all decks to hydrate store
   const decksResponse = await fetchAllDecks(userSession.cookieHeader);
   const decks = decksResponse.decks;
 
-  const { deck, cards }: DeckDataResponse = response.data;
+  // fetch response contains its deck information with pertaining cards for that deckId
+  const { deck, cards, tags }: DeckDataResponse = response.data;
 
   return (
     <div className='dashboard-wrapper'>
       {/* Pass data response to Deck client component */}
-      <Deck deck={deck} cards={cards} decks={decks} />
+      <Deck deck={deck} cards={cards} decks={decks} tags={tags} />
+      {/* Need to set tags in store */}
       <HydrateStore decks={decks} cards={cards} />
     </div>
   );
