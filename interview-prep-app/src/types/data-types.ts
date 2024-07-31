@@ -44,6 +44,7 @@ export interface DeckDataResponse {
     tags: TagData[] | null;
   }[];
   tags: TagData[];
+  cardTags: CardTagData[];
 }
 
 export interface DeckData {

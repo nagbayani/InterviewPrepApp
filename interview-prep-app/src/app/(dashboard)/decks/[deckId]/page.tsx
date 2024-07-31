@@ -23,14 +23,20 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   const decks = decksResponse.decks;
 
   // fetch response contains its deck information with pertaining cards for that deckId
-  const { deck, cards, tags }: DeckDataResponse = response.data;
+  const { deck, cards, tags, cardTags }: DeckDataResponse = response.data;
 
+  // console.log("CARDTAGS", cardTags);
   return (
     <div className='dashboard-wrapper'>
       {/* Pass data response to Deck client component */}
       <Deck deck={deck} cards={cards} decks={decks} tags={tags} />
       {/* Need to set tags in store */}
-      <HydrateStore decks={decks} cards={cards} />
+      <HydrateStore
+        decks={decks}
+        cards={cards}
+        tags={tags}
+        cardTags={cardTags}
+      />
     </div>
   );
 };

@@ -1,19 +1,22 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { CardData, DeckData, TagData } from "@/types/data-types";
+import { CardData, DeckData, TagData, CardTagData } from "@/types/data-types";
 import { StringifyOptions } from "querystring";
 
 // State for Tags (Cards)
 interface TagState {
   tags: Record<string, TagData>;
+  cardTags: Record<string, Record<string, CardTagData>>;
   updateTag: (tagId: string, data: Partial<TagData>) => void;
   setTags: (tags: TagData[]) => void;
+  setCardTags: (cardTags: CardTagData[]) => void;
   addTag: (tag: TagData) => void;
   deleteTag: (tagId: string) => void;
 }
 
 export const useTagStore = create<TagState>((set) => ({
   tags: {},
+  cardTags: {},
   updateTag: (tagId, data) =>
     set((state) => ({
       tags: {
@@ -41,6 +44,16 @@ export const useTagStore = create<TagState>((set) => ({
         {}
       ),
     })),
+  setCardTags: (cardTags) => {
+    const cardTagRecord = cardTags.reduce((acc, cardTag) => {
+      if (!acc[cardTag.cardId]) {
+        acc[cardTag.cardId] = {};
+      }
+      acc[cardTag.cardId][cardTag.tagId] = cardTag;
+      return acc;
+    }, {} as Record<string, Record<string, CardTagData>>);
+    set({ cardTags: cardTagRecord });
+  },
   deleteTag: (tagId: string) =>
     set((state) => {
       const newTags = { ...state.tags };

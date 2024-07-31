@@ -24,6 +24,14 @@ export const getTagsByCardId = async (cardId: string) => {
   return tags;
 };
 
+export const getCardTagsByCardId = async (cardId: string) => {
+  const cardTags = await prisma.cardTags.findMany({
+    where: { cardId: cardId },
+  });
+
+  return cardTags;
+};
+
 // Create a new Tag
 export const createTag = async (data: {
   name: string;

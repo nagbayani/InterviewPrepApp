@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
 import { getDeckByDeckId, updateDeck } from "@/data/decks";
 import { getCardsByDeckId } from "@/data/cards";
-import { getTagsByUserId } from "@/data/tags";
+import { getTagsByUserId, getCardTagsByCardId } from "@/data/tags";
 import { currentUser } from "@/lib/auth";
 
 export async function GET(
@@ -16,11 +16,19 @@ export async function GET(
   const cards = await getCardsByDeckId(deckId);
   const tags = await getTagsByUserId(user.session?.user.id ?? "");
 
+  // Fetch card tags for each card
+  const cardTagsPromises = cards.map((card) => getCardTagsByCardId(card.id));
+  const cardTagsArrays = await Promise.all(cardTagsPromises);
+
+  // Flatten the array of arrays
+  const cardTags = cardTagsArrays.flat();
+
   //json the decks & card data
   const data = {
     deck,
     cards,
     tags,
+    cardTags,
   };
 
   // console.log("API ROUTE SINGLE DECK DATA", data);

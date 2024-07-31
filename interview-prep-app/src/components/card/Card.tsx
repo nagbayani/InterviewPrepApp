@@ -85,7 +85,12 @@ export const DeckCard = ({
       style={{ background: "#fefcf6" }}
     >
       <div className='main-dc-wrapper justify-self-start flex justify-between'>
-        <div className='left-dc-wrapper'>{index}</div>
+        <div className='left-dc-wrapper'>
+          {index}
+          {/* SHOW TAGS HERE */}
+
+        </div>
+
         <div className='px-4 font-medium'>{card.question}</div>
       </div>
       <div className='bottom-dc-wrapper justify-self-end'>

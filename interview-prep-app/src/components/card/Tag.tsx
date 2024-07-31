@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { CardTagData } from "@/types/data-types";
+import { TagData } from "@/types/data-types";
+import { TangentIcon } from "lucide-react";
 
 /**
  * Tag component to render a tag
@@ -9,10 +10,10 @@ import { CardTagData } from "@/types/data-types";
  * @returns
  */
 
-export const Tag = ({ tag }: { tag: CardTagData }) => {
+export const Tag = ({ tag }: { tag: TagData }) => {
   return (
     <div className='tag'>
-      <span>{tag}</span>
+      <span>{tag.name}</span>
     </div>
   );
 };
