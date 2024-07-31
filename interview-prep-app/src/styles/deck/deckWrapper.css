@@ -5,11 +5,11 @@
 .deck-wrapper-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   gap: 1em;
   flex-shrink: 1;
-  padding: 1em;
+  /* padding: 1em; */
   width: 100%;
 }
 
@@ -31,12 +31,12 @@
 
 .deck-wrapper-header {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  /* justify-content: center; */
+  /* align-items: center; */
   height: auto;
   padding: 20px;
   /* font-size: 20px; */
-  font-size: var(--step--4);
+  font-size: var(--step-1);
   font-weight: 600;
   /* margin-bottom: 20px; */
 }

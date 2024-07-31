@@ -116,46 +116,48 @@ const Deck = ({ deck, cards, decks, tags }: any) => {
         <h1>{deck?.title}</h1>
       </div>
 
-      {/* Render cards from Zustand state to Card components */}
-      {Object.values(cardsData).map((card, index) => (
-        <DeckCard
-          key={card.id}
-          card={card}
-          deckId={deck.id}
-          index={index + 1}
-          onUpdateCard={handleCardUpdate}
-          onMoveCard={handleCardMove}
-        />
-      ))}
-      {showForm ? (
-        <div
-          className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
-          style={{ background: "#fefcf6" }}
-        >
-          <CardInput
-            id='question'
-            placeholder='Write a Question'
-            onChange={handleCardForm}
-            onSubmit={submitAddCard}
-            onBlur={submitAddCard}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                submitAddCard();
-              }
-            }}
+      <div className='flex flex-col items-center gap-8'>
+        {/* Render cards from Zustand state to Card components */}
+        {Object.values(cardsData).map((card, index) => (
+          <DeckCard
+            key={card.id}
+            card={card}
+            deckId={deck.id}
+            index={index + 1}
+            onUpdateCard={handleCardUpdate}
+            onMoveCard={handleCardMove}
           />
-        </div>
-      ) : (
-        <Button
-          // size='lg'
-          variant='outline'
-          className='w-[400px] flex p-4 rounded-lg justify-center items-center'
-          onClick={() => setShowForm(true)}
-        >
-          <LuPlus />
-          <span>Add a card</span>
-        </Button>
-      )}
+        ))}
+        {showForm ? (
+          <div
+            className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
+            style={{ background: "#fefcf6" }}
+          >
+            <CardInput
+              id='question'
+              placeholder='Write a Question'
+              onChange={handleCardForm}
+              onSubmit={submitAddCard}
+              onBlur={submitAddCard}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  submitAddCard();
+                }
+              }}
+            />
+          </div>
+        ) : (
+          <Button
+            // size='lg'
+            variant='outline'
+            className='w-[400px] flex p-4 rounded-lg justify-center items-center'
+            onClick={() => setShowForm(true)}
+          >
+            <LuPlus />
+            <span>Add a card</span>
+          </Button>
+        )}
+      </div>
     </section>
   );
 };

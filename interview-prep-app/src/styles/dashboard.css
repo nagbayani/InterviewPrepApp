@@ -22,8 +22,8 @@
 
 .dashboard-content {
   flex: 4;
-  padding-left: 20px;
-  padding-top: 40px;
+  /* padding-left: 20px; */
+  /* padding-top: 40px; */
   background: #f1f1fb;
   /* background: #e6e9dd; */
   /* padding-right: 20px; */
@@ -33,7 +33,7 @@
 .dashboard-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
   /* margin-top: 50px; */
 }
 
