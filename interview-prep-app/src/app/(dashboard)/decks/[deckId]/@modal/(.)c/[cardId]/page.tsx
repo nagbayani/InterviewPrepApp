@@ -3,6 +3,7 @@ import CardModalContent from "@/components/card/CardModalContent";
 import { fetchSingleCard } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
 import type { CardData } from "@/types/data-types";
+import { getTagsByUserId } from "@/data/tags";
 
 type Props = {
   params: {
@@ -17,7 +18,9 @@ const CardPage = async ({ params: { cardId } }: Props) => {
     cardId,
     userSession.cookieHeader
   );
-  console.log("Card Data", cardData);
+  // console.log("Card Data", cardData);
+
+  const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
 
   if (!cardData?.id) {
     return <h1 className='text-center'>No Data Found for that Card ID.</h1>;
@@ -26,7 +29,7 @@ const CardPage = async ({ params: { cardId } }: Props) => {
   return (
     <>
       <Modal data={cardData}>
-        <CardModalContent cardData={cardData} />
+        <CardModalContent cardData={cardData} userTags={userTags} />
       </Modal>
     </>
   );

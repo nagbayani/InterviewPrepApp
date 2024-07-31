@@ -27,6 +27,7 @@ import { HiOutlinePlusSmall } from "react-icons/hi2";
 import Card from "../../app/(dashboard)/decks/[deckId]/@modal/(.)c/[cardId]/page";
 import { Button } from "../ui/button";
 import { LuPlus } from "react-icons/lu";
+import TagsPopover from "../menus/card-tags/TagsPopover";
 
 type Props = {
   card: CardData;
@@ -37,7 +38,9 @@ type Props = {
  * @param param0
  * @returns
  */
-export default function CardDisplay({ card }: Props) {
+export default function CardDisplay({ card, userTags }: Props) {
+  console.log("userTags", userTags);
+
   const { updateCard } = useCardStore((state) => ({
     updateCard: state.updateCard,
   }));
@@ -215,9 +218,8 @@ export default function CardDisplay({ card }: Props) {
               )}
             />
           </div>
-          <Button>
-            <LuPlus />
-          </Button>
+          {/* Add wrapper here to render cardTags  */}
+          <TagsPopover tags={userTags} />
 
           {/* Novel Rich Text Editor - User writes answer. */}
           <EditorWrapper data={card} />

@@ -21,6 +21,7 @@ export type TagData = {
   id: string;
   name: string;
   color: string;
+  authorId: string;
 };
 
 export interface DeckDataResponse {

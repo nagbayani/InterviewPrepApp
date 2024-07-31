@@ -29,7 +29,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Ellipsis } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { DeckData } from "@/types/data-types";
 
 import { useCardStore } from "@/_store/index";

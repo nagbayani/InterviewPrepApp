@@ -29,7 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown";
 import { Ellipsis } from "lucide-react";
-import MoveCardMenu from "@/components/menus/MoveCardMenu";
+import MoveCardMenu from "@/components/menus/move-cards/MoveCardMenu";
 import { currentUser } from "@/lib/auth";
 import { fetchAllDecks } from "@/utils/fetch";
 
