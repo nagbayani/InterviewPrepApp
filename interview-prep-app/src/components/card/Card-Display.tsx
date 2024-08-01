@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "@/styles/cardForm.css";
-import { useCardStore } from "@/_store/index";
+import { useCardStore, useTagStore } from "@/_store/index";
 
 import { HiViewGrid } from "react-icons/hi";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
@@ -28,6 +28,7 @@ import Card from "../../app/(dashboard)/decks/[deckId]/@modal/(.)c/[cardId]/page
 import { Button } from "../ui/button";
 import { LuPlus } from "react-icons/lu";
 import TagsPopover from "../menus/card-tags/TagsPopover";
+import Tag from "./Tag";
 
 type Props = {
   card: CardData;
@@ -41,9 +42,20 @@ type Props = {
 export default function CardDisplay({ card, userTags }: Props) {
   console.log("userTags", userTags);
 
+  // Zustand Card Store
   const { updateCard } = useCardStore((state) => ({
     updateCard: state.updateCard,
   }));
+
+  // Zustand Tag Store
+  const { cardTags, tags } = useTagStore((state) => ({
+    cardTags: state.cardTags,
+    tags: state.tags,
+  }));
+
+  // Get tags associated with this card
+  const cardTagIds = cardTags[card.id] ? Object.keys(cardTags[card.id]) : [];
+  const cardTagsData = cardTagIds.map((tagId) => tags[tagId]);
 
   const [isEditing, setIsEditing] = useState({
     question: false,
@@ -219,7 +231,12 @@ export default function CardDisplay({ card, userTags }: Props) {
             />
           </div>
           {/* Add wrapper here to render cardTags  */}
-          <TagsPopover tags={userTags} />
+          <div className='flex items-center gap-4'>
+            {cardTagsData.map((tag) => (
+              <Tag key={tag.id} tag={tag} />
+            ))}
+            <TagsPopover tags={userTags} cardId={card.id} />
+          </div>
 
           {/* Novel Rich Text Editor - User writes answer. */}
           <EditorWrapper data={card} />

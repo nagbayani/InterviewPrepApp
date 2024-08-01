@@ -12,6 +12,8 @@ interface TagState {
   setCardTags: (cardTags: CardTagData[]) => void;
   addTag: (tag: TagData) => void;
   deleteTag: (tagId: string) => void;
+  addCardTag: (cardTag: CardTagData) => void;
+  deleteCardTag: (cardId: string, tagId: string) => void;
 }
 
 export const useTagStore = create<TagState>((set) => ({
@@ -59,6 +61,26 @@ export const useTagStore = create<TagState>((set) => ({
       const newTags = { ...state.tags };
       delete newTags[tagId];
       return { tags: newTags };
+    }),
+  addCardTag: (cardTag: CardTagData) =>
+    set((state) => {
+      const newCardTags = { ...state.cardTags };
+      if (!newCardTags[cardTag.cardId]) {
+        newCardTags[cardTag.cardId] = {};
+      }
+      newCardTags[cardTag.cardId][cardTag.tagId] = cardTag;
+      return { cardTags: newCardTags };
+    }),
+  deleteCardTag: (cardId: string, tagId: string) =>
+    set((state) => {
+      const newCardTags = { ...state.cardTags };
+      if (newCardTags[cardId]) {
+        delete newCardTags[cardId][tagId];
+        if (Object.keys(newCardTags[cardId]).length === 0) {
+          delete newCardTags[cardId];
+        }
+      }
+      return { cardTags: newCardTags };
     }),
 }));
 

@@ -10,9 +10,10 @@ import TagsMenu from "./TagsMenu";
 
 interface OpenTagsMenuProps {
   tags: TagData[];
+  cardId: string;
 }
 
-const TagsPopover = ({ tags }: OpenTagsMenuProps) => {
+const TagsPopover = ({ tags, cardId }: OpenTagsMenuProps) => {
   return (
     <Popover>
       <PopoverTrigger>
@@ -21,7 +22,7 @@ const TagsPopover = ({ tags }: OpenTagsMenuProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className='pointer-events-auto w-80'>
-        <TagsMenu tags={tags} />
+        <TagsMenu tags={tags} cardId={cardId}/>
       </PopoverContent>
     </Popover>
   );

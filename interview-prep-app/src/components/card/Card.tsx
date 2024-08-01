@@ -8,7 +8,8 @@ import { useModal } from "@/containers/modal/ModalContext";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CardData } from "@/types/data-types";
-import { useCardStore } from "@/_store/index";
+import { useCardStore, useTagStore } from "@/_store/index";
+import Tag from "./Tag";
 import "../../styles/deck/deckCard.css";
 import { useEffect } from "react";
 import { Trash2 } from "lucide-react";
@@ -57,6 +58,14 @@ export const DeckCard = ({
     cards: state.cards,
     deleteCard: state.deleteCard,
   }));
+  const { tags, cardTags } = useTagStore((state) => ({
+    tags: state.tags,
+    cardTags: state.cardTags,
+  }));
+
+  // Get the tags for the current card
+  const cardTagIds = cardTags[card.id] ? Object.keys(cardTags[card.id]) : [];
+  const cardTagsList = cardTagIds.map((tagId) => tags[tagId]);
 
   // push, should be intercepted by @modal route and open the modal
   const handleOpenModal = () => {
@@ -88,7 +97,11 @@ export const DeckCard = ({
         <div className='left-dc-wrapper'>
           {index}
           {/* SHOW TAGS HERE */}
-
+          <div className='tags-container flex'>
+            {cardTagsList.map((tag) => (
+              <Tag key={tag.id} tag={tag} />
+            ))}
+          </div>
         </div>
 
         <div className='px-4 font-medium'>{card.question}</div>

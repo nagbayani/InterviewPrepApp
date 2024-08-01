@@ -10,10 +10,15 @@ import { TangentIcon } from "lucide-react";
  * @returns
  */
 
-export const Tag = ({ tag }: { tag: TagData }) => {
+const Tag = ({ tag }: { tag: TagData }) => {
   return (
-    <div className='tag'>
+    <div
+      className='tag px-2 py-1 bg-gray-200 text-xs rounded-full'
+      style={{ borderRadius: "25px" , backgroundColor: tag.color }}
+    >
       <span>{tag.name}</span>
     </div>
   );
 };
+
+export default Tag;

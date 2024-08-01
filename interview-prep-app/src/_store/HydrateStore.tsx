@@ -22,10 +22,10 @@ const HydrateStore = ({ decks, cards, tags, cardTags }: HydrateStoreProps) => {
     setCards(cards);
     setTags(tags);
     setCardTags(cardTags);
-
+    
     console.log("New Cards set in store: ", decks);
     console.log("New Decks set in store: ", cards);
-  }, [decks, cards, setDecks, setCards]);
+  }, [decks, cards, tags, cardTags, setDecks, setCards, setTags, setCardTags]);
 
   return null;
 };

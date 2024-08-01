@@ -13,9 +13,7 @@ const Interviews = async () => {
   if (session?.user) {
     return (
       <div className='dashboard-wrapper p-8 '>
-        <h1 className='ml-[0] '>
-          Dashboard - Welcome Back {session?.user.name}
-        </h1>
+        <h1 className='ml-[0] '></h1>
         <h1 style={{ fontSize: "var(--step-1)" }}>Interviews</h1>
       </div>
     );
