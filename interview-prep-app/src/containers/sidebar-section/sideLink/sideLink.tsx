@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import "../../../styles/sideLink.css";
+import "../../../styles/sidebar.css";
 import { usePathname } from "next/navigation";
 
 interface Item {
@@ -12,8 +12,9 @@ interface Item {
 
 interface SideLinkProps {
   item: Item;
+  isCollapsed: boolean;
 }
-const SideLink = ({ item }: SideLinkProps) => {
+const SideLink = ({ item, isCollapsed }: SideLinkProps) => {
   const pathname = usePathname();
 
   return (
@@ -24,7 +25,7 @@ const SideLink = ({ item }: SideLinkProps) => {
       }`}
     >
       {item.icon}
-      {item.name}
+      {!isCollapsed && item.name}
     </Link>
   );
 };

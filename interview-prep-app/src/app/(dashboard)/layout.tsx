@@ -45,9 +45,9 @@ export default async function Layout({ children }: LayoutProps) {
     <div className='dashboard-container'>
       <Navbar />
       <div className='main-inner-wrapper flex h-full w-full'>
-        <div className='sidebar-menu'>
-          <Sidebar decks={decks} user={user} />
-        </div>
+        {/* <div className='sidebar-menu'>
+        </div> */}
+        <Sidebar user={user} />
         <main className='dashboard-content'>{children}</main>
       </div>
     </div>

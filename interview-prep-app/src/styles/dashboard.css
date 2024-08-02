@@ -9,47 +9,14 @@
   width: 100vw;
 }
 
-.sidebar-menu {
-  flex: 1;
-  /* background-color: #1d0061; */
-  background-color: rgba(24, 24, 27, 0.95);
-  padding: 5px;
-  /* height: 100vh; */
-  height: auto;
-  max-width: 250px;
-  position: relative;
-}
-
 .dashboard-content {
-  flex: 4;
-  /* padding-left: 20px; */
-  /* padding-top: 40px; */
+  flex: 1;
   background: #f1f1fb;
-  /* background: #e6e9dd; */
-  /* padding-right: 20px; */
   padding-bottom: 20px;
+  transition: margin-left 0.3s ease;
 }
 
 .dashboard-wrapper {
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
-  /* margin-top: 50px; */
-}
-
-.dashboard-main {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.dashboard-cards {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-}
-
-.dashboard-side {
-  flex: 1;
 }

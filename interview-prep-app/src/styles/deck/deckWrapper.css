@@ -34,11 +34,16 @@
   /* justify-content: center; */
   /* align-items: center; */
   height: auto;
-  padding: 20px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid black;
   /* font-size: 20px; */
+  /* margin-bottom: 20px; */
+}
+.deck-wrapper-header h1 {
+  margin: 0;
   font-size: var(--step-1);
   font-weight: 600;
-  /* margin-bottom: 20px; */
 }
 
 .add-wrapper {

@@ -1,19 +1,34 @@
+/* Sidebar wrapper container */
 .sidebar-container {
+  /* flex: 1; */
+  background-color: rgba(24, 24, 27, 0.95);
+  padding: 5px;
+  width: 250px;
+  max-width: 250px;
+  position: relative;
   height: 100vh;
   position: sticky;
   top: 50px;
   left: 0;
-  /* background-color: rgba(24, 24, 27, 0.5); */
-
-  overflow-x: hidden;
+  transition: width 0.3s ease;
   padding-top: 20px;
   -webkit-text-fill-color: aliceblue;
 }
 
+.sidebar-container .collapsed {
+  width: 90px;
+}
+
+.sidebar-auth-btn {
+  display: flex;
+  position: sticky;
+  position: bottom;
+}
+
+/* Side Item  */
 .sideitem-container {
-  padding: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 10px;
+  padding-left: 20px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -22,27 +37,57 @@
   -webkit-text-fill-color: #f1f1f1;
 }
 
-.sidebar-auth-btn {
+.sideitem-container.collapsed {
+  justify-content: center;
+  width: 100%;
+}
+
+/* Side Link */
+.sidelink-container {
+  padding: 10px;
   display: flex;
-  position: sticky;
-  /* justify-content: center; */
-  /* justify-items: center; */
-  /* align-items: center; */
-  position: bottom;
-  /* margin-top: 95%; */
-  /* padding-left: 10px; */
-  /* padding-left: 45%; */
-  /* padding: 10px; */
-  /* bottom: 25%; */
-}
-
-.cat {
-  color: #cabeff;
-  font-weight: bold;
-  font-size: 13px;
+  align-items: center;
+  gap: 1em;
   margin: 5px 0px;
+  border-radius: 10px;
+  -webkit-text-fill-color: #f1f1f1;
 }
 
-.sidebar-list {
-  list-style: none;
+.sidelink-container:hover,
+.active {
+  background-color: #642eff;
+  -webkit-text-fill-color: aliceblue;
+}
+
+/* Worklink */
+.worklink-container {
+  padding: 10px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 5px 0px;
+  border-radius: 10px;
+  -webkit-text-fill-color: #f1f1f1;
+}
+
+.worklink-container:hover,
+.active {
+  background-color: #642eff;
+  -webkit-text-fill-color: aliceblue;
+}
+
+.collapsed-icon-placeholder {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+/* Adjust these classes to ensure they properly target the elements when collapsed */
+.sidebar-container.collapsed .sideitem-container,
+.sidebar-container.collapsed .sidelink-container,
+.sidebar-container.collapsed .worklink-container,
+.sidebar-container.collapsed .sidebar-list {
+  justify-content: center;
+  width: 100%;
 }

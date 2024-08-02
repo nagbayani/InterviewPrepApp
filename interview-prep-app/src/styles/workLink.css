@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .worklink-container {
-  padding: 15px;
+  padding: 10px;
   padding-left: 20px;
   display: flex;
   align-items: center;
@@ -17,4 +17,11 @@
 .active {
   background-color: #642eff;
   -webkit-text-fill-color: aliceblue;
+}
+
+.collapsed-icon-placeholder {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 4px;
 }
