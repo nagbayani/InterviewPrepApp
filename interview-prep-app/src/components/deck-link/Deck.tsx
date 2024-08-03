@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import { DeckDataResponse, CardData } from "@/types/data-types";
 import { DeckCard } from "@/components/card/Card";
 import "../../styles/deck/deckWrapper.css";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { LuPlus } from "react-icons/lu";
 import { CardInput } from "../ui/cardinput";
 import { useCardStore, useDeckStore } from "@/_store/index";
 import { fetchAllCards, moveCardPUT } from "@/utils/fetch";
 import { set } from "zod";
 import { toast } from "@/components/ui/use-toast";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { LuPlus } from "react-icons/lu";
 
 /**
  *

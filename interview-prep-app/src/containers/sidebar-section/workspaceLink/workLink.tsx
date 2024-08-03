@@ -20,13 +20,13 @@ const WorkLink = ({ item, isCollapsed }: WorkLinkProps) => {
   return (
     <Link
       href={item.path}
-      className={`worklink-container ${
+      className={`worklink-container mx-auto ${
         pathname === item.path && "worklink-container active"
       }`}
     >
       {/* {item.icon} */}
       <div className='collapsed-icon-placeholder' />
-      {!isCollapsed && item.name}
+      {!isCollapsed && <span className='link-text'>{item.name}</span>}
     </Link>
   );
 };

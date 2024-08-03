@@ -10,7 +10,7 @@
   position: sticky;
   top: 50px;
   left: 0;
-  transition: width 0.3s ease;
+  transition: all 0.5s ease-in-out;
   padding-top: 20px;
   -webkit-text-fill-color: aliceblue;
 }
@@ -24,51 +24,44 @@
   position: sticky;
   position: bottom;
 }
-
-/* Side Item  */
-.sideitem-container {
-  padding: 10px;
-  padding-left: 20px;
-  display: flex;
-  align-items: center;
+.sidebar-list {
   gap: 10px;
-  margin: 5px 0px;
-  border-radius: 10px;
-  -webkit-text-fill-color: #f1f1f1;
 }
-
-.sideitem-container.collapsed {
-  justify-content: center;
-  width: 100%;
-}
-
 /* Side Link */
 .sidelink-container {
-  padding: 10px;
+  padding: 5px;
   display: flex;
   align-items: center;
+  /* padding-left: 20px; */
   gap: 1em;
-  margin: 5px 0px;
+  /* margin: auto; */
+  margin: auto 10px;
   border-radius: 10px;
   -webkit-text-fill-color: #f1f1f1;
+  transition: all 0.5s ease-in-out;
+  white-space: nowrap;
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
 }
 
 .sidelink-container:hover,
 .active {
   background-color: #642eff;
   -webkit-text-fill-color: aliceblue;
+  transition: all 0.5s ease-in-out;
 }
 
 /* Worklink */
 .worklink-container {
-  padding: 10px;
-  padding-left: 20px;
+  padding: 5px;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 5px;
-  margin: 5px 0px;
+  margin: auto;
   border-radius: 10px;
   -webkit-text-fill-color: #f1f1f1;
+  transition: all 0.5s ease-in-out;
+  white-space: nowrap;
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
 }
 
 .worklink-container:hover,
@@ -84,10 +77,54 @@
   border-radius: 4px;
 }
 /* Adjust these classes to ensure they properly target the elements when collapsed */
-.sidebar-container.collapsed .sideitem-container,
 .sidebar-container.collapsed .sidelink-container,
 .sidebar-container.collapsed .worklink-container,
 .sidebar-container.collapsed .sidebar-list {
+  /* justify-content: center; */
+  /* width: 100%; */
+  transition: all 0.5s ease-in-out;
+}
+
+.sidebar-container.collapsed .sidelink-container,
+.sidebar-container.collapsed .worklink-container {
+  /* padding: 10px 8px;
+  margin: auto; */
+  padding: 5px;
+  margin: 0px 10px;
+  width: 40px;
+  transition: all 0.5s ease-in-out;
+}
+
+.workspace-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.workspace-header.collapsed {
   justify-content: center;
   width: 100%;
+  padding: 0;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  padding: 5px;
+}
+
+.link-text {
+  padding: 0px;
+  transition: all 0.5s ease-in-out;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-container.collapsed .link-text {
+  opacity: 0;
+  transform: translateX(-100%);
 }

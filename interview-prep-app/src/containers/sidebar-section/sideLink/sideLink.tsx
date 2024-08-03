@@ -24,8 +24,8 @@ const SideLink = ({ item, isCollapsed }: SideLinkProps) => {
         pathname === item.path && "sidelink-container active"
       }`}
     >
-      {item.icon}
-      {!isCollapsed && item.name}
+      <div className='icon-container'>{item.icon}</div>
+      {!isCollapsed && <span className='link-text'>{item.name}</span>}
     </Link>
   );
 };

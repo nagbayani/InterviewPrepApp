@@ -16,10 +16,19 @@ import { Button } from "@/components/ui/button";
 import { Session } from "next-auth";
 import UserAccountNav from "@/components/UserAccountNav";
 import { useDeckStore } from "@/_store/index";
+import { Ellipsis } from "lucide-react";
 
 const sideItems = [
-  { name: "Home", path: "/home", icon: <AiOutlineHome color='#f1f1f1' /> },
-  { name: "Decks", path: "/decks", icon: <SiContentstack color='#f1f1f1' /> },
+  {
+    name: "Home",
+    path: "/home",
+    icon: <AiOutlineHome color='#f1f1f1' size={20} />,
+  },
+  {
+    name: "Decks",
+    path: "/decks",
+    icon: <SiContentstack color='#f1f1f1' size={20} />,
+  },
   {
     name: "Interviews",
     path: "/interviews",
@@ -54,7 +63,12 @@ const Sidebar = ({ user }: SidebarProps) => {
         isCollapsed ? "collapsed w-[90px] " : ""
       }`}
     >
-      <Button onClick={toggleSidebar} variant='default' size='icon'>
+      <Button
+        onClick={toggleSidebar}
+        variant='default'
+        size='icon'
+        className='justify-center'
+      >
         {isCollapsed ? (
           <FiChevronRight color='#f1f1f1' />
         ) : (
@@ -67,17 +81,21 @@ const Sidebar = ({ user }: SidebarProps) => {
       </div> */}
 
       {/* Main Side Links -- Home, Decks, Interviews */}
-      <ul className={`sidebar-list ${isCollapsed ? "collapsed" : ""}`}>
+      <ul className={`sidebar-list  ${isCollapsed ? "collapsed" : ""}`}>
         {sideItems.map((item) => (
-          <li key={item.name}>
+          <li key={item.name} className='mx-auto my-2'>
             <SideLink key={item.name} item={item} isCollapsed={isCollapsed} />
           </li>
         ))}
       </ul>
 
       {/* Workspace Links -- Decks */}
-      <ul className={`sidebar-list ${isCollapsed ? "collapsed" : ""}`}>
-        <strong className='pl-[10px]'>{!isCollapsed && "Workspace"}</strong>
+      <ul className={`sidebar-list  ${isCollapsed ? "collapsed" : ""}`}>
+        {/* <strong
+          className={`workspace-header ${isCollapsed ? "collapsed" : ""}`}
+        >
+          {!isCollapsed ? "Workspace" : <Ellipsis />}
+        </strong> */}
         {Object.values(decksData).map((deck) => (
           <li key={deck.id}>
             <WorkLink
