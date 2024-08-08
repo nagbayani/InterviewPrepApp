@@ -13,8 +13,8 @@ import { TangentIcon } from "lucide-react";
 const Tag = ({ tag }: { tag: TagData }) => {
   return (
     <div
-      className='tag px-2 py-1 bg-gray-200 text-xs rounded-full'
-      style={{ borderRadius: "25px" , backgroundColor: tag.color }}
+      className='tag p-2 bg-gray-200 border-black border-[1px] text-xs rounded-full'
+      style={{ borderRadius: "25px", backgroundColor: tag.color }}
     >
       <span>{tag.name}</span>
     </div>

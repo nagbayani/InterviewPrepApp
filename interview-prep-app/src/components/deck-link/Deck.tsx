@@ -10,6 +10,7 @@ import { set } from "zod";
 import { toast } from "@/components/ui/use-toast";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
+import { Send, SlidersHorizontal } from "lucide-react";
 
 /**
  *
@@ -170,20 +171,35 @@ const Deck = ({ deck, cards, decks, tags }: any) => {
     <section className='deck-wrapper-container'>
       <div className='deck-wrapper-header'>
         {/* <h1>{deck?.title}</h1> */}
-        {titleEditing ? (
-          <>
-            <CardInput
-              onBlur={handleInputBlur}
-              onChange={handleChange}
-              value={titleValue}
-              onKeyDown={handleKeyDown}
-            />
-          </>
-        ) : (
-          <>
-            <h1 onClick={() => setTitleEdit(true)}>{titleValue}</h1>
-          </>
-        )}
+        {/* Deck Icon */}
+        <div className='deck-icon-wrap'></div>
+
+        <div className='deck-title-wrap gap-2'>
+          {titleEditing ? (
+            <>
+              <CardInput
+                onBlur={handleInputBlur}
+                onChange={handleChange}
+                value={titleValue}
+                onKeyDown={handleKeyDown}
+              />
+            </>
+          ) : (
+            <>
+              <h1 onClick={() => setTitleEdit(true)}>{titleValue}</h1>
+            </>
+          )}
+          <div className='deck-header-buttons flex gap-4 mt-[1rem] '>
+            <Button variant='textIcon' style={{ backgroundColor: "" }}>
+              <span>Filter</span>
+              <SlidersHorizontal size={14} />
+            </Button>
+            <Button variant='textIcon'>
+              <span>Send</span>
+              <Send size={12} />
+            </Button>
+          </div>
+        </div>
       </div>
 
       <div className='flex flex-col items-center gap-8'>

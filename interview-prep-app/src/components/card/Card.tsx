@@ -94,19 +94,27 @@ export const DeckCard = ({
       style={{ background: "#fefcf6" }}
     >
       <div className='main-dc-wrapper justify-self-start flex justify-between'>
-        <div className='left-dc-wrapper'>
-          {index}
-          {/* SHOW TAGS HERE */}
-          <div className='tags-container mx-4 flex'>
-            {cardTagsList.map((tag) => (
-              <Tag key={tag.id} tag={tag} />
-            ))}
+        <div className='left-dc-wrapper m-4'>
+          <div className='flex p-2 m-2'>
+            {index}
+            {/* SHOW TAGS HERE */}
+            <div className='tags-container mx-4 flex'>
+              {cardTagsList.map((tag) => (
+                <Tag key={tag.id} tag={tag} />
+              ))}
+            </div>
           </div>
+          <div className='px-4 font-medium'>{card.question}</div>
         </div>
-
-        <div className='px-4 font-medium'>{card.question}</div>
       </div>
-      <div className='bottom-dc-wrapper justify-self-end'>
+      <div className='bottom-dc-wrapper '>
+        <Button
+          variant='editCard'
+          onClick={handleOpenModal}
+          className='h-[50%]'
+        >
+          <PenLine size={12} />
+        </Button>
         <MoveCardMenu
           handleDeleteCard={handleDeleteCard}
           user={card.authorId}
@@ -114,13 +122,6 @@ export const DeckCard = ({
           deckId={deckId}
           onMoveCard={onMoveCard}
         />
-        <Button
-          variant='outline'
-          onClick={handleOpenModal}
-          className='mx-2 px-4'
-        >
-          <PenLine size={12} />
-        </Button>
       </div>
       {/* <div className='card-content-wrapper w-full'></div> */}
     </div>

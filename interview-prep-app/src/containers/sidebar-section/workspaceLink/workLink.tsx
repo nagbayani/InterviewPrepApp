@@ -25,6 +25,7 @@ const WorkLink = ({ item, isCollapsed }: WorkLinkProps) => {
       }`}
     >
       {/* {item.icon} */}
+    
       <div className='collapsed-icon-placeholder' />
       {!isCollapsed && <span className='link-text'>{item.name}</span>}
     </Link>

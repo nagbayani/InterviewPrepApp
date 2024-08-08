@@ -29,14 +29,33 @@
   grid-column-gap: 1.5em;
 }
 
+.deck-icon-wrap {
+  width: 80px;
+  height: 80px;
+  background-color: red;
+  border-radius: 4px;
+}
+
+.deck-title-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+}
+.deck-title-text {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
 .deck-wrapper-header {
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
+  justify-content: center;
+  align-items: center;
   height: auto;
   padding: 12px;
-  margin-bottom: 12px;
-  border-bottom: 2px solid black;
+  margin-bottom: 2em;
+  gap: 2em;
+  height: 14em;
+  border-bottom: 1px solid black;
   /* font-size: 20px; */
   /* margin-bottom: 20px; */
 }
