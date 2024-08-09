@@ -8,6 +8,9 @@ const gradients: Gradients = {
   // Add more as needed
 };
 
+
+
+
 export default gradients;
 /**
  * White, Black, Grey, Yellow, Red, Blue, Green, Brown, Pink, Orange, Purple

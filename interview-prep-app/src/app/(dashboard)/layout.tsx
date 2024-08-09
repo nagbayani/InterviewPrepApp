@@ -1,5 +1,6 @@
 import React from "react";
-import Sidebar from "../../containers/sidebar-section/Sidebar";
+// import Sidebar from "../../containers/sidebar-section/Sidebar";
+import DashboardLayout from "@/containers/sidebar-section/dashboard-layout";
 import Navbar from "@/components/Navbar";
 import "../../styles/dashboard.css";
 import { auth } from "../../../auth";
@@ -44,25 +45,11 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <div className='dashboard-container'>
       <Navbar />
-      <div className='main-inner-wrapper flex h-full w-full'>
-        {/* <div className='sidebar-menu'>
-        </div> */}
+      {/* <div className='main-inner-wrapper flex h-full w-full'>
         <Sidebar user={user} />
         <main className='dashboard-content'>{children}</main>
-      </div>
+      </div> */}
+      <DashboardLayout>{children}</DashboardLayout>
     </div>
   );
 }
-
-// Sidebar should be outside
-// Navbar should be outside
-//inner children are the 3 links (Board, Decks, Interviews)
-/*
-  <div className='w-full h-full flex flex-col items-center'>
-        <Navbar />
-        <div className='pt-16'>
-          <h1 className='ml-[160px]'>
-            Dashboard - Welcome Back {session?.user.username}{" "}
-          </h1>
-          <Sidebar />
-*/

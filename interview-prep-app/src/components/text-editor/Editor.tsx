@@ -87,9 +87,10 @@ export const TipTapEditor = ({ initialValue, onChange }: EditorProp) => {
 
   return (
     editor && (
-      <section className='flex flex-col gap-2 w-full justify-center'>
+      <section className='flex flex-col gap-2 w-full h-full justify-center'>
+        <label>Your message</label>
         <EditorContent
-          className='w-full flex justify-center h-[500px]'
+          className='w-full flex justify-center h-[500px] border-black border-2'
           editor={editor}
         />
 
