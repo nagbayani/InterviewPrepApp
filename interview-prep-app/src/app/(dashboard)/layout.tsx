@@ -43,8 +43,9 @@ export default async function Layout({ children }: LayoutProps) {
   const user = data?.session?.user;
 
   return (
-    <div className='dashboard-container'>
-      <Navbar />
+    // <div className='dashboard-container'>
+    <div>
+      {/* <Navbar /> */}
       {/* <div className='main-inner-wrapper flex h-full w-full'>
         <Sidebar user={user} />
         <main className='dashboard-content'>{children}</main>

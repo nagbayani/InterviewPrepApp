@@ -23,7 +23,7 @@ const buttonVariants = cva(
         textIcon:
           "flex gap-2 bg-primary text-primary-foreground hover:bg-primary/90",
         editCard:
-          "bg-gray-200 hover:bg-gray-300 hover:bg-slate-500 rounded-l-[0px]  rounded-br-[0px] rounded-tr-[12px]",
+          "bg-gray-200 hover:bg-gray-300 hover:bg-slate-500 rounded-l-[0px]  rounded-br-[0px] rounded-tr-[12px] ",
       },
       size: {
         default: "h-10 px-4 py-2",

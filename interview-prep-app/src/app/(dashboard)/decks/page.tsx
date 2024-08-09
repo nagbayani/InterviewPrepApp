@@ -3,6 +3,7 @@ import { auth } from "../../../../auth";
 import "../../../styles/dashboard.css";
 import { cookies } from "next/headers";
 import DeckWrapper from "@/containers/deck-wrapper/DeckWrapper";
+import { ContentLayout } from "@/containers/sidebar-section/content-layout";
 
 const getDeckData = async (cookieHeader: string) => {
   // fetch data using api route
@@ -35,9 +36,11 @@ const DecksPage = async () => {
     const data = await getDeckData(cookieHeader);
 
     return (
-      <section className='dashboard-wrapper'>
+      <ContentLayout title={"Decks"}>
+        {/* <section className='dashboard-wrapper'> */}
         <DeckWrapper decks={data.decks} />
-      </section>
+        {/* </section> */}
+      </ContentLayout>
     );
   }
   return (

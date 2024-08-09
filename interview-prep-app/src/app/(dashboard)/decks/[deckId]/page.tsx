@@ -5,6 +5,8 @@ import { DeckDataResponse, CardData, DeckData } from "@/types/data-types";
 import { DeckCard } from "../../../../components/card/Card";
 import Deck from "@/components/deck-link/Deck";
 import HydrateStore from "@/_store/HydrateStore";
+import { ContentLayout } from "@/containers/sidebar-section/content-layout";
+
 interface Response {
   data: DeckDataResponse;
 }
@@ -27,7 +29,8 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
 
   // console.log("CARDTAGS", cardTags);
   return (
-    <div className='dashboard-wrapper'>
+    <ContentLayout title={deck.title}>
+      {/* <div className='dashboard-wrapper'> */}
       {/* Pass data response to Deck client component */}
       <Deck deck={deck} cards={cards} decks={decks} tags={tags} />
       {/* Need to set tags in store */}
@@ -37,7 +40,8 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
         tags={tags}
         cardTags={cardTags}
       />
-    </div>
+      {/* </div> */}
+    </ContentLayout>
   );
 };
 

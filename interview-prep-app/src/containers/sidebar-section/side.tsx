@@ -46,7 +46,7 @@ const Sidebar = () => {
                   : "translate-x-0 opacity-100"
               )}
             >
-              Brand
+              InterFluent
             </h1>
           </Link>
         </Button>

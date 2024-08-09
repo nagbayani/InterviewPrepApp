@@ -90,8 +90,8 @@ export const DeckCard = ({
 
   return (
     <div
-      className='deck-card-container justify-self-center flex flex-row justify-between'
-      style={{ background: "#fefcf6" }}
+      className='deck-card-container justify-self-center flex flex-row justify-between border-black'
+      style={{ background: "#fefcf6", border: "1px solid black" }}
     >
       <div className='main-dc-wrapper justify-self-start flex justify-between'>
         <div className='left-dc-wrapper m-4'>
