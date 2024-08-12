@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .sidelink-container {
-  padding: 15px;
+  padding: 10px;
   padding-left: 20px;
   display: flex;
   align-items: center;

@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <Provider>
-          <main className='h-screen flex flex-col'>
+          <main className='flex flex-col overflow-visible'>
             {children}
             <Toaster />
           </main>

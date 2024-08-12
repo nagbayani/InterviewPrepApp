@@ -26,6 +26,7 @@ interface Props {
 }
 
 const DeckWrapper = ({ decks }: { decks: any }) => {
+  // Zustand store:  State Management for Decks
   const {
     decks: decksData,
     addDeck,
@@ -36,10 +37,12 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
     setDecks: state.setDecks,
   }));
 
+  // Client show form state when User wants to add a new deck
   const [showForm, setShowForm] = useState(false);
   const [newDeckTitle, setNewDeckTitle] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Update Zustand store with deck data from database
   useEffect(() => {
     setDecks(decks);
   }, [decks, setDecks]);
@@ -101,24 +104,24 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
     <section className='deck-wrapper-container'>
       <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className=' w-[250px] rounded-md m-auto text-center place-self-center bg-[#642eff] px-0 py-2 hover:bg-black text-white  transition-colors duration-300 ease-in-out flex items-center justify-center'>
-            Filter
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem onSelect={() => console.log("Send")}>
-            Send
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className='flex justify-center gap-4'>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className=' w-[250px] rounded-md m-auto text-center place-self-center bg-[#642eff] px-0 py-2 hover:bg-black text-white  transition-colors duration-300 ease-in-out flex items-center justify-center'>
+              Filter
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onSelect={() => console.log("Send")}>
+              Send
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <ul className='decks-list h-full gap-4'>
-        <li className='add-wrapper'>
+        <div className='add-wrapper gap-2'>
           {showForm ? (
             <div
-              className='justify-self-center flex justify-between w-full p-4 rounded-lg'
+              className='justify-self-center flex   p-4 rounded-lg'
               // style={{ background: "#fefcf6" }}
             >
               <input
@@ -145,7 +148,10 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
               <span>Add a deck</span>
             </Button>
           )}
-        </li>
+        </div>
+      </div>
+      <ul className='decks-list h-full gap-4'>
+        {/* <li className='add-wrapper'></li> */}
         {Object.values(decksData)
           .reverse()
           .map((deck: any) => {

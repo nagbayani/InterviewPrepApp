@@ -20,6 +20,10 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         create:
           "group relative border-dotted border-2 border-blue-500 bg-blue-500 text-white px-4 py-2 rounded transition-all duration-300 ease-in-out",
+        textIcon:
+          "flex gap-2 bg-primary text-primary-foreground hover:bg-primary/90",
+        editCard:
+          "bg-gray-200 hover:bg-gray-300 hover:bg-slate-500 rounded-l-[0px]  rounded-br-[0px] rounded-tr-[12px] ",
       },
       size: {
         default: "h-10 px-4 py-2",

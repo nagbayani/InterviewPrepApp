@@ -1,6 +1,7 @@
 import React from "react";
-import Sidebar from "../../containers/sidebar-section/Sidebar";
-// import Navbar from "@/components/Navbar";
+// import Sidebar from "../../containers/sidebar-section/Sidebar";
+import DashboardLayout from "@/containers/sidebar-section/dashboard-layout";
+import Navbar from "@/components/Navbar";
 import "../../styles/dashboard.css";
 import { auth } from "../../../auth";
 import { fetchAllDecks } from "@/utils/fetch";
@@ -41,26 +42,15 @@ export default async function Layout({ children }: LayoutProps) {
   console.log("DECKS in Layout", decks);
   const user = data?.session?.user;
 
-
   return (
-    <div className='dashboard-container'>
-      <div className='sidebar-menu'>
-        <Sidebar decks={decks} user={user} />
-      </div>
-      <main className='dashboard-content'>{children}</main>
+    // <div className='dashboard-container'>
+    <div>
+      {/* <Navbar /> */}
+      {/* <div className='main-inner-wrapper flex h-full w-full'>
+        <Sidebar user={user} />
+        <main className='dashboard-content'>{children}</main>
+      </div> */}
+      <DashboardLayout>{children}</DashboardLayout>
     </div>
   );
 }
-
-// Sidebar should be outside
-// Navbar should be outside
-//inner children are the 3 links (Board, Decks, Interviews)
-/*
-  <div className='w-full h-full flex flex-col items-center'>
-        <Navbar />
-        <div className='pt-16'>
-          <h1 className='ml-[160px]'>
-            Dashboard - Welcome Back {session?.user.username}{" "}
-          </h1>
-          <Sidebar />
-*/

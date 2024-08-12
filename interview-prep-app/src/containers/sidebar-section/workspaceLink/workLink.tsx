@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import "../../../styles/workLink.css";
+import "../../../styles/sidebar.css";
 import { usePathname } from "next/navigation";
 
 interface Item {
@@ -12,19 +12,22 @@ interface Item {
 
 interface WorkLinkProps {
   item: Item;
+  isCollapsed: boolean;
 }
-const WorkLink = ({ item }: WorkLinkProps) => {
+const WorkLink = ({ item, isCollapsed }: WorkLinkProps) => {
   const pathname = usePathname();
 
   return (
     <Link
       href={item.path}
-      className={`worklink-container ${
+      className={`worklink-container mx-auto ${
         pathname === item.path && "worklink-container active"
       }`}
     >
       {/* {item.icon} */}
-      {item.name}
+    
+      <div className='collapsed-icon-placeholder' />
+      {!isCollapsed && <span className='link-text'>{item.name}</span>}
     </Link>
   );
 };

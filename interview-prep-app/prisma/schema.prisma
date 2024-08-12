@@ -26,6 +26,7 @@ model User {
   decks     Deck[]
   cards     Card[]
   accounts  Account[]
+  tags      Tag[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   emailVerified DateTime?
@@ -66,6 +67,17 @@ model VerificationToken {
 }
 
 
+model Deck {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  cards     Card[]
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+
 model Card {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -77,15 +89,25 @@ model Card {
   authorId  String
   deck      Deck    @relation(fields: [deckId], references: [id])
   deckId    String
+  tags      CardTags[]  // each card can have multiple tags
 }
 
-model Deck {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  cards     Card[]
+// handles tag-specific attributes
+model Tag {
+  id    String   @id @default(cuid())
+  name  String
+  color String  
+  authorId String   // No default value
   author    User    @relation(fields: [authorId], references: [id])
-  authorId  String
+  cards CardTags[]   // each tag can be associated with multiple cards
 }
 
+// Join table for Card and Tag
+model CardTags {
+  cardId String
+  tagId  String
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  // create composite primary key - pair of cardId and tagId are unique
+  @@id([cardId, tagId])
+}

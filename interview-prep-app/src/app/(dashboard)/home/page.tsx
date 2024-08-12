@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import "../../../styles/dashboard.css";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
+import { ContentLayout } from "@/containers/sidebar-section/content-layout";
+import { Content } from "next/font/google";
+
 // import Layout from "./layout";
 
 const HomePage = async () => {
@@ -13,7 +16,8 @@ const HomePage = async () => {
   if (session?.user) {
     console.log(session, "SESSION HOME");
     return (
-      <div className='dashboard-wrapper'>
+      <ContentLayout title={"Home"}>
+        {/* <div className='dashboard-wrapper'> */}
         <h1
           className='ml-[0]'
           style={{
@@ -25,7 +29,8 @@ const HomePage = async () => {
         </h1>
         <h1 style={{ fontSize: "var(--step-1)" }}>Board</h1>
         <HomeBoard />
-      </div>
+        {/* </div> */}
+      </ContentLayout>
     );
   }
 

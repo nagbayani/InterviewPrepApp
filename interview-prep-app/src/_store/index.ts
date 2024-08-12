@@ -1,7 +1,88 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { CardData, DeckData } from "@/types/data-types";
+import { CardData, DeckData, TagData, CardTagData } from "@/types/data-types";
 import { StringifyOptions } from "querystring";
+
+// State for Tags (Cards)
+interface TagState {
+  tags: Record<string, TagData>;
+  cardTags: Record<string, Record<string, CardTagData>>;
+  updateTag: (tagId: string, data: Partial<TagData>) => void;
+  setTags: (tags: TagData[]) => void;
+  setCardTags: (cardTags: CardTagData[]) => void;
+  addTag: (tag: TagData) => void;
+  deleteTag: (tagId: string) => void;
+  addCardTag: (cardTag: CardTagData) => void;
+  deleteCardTag: (cardId: string, tagId: string) => void;
+}
+
+export const useTagStore = create<TagState>((set) => ({
+  tags: {},
+  cardTags: {},
+  updateTag: (tagId, data) =>
+    set((state) => ({
+      tags: {
+        ...state.tags,
+        [tagId]: {
+          ...state.tags[tagId],
+          ...data,
+        },
+      },
+    })),
+  addTag: (tag: TagData) =>
+    set((state) => ({
+      tags: {
+        ...state.tags,
+        [tag.id]: tag,
+      },
+    })),
+  setTags: (tags) =>
+    set(() => ({
+      tags: tags.reduce(
+        (acc, tag) => ({
+          ...acc,
+          [tag.id]: tag,
+        }),
+        {}
+      ),
+    })),
+  setCardTags: (cardTags) => {
+    const cardTagRecord = cardTags.reduce((acc, cardTag) => {
+      if (!acc[cardTag.cardId]) {
+        acc[cardTag.cardId] = {};
+      }
+      acc[cardTag.cardId][cardTag.tagId] = cardTag;
+      return acc;
+    }, {} as Record<string, Record<string, CardTagData>>);
+    set({ cardTags: cardTagRecord });
+  },
+  deleteTag: (tagId: string) =>
+    set((state) => {
+      const newTags = { ...state.tags };
+      delete newTags[tagId];
+      return { tags: newTags };
+    }),
+  addCardTag: (cardTag: CardTagData) =>
+    set((state) => {
+      const newCardTags = { ...state.cardTags };
+      if (!newCardTags[cardTag.cardId]) {
+        newCardTags[cardTag.cardId] = {};
+      }
+      newCardTags[cardTag.cardId][cardTag.tagId] = cardTag;
+      return { cardTags: newCardTags };
+    }),
+  deleteCardTag: (cardId: string, tagId: string) =>
+    set((state) => {
+      const newCardTags = { ...state.cardTags };
+      if (newCardTags[cardId]) {
+        delete newCardTags[cardId][tagId];
+        if (Object.keys(newCardTags[cardId]).length === 0) {
+          delete newCardTags[cardId];
+        }
+      }
+      return { cardTags: newCardTags };
+    }),
+}));
 
 // state types
 interface CardState {

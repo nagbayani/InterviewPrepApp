@@ -1,7 +1,8 @@
-import CardDisplay from "./Card-Display";
+import CardDisplay from "../../../../../../components/card/Card-Display";
 import { CardData } from "@/types/data-types";
 import { currentUser } from "@/lib/auth";
 import { fetchSingleCard, fetchAllDecks } from "@/utils/fetch";
+import { getTagsByUserId } from "@/data/tags";
 // import { Modal } from "@/containers/modal/Modal";
 // import { ModalProvider } from "@/containers/modal/ModalContext";
 
@@ -19,6 +20,8 @@ export default async function CardPage({ params: { cardId } }: Props) {
     userSession.cookieHeader
   );
 
+  const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
+
   // const allDecks = await fetchAllDecks(userSession.cookieHeader);
 
   console.log(cardData, "CARD DATA IN CARD PAGE");
@@ -28,7 +31,7 @@ export default async function CardPage({ params: { cardId } }: Props) {
   }
   return (
     <div className='mt-2 grid place-content-center'>
-      <CardDisplay card={cardData} />
+      <CardDisplay card={cardData} userTags={userTags} />
     </div>
   );
 }
