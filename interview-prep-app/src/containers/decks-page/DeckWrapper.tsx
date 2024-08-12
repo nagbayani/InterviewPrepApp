@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import DeckLink from "@/components/deck-link/DeckLink";
+import DeckLink from "./DeckLink";
 import { useDeckStore } from "@/_store/index";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { LuPlus } from "react-icons/lu";
 import { DeckData } from "@/types/data-types";
-import "../../styles/deck/deckWrapper.css";
+import "@/styles/deck/deckWrapper.css";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +23,8 @@ import {
 interface Props {
   decks: DeckData[];
 }
+
+import { AddDeckModal } from "../modal/add-deck-modal";
 
 const DeckWrapper = ({ decks }: { decks: any }) => {
   // Zustand store:  State Management for Decks
@@ -118,7 +119,9 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className='add-wrapper gap-2'>
+        <AddDeckModal onSubmit={submitAddDeck} />
+
+        {/* <div className='add-wrapper gap-2'>
           {showForm ? (
             <div
               className='justify-self-center flex   p-4 rounded-lg'
@@ -144,11 +147,11 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
               className='add-card-btn  hover:bg-black hover:border-black hover:text-white flex rounded-lg self-center place-self-center justify-self-center  align-center align-items-center'
               onClick={() => setShowForm(true)}
             >
-              {/* <LuPlus /> */}
+              <LuPlus />
               <span>Add a deck</span>
             </Button>
           )}
-        </div>
+        </div> */}
       </div>
       <ul className='decks-list h-full gap-4'>
         {/* <li className='add-wrapper'></li> */}

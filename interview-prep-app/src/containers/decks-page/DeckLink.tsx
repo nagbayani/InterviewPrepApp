@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import "../../styles/deck/deckLink.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { ArrowUpRight } from "lucide-react";
 import { Ellipsis } from "lucide-react";
 import {
@@ -12,9 +12,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown";
-import { CardInput } from "../ui/cardinput";
-import { CardLabel } from "../ui/label";
+} from "@/components/ui/dropdown";
+import { CardInput } from "@/components/ui/cardinput";
+import { CardLabel } from "@/components/ui/label";
 
 import { useDeckStore } from "@/_store";
 

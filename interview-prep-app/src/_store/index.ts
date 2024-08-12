@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { CardData, DeckData, TagData, CardTagData } from "@/types/data-types";
 import { StringifyOptions } from "querystring";
 
+// Zustand Store
 // State for Tags (Cards)
 interface TagState {
   tags: Record<string, TagData>;

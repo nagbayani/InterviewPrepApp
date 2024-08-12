@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { useStore, useSidebarToggle } from "@/_store/sidebar-store";
 // import { Footer } from "@/components/admin-panel/footer";
-import Sidebar from "./side";
+import Sidebar from "@/containers/sidebar-section/Sidebar";
 /**
  * Dashboard layout that holds Sidebar and Main content (NavBar, Content, Footer)
  * @param param0

@@ -111,3 +111,5 @@ model CardTags {
   // create composite primary key - pair of cardId and tagId are unique
   @@id([cardId, tagId])
 }
+
+// Mock Interviews -- Interview Template import Cards -- probably add template to match in CArds table
