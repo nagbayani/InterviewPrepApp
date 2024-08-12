@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { TagData } from "@/types/data-types";
 import { TangentIcon } from "lucide-react";
+import { tagColors } from "@/lib/colors/tag-colors";
 
 /**
  * Tag component to render a tag
@@ -11,10 +12,20 @@ import { TangentIcon } from "lucide-react";
  */
 
 const Tag = ({ tag }: { tag: TagData }) => {
+  const selectedColor = tagColors.find((c) => c.textColor === tag.color);
+
   return (
     <div
-      className='tag p-2 bg-gray-200 border-black border-[1px] text-xs rounded-full'
-      style={{ borderRadius: "25px", backgroundColor: tag.color }}
+      className='tag px-2 py-1 rounded-full'
+      style={{
+        borderRadius: "25px",
+        backgroundColor: selectedColor?.backgroundColor,
+        borderColor: selectedColor?.borderColor,
+        color: selectedColor?.textColor,
+        borderWidth: "1px",
+        borderStyle: "solid",
+        fontSize: "var(--step--5)",
+      }}
     >
       <span>{tag.name}</span>
     </div>

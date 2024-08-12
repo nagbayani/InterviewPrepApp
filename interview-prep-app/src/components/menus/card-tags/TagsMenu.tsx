@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { TagData } from "@/types/data-types";
 import { useTagStore } from "@/_store/index";
+import EditTagMenu from "./EditTagMenu";
 
 interface TagsMenuProps {
   tags: TagData[];
@@ -33,10 +34,15 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
   const [selectedTags, setSelectedTags] =
     useState<string[]>(initialSelectedTags);
 
-  console.log("Selected tags state:", selectedTags);
+  // Menu state to toggle between editing a single tag and back to original TagsMenu
+  const [menuState, setMenuState] = useState<"list" | "edit">("list");
+  const [currentTagId, setCurrentTagId] = useState<string | null>(null);
 
+  // console.log("Selected tags state:", selectedTags);
+
+  // Toggle selected tags to set on card
   const handleTagToggle = (tagId: string) => {
-    console.log("Tag toggled", tagId);
+    // console.log("Tag toggled", tagId);
     setSelectedTags((prevSelectedTags) =>
       prevSelectedTags.includes(tagId)
         ? prevSelectedTags.filter((id) => id !== tagId)
@@ -44,6 +50,19 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
     );
   };
 
+  // User clicks on edit button to edit Tag name and color
+  const handleEditTag = (tagId: string) => {
+    setCurrentTagId(tagId);
+    setMenuState("edit");
+  };
+
+  // User clicks on back button to go back to the list of tags
+  const handleBackToMenu = () => {
+    setMenuState("list");
+    setCurrentTagId(null);
+  };
+
+  // Submit selected tags to update card-tags relationship in database and zustand store
   const handleSubmit = async () => {
     // Fetch existing CardTags from Zustand store
     const existingCardTags = cardTags[cardId]
@@ -105,8 +124,7 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
       console.error("Error updating tags", error);
     }
   };
-
-  return (
+  return menuState === "list" ? (
     <Table>
       <TableCaption>A list of your tags.</TableCaption>
       <TableHeader>
@@ -135,7 +153,11 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
               </div>
             </TableCell>
             <TableCell className='text-right'>
-              <Button variant='outline' size='sm'>
+              <Button
+                variant='outline'
+                size='sm'
+                onClick={() => handleEditTag(tag.id)}
+              >
                 Edit
               </Button>
             </TableCell>
@@ -151,5 +173,10 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
         Submit
       </Button>
     </Table>
+  ) : (
+    <EditTagMenu
+      tag={tags.find((tag) => tag.id === currentTagId)!}
+      onBack={handleBackToMenu}
+    />
   );
 }

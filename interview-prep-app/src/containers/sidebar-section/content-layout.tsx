@@ -1,10 +1,14 @@
-import  Navbar  from "@/components/Navbar"
+import Navbar from "@/components/Navbar";
 
 interface ContentLayoutProps {
   title: string;
   children: React.ReactNode;
 }
-
+/**
+ * Layout wrapper for content pages. Contains Navbar and children components.
+ * @param param0
+ * @returns
+ */
 export function ContentLayout({ title, children }: ContentLayoutProps) {
   return (
     <div>

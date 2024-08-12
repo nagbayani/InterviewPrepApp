@@ -98,7 +98,7 @@ export const DeckCard = ({
           <div className='flex p-2 m-2'>
             {index}
             {/* SHOW TAGS HERE */}
-            <div className='tags-container mx-4 flex'>
+            <div className='tags-container mx-4 gap-2 flex'>
               {cardTagsList.map((tag) => (
                 <Tag key={tag.id} tag={tag} />
               ))}

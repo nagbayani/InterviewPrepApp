@@ -17,7 +17,7 @@ import { Send, SlidersHorizontal } from "lucide-react";
  * Deck Client Component that holds all rendered cards, and will add new cards.
  *
  */
-const Deck = ({ deck, cards, decks, tags }: any) => {
+const Deck = ({ deck }: any) => {
   // retrieve list of cards
   const {
     cards: cardsData,
@@ -170,7 +170,6 @@ const Deck = ({ deck, cards, decks, tags }: any) => {
   return (
     <section className='deck-wrapper-container'>
       <div className='deck-wrapper-header'>
-        {/* <h1>{deck?.title}</h1> */}
         {/* Deck Icon */}
         <div className='deck-icon-wrap'></div>
 
@@ -189,20 +188,21 @@ const Deck = ({ deck, cards, decks, tags }: any) => {
               <h1 onClick={() => setTitleEdit(true)}>{titleValue}</h1>
             </>
           )}
-          <div className='deck-header-buttons flex gap-4 mt-[1rem] '>
-            <Button variant='textIcon' style={{ backgroundColor: "" }}>
-              <span>Filter</span>
-              <SlidersHorizontal size={14} />
-            </Button>
-            <Button variant='textIcon'>
-              <span>Send</span>
-              <Send size={12} />
-            </Button>
-          </div>
+          <div className='deck-description'>Description</div>
         </div>
       </div>
 
       <div className='flex flex-col items-center gap-8'>
+        <div className='deck-header-buttons flex gap-4 mt-[1rem] '>
+          <Button variant='textIcon' style={{ backgroundColor: "" }}>
+            <span>Filter</span>
+            <SlidersHorizontal size={14} />
+          </Button>
+          <Button variant='textIcon'>
+            <span>Send</span>
+            <Send size={12} />
+          </Button>
+        </div>
         {/* Render cards from Zustand state to Card components */}
         {Object.values(cardsData).map((card, index) => (
           <DeckCard

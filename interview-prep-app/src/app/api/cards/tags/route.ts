@@ -51,6 +51,8 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   const { tagId, name, color } = await req.json();
 
+  console.log("API endpoint PUT tags:", tagId, name, color);
+
   try {
     let updatedTag;
     if (name && color) {
