@@ -2,8 +2,9 @@ import React from "react";
 import { auth } from "../../../../auth";
 import "../../../styles/dashboard.css";
 import { cookies } from "next/headers";
-import DeckWrapper from "@/containers/deck-wrapper/DeckWrapper";
-import { ContentLayout } from "@/containers/sidebar-section/content-layout";
+import DeckWrapper from "@/containers/decks-page/DeckWrapper";
+import { ContentLayout } from "@/containers/layouts/content-layout";
+import { DeckData } from "@/types/data-types";
 
 const getDeckData = async (cookieHeader: string) => {
   // fetch data using api route
@@ -14,7 +15,7 @@ const getDeckData = async (cookieHeader: string) => {
         Cookie: cookieHeader,
       },
     });
-    const data = await res.json();
+    const data: any = await res.json();
     // console.log("In Page, Decks Data: ", data);
     return data;
   } catch (error) {

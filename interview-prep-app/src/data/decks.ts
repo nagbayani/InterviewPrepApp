@@ -13,7 +13,7 @@ export const getDeckByDeckId = async (deckId: string) => {
     where: { id: deckId },
   });
 
-  return deck; 
+  return deck;
 };
 
 export const updateDeck = async (data: {
@@ -35,4 +35,16 @@ export const updateDeck = async (data: {
   }
 
   return deck;
+};
+
+export const deleteDeckById = async (deckId: string) => {
+  const deletedDeck = await prisma.deck.delete({
+    where: { id: deckId },
+  });
+
+  if (deletedDeck) {
+    console.log("Deck deleted from database");
+  }
+
+  return deletedDeck;
 };

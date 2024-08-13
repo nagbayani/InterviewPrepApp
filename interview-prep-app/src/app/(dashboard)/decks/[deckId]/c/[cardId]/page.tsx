@@ -3,8 +3,6 @@ import { CardData } from "@/types/data-types";
 import { currentUser } from "@/lib/auth";
 import { fetchSingleCard, fetchAllDecks } from "@/utils/fetch";
 import { getTagsByUserId } from "@/data/tags";
-// import { Modal } from "@/containers/modal/Modal";
-// import { ModalProvider } from "@/containers/modal/ModalContext";
 
 type Props = {
   params: {

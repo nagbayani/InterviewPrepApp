@@ -1,6 +1,6 @@
 import React from "react";
 // import Sidebar from "../../containers/sidebar-section/Sidebar";
-import DashboardLayout from "@/containers/sidebar-section/dashboard-layout";
+import DashboardLayout from "@/containers/layouts/dashboard-layout";
 import Navbar from "@/components/Navbar";
 import "../../styles/dashboard.css";
 import { auth } from "../../../auth";

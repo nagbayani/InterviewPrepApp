@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Ellipsis, LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
-
 import { cn } from "@/lib/utils";
 import { getMenuList } from "@/lib/sidebar-list";
 import { Button } from "@/components/ui/button";

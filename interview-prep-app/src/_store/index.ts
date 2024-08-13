@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { CardData, DeckData, TagData, CardTagData } from "@/types/data-types";
 import { StringifyOptions } from "querystring";
 
+// Zustand Store
 // State for Tags (Cards)
 interface TagState {
   tags: Record<string, TagData>;
@@ -153,6 +154,7 @@ interface DeckState {
   updateDeck: (deckId: string, data: Partial<DeckData>) => void;
   setDecks: (decks: DeckData[]) => void;
   addDeck: (deck: DeckData) => void;
+  deleteDeck: (deckId: string) => void;
 }
 
 export const useDeckStore = create<DeckState>((set) => ({
@@ -203,4 +205,14 @@ export const useDeckStore = create<DeckState>((set) => ({
         {}
       ),
     })),
+  /**
+   * Deletes a deck by its ID
+   * @param deckId
+   */
+  deleteDeck: (deckId) =>
+    set((state) => {
+      const updatedDecks = { ...state.decks };
+      delete updatedDecks[deckId]; // Remove the deck from the state
+      return { decks: updatedDecks };
+    }),
 }));

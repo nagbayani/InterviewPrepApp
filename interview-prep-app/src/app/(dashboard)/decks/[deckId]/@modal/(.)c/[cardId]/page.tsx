@@ -1,4 +1,4 @@
-import { Modal } from "@/containers/modal/Modal";
+import { Modal } from "@/containers/modal/CardModal";
 import CardModalContent from "@/components/card/CardModalContent";
 import { fetchSingleCard } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";

@@ -4,18 +4,15 @@ import React, { useState } from "react";
 import "../../styles/deck/deckLink.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown";
-import { CardInput } from "../ui/cardinput";
-import { CardLabel } from "../ui/label";
-
+} from "@/components/ui/dropdown";
+import { CardInput } from "@/components/ui/cardinput";
 import { useDeckStore } from "@/_store";
 
 interface DeckLinkProps {
@@ -23,10 +20,16 @@ interface DeckLinkProps {
   title: string;
   path: string;
 }
+
 const DeckLink = ({ id, title, path }: DeckLinkProps) => {
-  const { decks: decksData, updateDeck } = useDeckStore((state) => ({
+  const {
+    decks: decksData,
+    updateDeck,
+    deleteDeck,
+  } = useDeckStore((state) => ({
     decks: state.decks,
     updateDeck: state.updateDeck,
+    deleteDeck: state.deleteDeck,
   }));
 
   const pathname = usePathname();
@@ -49,6 +52,7 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
       handleInputBlur();
     }
   };
+
   const handleInputBlur = async () => {
     if (titleValue.trim() === "") {
       setTitleValue(lastNonEmptyTitle);
@@ -57,18 +61,15 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
 
       // Update the database
       try {
-        console.log("Deck State", decksData[id]);
         const response = await fetch(`/api/decks/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ deckId: id, title: titleValue, decksData }),
+          body: JSON.stringify({ deckId: id, title: titleValue }),
         });
-        console.log("Current response.body", response.body);
 
         if (response.ok) {
-          console.log("Title Updated in Database", id, titleValue);
           updateDeck(id, { title: titleValue });
         }
       } catch (error) {
@@ -81,10 +82,33 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
 
     setTitleEdit(false);
   };
+
+  const handleDeleteDeck = async () => {
+    try {
+      const response = await fetch(`/api/decks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        // Remove the deck from Zustand store
+        deleteDeck(id);
+      } else {
+        console.error("Failed to delete the deck.");
+        alert("Failed to delete the deck. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting the deck:", error);
+      alert("Error deleting the deck. Please try again.");
+    }
+  };
+
   return (
     <div
       className={`decklink-container ${
-        pathname === path && "decklink-container "
+        pathname === path && "decklink-container"
       }`}
     >
       <div className='w-full flex justify-between'>
@@ -117,8 +141,8 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
               Send
             </DropdownMenuItem>
             <DropdownMenuItem
-              onSelect={() => console.log("Delete")}
-              className='my-4'
+              onSelect={handleDeleteDeck}
+              className='my-4 text-red-600'
             >
               Delete
             </DropdownMenuItem>
