@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
-import { getDeckByDeckId, updateDeck } from "@/data/decks";
+import { getDeckByDeckId, updateDeck, deleteDeckById } from "@/data/decks"; // Ensure deleteDeckById is imported
 import { getCardsByDeckId } from "@/data/cards";
 import { getTagsByUserId, getCardTagsByCardId } from "@/data/tags";
 import { currentUser } from "@/lib/auth";
@@ -52,6 +52,40 @@ export async function PUT(req: NextRequest, res: NextResponse) {
   } catch (error) {
     return NextResponse.json({
       message: "Error updating deck",
+      status: 400,
+      error: error,
+    });
+  }
+}
+
+// DELETE function to remove a deck by its ID
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { deckId: string } }
+) {
+  const user = await currentUser();
+  const deckId = params.deckId;
+
+  try {
+    // Check if the user is authorized to delete the deck
+    const deck = await getDeckByDeckId(deckId);
+    if (!deck || deck.authorId !== user.session?.user.id) {
+      return NextResponse.json({
+        message: "You are not authorized to delete this deck",
+        status: 403,
+      });
+    }
+
+    // Delete the deck
+    await deleteDeckById(deckId);
+
+    return NextResponse.json({
+      message: "Deck deleted successfully",
+      status: 200,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Error deleting deck",
       status: 400,
       error: error,
     });
