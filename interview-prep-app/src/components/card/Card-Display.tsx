@@ -22,11 +22,6 @@ import { CardSchema } from "@/schemas/cardSchema";
 import "@/styles/cardForm.css";
 import { useCardStore, useTagStore } from "@/_store/index";
 
-import { HiViewGrid } from "react-icons/hi";
-import { HiOutlinePlusSmall } from "react-icons/hi2";
-import Card from "../../app/(dashboard)/decks/[deckId]/@modal/(.)c/[cardId]/page";
-import { Button } from "../ui/button";
-import { LuPlus } from "react-icons/lu";
 import TagsPopover from "../menus/card-tags/TagsPopover";
 import Tag from "./Tag";
 

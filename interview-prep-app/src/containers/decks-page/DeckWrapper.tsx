@@ -5,7 +5,7 @@ import DeckLink from "./DeckLink";
 import { useDeckStore } from "@/_store/index";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { DeckData } from "@/types/data-types";
-import "@/styles/deck/deckWrapper.css";
+import "../../styles/deck/deck-wrapper.css";
 import {
   DropdownMenu,
   DropdownMenuContent,
