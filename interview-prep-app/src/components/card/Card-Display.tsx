@@ -1,8 +1,7 @@
 "use client";
 // import a type of data for props
-import { CardData, TagData } from "@/types/data-types";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -24,18 +23,21 @@ import { useCardStore, useTagStore } from "@/_store/index";
 
 import TagsPopover from "../menus/card-tags/TagsPopover";
 import Tag from "./Tag";
+import { CardData, TagData, CardTagData } from "@/types/data-types";
 
 type Props = {
   card: CardData;
   userTags: TagData[];
+  cardTags: CardTagData[];
 };
 /**
  * Card Display Component that is rendered when you open a card from DeckID page.  Allows user to edit the question and answer.
  * @param param0
  * @returns
  */
-export default function CardDisplay({ card, userTags }: Props) {
+export default function CardDisplay({ card, userTags, cardTags }: Props) {
   console.log("userTags", userTags);
+  console.log(card, "CardData");
 
   // Zustand Card Store
   const { updateCard } = useCardStore((state) => ({
@@ -43,14 +45,18 @@ export default function CardDisplay({ card, userTags }: Props) {
   }));
 
   // Zustand Tag Store
-  const { cardTags, tags } = useTagStore((state) => ({
-    cardTags: state.cardTags,
-    tags: state.tags,
-  }));
+  // const { cardTags, tags, setCardTags } = useTagStore((state) => ({
+  //   cardTags: state.cardTags,
+  //   tags: state.tags,
+  //   setCardTags: state.setCardTags,
+  // }));
 
   // Get tags associated with this card
-  const cardTagIds = cardTags[card.id] ? Object.keys(cardTags[card.id]) : [];
-  const cardTagsData = cardTagIds.map((tagId) => tags[tagId]);
+  // const cardTagIds = cardTags[card.id]
+  //   ? Object.keys(cardTags[card.id])
+  //   : [];
+  // const cardTagsData = cardTagIds.map((tagId) => tags[tagId]);
+  // console.log("cardTagsData", cardTagsData);
 
   const [isEditing, setIsEditing] = useState({
     question: false,
@@ -66,11 +72,6 @@ export default function CardDisplay({ card, userTags }: Props) {
 
   const [lastNonEmptyQuestion, setLastNonEmptyQuestion] =
     useState("Your Question");
-
-  // const [isExpanded, setIsExpanded] = useState(false);
-  // const toggleExpansion = () => {
-  //   setIsExpanded((prev) => !prev);
-  // };
 
   // Form hook
   const form = useForm<z.infer<typeof CardSchema>>({
@@ -186,7 +187,7 @@ export default function CardDisplay({ card, userTags }: Props) {
     // <section className='flex flex-col gap-4'>
     <section className='card-section h-[100%] w-full'>
       {/* <Link href={`/decks/${data.deckId}/c/${data.id}`}> */}
-      <div className={`card-form-container w-full h-fullmx-4`}>
+      <div className={`card-form-container mx-4`}>
         <Form {...form}>
           {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
           <div className='card-question w-full'>
@@ -226,14 +227,14 @@ export default function CardDisplay({ card, userTags }: Props) {
             />
           </div>
           {/* Add wrapper here to render cardTags  */}
-          <div className='flex items-center gap-4'>
-            {cardTagsData.map((tag) => (
+          <div className='flex items-center gap-4 my-4'>
+            {card.tags?.map((tag) => (
               <Tag key={tag.id} tag={tag} />
             ))}
             <TagsPopover tags={userTags} cardId={card.id} />
           </div>
 
-          {/* Novel Rich Text Editor - User writes answer. */}
+          {/* TipTap Rich Text Editor - User writes answer. */}
           <EditorWrapper data={card} />
         </Form>
       </div>

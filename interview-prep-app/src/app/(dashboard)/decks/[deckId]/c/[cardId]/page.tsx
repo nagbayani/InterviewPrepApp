@@ -2,7 +2,7 @@ import CardDisplay from "../../../../../../components/card/Card-Display";
 import { CardData } from "@/types/data-types";
 import { currentUser } from "@/lib/auth";
 import { fetchSingleCard, fetchAllDecks } from "@/utils/fetch";
-import { getTagsByUserId } from "@/data/tags";
+import { getTagsByUserId, getCardTagsByCardId } from "@/data/tags";
 
 type Props = {
   params: {
@@ -19,6 +19,7 @@ export default async function CardPage({ params: { cardId } }: Props) {
   );
 
   const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
+  const cardTags = await getCardTagsByCardId(cardId);
 
   // const allDecks = await fetchAllDecks(userSession.cookieHeader);
 
@@ -29,7 +30,7 @@ export default async function CardPage({ params: { cardId } }: Props) {
   }
   return (
     <div className='mt-2 grid place-content-center'>
-      <CardDisplay card={cardData} userTags={userTags} />
+      <CardDisplay card={cardData} userTags={userTags} cardTags={cardTags} />
     </div>
   );
 }

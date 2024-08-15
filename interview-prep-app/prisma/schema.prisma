@@ -75,7 +75,10 @@ model Deck {
   cards     Card[]
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
+  // Thumbnail
 }
+
+// Need to add thumbnnail image to Deck
 
 
 model Card {
