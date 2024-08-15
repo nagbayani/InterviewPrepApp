@@ -2,7 +2,7 @@ import React from "react";
 import { auth } from "../../../../auth";
 import "../../../styles/dashboard.css";
 import { cookies } from "next/headers";
-import DeckWrapper from "@/containers/decks-page/DeckWrapper";
+import DecksWrapper from "@/containers/decks-page/DecksWrapper";
 import { ContentLayout } from "@/containers/layouts/content-layout";
 import { DeckData } from "@/types/data-types";
 
@@ -39,7 +39,7 @@ const DecksPage = async () => {
     return (
       <ContentLayout title={"Decks"}>
         {/* <section className='dashboard-wrapper'> */}
-        <DeckWrapper decks={data.decks} />
+        <DecksWrapper decks={data.decks} />
         {/* </section> */}
       </ContentLayout>
     );

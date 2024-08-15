@@ -18,7 +18,7 @@ const CardPage = async ({ params: { cardId } }: Props) => {
     cardId,
     userSession.cookieHeader
   );
-  // console.log("Card Data", cardData);
+  console.log("Card Data in Modal", cardData);
 
   const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
 

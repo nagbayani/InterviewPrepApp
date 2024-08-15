@@ -26,7 +26,12 @@ interface Props {
 
 import { AddDeckModal } from "../modal/add-deck-modal";
 
-const DeckWrapper = ({ decks }: { decks: any }) => {
+/**
+ * Wrapper for /decks page that holds all rendered decks.
+ * @param param0
+ * @returns
+ */
+const DecksWrapper = ({ decks }: { decks: any }) => {
   // Zustand store:  State Management for Decks
   const {
     decks: decksData,
@@ -102,7 +107,7 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
    */
 
   return (
-    <section className='deck-wrapper-container'>
+    <section className='deck-wrapper-container h-100vh overflow-x-scroll'>
       <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
 
       <div className='flex justify-center gap-4'>
@@ -119,6 +124,7 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        {/* Add Deck Button Menu */}
         <AddDeckModal />
       </div>
       <ul className='decks-list h-full gap-4'>
@@ -141,4 +147,4 @@ const DeckWrapper = ({ decks }: { decks: any }) => {
   );
 };
 
-export default DeckWrapper;
+export default DecksWrapper;

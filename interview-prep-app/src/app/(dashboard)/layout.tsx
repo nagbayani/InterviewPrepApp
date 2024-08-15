@@ -39,7 +39,7 @@ const authCheck = async () => {
 export default async function Layout({ children }: LayoutProps) {
   const data = await authCheck();
   const decks = data?.decksData.decks;
-  console.log("DECKS in Layout", decks);
+  // console.log("DECKS in Layout", decks);
   const user = data?.session?.user;
 
   return (

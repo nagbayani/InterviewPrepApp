@@ -14,23 +14,21 @@ interface Response {
 const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   const userSession = await currentUser();
 
+  // fetch all decks to hydrate store
+  const decksResponse = await fetchAllDecks(userSession.cookieHeader);
+  const decks = decksResponse.decks;
+
   // fetch response for a single deck
   const response: Response = await fetchSingleDeck(
     params.deckId,
     userSession.cookieHeader
   );
-
-  // fetch all decks to hydrate store
-  const decksResponse = await fetchAllDecks(userSession.cookieHeader);
-  const decks = decksResponse.decks;
-
   // fetch response contains its deck information with pertaining cards for that deckId
   const { deck, cards, tags, cardTags }: DeckDataResponse = response.data;
 
   // console.log("CARDTAGS", cardTags);
   return (
     <ContentLayout title={deck.title}>
-      {/* <div className='dashboard-wrapper'> */}
       {/* Pass data response to Deck client component */}
       <Deck deck={deck} cards={cards} decks={decks} tags={tags} />
       {/* Need to set tags in store */}
@@ -40,7 +38,6 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
         tags={tags}
         cardTags={cardTags}
       />
-      {/* </div> */}
     </ContentLayout>
   );
 };

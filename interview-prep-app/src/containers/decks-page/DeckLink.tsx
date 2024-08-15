@@ -21,6 +21,11 @@ interface DeckLinkProps {
   path: string;
 }
 
+/**
+ * Rendered Individual decks in /decks page
+ * @param param0
+ * @returns
+ */
 const DeckLink = ({ id, title, path }: DeckLinkProps) => {
   const {
     decks: decksData,

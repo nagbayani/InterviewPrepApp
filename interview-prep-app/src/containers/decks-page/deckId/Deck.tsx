@@ -15,7 +15,7 @@ import { Send, SlidersHorizontal } from "lucide-react";
 
 /**
  *
- * Deck Client Component that holds all rendered cards, and will add new cards.
+ * [deckId] page Deck Client Component that holds all rendered cards, and will add new cards.
  *
  */
 const Deck = ({ deck }: any) => {
@@ -196,12 +196,12 @@ const Deck = ({ deck }: any) => {
       <div className='flex flex-col items-center gap-8'>
         <div className='deck-header-buttons flex gap-4 mt-[1rem] '>
           <Button variant='textIcon' style={{ backgroundColor: "" }}>
-            <span>Filter</span>
             <SlidersHorizontal size={14} />
+            <span>Filter</span>
           </Button>
           <Button variant='textIcon'>
-            <span>Send</span>
             <Send size={12} />
+            <span>Send</span>
           </Button>
         </div>
         {/* Render cards from Zustand state to Card components */}
