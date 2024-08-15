@@ -64,7 +64,18 @@ export function getMenuList(
           label: "Interviews",
           active: pathname.includes("/interviews"),
           icon: Bookmark,
-          submenus: [],
+          submenus: [
+            {
+              href: "/interviews/mock-templates",
+              label: "Mock Templates",
+              active: pathname.includes("/interviews/mock-templates"),
+            },
+            {
+              href: "/interviews/job-roles", // Or whatever name you prefer
+              label: "Job Positions",
+              active: pathname.includes("/interviews/job-roles"),
+            },
+          ],
         },
       ],
     },

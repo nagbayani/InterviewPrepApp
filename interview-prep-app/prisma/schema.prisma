@@ -25,10 +25,11 @@ model User {
   image     String?  
   decks     Deck[]
   cards     Card[]
-  accounts  Account[]
   tags      Tag[]
+  mockTemplates MockTemplate[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  accounts  Account[]
   emailVerified DateTime?
   // role      UserRole @default(USER)
   // isTwoFactorEnabled Boolean @default(false)
@@ -75,10 +76,9 @@ model Deck {
   cards     Card[]
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
-  // Thumbnail
+  thumbnail  String?  
 }
 
-// Need to add thumbnnail image to Deck
 
 
 model Card {
@@ -93,6 +93,8 @@ model Card {
   deck      Deck    @relation(fields: [deckId], references: [id])
   deckId    String
   tags      CardTags[]  // each card can have multiple tags
+  mockTemplates MockTemplateCard[] // Relation to MockTemplateCard for importing cards into templates
+
 }
 
 // handles tag-specific attributes
@@ -116,3 +118,21 @@ model CardTags {
 }
 
 // Mock Interviews -- Interview Template import Cards -- probably add template to match in CArds table
+model MockTemplate {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  cards       MockTemplateCard[]  // Many-to-many relationship with cards through MockTemplateCard
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MockTemplateCard {
+  templateId String
+  cardId     String
+  template   MockTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  card       Card         @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  @@id([templateId, cardId]) // Composite primary key to ensure unique pairing
+}
