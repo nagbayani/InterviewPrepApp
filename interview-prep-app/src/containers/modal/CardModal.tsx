@@ -48,7 +48,7 @@ export function Modal({
       <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogOverlay>
           <DialogContent
-            className='lg:max-w-screen-lg overflow-y-auto max-h-screen min-w-[750px]'
+            className='lg:max-w-screen-lg overflow-y-auto max-h-screen w-full'
             onInteractOutside={(e) => {
               e.preventDefault();
             }}
