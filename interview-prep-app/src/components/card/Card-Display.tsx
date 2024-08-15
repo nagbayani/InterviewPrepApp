@@ -187,7 +187,7 @@ export default function CardDisplay({ card, userTags, cardTags }: Props) {
     // <section className='flex flex-col gap-4'>
     <section className='card-section h-[100%] w-full'>
       {/* <Link href={`/decks/${data.deckId}/c/${data.id}`}> */}
-      <div className={`card-form-container w-full h-fullmx-4`}>
+      <div className={`card-form-container mx-4`}>
         <Form {...form}>
           {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
           <div className='card-question w-full'>
@@ -227,7 +227,7 @@ export default function CardDisplay({ card, userTags, cardTags }: Props) {
             />
           </div>
           {/* Add wrapper here to render cardTags  */}
-          <div className='flex items-center gap-4'>
+          <div className='flex items-center gap-4 my-4'>
             {card.tags?.map((tag) => (
               <Tag key={tag.id} tag={tag} />
             ))}

@@ -87,14 +87,16 @@ export const TipTapEditor = ({ initialValue, onChange }: EditorProp) => {
 
   return (
     editor && (
-      <section className='flex flex-col gap-4 w-full  justify-center'>
+      // <section className='flex flex-col gap-4 w-full border-red-600 border-2 justify-center'>
+      //   </section>
+      <>
         <EditorContent
-          className='w-full flex justify-center  border-black border-2'
+          className='w-full flex justify-center min-h-[500px] max-h-[500px] border-black border-2 overflow-y-scroll'
           editor={editor}
         />
 
         <CustomBubbleMenu editor={editor} />
-      </section>
+      </>
     )
   );
 };
