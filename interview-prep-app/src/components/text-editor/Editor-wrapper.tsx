@@ -88,18 +88,9 @@ export default function EditorWrapper({ data }: { data: Data }) {
   }, [value, data]);
 
   return (
-    // <div className=' w-full h-full p-6 border gap-6 rounded-md bg-card'>
-    // {/* </div> */}
     <>
-      <div className='flex flex-col min-w-[850px] h-[600px] max-h-[600px] overflow-y-scroll'>
-        {/* <Editor initialValue={value} onChange={setValue} /> */}
+      <div className='flex flex-col w-full h-[600px] max-h-[600px] overflow-y-scroll'>
         <TipTapEditor initialValue={value} onChange={handleEditorChange} />
-        {/* <button
-          onClick={handleSave}
-          className='w-[100px] mt-4 p-2 bg-blue-500 text-white rounded-md self-end'
-        >
-          Save Card
-        </button> */}
         <SaveButton status={saveStatus} onClick={handleSave} />
       </div>
     </>
