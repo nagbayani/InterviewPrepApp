@@ -7,6 +7,7 @@ import { useState, useEffect, use } from "react";
 import { defaultValue } from "@/lib/content";
 import { useCardStore } from "@/_store";
 import { TipTapEditor } from "./Editor";
+import SaveButton from "../buttons/save-button";
 
 interface Data {
   id: string; // cardID
@@ -37,8 +38,14 @@ export default function EditorWrapper({ data }: { data: Data }) {
     initialContent || defaultValue
   );
 
+  // Save state to pass to SaveButton
+  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">(
+    "idle"
+  );
+
   // press save, sends POST to API
   const handleSave = async () => {
+    setSaveStatus("saving");
     const response = await fetch(`/api/cards/${data.id}`, {
       method: "PUT",
       headers: {
@@ -56,12 +63,20 @@ export default function EditorWrapper({ data }: { data: Data }) {
     if (response.ok) {
       updateCard(data.id, { answer: JSON.stringify(value) });
       // Handle successful save
+      setSaveStatus("saved");
       console.log("successful save");
     } else {
       // Handle error
       console.log("error saving card");
+      setSaveStatus("idle"); // Reset to idle if there's an error
     }
   };
+
+  const handleEditorChange = (newValue: JSONContent) => {
+    setValue(newValue);
+    setSaveStatus("idle");
+  };
+
   useEffect(() => {
     // const content = window.localStorage.getItem("novel-content");
     // console.log("CONTENT", content); // this works
@@ -76,15 +91,16 @@ export default function EditorWrapper({ data }: { data: Data }) {
     // <div className=' w-full h-full p-6 border gap-6 rounded-md bg-card'>
     // {/* </div> */}
     <>
-      <div className='flex flex-col h-[600px] max-h-[600px] overflow-y-scroll'>
+      <div className='flex flex-col min-w-[850px] h-[600px] max-h-[600px] overflow-y-scroll'>
         {/* <Editor initialValue={value} onChange={setValue} /> */}
-        <TipTapEditor initialValue={value} onChange={setValue} />
-        <button
+        <TipTapEditor initialValue={value} onChange={handleEditorChange} />
+        {/* <button
           onClick={handleSave}
-          className='w-[100px] mt-4 p-2 bg-blue-500 text-white rounded-md'
+          className='w-[100px] mt-4 p-2 bg-blue-500 text-white rounded-md self-end'
         >
           Save Card
-        </button>
+        </button> */}
+        <SaveButton status={saveStatus} onClick={handleSave} />
       </div>
     </>
   );

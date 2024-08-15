@@ -24,6 +24,7 @@ import { useCardStore, useTagStore } from "@/_store/index";
 import TagsPopover from "../menus/card-tags/TagsPopover";
 import Tag from "./Tag";
 import { CardData, TagData, CardTagData } from "@/types/data-types";
+import SaveButton from "../buttons/save-button";
 
 type Props = {
   card: CardData;
@@ -185,7 +186,7 @@ export default function CardDisplay({ card, userTags, cardTags }: Props) {
   return (
     // Card Form Holding entire card
     // <section className='flex flex-col gap-4'>
-    <section className='card-section h-[100%] w-full'>
+    <section className='card-section h-[100%] w-full overflow-y-scroll'>
       {/* <Link href={`/decks/${data.deckId}/c/${data.id}`}> */}
       <div className={`card-form-container mx-4`}>
         <Form {...form}>
