@@ -54,3 +54,15 @@ export interface DeckData {
   title: string;
   // authorId: string;
 }
+
+export type MockTemplateData = {
+  id: string;
+  title: string;
+  description: string;
+  cards: CardData[];
+};
+
+export type MockTemplateCardData = {
+  cardId: string;
+  templateId: string;
+};
