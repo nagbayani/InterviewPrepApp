@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
+import MocksWrapper from "@/containers/mock-templates/MocksWrapper";
+import { cookies } from "next/headers";
+import { ContentLayout } from "@/containers/layouts/content-layout";
 
 // Fetch Mock Template Data
 const getMockTemplates = async (cookieHeader: string) => {
@@ -27,16 +30,18 @@ const MockTemplates = async () => {
   if (!session) {
     return redirect("/login");
   }
+  if (session) {
+    const cookieStore = cookies();
+    const cookieHeader = cookieStore
+      .getAll()
+      .map((cookie) => `${cookie.name}=${cookie.value}`)
+      .join("; ");
 
-  
-
-  if (session?.user) {
+    const mocks = await getMockTemplates(cookieHeader);
     return (
-      <div className='dashboard-wrapper p-8 '>
-        <h1 className='ml-[0] '></h1>
-        <h1 style={{ fontSize: "var(--step-1)" }}>Mock Templates</h1>
-        <p>Craft your personalized mock interview templates! </p>
-      </div>
+      <ContentLayout title={"Mock Templates"}>
+        <MocksWrapper mocks={mocks} />
+      </ContentLayout>
     );
   }
   return (
