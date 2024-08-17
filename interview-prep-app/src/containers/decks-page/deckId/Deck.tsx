@@ -193,7 +193,7 @@ const Deck = ({ deck }: any) => {
         </div>
       </div>
 
-      <div className='flex flex-col items-center gap-8'>
+      <div className='flex flex-col items-center gap-8 mx-4'>
         <div className='deck-header-buttons flex gap-4 mt-[1rem] '>
           <Button variant='textIcon' style={{ backgroundColor: "" }}>
             <SlidersHorizontal size={14} />
