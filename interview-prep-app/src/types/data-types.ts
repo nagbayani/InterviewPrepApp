@@ -59,7 +59,7 @@ export type MockTemplateData = {
   id: string;
   title: string;
   description: string;
-  cards: CardData[];
+  cards: MockTemplateCardData[];
 };
 
 export type MockTemplateCardData = {

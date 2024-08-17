@@ -39,14 +39,17 @@ export const useTagStore = create<TagState>((set) => ({
     })),
   setTags: (tags) =>
     set(() => ({
-      tags: tags.reduce(
-        (acc, tag) => ({
-          ...acc,
-          [tag.id]: tag,
-        }),
-        {}
-      ),
+      tags: Array.isArray(tags)
+        ? tags.reduce(
+            (acc, tag) => ({
+              ...acc,
+              [tag.id]: tag,
+            }),
+            {}
+          )
+        : {}, // Return an empty object if tags is not an array
     })),
+
   setCardTags: (cardTags) => {
     const cardTagRecord = cardTags.reduce((acc, cardTag) => {
       if (!acc[cardTag.cardId]) {
@@ -196,15 +199,23 @@ export const useDeckStore = create<DeckState>((set) => ({
    * @returns
    */
   setDecks: (decks) =>
-    set(() => ({
-      decks: decks.reduce(
-        (acc, deck) => ({
-          ...acc,
-          [deck.id]: deck,
-        }),
-        {}
-      ),
-    })),
+    set((state) => {
+      const newDecks = Array.isArray(decks)
+        ? decks.reduce(
+            (acc, deck) => ({
+              ...acc,
+              [deck.id]: deck,
+            }),
+            {}
+          )
+        : {}; // Return an empty object if decks is not an array
+
+      console.log("Setting new Decks: ", newDecks); // Log the new decks object
+
+      return {
+        decks: newDecks,
+      };
+    }),
   /**
    * Deletes a deck by its ID
    * @param deckId

@@ -16,18 +16,25 @@ import {
 } from "@/components/ui/tooltip";
 import { DeckData } from "@/types/data-types";
 
+import { useDeckStore } from "@/_store/index";
+
 interface MenuProps {
   isOpen: boolean | undefined;
-  decks: Record<string, DeckData>;
+  // decks: Record<string, DeckData>;
 }
 /**
  * Maps out all menu items in Sidebar
  * @param param0
  * @returns
  */
-export function Menu({ isOpen, decks }: MenuProps) {
+export function Menu({ isOpen }: MenuProps) {
+  const { decks: decksData } = useDeckStore((state) => ({
+    decks: state.decks,
+  }));
   const pathname = usePathname();
-  const menuList = getMenuList(pathname, decks);
+  const menuList = getMenuList(pathname, decksData);
+
+  // console.log("DECKS in Menu", decksData);
   return (
     <ScrollArea className='[&>div>div[style]]:!block'>
       <nav className='mt-8 h-full w-full'>

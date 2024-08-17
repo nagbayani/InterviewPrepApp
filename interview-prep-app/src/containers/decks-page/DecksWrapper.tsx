@@ -51,6 +51,7 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
   // Update Zustand store with deck data from database
   useEffect(() => {
     setDecks(decks);
+    console.log("Decks in DecksWrapper: ", decksData);
   }, [decks, setDecks]);
 
   /**

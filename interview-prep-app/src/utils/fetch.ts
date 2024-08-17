@@ -98,3 +98,60 @@ export const moveCardPUT = async (
 };
 
 export const updateDeckPUT = async () => {};
+
+/**
+ * Tags API
+ */
+export const fetchAllTags = async (cookieHeader: string) => {
+  try {
+    const res = await fetch(`${process.env.AUTH_URL}/api/cards/tags`, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieHeader,
+      },
+    });
+    const data = await res.json();
+    // console.log("In Page, Tags Data: ", data);
+    return data;
+  } catch (error) {
+    console.log(error, "Something Went Wrong retrieving Tags.");
+  }
+};
+
+export const fetchAllMockTemplates = async (cookieHeader: string) => {
+  try {
+    const res = await fetch(`${process.env.AUTH_URL}/api/mock-templates`, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieHeader,
+      },
+    });
+    const data = await res.json();
+    // console.log("In Page, MockTemplates Data: ", data);
+    return data;
+  } catch (error) {
+    console.log(error, "Something Went Wrong retrieving MockTemplates.");
+  }
+};
+
+export const fetchSingleMockTemplate = async (
+  mockId: string,
+  cookieHeader: string
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.AUTH_URL}/api/mock-templates/${mockId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieHeader,
+        },
+      }
+    );
+    const data = await res.json();
+    // console.log("FETCH MockTemplates Data: ", data);
+    return data;
+  } catch (error) {
+    console.log(error, "Something Went Wrong retrieving the mock template.");
+  }
+};
