@@ -19,6 +19,7 @@ interface DeckLinkProps {
   id: string;
   title: string;
   path: string;
+  thumbnail: string;
 }
 
 /**
@@ -26,7 +27,7 @@ interface DeckLinkProps {
  * @param param0
  * @returns
  */
-const DeckLink = ({ id, title, path }: DeckLinkProps) => {
+const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
   const {
     decks: decksData,
     updateDeck,
@@ -155,7 +156,10 @@ const DeckLink = ({ id, title, path }: DeckLinkProps) => {
         </DropdownMenu>
       </div>
 
-      <div className='deck-preview mx-auto'></div>
+      <div
+        className='deck-preview mx-auto'
+        style={{ backgroundImage: thumbnail }}
+      ></div>
     </div>
   );
 };

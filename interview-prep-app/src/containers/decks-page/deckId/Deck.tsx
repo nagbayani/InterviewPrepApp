@@ -171,8 +171,6 @@ const Deck = ({ deck }: any) => {
     setTitleEdit(false);
   };
 
-  console.log("Deck thumbnail", deck.thumbnail);
-
   return (
     <section className='deck-wrapper-container'>
       <div className='deck-wrapper-header'>

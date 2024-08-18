@@ -23,6 +23,7 @@ import {
 interface Props {
   decks: DeckData[];
 }
+import gradients from "@/lib/colors/thumbnail-gradients";
 
 import { AddDeckModal } from "../modal/add-deck-modal";
 
@@ -133,12 +134,23 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
         {Object.values(decksData)
           .reverse()
           .map((deck: any) => {
+            // Find the matching gradient style based on the thumbnail
+            const matchedGradient = gradients.find(
+              (gradient) => gradient.name === deck.thumbnail
+            );
+
+            // Extract the style or use a default background if not found
+            const gradientStyle = matchedGradient
+              ? matchedGradient.style
+              : "linear-gradient(to right, #e66465, #9198e5)"; // Default gradient
+
             return (
               <li key={deck.id}>
                 <DeckLink
                   id={deck.id}
                   title={deck.title}
                   path={`/decks/${deck.id}`}
+                  thumbnail={gradientStyle}
                 />
               </li>
             );

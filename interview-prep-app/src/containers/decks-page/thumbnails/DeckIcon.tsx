@@ -55,8 +55,6 @@ const DeckIcon: React.FC<DeckIconProps> = ({
     }
   };
 
-  console.log("Deck Icon", deckId, gradientStyle);
-
   return (
     <Popover>
       <PopoverTrigger asChild>
