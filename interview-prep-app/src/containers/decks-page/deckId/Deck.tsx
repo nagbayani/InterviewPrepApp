@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { DeckDataResponse, CardData } from "@/types/data-types";
 import { DeckCard } from "@/components/card/Card";
 import { CardInput } from "@/components/ui/cardinput";
+import DeckIcon from "../thumbnails/DeckIcon";
 import { useCardStore, useDeckStore } from "@/_store/index";
 import { fetchAllCards, moveCardPUT } from "@/utils/fetch";
 import { toast } from "@/components/ui/use-toast";
@@ -46,6 +47,8 @@ const Deck = ({ deck }: any) => {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [newCardQuestion, setNewCardQuestion] = useState("");
+
+  const deckInStore = decksData[deck.id];
 
   /**
    * Handles card form question input changes
@@ -168,11 +171,20 @@ const Deck = ({ deck }: any) => {
     setTitleEdit(false);
   };
 
+  console.log("Deck thumbnail", deck.thumbnail);
+
   return (
     <section className='deck-wrapper-container'>
       <div className='deck-wrapper-header'>
         {/* Deck Icon */}
-        <div className='deck-icon-wrap'></div>
+        <DeckIcon
+          deckId={deck.id}
+          currentThumbnail={deckInStore.thumbnail}
+          gradientStyle={
+            deckInStore?.thumbnail ||
+            "linear-gradient(to right, #e66465, #9198e5)"
+          } // Provide a default gradient
+        />
 
         <div className='deck-title-wrap gap-2'>
           {titleEditing ? (

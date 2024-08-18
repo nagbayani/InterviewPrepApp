@@ -8,17 +8,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-interface EditThumbnailMenuProps {
+interface DeckIconProps {
   deckId: string;
+  gradientStyle: string;
   currentThumbnail: string | null;
-  onBack: () => void;
 }
 
-export default function EditThumbnailMenu({
+const DeckIcon: React.FC<DeckIconProps> = ({
   deckId,
+  gradientStyle,
   currentThumbnail,
-  onBack,
-}: EditThumbnailMenuProps) {
+}) => {
   const [selectedGradient, setSelectedGradient] = useState<string | null>(
     currentThumbnail
   );
@@ -26,6 +26,14 @@ export default function EditThumbnailMenu({
   const { updateDeck } = useDeckStore((state) => ({
     updateDeck: state.updateDeck,
   }));
+
+  console.log("Deck Icon", deckId, gradientStyle);
+  // Function to get the gradient style
+  const getGradientStyle = (gradientName: string) => {
+    const gradient = gradients.find((g) => g.name === gradientName);
+    console.log("Gradient", gradient);
+    return gradient ? gradient.style : "none";
+  };
 
   const handleSave = async () => {
     try {
@@ -42,18 +50,22 @@ export default function EditThumbnailMenu({
       }
 
       updateDeck(deckId, { thumbnail: selectedGradient });
-      onBack();
     } catch (error) {
       console.error("Error updating the thumbnail:", error);
     }
   };
 
+  console.log("Deck Icon", deckId, gradientStyle);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant='outline'>Edit Thumbnail</Button>
+        <div
+          className='w-[80px] h-[80px] rounded-[4px] cursor-pointer'
+          style={{ background: getGradientStyle(gradientStyle) }}
+        />
       </PopoverTrigger>
-      <PopoverContent className='w-[300px]'>
+      <PopoverContent className='w-[300px] overflow-scroll'>
         <div className='mb-4'>
           <label className='block text-sm font-medium text-gray-700'>
             Choose a Thumbnail Gradient
@@ -63,7 +75,7 @@ export default function EditThumbnailMenu({
               <div
                 key={gradient.name}
                 onClick={() => setSelectedGradient(gradient.name)}
-                className={`w-24 h-24 cursor-pointer hover:border-black hover:border-2 rounded-[4px] ${
+                className={`w-12 h-12 cursor-pointer hover:border-black hover:border-2 rounded-[4px] ${
                   selectedGradient === gradient.name
                     ? "border-4 border-black"
                     : "border-2 border-transparent"
@@ -81,4 +93,6 @@ export default function EditThumbnailMenu({
       </PopoverContent>
     </Popover>
   );
-}
+};
+
+export default DeckIcon;
