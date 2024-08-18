@@ -31,6 +31,7 @@ export interface DeckDataResponse {
     updatedAt: string;
     title: string;
     authorId: string;
+    thumbnail: string | null;
   };
   cards: {
     id: string;
@@ -52,6 +53,7 @@ export interface DeckData {
   createdAt: string;
   updatedAt: string;
   title: string;
+  thumbnail: string | null;
   // authorId: string;
 }
 

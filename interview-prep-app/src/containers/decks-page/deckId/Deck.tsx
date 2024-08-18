@@ -237,7 +237,7 @@ const Deck = ({ deck }: any) => {
           <Button
             // size='lg'
             variant='outline'
-            className='w-[400px] flex p-4 rounded-lg justify-center items-center'
+            className=' flex p-4 rounded-lg justify-center items-center'
             onClick={() => setShowForm(true)}
           >
             <LuPlus />
