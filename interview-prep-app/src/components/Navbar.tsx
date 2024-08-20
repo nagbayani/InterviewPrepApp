@@ -12,8 +12,8 @@ const Navbar = async () => {
       className='w-full h-[50px] border-b-[1px] border-black'
       style={{ backgroundColor: "#292929" }}
     >
-      <div className='container flex justify-between items-center h-full'>
-        <div className='flex items-center mr-4 px-8'>
+      <div className='container flex w-full h-full'>
+        {/* <div className='flex items-center mr-4 px-8'>
           <Link
             href='/home'
             className='flex items-center p-4 gap-4 text-lg font-semibold'
@@ -29,8 +29,8 @@ const Navbar = async () => {
               Interfluent
             </span>{" "}
           </Link>
-        </div>
-        <div className='flex items-center px-8'>
+        </div> */}
+        <div className='ml-auto flex items-center px-8'>
           {session?.user ? (
             <UserAccountNav user={session.user} />
           ) : (

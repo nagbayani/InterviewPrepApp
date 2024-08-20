@@ -8,12 +8,14 @@ import { useCardStore, useDeckStore } from "@/_store/index";
 import { fetchAllCards, moveCardPUT } from "@/utils/fetch";
 import { toast } from "@/components/ui/use-toast";
 // Styles & Icons
-import "@/styles/deck/deck-wrapper.css";
+import "../../../styles/deck/deck-wrapper.css";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { Send, SlidersHorizontal } from "lucide-react";
 import { AddCardModal } from "@/containers/modal/add-card-modal";
 import { DeckData } from "@/types/data-types";
+
+import { Card, CardContent } from "@/components/ui/card";
 
 interface DeckProps {
   deck: DeckData;
@@ -208,30 +210,36 @@ const Deck = ({ deck }: DeckProps) => {
         </div>
       </div>
 
-      <div className='flex flex-col items-center gap-8 mx-4'>
-        <div className='deck-header-buttons flex gap-4 mt-[1rem] '>
-          <Button variant='textIcon' style={{ backgroundColor: "" }}>
-            <SlidersHorizontal size={14} />
-            <span>Filter</span>
-          </Button>
-          <Button variant='textIcon'>
-            <Send size={12} />
-            <span>Send</span>
-          </Button>
-          <AddCardModal deckId={deck.id} />
-        </div>
-        {/* Render cards from Zustand state to Card components */}
-        {Object.values(cardsData).map((card, index) => (
-          <DeckCard
-            key={card.id}
-            card={card}
-            deckId={deck.id}
-            index={index + 1}
-            onUpdateCard={handleCardUpdate}
-            onMoveCard={handleCardMove}
-          />
-        ))}
+      <div className='deck-header-buttons flex justify-center gap-4 mt-[1rem] '>
+        <Button variant='textIcon' style={{ backgroundColor: "" }}>
+          <SlidersHorizontal size={14} />
+          <span>Filter</span>
+        </Button>
+        <Button variant='textIcon'>
+          <Send size={12} />
+          <span>Send</span>
+        </Button>
+        <AddCardModal deckId={deck.id} />
       </div>
+      <Card className='rounded-lg border-none w-full h-full bg-slate-600'>
+        <CardContent>
+          <div className='flex flex-col items-center gap-8 mx-4'>
+            <div className='flex flex-col gap-4 w-full mt-4'>
+              {/* Render cards from Zustand state to Card components */}
+              {Object.values(cardsData).map((card, index) => (
+                <DeckCard
+                  key={card.id}
+                  card={card}
+                  deckId={deck.id}
+                  index={index + 1}
+                  onUpdateCard={handleCardUpdate}
+                  onMoveCard={handleCardMove}
+                />
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </section>
   );
 };
