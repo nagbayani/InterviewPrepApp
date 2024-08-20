@@ -15,19 +15,27 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { DeckData } from "@/types/data-types";
+import { Tag } from "lucide-react";
+import Thumbnail from "../decks-page/thumbnails/Thumbnail";
+import { useDeckStore } from "@/_store/index";
 
 interface MenuProps {
   isOpen: boolean | undefined;
-  decks: Record<string, DeckData>;
+  // decks: Record<string, DeckData>;
 }
 /**
  * Maps out all menu items in Sidebar
  * @param param0
  * @returns
  */
-export function Menu({ isOpen, decks }: MenuProps) {
+export function Menu({ isOpen }: MenuProps) {
+  const { decks: decksData } = useDeckStore((state) => ({
+    decks: state.decks,
+  }));
   const pathname = usePathname();
-  const menuList = getMenuList(pathname, decks);
+  const menuList = getMenuList(pathname, decksData);
+
+  // console.log("DECKS in Menu", decksData);
   return (
     <ScrollArea className='[&>div>div[style]]:!block'>
       <nav className='mt-8 h-full w-full'>
@@ -58,7 +66,10 @@ export function Menu({ isOpen, decks }: MenuProps) {
 
               {/* Map out Sidebar Menus */}
               {menus.map(
-                ({ href, label, icon: Icon, active, submenus }, index) =>
+                (
+                  { href, label, icon: Icon, active, submenus, thumbnailStyle },
+                  index
+                ) =>
                   submenus.length === 0 ? (
                     <div className='w-full' key={index}>
                       <TooltipProvider disableHoverableContent>
@@ -73,7 +84,14 @@ export function Menu({ isOpen, decks }: MenuProps) {
                                 <span
                                   className={cn(isOpen === false ? "" : "mr-4")}
                                 >
-                                  <Icon size={18} />
+                                  {/* (If) Static menus have icons & no thumbnails
+                                      (Else) Dynamic menus [DeckId - Deck links] have thumbnails
+                                   */}
+                                  {Icon ? (
+                                    <Icon size={18} />
+                                  ) : thumbnailStyle ? (
+                                    <Thumbnail gradientStyle={thumbnailStyle} />
+                                  ) : null}
                                 </span>
                                 <p
                                   className={cn(
@@ -99,7 +117,7 @@ export function Menu({ isOpen, decks }: MenuProps) {
                   ) : (
                     <div className='w-full' key={index}>
                       <CollapseMenuButton
-                        icon={Icon}
+                        icon={Icon || Tag}
                         label={label}
                         active={active}
                         submenus={submenus}

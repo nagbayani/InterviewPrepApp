@@ -12,10 +12,11 @@ import { useDeckStore } from "@/_store/index";
 const Sidebar = () => {
   const sidebar = useStore(useSidebarToggle, (state) => state);
 
-  const { decks: decksData, setDecks } = useDeckStore((state) => ({
+  const { decks: decksData } = useDeckStore((state) => ({
     decks: state.decks,
-    setDecks: state.setDecks,
   }));
+
+  // console.log("DECKS in Sidebar", decksData);
 
   if (!sidebar) return null;
 
@@ -56,7 +57,7 @@ const Sidebar = () => {
             </h1>
           </Link>
         </Button>
-        <Menu isOpen={sidebar?.isOpen} decks={decksData} />
+        <Menu isOpen={sidebar?.isOpen} />
       </div>
     </aside>
   );

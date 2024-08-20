@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { useStore, useSidebarToggle } from "@/_store/sidebar-store";
+import { useDeckStore } from "@/_store/index";
+
 // import { Footer } from "@/components/admin-panel/footer";
 import Sidebar from "@/containers/sidebar-section/Sidebar";
 /**

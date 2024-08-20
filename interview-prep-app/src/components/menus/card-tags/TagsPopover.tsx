@@ -16,13 +16,13 @@ interface OpenTagsMenuProps {
 const TagsPopover = ({ tags, cardId }: OpenTagsMenuProps) => {
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button variant='outline' size='sm'>
           <LuPlus />
         </Button>
       </PopoverTrigger>
       <PopoverContent className='pointer-events-auto w-80'>
-        <TagsMenu tags={tags} cardId={cardId}/>
+        <TagsMenu tags={tags} cardId={cardId} />
       </PopoverContent>
     </Popover>
   );

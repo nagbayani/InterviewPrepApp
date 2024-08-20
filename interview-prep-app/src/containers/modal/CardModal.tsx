@@ -16,6 +16,12 @@ import type { CardData } from "@/types/data-types";
 
 import { useModal } from "./ModalContext";
 
+/**
+ * Modal Component that will open the card in a modal
+ * Content = Card-Display.tsx
+ *
+ *
+ */
 export function Modal({
   children,
   data,

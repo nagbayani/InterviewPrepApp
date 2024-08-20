@@ -31,6 +31,7 @@ export interface DeckDataResponse {
     updatedAt: string;
     title: string;
     authorId: string;
+    thumbnail: string | null;
   };
   cards: {
     id: string;
@@ -52,5 +53,18 @@ export interface DeckData {
   createdAt: string;
   updatedAt: string;
   title: string;
+  thumbnail: string | null;
   // authorId: string;
 }
+
+export type MockTemplateData = {
+  id: string;
+  title: string;
+  description: string;
+  cards: MockTemplateCardData[];
+};
+
+export type MockTemplateCardData = {
+  cardId: string;
+  templateId: string;
+};

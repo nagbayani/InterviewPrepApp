@@ -4,7 +4,7 @@ import { currentUser } from "@/lib/auth";
 import { DeckDataResponse, CardData, DeckData } from "@/types/data-types";
 import { DeckCard } from "../../../../components/card/Card";
 import Deck from "@/containers/decks-page/deckId/Deck";
-import HydrateStore from "@/_store/HydrateStore";
+import HydrateStore from "@/_store/HydrateDeckId";
 import { ContentLayout } from "@/containers/layouts/content-layout";
 
 interface Response {
@@ -13,10 +13,6 @@ interface Response {
 // Get Data with all Cards Data for this specific Deck
 const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   const userSession = await currentUser();
-
-  // fetch all decks to hydrate store
-  const decksResponse = await fetchAllDecks(userSession.cookieHeader);
-  const decks = decksResponse.decks;
 
   // fetch response for a single deck
   const response: Response = await fetchSingleDeck(
@@ -30,10 +26,12 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   return (
     <ContentLayout title={deck.title}>
       {/* Pass data response to Deck client component */}
-      <Deck deck={deck} cards={cards} decks={decks} tags={tags} />
-      {/* Need to set tags in store */}
+      <Deck deck={deck} />
+      {/* <Deck deck={deck} cards={cards} decks={decks} tags={tags} /> */}
+
+      {/* rename this for a single deck store */}
       <HydrateStore
-        decks={decks}
+        // decks={decks}
         cards={cards}
         tags={tags}
         cardTags={cardTags}

@@ -9,8 +9,8 @@ import Provider from "@/components/Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Interview Prep App",
-  description: "Made by Nathan Agbayani",
+  title: "InterFluent",
+  description: " Interview Prep Application Made by Nathan Agbayani",
 };
 
 export default function RootLayout({

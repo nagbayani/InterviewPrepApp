@@ -1,9 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
-import prisma from "@/lib/db";
 import { getDeckByDeckId, updateDeck, deleteDeckById } from "@/data/decks"; // Ensure deleteDeckById is imported
 import { getCardsByDeckId } from "@/data/cards";
 import { getTagsByUserId, getCardTagsByCardId } from "@/data/tags";
 import { currentUser } from "@/lib/auth";
+import prisma from "@/lib/db";
 
 export async function GET(
   req: NextRequest,

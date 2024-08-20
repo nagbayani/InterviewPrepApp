@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import "../../styles/deck/deckLink.css";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -12,33 +11,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown";
-import { CardInput } from "@/components/ui/cardinput";
-import { useDeckStore } from "@/_store";
+import { useMockTemplateStore } from "@/_store/mock-store";
+// import "../../styles/deck/mockLink.css";
 
-interface DeckLinkProps {
+interface MockLinkProps {
   id: string;
   title: string;
   path: string;
-  thumbnail: string;
 }
 
-/**
- * Rendered Individual decks in /decks page
- * @param param0
- * @returns
- */
-const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
-  const {
-    decks: decksData,
-    updateDeck,
-    deleteDeck,
-  } = useDeckStore((state) => ({
-    decks: state.decks,
-    updateDeck: state.updateDeck,
-    deleteDeck: state.deleteDeck,
-  }));
-
+const MockLink = ({ id, title, path }: MockLinkProps) => {
   const pathname = usePathname();
+  const { updateMockTemplate, deleteMockTemplate } = useMockTemplateStore();
 
   const [titleEditing, setTitleEdit] = useState(false);
   const [titleValue, setTitleValue] = useState(title);
@@ -65,72 +49,56 @@ const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
     } else {
       setLastNonEmptyTitle(titleValue);
 
-      // Update the database
+      // Update the database and Zustand store
       try {
-        const response = await fetch(`/api/decks/${id}`, {
+        const response = await fetch(`/api/mock-templates/${id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ deckId: id, title: titleValue }),
+          body: JSON.stringify({ title: titleValue }),
         });
 
         if (response.ok) {
-          updateDeck(id, { title: titleValue });
+          updateMockTemplate(id, { title: titleValue });
         }
       } catch (error) {
-        // Revert to the last known good state
         setTitleValue(title);
         console.error(error);
         alert("Failed to update the title. Please try again.");
       }
     }
-
     setTitleEdit(false);
   };
 
-  const handleDeleteDeck = async () => {
+  const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/decks/${id}`, {
+      const response = await fetch(`/api/mock-templates/${id}`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
 
       if (response.ok) {
-        // Remove the deck from Zustand store
-        deleteDeck(id);
-      } else {
-        console.error("Failed to delete the deck.");
-        alert("Failed to delete the deck. Please try again.");
+        deleteMockTemplate(id);
       }
     } catch (error) {
-      console.error("Error deleting the deck:", error);
-      alert("Error deleting the deck. Please try again.");
+      console.error(error);
+      alert("Failed to delete the mock template. Please try again.");
     }
   };
 
   return (
-    <div
-      className={`decklink-container ${
-        pathname === path && "decklink-container"
-      }`}
-    >
+    <div className={`mocklink-container ${pathname === path && "active"}`}>
       <div className='w-full flex justify-between'>
         {titleEditing ? (
-          <>
-            <CardInput
-              onBlur={handleInputBlur}
-              onChange={handleChange}
-              value={titleValue}
-              onKeyDown={handleKeyDown}
-            />
-          </>
+          <input
+            value={titleValue}
+            onChange={handleChange}
+            onBlur={handleInputBlur}
+            onKeyDown={handleKeyDown}
+            className='input-edit'
+          />
         ) : (
-          <>
-            <span onClick={() => setTitleEdit(true)}>{titleValue}</span>
-          </>
+          <span onClick={() => setTitleEdit(true)}>{titleValue}</span>
         )}
 
         <DropdownMenu>
@@ -139,29 +107,16 @@ const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent sideOffset={5}>
             <Link href={path}>
-              <DropdownMenuItem onSelect={() => console.log("Opened")}>
-                Open
-              </DropdownMenuItem>
+              <DropdownMenuItem>Open</DropdownMenuItem>
             </Link>
-            <DropdownMenuItem onSelect={() => console.log("Send")}>
-              Send
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={handleDeleteDeck}
-              className='my-4 text-red-600'
-            >
+            <DropdownMenuItem onClick={handleDelete} className='text-red-600'>
               Delete
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
-      <div
-        className='deck-preview mx-auto'
-        style={{ backgroundImage: thumbnail }}
-      ></div>
     </div>
   );
 };
 
-export default DeckLink;
+export default MockLink;

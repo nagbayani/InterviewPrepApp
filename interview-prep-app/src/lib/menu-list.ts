@@ -1,3 +1,8 @@
+/**
+ * EXAMPLE PAGE, NOT USED IN THE APP
+ * This file is an example of how to create a menu list for the sidebar.
+ */
+
 import {
   Tag,
   Users,

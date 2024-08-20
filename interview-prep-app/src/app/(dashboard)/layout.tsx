@@ -4,9 +4,21 @@ import DashboardLayout from "@/containers/layouts/dashboard-layout";
 import Navbar from "@/components/Navbar";
 import "../../styles/dashboard.css";
 import { auth } from "../../../auth";
-import { fetchAllDecks } from "@/utils/fetch";
+import {
+  fetchAllDecks,
+  fetchAllCards,
+  fetchAllTags,
+  fetchAllMockTemplates,
+} from "@/utils/fetch";
 import { cookies } from "next/headers";
 import { useDeckStore, useCardStore } from "@/_store";
+import HydrateDashboard from "@/_store/HydrateDashboard";
+import {
+  DeckData,
+  CardData,
+  TagData,
+  MockTemplateData,
+} from "@/types/data-types";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,13 +36,28 @@ const authCheck = async () => {
       .getAll()
       .map((cookie) => `${cookie.name}=${cookie.value}`)
       .join("; ");
-    const decksData = await fetchAllDecks(cookieHeader);
-    console.log(decksData, "Decks Data in Layout");
+    const decksDb = await fetchAllDecks(cookieHeader);
+    const cardsDb = await fetchAllCards(cookieHeader);
+    const tagsDb = await fetchAllTags(cookieHeader);
+    const mockTemplatesDb = await fetchAllMockTemplates(cookieHeader);
+
+    const decks = decksDb.decks;
+    // const cards = cardsDb.cards;
+    const tags = tagsDb.tags;
+    const mockTemplates = mockTemplatesDb.mockTemplates;
+    console.log("DECKS in Layout", decks);
+    console.log("TAGS in Layout", tags);
+
+    // add cards
+    // add mock templates
+    // add tags
     const userData = {
-      decksData,
       session,
+      decks,
+      cards: cardsDb,
+      tags,
+      mockTemplates,
     };
-    // return decksData;
     return userData;
   }
   return null;
@@ -38,18 +65,23 @@ const authCheck = async () => {
 
 export default async function Layout({ children }: LayoutProps) {
   const data = await authCheck();
-  const decks = data?.decksData.decks;
-  // console.log("DECKS in Layout", decks);
-  const user = data?.session?.user;
+  const decks = data?.decks ?? [];
+  const cards = data?.cards ?? [];
+  const tags = data?.tags ?? [];
+  const mockTemplates = data?.mockTemplates ?? [];
+  // const decks = data?.decksData.decks;
+  // const user = data?.session?.user;
+  console.log("DECKS in Layout", decks);
 
   return (
     // <div className='dashboard-container'>
     <div>
-      {/* <Navbar /> */}
-      {/* <div className='main-inner-wrapper flex h-full w-full'>
-        <Sidebar user={user} />
-        <main className='dashboard-content'>{children}</main>
-      </div> */}
+      <HydrateDashboard
+        decks={decks}
+        cards={cards}
+        tags={tags}
+        mockTemplates={mockTemplates}
+      ></HydrateDashboard>
       <DashboardLayout>{children}</DashboardLayout>
     </div>
   );
