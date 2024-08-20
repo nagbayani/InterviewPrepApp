@@ -179,7 +179,7 @@ const Deck = ({ deck }: DeckProps) => {
   };
 
   return (
-    <section className='deck-wrapper-container'>
+    <section className='deck-wrapper-container overflow-visible'>
       <div className='deck-wrapper-header'>
         {/* Deck Icon */}
         <DeckIcon
@@ -221,9 +221,9 @@ const Deck = ({ deck }: DeckProps) => {
         </Button>
         <AddCardModal deckId={deck.id} />
       </div>
-      <Card className='rounded-lg border-none w-full h-full bg-slate-600'>
+      <Card className='rounded-lg border-none w-full overflow-y-visible bg-slate-600 '>
         <CardContent>
-          <div className='flex flex-col items-center gap-8 mx-4'>
+          <div className='flex flex-col items-center gap-8 mx-4 h-full'>
             <div className='flex flex-col gap-4 w-full mt-4'>
               {/* Render cards from Zustand state to Card components */}
               {Object.values(cardsData).map((card, index) => (
