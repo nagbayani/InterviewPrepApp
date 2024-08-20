@@ -69,12 +69,12 @@ const HydrateDashboard = ({
     setMockTemplates,
   ]);
 
-  useEffect(() => {
-    console.log("New Decks in store: ", decksData);
-    console.log("New Cards in store: ", cardsData);
-    console.log("New Tags in store: ", tagsData);
-    console.log("New Mock Templates in store: ", mockTemplatesData);
-  }, [decksData, cardsData, tagsData, mockTemplatesData]);
+  // useEffect(() => {
+  //   console.log("New Decks in store: ", decksData);
+  //   console.log("New Cards in store: ", cardsData);
+  //   console.log("New Tags in store: ", tagsData);
+  //   console.log("New Mock Templates in store: ", mockTemplatesData);
+  // }, [decksData, cardsData, tagsData, mockTemplatesData]);
 
   return null;
 };

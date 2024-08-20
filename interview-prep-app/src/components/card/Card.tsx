@@ -11,25 +11,8 @@ import { CardData } from "@/types/data-types";
 import { useCardStore, useTagStore } from "@/_store/index";
 import Tag from "./Tag";
 import "../../styles/deck/deckCard.css";
-import { useEffect } from "react";
-import { Trash2 } from "lucide-react";
-import { PenLine } from "lucide-react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown";
-import { Ellipsis } from "lucide-react";
+import { PenLine } from "lucide-react";
 import MoveCardMenu from "@/components/menus/move-cards/MoveCardMenu";
 import { currentUser } from "@/lib/auth";
 import { fetchAllDecks } from "@/utils/fetch";
@@ -123,7 +106,6 @@ export const DeckCard = ({
           onMoveCard={onMoveCard}
         />
       </div>
-      {/* <div className='card-content-wrapper w-full'></div> */}
     </div>
   );
 };

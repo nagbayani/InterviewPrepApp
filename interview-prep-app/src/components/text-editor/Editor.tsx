@@ -10,9 +10,16 @@ import { useDebouncedCallback } from "use-debounce";
 interface EditorProp {
   initialValue?: JSONContent;
   onChange: (value: JSONContent) => void;
+  onTextChange: (text: string) => void; // Extract text from the Editor
+  onSave: () => void;
 }
 
-export const TipTapEditor = ({ initialValue, onChange }: EditorProp) => {
+export const TipTapEditor = ({
+  initialValue,
+  onChange,
+  onTextChange,
+  onSave,
+}: EditorProp) => {
   const logContent = useCallback((e: Editor) => console.log(e.getJSON()), []);
 
   const [isAddingNewLink, setIsAddingNewLink] = useState(false);
@@ -28,25 +35,20 @@ export const TipTapEditor = ({ initialValue, onChange }: EditorProp) => {
     initialValue
   );
 
-  // const addImage = () =>
-  //   editor?.commands.setMedia({
-  //     src: "https://source.unsplash.com/8xznAGy4HcY/800x400",
-  //     "media-type": "img",
-  //     alt: "Something else",
-  //     title: "Something",
-  //     width: "800",
-  //     height: "400",
-  //   });
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "s") {
+        event.preventDefault();
+        onSave(); // Trigger the save function
+      }
+    };
 
-  // const addVideo = () =>
-  //   editor?.commands.setMedia({
-  //     src: videoUrl,
-  //     "media-type": "video",
-  //     alt: "Some Video",
-  //     title: "Some Title Video",
-  //     width: "400",
-  //     height: "400",
-  //   });
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onSave]);
 
   const debouncedUpdates = useDebouncedCallback(async ({ editor }) => {
     setSaveStatus("Saving...");
@@ -69,6 +71,7 @@ export const TipTapEditor = ({ initialValue, onChange }: EditorProp) => {
     onUpdate: ({ editor }) => {
       debouncedUpdates({ editor });
       onChange(editor.getJSON());
+      onTextChange(editor.getText());
       setSaveStatus("Unsaved");
     },
     // onUpdate: debounce(({ editor: e }) => {

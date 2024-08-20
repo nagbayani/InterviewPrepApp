@@ -7,6 +7,17 @@ import {
   DialogPortal,
   DialogClose,
 } from "@/components/ui/dialog";
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { useRouter } from "next/navigation";
 import { useDialog } from "./useDialog";
 import Card from "@/app/(dashboard)/decks/[deckId]/c/[cardId]/page";
@@ -50,30 +61,35 @@ export function Modal({
    *
    */
   return (
+    // <>
+    //   <Dialog open={open} onOpenChange={handleOpenChange}>
+    //     <DialogOverlay>
+    //       <DialogContent
+    //         className='lg:max-w-screen-lg overflow-y-auto max-h-screen w-full'
+    //         onInteractOutside={(e) => {
+    //           e.preventDefault();
+    //         }}
+    //       >
+    //         {children}
+    //       </DialogContent>
+    //     </DialogOverlay>
+    //   </Dialog>
+
+    //     </>
     <>
-      <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogOverlay>
-          <DialogContent
-            className='lg:max-w-screen-lg overflow-y-auto max-h-screen w-full'
-            onInteractOutside={(e) => {
-              e.preventDefault();
-            }}
-          >
-            {children}
-          </DialogContent>
-        </DialogOverlay>
-      </Dialog>
+      <Drawer open={open} onOpenChange={handleOpenChange}>
+        {/* <DrawerTrigger>
+          <Button>Open Drawer</Button>
+        </DrawerTrigger> */}
+        <DrawerContent>
+          {children}
+          <DrawerFooter>
+            <DrawerClose asChild>
+              <Button variant='outline'>Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 }
-
-/* <Dialog
-        defaultOpen={true}
-        modal
-        open={isOpen}
-        onOpenChange={handleOpenChange}
-      > */
-
-/* <DialogTrigger asChild>
-          <Button variant='outline'>{data.question}</Button>
-        </DialogTrigger> */

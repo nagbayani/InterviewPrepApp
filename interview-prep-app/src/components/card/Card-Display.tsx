@@ -23,23 +23,20 @@ import { useCardStore, useTagStore } from "@/_store/index";
 
 import TagsPopover from "../menus/card-tags/TagsPopover";
 import Tag from "./Tag";
-import { CardData, TagData, CardTagData } from "@/types/data-types";
+import { CardData, TagData } from "@/types/data-types";
 import SaveButton from "../buttons/save-button";
 
 type Props = {
   card: CardData;
   userTags: TagData[];
-  cardTags: CardTagData[];
+  // cardTags: CardTagData[];
 };
 /**
  * Card Display Component that is rendered when you open a card from DeckID page.  Allows user to edit the question and answer.
  * @param param0
  * @returns
  */
-export default function CardDisplay({ card, userTags, cardTags }: Props) {
-  console.log("userTags", userTags);
-  console.log(card, "CardData");
-
+export default function CardDisplay({ card, userTags }: Props) {
   // Zustand Card Store
   const { updateCard } = useCardStore((state) => ({
     updateCard: state.updateCard,
@@ -185,61 +182,62 @@ export default function CardDisplay({ card, userTags, cardTags }: Props) {
 
   return (
     // Card Form Holding entire card
-    // <section className='flex flex-col gap-4'>
-    <section className='card-section h-[100%] w-full overflow-y-scroll'>
-      {/* <Link href={`/decks/${data.deckId}/c/${data.id}`}> */}
-      <div className={`card-form-container mx-4`}>
-        <Form {...form}>
-          {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
-          <div className='card-question w-full'>
-            <FormField
-              control={form.control}
-              name='question'
-              render={({ field }) => (
-                <FormItem className='w-full'>
-                  {isEditing.question ? (
-                    <>
-                      <FormControl className='w-full'>
-                        <CardInput
-                          id='question'
-                          placeholder='Write a Question'
-                          {...field}
-                          onBlur={() => {
-                            handleInputBlur("question");
-                          }}
-                          onChange={handleChange}
-                          value={details.question}
-                          onKeyDown={(e) => handleKeyDown(e, "question")}
-                        />
-                      </FormControl>
-                    </>
-                  ) : (
-                    <>
-                      <CardFormLabel
-                        onClick={() => handleLabelClick("question")}
-                      >
-                        {field.value || details.question}
-                      </CardFormLabel>
-                    </>
-                  )}
-                  <FormMessage />
-                </FormItem>
-              )}
+    // <section className='card-section   w-full h-full overflow-y-scroll'>
+    <div className={`card-form-container`}>
+      <Form {...form}>
+        {/* Render Card Tags */}
+        <div className='flex items-center gap-4 my-4'>
+          {card.tags?.map((tag) => (
+            <TagsPopover
+              key={tag.id}
+              tags={userTags}
+              cardId={card.id}
+              triggerElement={<Tag tag={tag} />}
             />
-          </div>
-          {/* Add wrapper here to render cardTags  */}
-          <div className='flex items-center gap-4 my-4'>
-            {card.tags?.map((tag) => (
-              <Tag key={tag.id} tag={tag} />
-            ))}
-            <TagsPopover tags={userTags} cardId={card.id} />
-          </div>
+          ))}
+          <TagsPopover tags={userTags} cardId={card.id} />
+        </div>
 
-          {/* TipTap Rich Text Editor - User writes answer. */}
-          <EditorWrapper data={card} />
-        </Form>
-      </div>
-      {/* </Link> */}
-    </section>
+        {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
+        <div className='card-question  w-full'>
+          <FormField
+            control={form.control}
+            name='question'
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                {isEditing.question ? (
+                  <>
+                    <FormControl className='w-full'>
+                      <CardInput
+                        id='question'
+                        placeholder='Write a Question'
+                        {...field}
+                        onBlur={() => {
+                          handleInputBlur("question");
+                        }}
+                        onChange={handleChange}
+                        value={details.question}
+                        onKeyDown={(e) => handleKeyDown(e, "question")}
+                      />
+                    </FormControl>
+                  </>
+                ) : (
+                  <>
+                    <CardFormLabel onClick={() => handleLabelClick("question")}>
+                      {field.value || details.question}
+                    </CardFormLabel>
+                  </>
+                )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* TipTap Rich Text Editor - User writes answer. */}
+        <EditorWrapper data={card} cardId={card.id} />
+      </Form>
+    </div>
+    // </section>
   );
 }

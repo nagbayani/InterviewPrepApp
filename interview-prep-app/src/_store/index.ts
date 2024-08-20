@@ -106,15 +106,20 @@ export const useCardStore = create<CardState>((set) => ({
    * @returns
    */
   updateCard: (cardId, data) =>
-    set((state) => ({
-      cards: {
-        ...state.cards,
-        [cardId]: {
-          ...state.cards[cardId],
-          ...data,
-        },
-      },
-    })),
+    set(
+      (state) => (
+        console.log("Updating card with ID: ", cardId),
+        {
+          cards: {
+            ...state.cards,
+            [cardId]: {
+              ...state.cards[cardId],
+              ...data,
+            },
+          },
+        }
+      )
+    ),
 
   /**
    * Adds a card to the store
@@ -210,7 +215,7 @@ export const useDeckStore = create<DeckState>((set) => ({
           )
         : {}; // Return an empty object if decks is not an array
 
-      console.log("Setting new Decks: ", newDecks); // Log the new decks object
+      // console.log("Setting new Decks: ", newDecks); // Log the new decks object
 
       return {
         decks: newDecks,
