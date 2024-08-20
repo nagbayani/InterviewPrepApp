@@ -30,8 +30,6 @@ export default function EditTagMenu({ tag, onBack }: EditTagMenuProps) {
       color: tagColor,
     };
 
-    console.log("Updated tag", updatedTag);
-
     try {
       // Update the tag in the database
       const response = await fetch(`/api/cards/tags`, {

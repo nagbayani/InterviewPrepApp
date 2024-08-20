@@ -7,19 +7,24 @@ import DeckIcon from "../thumbnails/DeckIcon";
 import { useCardStore, useDeckStore } from "@/_store/index";
 import { fetchAllCards, moveCardPUT } from "@/utils/fetch";
 import { toast } from "@/components/ui/use-toast";
-
 // Styles & Icons
 import "@/styles/deck/deck-wrapper.css";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import { Send, SlidersHorizontal } from "lucide-react";
+import { AddCardModal } from "@/containers/modal/add-card-modal";
+import { DeckData } from "@/types/data-types";
+
+interface DeckProps {
+  deck: DeckData;
+}
 
 /**
  *
  * [deckId] page Deck Client Component that holds all rendered cards, and will add new cards.
  *
  */
-const Deck = ({ deck }: any) => {
+const Deck = ({ deck }: DeckProps) => {
   // retrieve list of cards
   const {
     cards: cardsData,
@@ -213,6 +218,7 @@ const Deck = ({ deck }: any) => {
             <Send size={12} />
             <span>Send</span>
           </Button>
+          <AddCardModal deckId={deck.id} />
         </div>
         {/* Render cards from Zustand state to Card components */}
         {Object.values(cardsData).map((card, index) => (
@@ -225,35 +231,6 @@ const Deck = ({ deck }: any) => {
             onMoveCard={handleCardMove}
           />
         ))}
-        {showForm ? (
-          <div
-            className='justify-self-center flex justify-between w-[400px] p-4 rounded-lg'
-            style={{ background: "#fefcf6" }}
-          >
-            <CardInput
-              id='question'
-              placeholder='Write a Question'
-              onChange={handleCardForm}
-              onSubmit={submitAddCard}
-              onBlur={submitAddCard}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  submitAddCard();
-                }
-              }}
-            />
-          </div>
-        ) : (
-          <Button
-            // size='lg'
-            variant='outline'
-            className=' flex p-4 rounded-lg justify-center items-center'
-            onClick={() => setShowForm(true)}
-          >
-            <LuPlus />
-            <span>Add a card</span>
-          </Button>
-        )}
       </div>
     </section>
   );
