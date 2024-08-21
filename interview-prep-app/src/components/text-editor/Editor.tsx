@@ -94,7 +94,7 @@ export const TipTapEditor = ({
       //   </section>
       <>
         <EditorContent
-          className='w-full flex justify-center min-h-[500px] max-h-[500px] border-black border-2 overflow-y-scroll'
+          className='w-full flex justify-center min-h-[500px] max-h-[500px] border-black border-2 scrollbar-thin scrollbar-thumb-rounded overflow-y-scroll'
           editor={editor}
         />
 

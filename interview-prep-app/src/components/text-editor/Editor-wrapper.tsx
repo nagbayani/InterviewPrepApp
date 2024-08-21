@@ -103,14 +103,19 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
 
   useEffect(() => {
     if (card) {
-      const parsedAnswer = JSON.parse(card.answer);
-      setValue(parsedAnswer || defaultValue);
+      try {
+        const parsedAnswer = JSON.parse(card.answer);
+        setValue(parsedAnswer);
+      } catch {
+        const parsedAnswer = defaultValue;
+        setValue(parsedAnswer);
+      }
     }
   }, [card]);
 
   return (
     <>
-      <div className='flex flex-col  h-[600px] max-h-[600px] overflow-y-scroll'>
+      <div className='flex flex-col  max-h-[600px]'>
         <TipTapEditor
           initialValue={value}
           onChange={handleEditorChange}

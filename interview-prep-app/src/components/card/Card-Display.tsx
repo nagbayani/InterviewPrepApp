@@ -235,7 +235,18 @@ export default function CardDisplay({ card, userTags }: Props) {
         </div>
 
         {/* TipTap Rich Text Editor - User writes answer. */}
-        <EditorWrapper data={card} cardId={card.id} />
+        {/* <EditorWrapper data={card} cardId={card.id} /> */}
+        {/* Layout with EditorWrapper and Feedback */}
+        <div className='flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-16'>
+          <div className='flex-1 lg:basis-2/3'>
+            <EditorWrapper data={card} cardId={card.id} />
+          </div>
+          <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md'>
+            {/* Feedback Box Content */}
+            <h2 className='text-lg font-semibold mb-2'>Feedback</h2>
+            <p className='text-gray-700'>Your feedback content goes here.</p>
+          </div>
+        </div>
       </Form>
     </div>
     // </section>
