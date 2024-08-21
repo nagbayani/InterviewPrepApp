@@ -24,7 +24,7 @@ const Tag = ({ tag }: { tag: TagData }) => {
         color: selectedColor?.textColor,
         borderWidth: "1px",
         borderStyle: "solid",
-        fontSize: "var(--step--5)",
+        fontSize: "var(--step--7)",
       }}
     >
       <span>{tag.name}</span>

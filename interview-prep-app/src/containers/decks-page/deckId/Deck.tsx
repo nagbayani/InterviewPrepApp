@@ -223,21 +223,21 @@ const Deck = ({ deck }: DeckProps) => {
       </div>
       <Card className='rounded-lg border-none w-full overflow-y-visible bg-slate-600 '>
         <CardContent>
-          <div className='flex flex-col items-center gap-8 mx-4 h-full'>
-            <div className='flex flex-col gap-4 w-full mt-4'>
-              {/* Render cards from Zustand state to Card components */}
-              {Object.values(cardsData).map((card, index) => (
-                <DeckCard
-                  key={card.id}
-                  card={card}
-                  deckId={deck.id}
-                  index={index + 1}
-                  onUpdateCard={handleCardUpdate}
-                  onMoveCard={handleCardMove}
-                />
-              ))}
-            </div>
+          {/* <div className='flex flex-col items-center gap-8 mx-4 h-full'> */}
+          <div className='cards-list'>
+            {/* Render cards from Zustand state to Card components */}
+            {Object.values(cardsData).map((card, index) => (
+              <DeckCard
+                key={card.id}
+                card={card}
+                deckId={deck.id}
+                index={index + 1}
+                onUpdateCard={handleCardUpdate}
+                onMoveCard={handleCardMove}
+              />
+            ))}
           </div>
+          {/* </div> */}
         </CardContent>
       </Card>
     </section>

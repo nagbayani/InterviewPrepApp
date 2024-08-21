@@ -76,36 +76,43 @@ export const DeckCard = ({
       className='deck-card-container  flex flex-row justify-between border-black'
       style={{ background: "#fefcf6", border: "1px solid black" }}
     >
-      <div className='main-dc-wrapper justify-self-start flex justify-between'>
-        <div className='left-dc-wrapper m-4'>
-          <div className='flex p-2 m-2'>
+      <div className='main-dc-wrapper justify-self-start flex flex-col justify-between'>
+        <div className='left-dc-wrapper'>
+          <div className='flex p-2'>
             {index}
             {/* SHOW TAGS HERE */}
-            <div className='tags-container mx-4 gap-2 flex'>
-              {cardTagsList.map((tag) => (
-                <Tag key={tag.id} tag={tag} />
-              ))}
+            <div className='flex-col flex-1'>
+              <div className='tags-container mx-4 gap-2 flex'>
+                {cardTagsList.map((tag) => (
+                  <Tag key={tag.id} tag={tag} />
+                ))}
+              </div>
+              <p className='px-4'>{card.question}</p>
             </div>
           </div>
-          <div className='px-4 font-medium'>{card.question}</div>
         </div>
-      </div>
-      <div className='bottom-dc-wrapper '>
-        <Button
-          variant='editCard'
-          onClick={handleOpenModal}
-          className='h-[50%]'
-        >
-          <PenLine size={12} />
-        </Button>
-        <MoveCardMenu
-          handleDeleteCard={handleDeleteCard}
-          user={card.authorId}
-          cardId={card.id}
-          deckId={deckId}
-          onMoveCard={onMoveCard}
-        />
+        <div className='flex'>
+          <MoveCardMenu
+            handleDeleteCard={handleDeleteCard}
+            user={card.authorId}
+            cardId={card.id}
+            deckId={deckId}
+            onMoveCard={onMoveCard}
+          />
+          <Button
+            variant='editCard'
+            onClick={handleOpenModal}
+            className=' w-[50%]'
+          >
+            <PenLine size={12} />
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
+
+{
+  /* <div className='bottom-dc-wrapper '>
+</div> */
+}

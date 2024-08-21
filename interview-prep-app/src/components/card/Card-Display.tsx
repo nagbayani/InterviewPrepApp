@@ -186,7 +186,7 @@ export default function CardDisplay({ card, userTags }: Props) {
     <div className={`card-form-container`}>
       <Form {...form}>
         {/* Render Card Tags */}
-        <div className='flex items-center gap-4 my-4'>
+        <div className='flex items-center gap-4 mt-4'>
           {card.tags?.map((tag) => (
             <TagsPopover
               key={tag.id}
@@ -199,7 +199,7 @@ export default function CardDisplay({ card, userTags }: Props) {
         </div>
 
         {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
-        <div className='card-question  w-full'>
+        <div className='card-question   mx-24'>
           <FormField
             control={form.control}
             name='question'
@@ -237,7 +237,7 @@ export default function CardDisplay({ card, userTags }: Props) {
         {/* TipTap Rich Text Editor - User writes answer. */}
         {/* <EditorWrapper data={card} cardId={card.id} /> */}
         {/* Layout with EditorWrapper and Feedback */}
-        <div className='flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-16'>
+        <div className='flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-8'>
           <div className='flex-1 lg:basis-2/3'>
             <EditorWrapper data={card} cardId={card.id} />
           </div>
