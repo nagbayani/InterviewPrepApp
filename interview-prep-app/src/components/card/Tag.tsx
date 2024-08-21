@@ -16,7 +16,7 @@ const Tag = ({ tag }: { tag: TagData }) => {
 
   return (
     <div
-      className='tag px-2 py-1 rounded-full transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg'
+      className='tag px-2 py-1 '
       style={{
         borderRadius: "5px",
         backgroundColor: selectedColor?.backgroundColor,

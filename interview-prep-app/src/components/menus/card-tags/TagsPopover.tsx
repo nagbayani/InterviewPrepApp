@@ -26,7 +26,9 @@ const TagsPopover = ({ tags, cardId, triggerElement }: OpenTagsMenuProps) => {
     <Popover>
       <PopoverTrigger asChild>
         {isTriggerElementVisible && triggerElement ? (
-          <div>{triggerElement}</div>
+          <div className='transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg'>
+            {triggerElement}
+          </div>
         ) : (
           <Button
             variant='editTag'
