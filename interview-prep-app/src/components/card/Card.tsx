@@ -73,21 +73,22 @@ export const DeckCard = ({
 
   return (
     <div
-      className='deck-card-container  flex flex-row justify-between border-black'
+      className=' flex w-[100%]  border-black'
       style={{ background: "#fefcf6", border: "1px solid black" }}
     >
-      <div className='main-dc-wrapper justify-self-start flex flex-col justify-between'>
-        <div className='left-dc-wrapper'>
-          <div className='flex p-2'>
+      <div className='flex flex-col justify-between w-full'>
+        <div className='flex flex-col'>
+          <div className='flex-1 p-2'>
             {index}
-            {/* SHOW TAGS HERE */}
-            <div className='flex-col flex-1'>
-              <div className='tags-container mx-4 gap-2 flex'>
+
+            {/* Tags + Card Question */}
+            <div className='flex-col px-2'>
+              <div className='tags-container my-2 gap-2 flex flex-wrap'>
                 {cardTagsList.map((tag) => (
                   <Tag key={tag.id} tag={tag} />
                 ))}
               </div>
-              <p className='px-4'>{card.question}</p>
+              <p className=''>{card.question}</p>
             </div>
           </div>
         </div>

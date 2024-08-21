@@ -40,7 +40,7 @@ const CardLabel = React.forwardRef<
       className={cn(cardLabelVariants(), className)}
       style={{
         display: "inline-block",
-        padding: "0.5rem 1rem",
+        padding: "0.5rem 0rem",
         cursor: "pointer",
         fontSize: "20px",
         alignContent: "center",

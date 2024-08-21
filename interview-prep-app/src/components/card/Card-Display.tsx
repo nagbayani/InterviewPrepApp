@@ -27,7 +27,7 @@ import { CardData, TagData } from "@/types/data-types";
 import SaveButton from "../buttons/save-button";
 
 type Props = {
-  card: CardData;
+  cardDb: CardData;
   userTags: TagData[];
   // cardTags: CardTagData[];
 };
@@ -36,9 +36,10 @@ type Props = {
  * @param param0
  * @returns
  */
-export default function CardDisplay({ card, userTags }: Props) {
+export default function CardDisplay({ cardDb, userTags }: Props) {
   // Zustand Card Store
-  const { updateCard } = useCardStore((state) => ({
+  const { card, updateCard } = useCardStore((state) => ({
+    card: state.cards[cardDb.id],
     updateCard: state.updateCard,
   }));
 
@@ -145,7 +146,7 @@ export default function CardDisplay({ card, userTags }: Props) {
     switch (field) {
       case "question":
         try {
-          const response = await fetch(`/api/cards/${card.id}`, {
+          const response = await fetch(`/api/cards/${cardDb.id}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -161,7 +162,7 @@ export default function CardDisplay({ card, userTags }: Props) {
 
           if (response.ok) {
             // UPDATE Card in Zustand Store
-            updateCard(card.id, { question: details.question });
+            updateCard(cardDb.id, { question: details.question });
 
             console.log("CardForm.tsx component - SAVE SUCCESS");
           }
@@ -186,8 +187,9 @@ export default function CardDisplay({ card, userTags }: Props) {
     <div className={`card-form-container`}>
       <Form {...form}>
         {/* Render Card Tags */}
-        <div className='flex items-center gap-4 mt-4'>
-          {card.tags?.map((tag) => (
+        <p>Tags</p>
+        <div className='flex items-center gap-4 '>
+          {cardDb.tags?.map((tag) => (
             <TagsPopover
               key={tag.id}
               tags={userTags}
@@ -199,15 +201,15 @@ export default function CardDisplay({ card, userTags }: Props) {
         </div>
 
         {/* div for CARD QUESTION - CardInput / CardFormLabel  */}
-        <div className='card-question   mx-24'>
+        <div className='card-question'>
           <FormField
             control={form.control}
             name='question'
             render={({ field }) => (
-              <FormItem className='w-full'>
+              <FormItem className='w-full lg:w-3/4] mt-2'>
                 {isEditing.question ? (
                   <>
-                    <FormControl className='w-full'>
+                    <FormControl className='w-full lg:w-[66%]'>
                       <CardInput
                         id='question'
                         placeholder='Write a Question'
@@ -239,7 +241,7 @@ export default function CardDisplay({ card, userTags }: Props) {
         {/* Layout with EditorWrapper and Feedback */}
         <div className='flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-8'>
           <div className='flex-1 lg:basis-2/3'>
-            <EditorWrapper data={card} cardId={card.id} />
+            <EditorWrapper data={cardDb} cardId={card.id} />
           </div>
           <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md'>
             {/* Feedback Box Content */}

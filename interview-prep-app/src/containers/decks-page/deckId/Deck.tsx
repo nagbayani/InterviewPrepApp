@@ -221,7 +221,7 @@ const Deck = ({ deck }: DeckProps) => {
         </Button>
         <AddCardModal deckId={deck.id} />
       </div>
-      <Card className='rounded-lg border-none w-full overflow-y-visible bg-slate-600 '>
+      <Card className='rounded-lg border-none w-full h-[100vh] overflow-y-visible bg-slate-600 '>
         <CardContent>
           {/* <div className='flex flex-col items-center gap-8 mx-4 h-full'> */}
           <div className='cards-list'>

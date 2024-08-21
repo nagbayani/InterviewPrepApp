@@ -42,13 +42,6 @@
   grid-column-gap: 1.5em;
 }
 
-.cards-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 1em;
-  padding: 1em;
-}
-
 .deck-icon-wrap {
   width: 80px;
   height: 80px;
@@ -98,4 +91,11 @@
   font-size: var(--step--5);
   height: 200px;
   /* -webkit-text-fill-color: #666666; */
+}
+
+.cards-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1em;
+  padding: 1em;
 }

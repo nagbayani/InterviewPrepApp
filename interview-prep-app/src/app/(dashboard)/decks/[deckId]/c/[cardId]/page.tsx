@@ -30,7 +30,7 @@ export default async function CardPage({ params: { cardId } }: Props) {
   }
   return (
     <div className='mt-2 grid place-content-center'>
-      <CardDisplay card={cardData} userTags={userTags} />
+      <CardDisplay cardDb={cardData} userTags={userTags} />
     </div>
   );
 }

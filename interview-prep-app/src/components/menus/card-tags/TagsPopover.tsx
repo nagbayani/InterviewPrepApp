@@ -29,8 +29,8 @@ const TagsPopover = ({ tags, cardId, triggerElement }: OpenTagsMenuProps) => {
           <div>{triggerElement}</div>
         ) : (
           <Button
-            variant='outline'
-            size='sm'
+            variant='editTag'
+            size={"tag"}
             onClick={() => setIsTriggerElementVisible(true)}
           >
             <LuPlus />
