@@ -84,9 +84,9 @@ export function Modal({
         <DrawerContent>
           {children}
           <DrawerFooter>
-            <DrawerClose asChild>
+            {/* <DrawerClose asChild>
               <Button variant='outline'>Cancel</Button>
-            </DrawerClose>
+            </DrawerClose> */}
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

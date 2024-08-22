@@ -82,7 +82,7 @@ export const Placeholder = Extension.create<PlaceholderOptions>({
                 const classes = [this.options.emptyNodeClass];
 
                 if (this.editor.isEmpty) {
-                  console.log("editor is empty");
+                  // console.log("editor is empty");
                   classes.push(this.options.emptyEditorClass);
                 }
 

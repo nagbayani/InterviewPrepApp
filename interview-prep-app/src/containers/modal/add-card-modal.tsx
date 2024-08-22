@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,15 +12,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LuPlus } from "react-icons/lu";
-import { CardData, TagData } from "@/types/data-types";
+import { CardData, TagData, CardTagData } from "@/types/data-types";
 import { useCardStore, useTagStore } from "@/_store/index";
 import Tag from "@/components/card/Tag";
-import TagsPopover from "@/components/menus/card-tags/TagsPopover";
+import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
+
 interface AddCardModalProps {
   deckId: string;
 }
-
-import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
 
 export function AddCardModal({ deckId }: AddCardModalProps) {
   const [cardQuestion, setCardQuestion] = useState("");
@@ -30,16 +29,18 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
     addCard: state.addCard,
   }));
 
-  const { tags } = useTagStore((state) => ({
-    tags: state.tags,
+  const { addCardTag } = useTagStore((state) => ({
+    addCardTag: state.addCardTag,
   }));
 
   const handleSave = async () => {
+    // Check if card question is empty, return if it is
     if (cardQuestion.trim() === "") {
       console.log("Card question is empty.");
       return;
     }
 
+    // Create new card
     try {
       const response = await fetch(`/api/cards`, {
         method: "POST",
@@ -57,16 +58,48 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
         const data = await response.json();
         const newCard: CardData = data.card;
 
-        // Add card to Zustand store
-        addCard(newCard);
+        // Create card-tag relationships
+        const cardTagPromises = selectedTags.map(async (tag) => {
+          const responseTag = await fetch(`/api/cards/tags/card-tag`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              cardId: newCard.id,
+              tagId: tag.id,
+            }),
+          });
+
+          const cardTag: CardTagData = await responseTag.json();
+          if (cardTag) {
+            // Update Zustand store with new card-tag relationship
+            console.log("CardTag added", cardTag);
+          }
+        });
+
+        const completedTags = await Promise.all(cardTagPromises);
+
+        if (completedTags) {
+          selectedTags.map((tag) => {
+            addCardTag({ cardId: newCard.id, tagId: tag.id });
+          });
+          // Add card to Zustand store
+          addCard(newCard);
+        }
 
         // Clear the form fields after submission
         setCardQuestion("");
+        setSelectedTags([]);
       }
     } catch (error) {
       console.error("Error adding card:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("Selected Tags:", selectedTags);
+  }, [selectedTags]);
 
   return (
     <Dialog>
@@ -86,7 +119,7 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
             <Label htmlFor='card-tag' className='my-1'>
               Tags
             </Label>
-            {/* Render tags here */}
+            {/* Render selected tags here */}
             <div className='flex flex-wrap gap-2 mb-2'>
               {selectedTags.map((tag) => (
                 <Tag key={tag.id} tag={tag} />
@@ -103,9 +136,6 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
               id='card-question'
               value={cardQuestion}
               onChange={(e) => setCardQuestion(e.target.value)}
-              onClick={() => {
-                console.log("clicked");
-              }}
             />
           </div>
         </div>

@@ -1,27 +1,16 @@
 "use client";
-/**
- * Client component to render a card that is mapped out in "interview-prep-app/src/app/(dashboard)/decks/[deckId]/page.tsx"
- *  - This is a button that will open a modal when clicked
- */
-
+import React, { useEffect, useState } from "react";
 import { useModal } from "@/containers/modal/ModalContext";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { CardData } from "@/types/data-types";
+import { CardData, TagData } from "@/types/data-types";
 import { useCardStore, useTagStore } from "@/_store/index";
 import Tag from "./Tag";
 import "../../styles/deck/deckCard.css";
 
 import { PenLine } from "lucide-react";
 import MoveCardMenu from "@/components/menus/move-cards/MoveCardMenu";
-import { currentUser } from "@/lib/auth";
-import { fetchAllDecks } from "@/utils/fetch";
 
-/**
- * On DeckID page, this is a single card that is rendered
- * @param param0
- * @returns
- */
 export const DeckCard = ({
   card,
   deckId,
@@ -46,9 +35,19 @@ export const DeckCard = ({
     cardTags: state.cardTags,
   }));
 
-  // Get the tags for the current card
-  const cardTagIds = cardTags[card.id] ? Object.keys(cardTags[card.id]) : [];
-  const cardTagsList = cardTagIds.map((tagId) => tags[tagId]);
+  const [cardTagsList, setCardTagsList] = useState<TagData[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    console.log("CardTags updated:", cardTags, card.id, card.question);
+    const cardTagIds = cardTags[card.id] ? Object.keys(cardTags[card.id]) : [];
+    const updatedCardTagsList = cardTagIds.map((tagId) => tags[tagId]);
+    setCardTagsList(updatedCardTagsList);
+    setIsLoaded(true);
+  }, [cardTags, tags, card.id]);
+
+  // Ensure the tags only render after the data is loaded
+  if (!isLoaded) return <div>Loading tags...</div>;
 
   // push, should be intercepted by @modal route and open the modal
   const handleOpenModal = () => {
@@ -73,7 +72,7 @@ export const DeckCard = ({
 
   return (
     <div
-      className=' flex w-[100%]  border-black'
+      className='flex w-[100%] border-black'
       style={{ background: "#fefcf6", border: "1px solid black" }}
     >
       <div className='flex flex-col justify-between w-full'>
@@ -112,8 +111,3 @@ export const DeckCard = ({
     </div>
   );
 };
-
-{
-  /* <div className='bottom-dc-wrapper '>
-</div> */
-}
