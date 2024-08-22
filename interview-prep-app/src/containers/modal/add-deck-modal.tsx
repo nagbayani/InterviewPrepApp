@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { LuPlus } from "react-icons/lu";
 import { DeckData } from "@/types/data-types";
 import { useDeckStore } from "@/_store/index";
@@ -67,15 +68,12 @@ export function AddDeckModal() {
         <DialogHeader>
           <DialogTitle>Create new deck</DialogTitle>
           <DialogDescription>
-            Dont forget to add a description to your deck. It can help with
-            AI-generation results.
+            Add a new deck to your collection.
           </DialogDescription>
         </DialogHeader>
-        <div className='grid gap-4 py-4'>
-          <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='deck-title' className='text-right'>
-              Title
-            </Label>
+        <div className='grid gap-8 py-4'>
+          <div className='grid w-full gap-1.5'>
+            <Label htmlFor='deck-title'>Title</Label>
             <Input
               id='deck-title'
               className='col-span-3'
@@ -83,7 +81,7 @@ export function AddDeckModal() {
               onChange={(e) => setDeckTitle(e.target.value)}
             />
           </div>
-          <div className='grid grid-cols-4 items-center gap-4'>
+          {/* <div className='grid grid-cols-4 items-center gap-4'>
             <Label htmlFor='deck-description' className='text-right'>
               Description
             </Label>
@@ -93,6 +91,19 @@ export function AddDeckModal() {
               value={deckDescription}
               onChange={(e) => setDeckDescription(e.target.value)}
             />
+          </div> */}
+          <div className='grid w-full gap-1.5'>
+            <Label htmlFor='message-2'>Description</Label>
+            <Textarea
+              placeholder='Type your message here.'
+              id='message-2'
+              value={deckDescription}
+              onChange={(e) => setDeckDescription(e.target.value)}
+            />
+            <p className='text-sm text-muted-foreground'>
+              Adding a description to your deck can help with AI-generation
+              results.
+            </p>
           </div>
         </div>
         <DialogFooter>

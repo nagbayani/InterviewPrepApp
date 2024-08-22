@@ -40,11 +40,19 @@ export async function GET(
 export async function PUT(req: NextRequest, res: NextResponse) {
   const user = await currentUser();
 
-  const { deckId, title } = (await req.json()) as {
+  const { deckId, title, description, thumbnail } = (await req.json()) as {
     deckId: string;
     title: string;
+    description: string | null;
+    thumbnail: string | null;
   };
-  const data = { deckId, title, authorId: user.session?.user.id ?? "" };
+  const data = {
+    deckId,
+    title,
+    description,
+    thumbnail,
+    authorId: user.session?.user.id ?? "",
+  };
   try {
     const deck = await updateDeck(data);
     console.log("API ENDPOINT DECK", deck);

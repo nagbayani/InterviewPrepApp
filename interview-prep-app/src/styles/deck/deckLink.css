@@ -55,3 +55,8 @@
   height: 100%;
   border-radius: 4px;
 }
+
+.decklink-description {
+  display: flex;
+  flex-direction: column;
+}

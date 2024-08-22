@@ -1,12 +1,4 @@
 "use client";
-import {
-  Dialog,
-  DialogOverlay,
-  DialogContent,
-  DialogTrigger,
-  DialogPortal,
-  DialogClose,
-} from "@/components/ui/dialog";
 
 import {
   Drawer,
@@ -61,33 +53,11 @@ export function Modal({
    *
    */
   return (
-    // <>
-    //   <Dialog open={open} onOpenChange={handleOpenChange}>
-    //     <DialogOverlay>
-    //       <DialogContent
-    //         className='lg:max-w-screen-lg overflow-y-auto max-h-screen w-full'
-    //         onInteractOutside={(e) => {
-    //           e.preventDefault();
-    //         }}
-    //       >
-    //         {children}
-    //       </DialogContent>
-    //     </DialogOverlay>
-    //   </Dialog>
-
-    //     </>
     <>
-      <Drawer open={open} onOpenChange={handleOpenChange}>
-        {/* <DrawerTrigger>
-          <Button>Open Drawer</Button>
-        </DrawerTrigger> */}
+      <Drawer open={open} onOpenChange={handleOpenChange} dismissible={false}>
         <DrawerContent>
           {children}
-          <DrawerFooter>
-            {/* <DrawerClose asChild>
-              <Button variant='outline'>Cancel</Button>
-            </DrawerClose> */}
-          </DrawerFooter>
+          <DrawerFooter></DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

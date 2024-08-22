@@ -34,73 +34,20 @@ import { AddDeckModal } from "../modal/add-deck-modal";
  */
 const DecksWrapper = ({ decks }: { decks: any }) => {
   // Zustand store:  State Management for Decks
-  const {
-    decks: decksData,
-    addDeck,
-    setDecks,
-  } = useDeckStore((state) => ({
+  const { decks: decksData, setDecks } = useDeckStore((state) => ({
     decks: state.decks,
     addDeck: state.addDeck,
     setDecks: state.setDecks,
   }));
 
-  // Client show form state when User wants to add a new deck
-  const [showForm, setShowForm] = useState(false);
-  const [newDeckTitle, setNewDeckTitle] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Update Zustand store with deck data from database
-  useEffect(() => {
-    setDecks(decks);
-    console.log("Decks in DecksWrapper: ", decksData);
-  }, [decks, setDecks]);
+  // useEffect(() => {
+  //   setDecks(decks);
+  //   console.log("Decks in DecksWrapper: ", decksData);
+  // }, [decks, setDecks]);
 
-  /**
-   * Handles deck form title input changes
-   * @param e
-   */
-  const handleDeckForm = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setNewDeckTitle(value);
-  };
-
-  /**
-   * Submits the new deck to the database, updates state with new deck.
-   * If deck title is empty, do not submit.
-   */
-  const submitAddDeck = async () => {
-    if (newDeckTitle.trim() === "") {
-      console.log("Deck title is empty.");
-      setShowForm(false);
-    } else {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/decks`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: newDeckTitle,
-          }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const newDeck: DeckData = data.deck;
-
-          // Add deck to Zustand store
-          addDeck(newDeck);
-        }
-      } catch {
-        console.error("Error adding deck.");
-      } finally {
-        setLoading(false);
-        setNewDeckTitle("");
-        setShowForm(false);
-      }
-    }
-  };
   /**
    * COLORS:
    *
@@ -129,11 +76,11 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
         {/* Add Deck Button Menu */}
         <AddDeckModal />
       </div>
-      <ul className='decks-list h-full gap-4'>
+      <ul className='decks-list h-[100vh] gap-4'>
         {/* <li className='add-wrapper'></li> */}
         {Object.values(decksData)
           .reverse()
-          .map((deck: any) => {
+          .map((deck: DeckData) => {
             // Find the matching gradient style based on the thumbnail
             const matchedGradient = gradients.find(
               (gradient) => gradient.name === deck.thumbnail
@@ -151,6 +98,7 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
                   title={deck.title}
                   path={`/decks/${deck.id}`}
                   thumbnail={gradientStyle}
+                  description={deck.description || ""}
                 />
               </li>
             );

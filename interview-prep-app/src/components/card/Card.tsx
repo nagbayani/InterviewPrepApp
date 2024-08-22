@@ -39,7 +39,7 @@ export const DeckCard = ({
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    console.log("CardTags updated:", cardTags, card.id, card.question);
+    // console.log("CardTags updated:", cardTags, card.id, card.question);
     const cardTagIds = cardTags[card.id] ? Object.keys(cardTags[card.id]) : [];
     const updatedCardTagsList = cardTagIds.map((tagId) => tags[tagId]);
     setCardTagsList(updatedCardTagsList);
