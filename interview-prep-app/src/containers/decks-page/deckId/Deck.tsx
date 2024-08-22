@@ -14,6 +14,7 @@ import { LuPlus } from "react-icons/lu";
 import { Send, SlidersHorizontal } from "lucide-react";
 import { AddCardModal } from "@/containers/modal/add-card-modal";
 import { DeckData } from "@/types/data-types";
+import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -181,6 +182,7 @@ const Deck = ({ deck }: DeckProps) => {
   return (
     <section className='deck-wrapper-container overflow-visible'>
       <div className='deck-wrapper-header'>
+        <AddCardTagsMenu />
         {/* Deck Icon */}
         <DeckIcon
           deckId={deck.id}

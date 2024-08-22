@@ -12,16 +12,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LuPlus } from "react-icons/lu";
-import { CardData } from "@/types/data-types";
-import { useCardStore } from "@/_store/index";
+import { CardData, TagData } from "@/types/data-types";
+import { useCardStore, useTagStore } from "@/_store/index";
+import Tag from "@/components/card/Tag";
+import TagsPopover from "@/components/menus/card-tags/TagsPopover";
 interface AddCardModalProps {
   deckId: string;
 }
 
+import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
+
 export function AddCardModal({ deckId }: AddCardModalProps) {
   const [cardQuestion, setCardQuestion] = useState("");
+  const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
+
   const { addCard } = useCardStore((state) => ({
     addCard: state.addCard,
+  }));
+
+  const { tags } = useTagStore((state) => ({
+    tags: state.tags,
   }));
 
   const handleSave = async () => {
@@ -66,18 +76,38 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
           Add Card
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='overflow-visible'>
         <DialogHeader>
-          <DialogTitle>Add Card</DialogTitle>
+          <DialogTitle>New Card</DialogTitle>
           <DialogDescription>Add a new card to the deck</DialogDescription>
         </DialogHeader>
-        <div className='grid items-center py-4'>
-          <Label htmlFor='card-question'>Question</Label>
-          <Input
-            id='card-question'
-            value={cardQuestion}
-            onChange={(e) => setCardQuestion(e.target.value)}
-          />
+        <div className='grid gap-2'>
+          <div>
+            <Label htmlFor='card-tag' className='my-1'>
+              Tags
+            </Label>
+            {/* Render tags here */}
+            <div className='flex flex-wrap gap-2 mb-2'>
+              {selectedTags.map((tag) => (
+                <Tag key={tag.id} tag={tag} />
+              ))}
+            </div>
+            {/* New Popover Menu for Tags */}
+            <AddCardTagsMenu onSelectTags={setSelectedTags} />
+          </div>
+          <div>
+            <Label htmlFor='card-question' className='my-1'>
+              Question
+            </Label>
+            <Input
+              id='card-question'
+              value={cardQuestion}
+              onChange={(e) => setCardQuestion(e.target.value)}
+              onClick={() => {
+                console.log("clicked");
+              }}
+            />
+          </div>
         </div>
         <Button onClick={handleSave}>Save Card</Button>
       </DialogContent>

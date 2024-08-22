@@ -39,7 +39,7 @@ const TagsPopover = ({ tags, cardId, triggerElement }: OpenTagsMenuProps) => {
           </Button>
         )}
       </PopoverTrigger>
-      <PopoverContent className='pointer-events-auto w-80'>
+      <PopoverContent className='pointer-events-auto  w-80'>
         <TagsMenu tags={tags} cardId={cardId} />
       </PopoverContent>
     </Popover>

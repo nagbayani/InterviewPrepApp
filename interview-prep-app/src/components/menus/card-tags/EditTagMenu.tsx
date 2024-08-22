@@ -57,7 +57,7 @@ export default function EditTagMenu({ tag, onBack }: EditTagMenuProps) {
     setTagColor(color);
   };
   return (
-    <div>
+    <div className='pointer-events-auto'>
       <h2>Edit Tag</h2>
       <div className='mb-4'>
         <label className='block text-sm font-medium text-gray-700'>

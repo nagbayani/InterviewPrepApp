@@ -19,12 +19,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "@/styles/cardForm.css";
-import { useCardStore, useTagStore } from "@/_store/index";
+import { useCardStore } from "@/_store/index";
 
 import TagsPopover from "../menus/card-tags/TagsPopover";
 import Tag from "./Tag";
 import { CardData, TagData } from "@/types/data-types";
-import SaveButton from "../buttons/save-button";
 
 type Props = {
   cardDb: CardData;
