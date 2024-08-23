@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { TagData } from "@/types/data-types";
 import { useTagStore } from "@/_store/index";
 import EditTagMenu from "./EditTagMenu";
+import NewTagMenu from "./NewTagMenu";
 
 interface TagsMenuProps {
   tags: TagData[];
@@ -35,7 +36,7 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
     useState<string[]>(initialSelectedTags);
 
   // Menu state to toggle between editing a single tag and back to original TagsMenu
-  const [menuState, setMenuState] = useState<"list" | "edit">("list");
+  const [menuState, setMenuState] = useState<"list" | "edit" | "new">("list");
   const [currentTagId, setCurrentTagId] = useState<string | null>(null);
 
   // console.log("Selected tags state:", selectedTags);
@@ -125,58 +126,76 @@ export default function TagsMenu({ tags, cardId }: TagsMenuProps) {
     }
   };
   return menuState === "list" ? (
-    <Table>
-      <TableCaption>A list of your tags.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className='w-[50px]'>Select</TableHead>
-          <TableHead>Tag</TableHead>
-          <TableHead className='text-right'>Actions</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {tags.map((tag) => (
-          <TableRow key={tag.id}>
-            <TableCell>
-              <Checkbox
-                checked={selectedTags.includes(tag.id)}
-                onCheckedChange={() => handleTagToggle(tag.id)}
-              />
-            </TableCell>
-            <TableCell>
-              <div className='flex items-center space-x-2'>
-                <div
-                  className='w-4 h-4 rounded-full'
-                  style={{ backgroundColor: tag.color }}
-                ></div>
-                <span>{tag.name}</span>
-              </div>
-            </TableCell>
-            <TableCell className='text-right'>
-              <Button
-                variant='outline'
-                size='sm'
-                onClick={() => handleEditTag(tag.id)}
-              >
-                Edit
-              </Button>
-            </TableCell>
+    <>
+      <Table>
+        {/* <TableCaption>A list of your tags.</TableCaption> */}
+        <TableHeader>
+          <TableRow>
+            {/* <TableHead className='w-[50px]'>Select</TableHead> */}
+            {/* <TableHead>Tag</TableHead>
+            <TableHead className='text-right'>Actions</TableHead> */}
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total Tags: {tags.length}</TableCell>
-        </TableRow>
-      </TableFooter>
-      <Button onClick={handleSubmit} variant='create' className='mt-4'>
-        Submit
-      </Button>
-    </Table>
-  ) : (
+        </TableHeader>
+        <TableBody>
+          {tags.map((tag) => (
+            <TableRow key={tag.id}>
+              <TableCell>
+                <Checkbox
+                  checked={selectedTags.includes(tag.id)}
+                  onCheckedChange={() => handleTagToggle(tag.id)}
+                />
+              </TableCell>
+              <TableCell>
+                <div
+                  className='flex items-center space-x-2'
+                  onClick={() => {
+                    handleTagToggle(tag.id);
+                  }}
+                >
+                  <div
+                    className='w-4 h-4 rounded-full'
+                    style={{ backgroundColor: tag.color }}
+                  ></div>
+                  <span>{tag.name}</span>
+                </div>
+              </TableCell>
+              <TableCell className='text-right'>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  onClick={() => handleEditTag(tag.id)}
+                >
+                  Edit
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={3}>Total Tags: {tags.length}</TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+      <div className='flex flex-col'>
+        <Button
+          onClick={() => setMenuState("new")}
+          variant='outline'
+          className='mt-2'
+        >
+          Create New Tag
+        </Button>
+        <Button onClick={handleSubmit} variant='create' className='mt-4'>
+          Save
+        </Button>
+      </div>
+    </>
+  ) : menuState === "edit" ? (
     <EditTagMenu
       tag={tags.find((tag) => tag.id === currentTagId)!}
       onBack={handleBackToMenu}
     />
+  ) : (
+    <NewTagMenu onBack={handleBackToMenu} />
   );
 }

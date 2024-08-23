@@ -16,15 +16,15 @@ const Tag = ({ tag }: { tag: TagData }) => {
 
   return (
     <div
-      className='tag px-2 py-1 rounded-full'
+      className='tag px-2 py-1 '
       style={{
-        borderRadius: "25px",
+        borderRadius: "5px",
         backgroundColor: selectedColor?.backgroundColor,
         borderColor: selectedColor?.borderColor,
         color: selectedColor?.textColor,
         borderWidth: "1px",
         borderStyle: "solid",
-        fontSize: "var(--step--5)",
+        fontSize: "10px",
       }}
     >
       <span>{tag.name}</span>

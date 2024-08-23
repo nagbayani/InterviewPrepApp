@@ -77,6 +77,7 @@ model Deck {
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
   thumbnail  String?  
+  description String?
 }
 
 
@@ -117,7 +118,7 @@ model CardTags {
   @@id([cardId, tagId])
 }
 
-// Mock Interviews -- Interview Template import Cards -- probably add template to match in CArds table
+// Mock Interviews -- Interview Template import Cards -- probably add template to match in Cards table
 model MockTemplate {
   id          String   @id @default(cuid())
   title       String

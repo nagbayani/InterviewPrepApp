@@ -16,7 +16,7 @@ export interface BubbleColorMenuItem {
 export const TEXT_COLORS: BubbleColorMenuItem[] = [
   {
     name: "Default",
-    color: "var(--novel-black)",
+    color: "#09090b",
   },
   {
     name: "Purple",

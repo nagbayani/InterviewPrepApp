@@ -75,7 +75,8 @@ export default async function Layout({ children }: LayoutProps) {
 
   return (
     // <div className='dashboard-container'>
-    <div>
+    // <div>
+    <>
       <HydrateDashboard
         decks={decks}
         cards={cards}
@@ -83,6 +84,7 @@ export default async function Layout({ children }: LayoutProps) {
         mockTemplates={mockTemplates}
       ></HydrateDashboard>
       <DashboardLayout>{children}</DashboardLayout>
-    </div>
+    </>
+    // </div>
   );
 }

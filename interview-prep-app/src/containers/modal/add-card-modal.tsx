@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,24 +12,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LuPlus } from "react-icons/lu";
-import { CardData } from "@/types/data-types";
-import { useCardStore } from "@/_store/index";
+import { CardData, TagData, CardTagData } from "@/types/data-types";
+import { useCardStore, useTagStore } from "@/_store/index";
+import Tag from "@/components/card/Tag";
+import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
+
 interface AddCardModalProps {
   deckId: string;
 }
 
 export function AddCardModal({ deckId }: AddCardModalProps) {
   const [cardQuestion, setCardQuestion] = useState("");
+  const [selectedTags, setSelectedTags] = useState<TagData[]>([]);
+
   const { addCard } = useCardStore((state) => ({
     addCard: state.addCard,
   }));
 
+  const { addCardTag } = useTagStore((state) => ({
+    addCardTag: state.addCardTag,
+  }));
+
   const handleSave = async () => {
+    // Check if card question is empty, return if it is
     if (cardQuestion.trim() === "") {
       console.log("Card question is empty.");
       return;
     }
 
+    // Create new card
     try {
       const response = await fetch(`/api/cards`, {
         method: "POST",
@@ -47,16 +58,48 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
         const data = await response.json();
         const newCard: CardData = data.card;
 
-        // Add card to Zustand store
-        addCard(newCard);
+        // Create card-tag relationships
+        const cardTagPromises = selectedTags.map(async (tag) => {
+          const responseTag = await fetch(`/api/cards/tags/card-tag`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              cardId: newCard.id,
+              tagId: tag.id,
+            }),
+          });
+
+          const cardTag: CardTagData = await responseTag.json();
+          if (cardTag) {
+            // Update Zustand store with new card-tag relationship
+            console.log("CardTag added", cardTag);
+          }
+        });
+
+        const completedTags = await Promise.all(cardTagPromises);
+
+        if (completedTags) {
+          selectedTags.map((tag) => {
+            addCardTag({ cardId: newCard.id, tagId: tag.id });
+          });
+          // Add card to Zustand store
+          addCard(newCard);
+        }
 
         // Clear the form fields after submission
         setCardQuestion("");
+        setSelectedTags([]);
       }
     } catch (error) {
       console.error("Error adding card:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("Selected Tags:", selectedTags);
+  }, [selectedTags]);
 
   return (
     <Dialog>
@@ -66,18 +109,35 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
           Add Card
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='overflow-visible'>
         <DialogHeader>
-          <DialogTitle>Add Card</DialogTitle>
+          <DialogTitle>New Card</DialogTitle>
           <DialogDescription>Add a new card to the deck</DialogDescription>
         </DialogHeader>
-        <div className='grid items-center py-4'>
-          <Label htmlFor='card-question'>Question</Label>
-          <Input
-            id='card-question'
-            value={cardQuestion}
-            onChange={(e) => setCardQuestion(e.target.value)}
-          />
+        <div className='grid gap-2'>
+          <div>
+            <Label htmlFor='card-tag' className='my-1'>
+              Tags
+            </Label>
+            {/* Render selected tags here */}
+            <div className='flex flex-wrap gap-2 mb-2'>
+              {selectedTags.map((tag) => (
+                <Tag key={tag.id} tag={tag} />
+              ))}
+            </div>
+            {/* New Popover Menu for Tags */}
+            <AddCardTagsMenu onSelectTags={setSelectedTags} />
+          </div>
+          <div>
+            <Label htmlFor='card-question' className='my-1'>
+              Question
+            </Label>
+            <Input
+              id='card-question'
+              value={cardQuestion}
+              onChange={(e) => setCardQuestion(e.target.value)}
+            />
+          </div>
         </div>
         <Button onClick={handleSave}>Save Card</Button>
       </DialogContent>

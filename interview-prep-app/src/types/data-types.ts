@@ -1,5 +1,3 @@
-import { StringValidation } from "zod";
-
 export type CardData = {
   id: string;
   createdAt: string;
@@ -32,6 +30,7 @@ export interface DeckDataResponse {
     title: string;
     authorId: string;
     thumbnail: string | null;
+    description: string | null;
   };
   cards: {
     id: string;
@@ -48,14 +47,14 @@ export interface DeckDataResponse {
   cardTags: CardTagData[];
 }
 
-export interface DeckData {
+export type DeckData = {
   id: string;
   createdAt: string;
   updatedAt: string;
   title: string;
   thumbnail: string | null;
-  // authorId: string;
-}
+  description: string | null;
+};
 
 export type MockTemplateData = {
   id: string;

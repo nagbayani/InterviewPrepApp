@@ -68,6 +68,7 @@ export const useTagStore = create<TagState>((set) => ({
     }),
   addCardTag: (cardTag: CardTagData) =>
     set((state) => {
+      console.log("Adding card tag: ", cardTag);
       const newCardTags = { ...state.cardTags };
       if (!newCardTags[cardTag.cardId]) {
         newCardTags[cardTag.cardId] = {};
@@ -106,15 +107,20 @@ export const useCardStore = create<CardState>((set) => ({
    * @returns
    */
   updateCard: (cardId, data) =>
-    set((state) => ({
-      cards: {
-        ...state.cards,
-        [cardId]: {
-          ...state.cards[cardId],
-          ...data,
-        },
-      },
-    })),
+    set(
+      (state) => (
+        console.log("Updating card with ID: ", cardId),
+        {
+          cards: {
+            ...state.cards,
+            [cardId]: {
+              ...state.cards[cardId],
+              ...data,
+            },
+          },
+        }
+      )
+    ),
 
   /**
    * Adds a card to the store
@@ -122,12 +128,17 @@ export const useCardStore = create<CardState>((set) => ({
    * @returns
    */
   addCard: (card: CardData) =>
-    set((state) => ({
-      cards: {
-        ...state.cards,
-        [card.id]: card,
-      },
-    })),
+    set(
+      (state) => (
+        console.log("Adding card: ", card),
+        {
+          cards: {
+            ...state.cards,
+            [card.id]: card,
+          },
+        }
+      )
+    ),
 
   /**
    *  Sets all cards in the store
@@ -210,7 +221,7 @@ export const useDeckStore = create<DeckState>((set) => ({
           )
         : {}; // Return an empty object if decks is not an array
 
-      console.log("Setting new Decks: ", newDecks); // Log the new decks object
+      // console.log("Setting new Decks: ", newDecks); // Log the new decks object
 
       return {
         decks: newDecks,

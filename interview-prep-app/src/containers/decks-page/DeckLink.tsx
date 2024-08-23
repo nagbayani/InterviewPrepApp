@@ -3,23 +3,16 @@
 import React, { useState } from "react";
 import "../../styles/deck/deckLink.css";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown";
 import { CardInput } from "@/components/ui/cardinput";
 import { useDeckStore } from "@/_store";
+import DeckLinkMenu from "./DeckLinkMenu";
 
 interface DeckLinkProps {
   id: string;
   title: string;
   path: string;
   thumbnail: string;
+  description: string;
 }
 
 /**
@@ -27,7 +20,13 @@ interface DeckLinkProps {
  * @param param0
  * @returns
  */
-const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
+const DeckLink = ({
+  id,
+  title,
+  path,
+  thumbnail,
+  description,
+}: DeckLinkProps) => {
   const {
     decks: decksData,
     updateDeck,
@@ -117,6 +116,10 @@ const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
         pathname === path && "decklink-container"
       }`}
     >
+      <div
+        className='deck-preview mx-auto'
+        style={{ backgroundImage: thumbnail }}
+      ></div>
       <div className='w-full flex justify-between'>
         {titleEditing ? (
           <>
@@ -133,33 +136,13 @@ const DeckLink = ({ id, title, path, thumbnail }: DeckLinkProps) => {
           </>
         )}
 
-        <DropdownMenu>
-          <DropdownMenuTrigger className='w-8 h-8 bg-inherit px-0 py-0 hover:bg-gray-300 text-white font-bold rounded-lg transition-colors duration-300 ease-in-out flex items-center justify-center'>
-            <Ellipsis size={20} className='text-black' />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent sideOffset={5}>
-            <Link href={path}>
-              <DropdownMenuItem onSelect={() => console.log("Opened")}>
-                Open
-              </DropdownMenuItem>
-            </Link>
-            <DropdownMenuItem onSelect={() => console.log("Send")}>
-              Send
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onSelect={handleDeleteDeck}
-              className='my-4 text-red-600'
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <DeckLinkMenu path={path} onDelete={handleDeleteDeck} />
       </div>
 
-      <div
-        className='deck-preview mx-auto'
-        style={{ backgroundImage: thumbnail }}
-      ></div>
+      <div className='decklink-description w-40 h-40'>
+        <p>{description}</p>
+        {/* last opened  */}
+      </div>
     </div>
   );
 };

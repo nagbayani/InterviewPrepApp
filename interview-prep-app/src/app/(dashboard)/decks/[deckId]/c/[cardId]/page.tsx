@@ -19,18 +19,18 @@ export default async function CardPage({ params: { cardId } }: Props) {
   );
 
   const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
-  const cardTags = await getCardTagsByCardId(cardId);
+  // const cardTags = await getCardTagsByCardId(cardId);
 
   // const allDecks = await fetchAllDecks(userSession.cookieHeader);
 
-  console.log(cardData, "CARD DATA IN CARD PAGE");
+  // console.log(cardData, "CARD DATA IN CARD PAGE");
 
   if (!cardData?.id) {
     return <h1 className='text-center'>No Data Found for that Card ID.</h1>;
   }
   return (
     <div className='mt-2 grid place-content-center'>
-      <CardDisplay card={cardData} userTags={userTags} cardTags={cardTags} />
+      <CardDisplay cardDb={cardData} userTags={userTags} />
     </div>
   );
 }

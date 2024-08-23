@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Popover,
   PopoverContent,
@@ -11,17 +12,34 @@ import TagsMenu from "./TagsMenu";
 interface OpenTagsMenuProps {
   tags: TagData[];
   cardId: string;
+  triggerElement?: React.ReactNode; // Optional trigger element
 }
 
-const TagsPopover = ({ tags, cardId }: OpenTagsMenuProps) => {
+const TagsPopover = ({ tags, cardId, triggerElement }: OpenTagsMenuProps) => {
+  const [isTriggerElementVisible, setIsTriggerElementVisible] = useState(
+    Boolean(triggerElement)
+  );
+
+  // console.log(isTriggerElementVisible, "isTriggerElementVisible");
+
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant='outline' size='sm'>
-          <LuPlus />
-        </Button>
+        {isTriggerElementVisible && triggerElement ? (
+          <div className='transition-transform transform-gpu hover:-translate-y-1 hover:shadow-lg'>
+            {triggerElement}
+          </div>
+        ) : (
+          <Button
+            variant='editTag'
+            size={"tag"}
+            onClick={() => setIsTriggerElementVisible(true)}
+          >
+            <LuPlus />
+          </Button>
+        )}
       </PopoverTrigger>
-      <PopoverContent className='pointer-events-auto w-80'>
+      <PopoverContent className='pointer-events-auto  w-80'>
         <TagsMenu tags={tags} cardId={cardId} />
       </PopoverContent>
     </Popover>

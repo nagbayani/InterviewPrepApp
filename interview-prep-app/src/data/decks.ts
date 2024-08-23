@@ -20,6 +20,8 @@ export const updateDeck = async (data: {
   title: string;
   authorId: string;
   deckId: string;
+  description: string | null;
+  thumbnail: string | null;
 }) => {
   console.log("UPDATE DECK DATA", data);
 
@@ -27,6 +29,8 @@ export const updateDeck = async (data: {
     where: { id: data.deckId },
     data: {
       title: data.title,
+      description: data.description,
+      thumbnail: data.thumbnail,
     },
   });
 

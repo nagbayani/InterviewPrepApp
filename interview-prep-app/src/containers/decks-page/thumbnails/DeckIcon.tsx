@@ -27,11 +27,10 @@ const DeckIcon: React.FC<DeckIconProps> = ({
     updateDeck: state.updateDeck,
   }));
 
-  console.log("Deck Icon", deckId, gradientStyle);
   // Function to get the gradient style
   const getGradientStyle = (gradientName: string) => {
     const gradient = gradients.find((g) => g.name === gradientName);
-    console.log("Gradient", gradient);
+    // console.log("Gradient", gradient);
     return gradient ? gradient.style : "none";
   };
 
