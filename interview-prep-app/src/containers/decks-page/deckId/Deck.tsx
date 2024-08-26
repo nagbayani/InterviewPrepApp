@@ -48,9 +48,6 @@ const Deck = ({ deck }: DeckProps) => {
     updateDeck: state.updateDeck,
   }));
 
-  const [titleEditing, setTitleEdit] = useState(false);
-  const [titleValue, setTitleValue] = useState(deck.title);
-  const [lastNonEmptyTitle, setLastNonEmptyTitle] = useState(deck.title);
 
   const deckInStore = decksData[deck.id];
 
@@ -103,7 +100,7 @@ const Deck = ({ deck }: DeckProps) => {
         </Button>
         <AddCardModal deckId={deck.id} />
       </div>
-      <Card className='rounded-lg border-none w-full h-[100vh] overflow-y-visible bg-slate-600 '>
+      <Card className='rounded-lg border-none w-full h-[100vh] overflow-y-visible bg-slate-0 '>
         <CardContent>
           {/* <div className='flex flex-col items-center gap-8 mx-4 h-full'> */}
           <div className='cards-list'>
@@ -127,85 +124,3 @@ const Deck = ({ deck }: DeckProps) => {
 };
 
 export default Deck;
-
-{
-  /* <div className='deck-wrapper-header'>
-        Deck Icon
-        <DeckIcon
-          deckId={deck.id}
-          currentThumbnail={deckInStore.thumbnail}
-          gradientStyle={
-            deckInStore?.thumbnail ||
-            "linear-gradient(to right, #e66465, #9198e5)"
-          }
-        />
-        <div className='deck-title-wrap gap-2'>
-          {titleEditing ? (
-            <>
-              <CardInput
-                onBlur={handleInputBlur}
-                onChange={handleChange}
-                value={titleValue}
-                onKeyDown={handleKeyDown}
-              />
-            </>
-          ) : (
-            <>
-              <h1 onClick={() => setTitleEdit(true)}>{titleValue}</h1>
-            </>
-          )}
-          <div className='deck-description'>Description</div>
-        </div>
-      </div> */
-}
-
-// const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const { value } = e.target;
-//   setTitleValue(value);
-//   if (value.trim() !== "") {
-//     setLastNonEmptyTitle(value);
-//   }
-// };
-
-// const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-//   if (e.key === "Enter" || e.key === "Return") {
-//     e.preventDefault();
-//     handleInputBlur();
-//   }
-// };
-// const handleInputBlur = async () => {
-//   if (titleValue.trim() === "") {
-//     setTitleValue(lastNonEmptyTitle);
-//   } else {
-//     setLastNonEmptyTitle(titleValue);
-
-//     // Update the database
-//     try {
-//       console.log("Deck State", decksData[deck.id]);
-//       const response = await fetch(`/api/decks/${deck.id}`, {
-//         method: "PUT",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           deckId: deck.id,
-//           title: titleValue,
-//           decksData,
-//         }),
-//       });
-//       console.log("Current response.body", response.body);
-
-//       if (response.ok) {
-//         console.log("Title Updated in Database", deck.id, titleValue);
-//         updateDeck(deck.id, { title: titleValue });
-//       }
-//     } catch (error) {
-//       // Revert to the last known good state
-//       setTitleValue(deck.title);
-//       console.error(error);
-//       alert("Failed to update the title. Please try again.");
-//     }
-//   }
-
-//   setTitleEdit(false);
-// };

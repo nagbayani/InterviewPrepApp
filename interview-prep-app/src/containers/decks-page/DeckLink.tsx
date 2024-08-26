@@ -116,30 +116,20 @@ const DeckLink = ({
         pathname === path && "decklink-container"
       }`}
     >
-      <div
-        className='deck-preview mx-auto'
-        style={{ backgroundImage: thumbnail }}
-      ></div>
-      <div className='w-full flex justify-between'>
-        {titleEditing ? (
-          <>
-            <CardInput
-              onBlur={handleInputBlur}
-              onChange={handleChange}
-              value={titleValue}
-              onKeyDown={handleKeyDown}
-            />
-          </>
-        ) : (
-          <>
-            <span onClick={() => setTitleEdit(true)}>{titleValue}</span>
-          </>
-        )}
-
+      <div className='self-end'>
         <DeckLinkMenu path={path} onDelete={handleDeleteDeck} />
       </div>
+      <div className='flex gap-2 justify-between items-center'>
+        <div className='flex gap-2 items-center'>
+          <div
+            className='decklink-thumbnail'
+            style={{ backgroundImage: thumbnail }}
+          ></div>
+          <h1 id='decklink-title'>{title}</h1>
+        </div>
+      </div>
 
-      <div className='decklink-description w-40 h-40'>
+      <div className='decklink-description w-full h-full min-h-[100px]'>
         <p>{description}</p>
         {/* last opened  */}
       </div>
@@ -148,3 +138,20 @@ const DeckLink = ({
 };
 
 export default DeckLink;
+
+{
+  /* {titleEditing ? (
+  <>
+    <CardInput
+      onBlur={handleInputBlur}
+      onChange={handleChange}
+      value={titleValue}
+      onKeyDown={handleKeyDown}
+    />
+  </>
+) : (
+  <>
+    <span onClick={() => setTitleEdit(true)}>{titleValue}</span>
+  </>
+)} */
+}
