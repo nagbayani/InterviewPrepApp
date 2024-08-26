@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Send, Trash2 } from "lucide-react";
 
 import {
   Command,
@@ -62,14 +64,23 @@ const MoveCardMenu = ({
   cardId,
   deckId,
 }: Props) => {
+  const [menuState, setMenuState] = useState<"list" | "move">("list");
+
+  const handleBackToMenu = () => {
+    setMenuState("list");
+  };
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className='drop-trigger  w-[50%] bg-gray-300 hover:bg-slate-500  text-white font-bold transition-colors duration-300 ease-in-out flex items-center justify-center'>
+      <DropdownMenuTrigger className='drop-trigger  bg-gray-300 hover:bg-slate-500  text-white font-bold transition-colors duration-300 ease-in-out flex items-center justify-center'>
         <Ellipsis className='text-black' />
       </DropdownMenuTrigger>
-      <DropdownMenuContent sideOffset={5}>
+      <DropdownMenuContent sideOffset={5} className='gap-2'>
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Move to</DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger>
+            <Send size={12} />
+            <span className='p-2'>Send</span>
+          </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent sideOffset={5}>
               {/* Trigger a Dropdown Menu that shows all the decks,
@@ -80,18 +91,17 @@ const MoveCardMenu = ({
                 cardId={cardId}
                 onMoveCard={onMoveCard}
                 deckId={deckId}
+                onBack={handleBackToMenu}
               />
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
 
-        <DropdownMenuItem
-          onSelect={() => console.log("Delete")}
-          className='my-5 p-0'
-        >
-          <Button variant='destructive' onClick={handleDeleteCard}>
+        <DropdownMenuItem onSelect={() => console.log("Delete")} className=''>
+          <Trash2 size={12} color={"red"} />
+          <span className='text-red-500 p-2' onClick={handleDeleteCard}>
             Delete
-          </Button>
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

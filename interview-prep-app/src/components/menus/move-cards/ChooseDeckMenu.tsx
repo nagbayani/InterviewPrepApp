@@ -44,10 +44,12 @@ export function ChooseDeckMenu({
   cardId,
   onMoveCard,
   deckId,
+  onBack,
 }: {
   cardId: string;
   deckId: string;
   onMoveCard: (cardId: string, newDeckId: string, oldDeckId: string) => void;
+  onBack: () => void;
 }) {
   const {
     decks: decksData,
@@ -90,13 +92,13 @@ export function ChooseDeckMenu({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6 p-2'>
         <FormField
           control={form.control}
           name='deck'
           render={({ field }) => (
-            <FormItem className='flex flex-col'>
-              {/* <FormLabel>Language</FormLabel> */}
+            <FormItem className='flex flex-col h-[150px] p-4'>
+              <FormLabel className='my-2'>Select destination</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -104,19 +106,22 @@ export function ChooseDeckMenu({
                       variant='outline'
                       role='combobox'
                       className={cn(
-                        "w-[200px] justify-between",
+                        "w-[250px] justify-between text-left overflow-hidden",
                         !field.value && "text-muted-foreground"
                       )}
                     >
-                      {field.value
-                        ? decksArray.find((deck) => deck.title === field.value)
-                            ?.title
-                        : "Select Deck"}
+                      <span className='whitespace-nowrap overflow-hidden text-ellipsis max-w-[calc(100%-24px)]'>
+                        {field.value
+                          ? decksArray.find(
+                              (deck) => deck.title === field.value
+                            )?.title
+                          : "Select Deck"}
+                      </span>
                       <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className='w-[200px] p-0'>
+                <PopoverContent className='p-0'>
                   <Command>
                     <CommandInput placeholder='Search Decks...' />
                     <CommandEmpty>No Deck found. Create Deck...</CommandEmpty>
@@ -151,7 +156,9 @@ export function ChooseDeckMenu({
             </FormItem>
           )}
         />
-        <Button type='submit'>Move</Button>
+        <div className='flex justify-end mr-4'>
+          <Button type='submit'>Move</Button>
+        </div>
       </form>
     </Form>
   );

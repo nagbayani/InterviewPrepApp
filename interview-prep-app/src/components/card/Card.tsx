@@ -78,7 +78,19 @@ export const DeckCard = ({
       <div className='flex flex-col justify-between w-full'>
         <div className='flex flex-col'>
           <div className='flex-1 p-2'>
-            {index}
+            <div className='flex justify-between'>
+              {index}
+
+              <div className='self-end'>
+                <MoveCardMenu
+                  handleDeleteCard={handleDeleteCard}
+                  user={card.authorId}
+                  cardId={card.id}
+                  deckId={deckId}
+                  onMoveCard={onMoveCard}
+                />
+              </div>
+            </div>
 
             {/* Tags + Card Question */}
             <div className='flex-col px-2'>
@@ -91,22 +103,14 @@ export const DeckCard = ({
             </div>
           </div>
         </div>
-        <div className='flex'>
-          <MoveCardMenu
-            handleDeleteCard={handleDeleteCard}
-            user={card.authorId}
-            cardId={card.id}
-            deckId={deckId}
-            onMoveCard={onMoveCard}
-          />
-          <Button
-            variant='editCard'
-            onClick={handleOpenModal}
-            className=' w-[50%]'
-          >
-            <PenLine size={12} />
-          </Button>
-        </div>
+        <Button
+          variant='editCard'
+          onClick={handleOpenModal}
+          className=' w-full'
+        >
+          <span className='px-2'>Write your answer</span>
+          <PenLine size={12} />
+        </Button>
       </div>
     </div>
   );

@@ -76,7 +76,7 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
         {/* Add Deck Button Menu */}
         <AddDeckModal />
       </div>
-      <ul className='decks-list h-[100vh] gap-4'>
+      <ul className='decks-list gap-4 p-16'>
         {/* <li className='add-wrapper'></li> */}
         {Object.values(decksData)
           .reverse()
