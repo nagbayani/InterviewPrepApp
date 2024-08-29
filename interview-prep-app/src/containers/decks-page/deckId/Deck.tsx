@@ -48,7 +48,6 @@ const Deck = ({ deck }: DeckProps) => {
     updateDeck: state.updateDeck,
   }));
 
-
   const deckInStore = decksData[deck.id];
 
   const handleCardUpdate = (cardId: string, newDeckId: string) => {
@@ -79,7 +78,7 @@ const Deck = ({ deck }: DeckProps) => {
   const [thumbnail, setThumbnail] = useState(deckInStore?.thumbnail || "");
 
   return (
-    <section className='deck-wrapper-container overflow-visible'>
+    <section className='deck-wrapper-container '>
       <EditDeckMenu
         deckId={deck.id}
         title={title}
@@ -100,7 +99,7 @@ const Deck = ({ deck }: DeckProps) => {
         </Button>
         <AddCardModal deckId={deck.id} />
       </div>
-      <Card className='rounded-lg border-none w-full h-[100vh] overflow-y-visible bg-slate-0 '>
+      <Card className='rounded-lg border-none w-full h-[100vh]  bg-slate-0 '>
         <CardContent>
           {/* <div className='flex flex-col items-center gap-8 mx-4 h-full'> */}
           <div className='cards-list'>

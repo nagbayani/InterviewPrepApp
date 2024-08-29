@@ -1,0 +1,29 @@
+.interview-wrapper-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  flex-shrink: 1;
+  width: 100%;
+}
+
+.interviews-list {
+  display: grid;
+  width: 100%;
+  grid-auto-columns: 1fr;
+  grid-column-gap: 1.5em;
+  grid-row-gap: 1.5em;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+}
+
+@media (max-width: 768px) {
+  .interviews-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .interviews-list {
+    grid-template-columns: 1fr;
+  }
+}

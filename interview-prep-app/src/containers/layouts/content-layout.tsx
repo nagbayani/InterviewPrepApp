@@ -14,7 +14,7 @@ export function ContentLayout({ title, children }: ContentLayoutProps) {
     // <div>
     <>
       <Navbar />
-      <div className='content-container overflow-scroll h-[100vh] pt-8 pb-8 px-4 sm:px-8'>
+      <div className='content-container h-[100vh] pt-8 pb-8 px-4 sm:px-8'>
         {children}
       </div>
     </>

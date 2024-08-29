@@ -67,3 +67,13 @@ export type MockTemplateCardData = {
   cardId: string;
   templateId: string;
 };
+
+export interface InterviewData {
+  id: string;
+  company: string;
+  jobPosition: string;
+  expectedSalary?: string;
+  jobDescription?: string;
+  createdAt: string;
+  updatedAt: string;
+}

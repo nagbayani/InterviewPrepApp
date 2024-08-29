@@ -77,7 +77,12 @@ export function Menu({ isOpen }: MenuProps) {
                           <TooltipTrigger asChild>
                             <Button
                               variant={active ? "secondary" : "ghost"}
-                              className='w-full justify-start h-10 mb-1'
+                              className={cn(
+                                "h-10 mb-1",
+                                isOpen
+                                  ? "w-full justify-start"
+                                  : "w-full flex justify-center items-center"
+                              )}
                               asChild
                             >
                               <Link href={href}>
@@ -88,21 +93,21 @@ export function Menu({ isOpen }: MenuProps) {
                                       (Else) Dynamic menus [DeckId - Deck links] have thumbnails
                                    */}
                                   {Icon ? (
-                                    <Icon size={18} />
+                                    <Icon size={18} className='mx-auto' />
                                   ) : thumbnailStyle ? (
                                     <Thumbnail gradientStyle={thumbnailStyle} />
                                   ) : null}
                                 </span>
-                                <p
-                                  className={cn(
-                                    "max-w-[200px] truncate",
-                                    isOpen === false
-                                      ? "-translate-x-96 opacity-0"
-                                      : "translate-x-0 opacity-100"
-                                  )}
-                                >
-                                  {label}
-                                </p>
+                                {isOpen && (
+                                  <p
+                                    className={cn(
+                                      "max-w-[200px] truncate",
+                                      "translate-x-0 opacity-100"
+                                    )}
+                                  >
+                                    {label}
+                                  </p>
+                                )}
                               </Link>
                             </Button>
                           </TooltipTrigger>
