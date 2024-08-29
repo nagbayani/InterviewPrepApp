@@ -56,7 +56,7 @@ export type DeckData = {
   description: string | null;
 };
 
-export type MockTemplateData = {
+export interface MockTemplateData {
   id: string;
   title: string;
   description: string;
