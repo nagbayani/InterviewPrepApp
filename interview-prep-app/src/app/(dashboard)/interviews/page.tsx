@@ -37,7 +37,7 @@ const InterviewsPage = async () => {
 
     return (
       <ContentLayout title={"Interviews"}>
-        <InterviewsWrapper interviews={[]} />
+        <InterviewsWrapper interviews={data.interviews} />
       </ContentLayout>
     );
   }

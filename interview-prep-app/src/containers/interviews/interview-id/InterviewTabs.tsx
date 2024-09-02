@@ -1,19 +1,28 @@
 import React, { useState } from "react";
 import "../../../styles/interviews/interview-tabs.css";
+import AddMockMenu from "@/containers/modal/interviews/add-mock-modal";
+import { InterviewData } from "@/types/data-types";
+
 interface InterviewTabsProps {
   jobDetails: React.ReactNode;
-  mockTemplates: { id: string; title: string; content: React.ReactNode }[];
+  mockTemplates:
+    | { id: string; title: string; content: React.ReactNode }[]
+    | null;
   onAddTemplate: () => void;
+  interview: InterviewData;
 }
 
 const InterviewTabs = ({
   jobDetails,
   mockTemplates,
   onAddTemplate,
+  interview,
 }: InterviewTabsProps) => {
   const [activeTab, setActiveTab] = useState(0);
 
+  // need to import Job Deatails
   const handleTabClick = (index: number) => {
+    console.log("Tab clicked: ", index);
     setActiveTab(index);
   };
 
@@ -26,7 +35,7 @@ const InterviewTabs = ({
         >
           Job Details
         </button>
-        {mockTemplates.map((template, index) => (
+        {mockTemplates?.map((template, index) => (
           <button
             key={template.id}
             className={`tab ${activeTab === index + 1 ? "active" : ""}`}
@@ -35,12 +44,19 @@ const InterviewTabs = ({
             {template.title}
           </button>
         ))}
-        <button className='tab add-template' onClick={onAddTemplate}>
-          + Add Template
-        </button>
+        {/* <button className='tab add-template' onClick={onAddTemplate}>
+          + Mock Interview
+        </button> */}
+        <AddMockMenu company={interview.company} />
       </div>
       <div className='tab-content'>
-        {activeTab === 0 ? jobDetails : mockTemplates[activeTab - 1]?.content}
+        {activeTab === 0 ? (
+          jobDetails
+        ) : mockTemplates && mockTemplates.length > 0 ? (
+          mockTemplates[activeTab - 1]?.content
+        ) : (
+          <div>No mock templates available.</div>
+        )}
       </div>
     </div>
   );

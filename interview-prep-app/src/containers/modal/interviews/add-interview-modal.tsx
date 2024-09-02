@@ -17,7 +17,7 @@ import { InterviewData } from "@/types/data-types";
 import { useInterviewStore } from "@/_store/interviews-store";
 
 export function AddInterviewModal() {
-  const [jobTitle, setJobTitle] = useState("");
+  const [company, setCompanyTitle] = useState("");
   const [jobPosition, setJobPosition] = useState("");
   const [expectedSalary, setExpectedSalary] = useState("");
   const [jobDescription, setJobDescription] = useState("");
@@ -26,7 +26,7 @@ export function AddInterviewModal() {
   }));
 
   const handleSave = async () => {
-    if (jobTitle.trim() === "" || jobPosition.trim() === "") {
+    if (company.trim() === "" || jobPosition.trim() === "") {
       console.log("Job title or position is empty.");
       return;
     }
@@ -38,7 +38,7 @@ export function AddInterviewModal() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          jobTitle,
+          company,
           jobPosition,
           expectedSalary,
           jobDescription,
@@ -48,12 +48,13 @@ export function AddInterviewModal() {
       if (response.ok) {
         const data = await response.json();
         const newInterview: InterviewData = data.interview;
+        console.log("New interview:", newInterview);
 
         // Add interview to Zustand store
         addInterview(newInterview);
 
         // Clear the form fields after submission
-        setJobTitle("");
+        setCompanyTitle("");
         setJobPosition("");
         setExpectedSalary("");
         setJobDescription("");
@@ -83,8 +84,8 @@ export function AddInterviewModal() {
             <Input
               id='job-title'
               className='col-span-3'
-              value={jobTitle}
-              onChange={(e) => setJobTitle(e.target.value)}
+              value={company}
+              onChange={(e) => setCompanyTitle(e.target.value)}
             />
           </div>
           <div className='grid w-full gap-1.5'>

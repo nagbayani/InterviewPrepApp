@@ -155,3 +155,27 @@ export const fetchSingleMockTemplate = async (
     console.log(error, "Something Went Wrong retrieving the mock template.");
   }
 };
+
+export const fetchSingleInterview = async (
+  interviewId: string,
+  cookieHeader: string
+) => {
+  try {
+    const res = await fetch(
+      `${process.env.AUTH_URL}/api/interviews/${interviewId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieHeader,
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(
+      error,
+      "Something went wrong with retrieving the interview template"
+    );
+  }
+};

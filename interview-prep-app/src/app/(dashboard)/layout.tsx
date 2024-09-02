@@ -45,8 +45,9 @@ const authCheck = async () => {
     // const cards = cardsDb.cards;
     const tags = tagsDb.tags;
     const mockTemplates = mockTemplatesDb.mockTemplates;
-    console.log("DECKS in Layout", decks);
-    console.log("TAGS in Layout", tags);
+    // console.log("DECKS in Layout", decks);
+    // console.log("TAGS in Layout", tags);
+    // console.log("CARDS in Layout", cardsDb);
 
     // add cards
     // add mock templates

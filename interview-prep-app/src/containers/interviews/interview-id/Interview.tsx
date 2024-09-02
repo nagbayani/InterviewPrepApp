@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import InterviewTabs from "./InterviewTabs";
 import JobDetailsForm from "./JobDetailsForm"; // Create this component
@@ -5,10 +6,10 @@ import MockTemplate from "./MockTemplate"; // Create this component for each moc
 import { InterviewData, MockTemplateData } from "@/types/data-types";
 interface InterviewPageProps {
   interview: InterviewData;
-  mockTemplates: MockTemplateData[];
+  mockTemplates: MockTemplateData[] | null;
 }
 
-const InterviewPage = ({ interview, mockTemplates }: InterviewPageProps) => {
+const Interview = ({ interview, mockTemplates }: InterviewPageProps) => {
   const handleAddTemplate = () => {
     console.log("Add a new mock interview template");
     // Logic to add a new mock template
@@ -18,15 +19,20 @@ const InterviewPage = ({ interview, mockTemplates }: InterviewPageProps) => {
     <div className='interview-page-container'>
       <InterviewTabs
         jobDetails={<JobDetailsForm interview={interview} />}
-        mockTemplates={mockTemplates.map((template) => ({
-          id: template.id,
-          title: template.title,
-          content: <MockTemplate template={template} />,
-        }))}
+        mockTemplates={
+          mockTemplates
+            ? mockTemplates.map((template) => ({
+                id: template.id,
+                title: template.title,
+                content: <MockTemplate template={template} />,
+              }))
+            : null
+        }
         onAddTemplate={handleAddTemplate}
+        interview={interview}
       />
     </div>
   );
 };
 
-export default InterviewPage;
+export default Interview;

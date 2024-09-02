@@ -18,9 +18,12 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+.tab:hover {
+  background-color: red;
+}
 
 .tab.active {
-  background-color: #fff;
+  background-color: red;
   border-bottom: 1px solid transparent;
 }
 

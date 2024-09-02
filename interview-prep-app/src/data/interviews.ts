@@ -4,9 +4,9 @@ import prisma from "@/lib/db";
 export const getInterviewsByUserId = async (userId: string) => {
   const interviews = await prisma.interview.findMany({
     where: { userId },
-    include: {
-      mockTemplates: true, // Include related mock templates if needed
-    },
+    // include: {
+    //   mockTemplates: true, // Include related mock templates if needed
+    // },
   });
 
   return interviews;
@@ -16,11 +16,10 @@ export const getInterviewsByUserId = async (userId: string) => {
 export const getInterviewById = async (interviewId: string) => {
   const interview = await prisma.interview.findUnique({
     where: { id: interviewId },
-    include: {
-      mockTemplates: true, // Include related mock templates if needed
-    },
+    // include: {
+    //   mockTemplates: true, // Include related mock templates if needed
+    // },
   });
-
   return interview;
 };
 
@@ -72,6 +71,7 @@ export const createInterview = async (data: {
   jobDescription?: string | null;
   userId: string;
 }) => {
+  console.log("CREATE INTERVIEW DATA", data);
   const interview = await prisma.interview.create({
     data: {
       company: data.company,
@@ -85,6 +85,8 @@ export const createInterview = async (data: {
   if (interview) {
     console.log("Interview created in database");
   }
+
+  console.log("CREATE INTERVIEW DATA", interview);
 
   return interview;
 };

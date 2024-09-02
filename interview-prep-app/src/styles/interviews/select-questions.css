@@ -1,0 +1,22 @@
+.select-questions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.decks-view,
+.deck-cards-view {
+  padding: 1rem;
+}
+
+.decks-list,
+.cards-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.decks-list li,
+.cards-list li {
+  margin-bottom: 0.5rem;
+}

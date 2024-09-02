@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown";
-import { AddInterviewModal } from "../modal/add-interview-modal";
+import { AddInterviewModal } from "../modal/interviews/add-interview-modal";
 
 interface Props {
   interviews: InterviewData[];

@@ -51,6 +51,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       jobDescription,
       userId: user.session?.user.id ?? "",
     });
+    console.log("API Interview Created:", interview);
 
     return NextResponse.json({
       message: `Interview created`,
