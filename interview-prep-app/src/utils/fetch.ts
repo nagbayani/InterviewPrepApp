@@ -127,7 +127,7 @@ export const fetchAllMockTemplates = async (cookieHeader: string) => {
       },
     });
     const data = await res.json();
-    // console.log("In Page, MockTemplates Data: ", data);
+    console.log("In Page, MockTemplates Data: ", data);
     return data;
   } catch (error) {
     console.log(error, "Something Went Wrong retrieving MockTemplates.");
@@ -156,6 +156,22 @@ export const fetchSingleMockTemplate = async (
   }
 };
 
+export const fetchAllInterviews = async (cookieHeader: string) => {
+  try {
+    const res = await fetch(`${process.env.AUTH_URL}/api/interviews`, {
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieHeader,
+      },
+    });
+    const data = await res.json();
+    // console.log("In Page, Interviews Data: ", data);
+    return data;
+  } catch (error) {
+    console.log(error, "Something Went Wrong retrieving Interviews.");
+  }
+};
+
 export const fetchSingleInterview = async (
   interviewId: string,
   cookieHeader: string
@@ -177,5 +193,45 @@ export const fetchSingleInterview = async (
       error,
       "Something went wrong with retrieving the interview template"
     );
+  }
+};
+
+type MockTemplateResponse = {
+  message: string;
+  status: number;
+  template: {
+    id: string;
+    title: string;
+    description: string;
+    type: string;
+    interviewId: string;
+    authorId: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
+
+export const postMockTemplate = async (
+  title: string,
+  type: string,
+  description: string,
+  interviewId: string
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/mock-templates`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, type, description, interviewId }),
+      }
+    );
+    const data: MockTemplateResponse = await response.json();
+    console.log("Post Mock Template Data: ", data);
+    return data;
+  } catch {
+    console.log("Error creating mock template");
   }
 };

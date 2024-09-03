@@ -2,12 +2,15 @@
 import { useEffect } from "react";
 import { useDeckStore, useCardStore, useTagStore } from "@/_store";
 import { useMockTemplateStore } from "./mock-store";
+import { useInterviewStore } from "./interviews-store";
 import {
   DeckData,
   CardData,
   TagData,
   MockTemplateData,
+  InterviewData,
 } from "@/types/data-types";
+import { set } from "zod";
 
 /**
  * Hydrate dashboard layout with:
@@ -22,6 +25,7 @@ interface HydrateDashboardProps {
   cards: CardData[];
   tags: TagData[];
   mockTemplates: MockTemplateData[];
+  interviews: InterviewData[];
 }
 
 const HydrateDashboard = ({
@@ -29,8 +33,15 @@ const HydrateDashboard = ({
   cards,
   tags,
   mockTemplates,
+  interviews,
 }: HydrateDashboardProps) => {
   // const setDecks = useDeckStore((state) => state.setDecks);
+  const { interviews: interviewsData, setInterviews } = useInterviewStore(
+    (state) => ({
+      interviews: state.interviews,
+      setInterviews: state.setInterviews,
+    })
+  );
   const { decks: decksData, setDecks } = useDeckStore((state) => ({
     decks: state.decks,
     addDeck: state.addDeck,
@@ -58,15 +69,18 @@ const HydrateDashboard = ({
     setCards(cards);
     setTags(tags);
     setMockTemplates(mockTemplates);
+    setInterviews(interviews);
   }, [
     decks,
     cards,
     tags,
     mockTemplates,
+    interviews,
     setDecks,
     setCards,
     setTags,
     setMockTemplates,
+    setInterviews,
   ]);
 
   // useEffect(() => {

@@ -23,6 +23,8 @@ const InterviewPage = async ({
     userSession.cookieHeader
   );
   const { interview } = response;
+  console.log("INTERVIEW PAGE: ", interview);
+  // console.log("MOCK TEMPLATES: ", interview.mockTemplates);
 
   // retrieve single interview
   // retrieve mock templates

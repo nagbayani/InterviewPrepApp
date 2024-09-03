@@ -9,6 +9,7 @@ import {
   fetchAllCards,
   fetchAllTags,
   fetchAllMockTemplates,
+  fetchAllInterviews,
 } from "@/utils/fetch";
 import { cookies } from "next/headers";
 import { useDeckStore, useCardStore } from "@/_store";
@@ -40,14 +41,18 @@ const authCheck = async () => {
     const cardsDb = await fetchAllCards(cookieHeader);
     const tagsDb = await fetchAllTags(cookieHeader);
     const mockTemplatesDb = await fetchAllMockTemplates(cookieHeader);
+    const interviewDb = await fetchAllInterviews(cookieHeader);
 
     const decks = decksDb.decks;
     // const cards = cardsDb.cards;
     const tags = tagsDb.tags;
-    const mockTemplates = mockTemplatesDb.mockTemplates;
+    const mockTemplates = mockTemplatesDb.templates;
+    const interviews = interviewDb.interviews;
     // console.log("DECKS in Layout", decks);
     // console.log("TAGS in Layout", tags);
     // console.log("CARDS in Layout", cardsDb);
+
+    console.log("MOCK TEMPLATES in Layout", mockTemplates);
 
     // add cards
     // add mock templates
@@ -58,6 +63,7 @@ const authCheck = async () => {
       cards: cardsDb,
       tags,
       mockTemplates,
+      interviews,
     };
     return userData;
   }
@@ -70,9 +76,10 @@ export default async function Layout({ children }: LayoutProps) {
   const cards = data?.cards ?? [];
   const tags = data?.tags ?? [];
   const mockTemplates = data?.mockTemplates ?? [];
+  const interviews = data?.interviews ?? [];
   // const decks = data?.decksData.decks;
   // const user = data?.session?.user;
-  console.log("DECKS in Layout", decks);
+  // console.log("DECKS in Layout", decks);
 
   return (
     // <div className='dashboard-container'>
@@ -83,6 +90,7 @@ export default async function Layout({ children }: LayoutProps) {
         cards={cards}
         tags={tags}
         mockTemplates={mockTemplates}
+        interviews={interviews}
       ></HydrateDashboard>
       <DashboardLayout>{children}</DashboardLayout>
     </>

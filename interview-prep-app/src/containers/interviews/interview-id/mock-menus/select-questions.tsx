@@ -3,13 +3,20 @@ import { useDeckStore } from "@/_store/index";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DeckData, CardData } from "@/types/data-types";
-import "../../../styles/interviews/select-questions.css";
+import "../../../../styles/interviews/select-questions.css";
 
-const SelectQuestions = () => {
+interface SelectQuestionsProps {
+  selectedCardsByDeck: Record<string, Record<string, boolean>>;
+  setSelectedCardsByDeck: React.Dispatch<
+    React.SetStateAction<Record<string, Record<string, boolean>>>
+  >;
+}
+
+const SelectQuestions = ({
+  selectedCardsByDeck,
+  setSelectedCardsByDeck,
+}: SelectQuestionsProps) => {
   const [selectedDeck, setSelectedDeck] = useState<DeckData | null>(null);
-  const [selectedCardsByDeck, setSelectedCardsByDeck] = useState<
-    Record<string, Record<string, boolean>>
-  >({});
 
   const { decks } = useDeckStore((state) => ({
     decks: state.decks,

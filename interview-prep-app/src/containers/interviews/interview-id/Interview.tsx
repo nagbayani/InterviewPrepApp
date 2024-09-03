@@ -14,6 +14,8 @@ const Interview = ({ interview, mockTemplates }: InterviewPageProps) => {
     console.log("Add a new mock interview template");
     // Logic to add a new mock template
   };
+  console.log("INTERVIEW: ", interview);
+  // console.log("MOCK TEMPLATES: ", mockTemplates);
 
   return (
     <div className='interview-page-container'>

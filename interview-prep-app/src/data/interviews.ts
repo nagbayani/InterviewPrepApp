@@ -16,9 +16,9 @@ export const getInterviewsByUserId = async (userId: string) => {
 export const getInterviewById = async (interviewId: string) => {
   const interview = await prisma.interview.findUnique({
     where: { id: interviewId },
-    // include: {
-    //   mockTemplates: true, // Include related mock templates if needed
-    // },
+    include: {
+      mockTemplates: true, // Include related mock templates if needed
+    },
   });
   return interview;
 };

@@ -12,15 +12,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SelectMockType from "./select-mock-type";
+import { postMockTemplate } from "@/utils/fetch";
+import { useMockTemplateStore } from "@/_store/mock-store";
 
 interface AddMockMenuProps {
   company: string;
+  interviewId: string;
 }
 
-const AddMockMenu = ({ company }: AddMockMenuProps) => {
+const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
   const [mockTitle, setMockTitle] = useState("");
   const [selectedMockType, setSelectedMockType] = useState("");
   const [selectedDescription, setSelectedDescription] = useState("");
+
+  const { mockTemplates: mockTemplateData, addMockTemplate } =
+    useMockTemplateStore((state) => ({
+      mockTemplates: state.mockTemplates,
+      addMockTemplate: state.addMockTemplate,
+    }));
 
   useEffect(() => {
     if (selectedMockType) {
@@ -28,12 +37,31 @@ const AddMockMenu = ({ company }: AddMockMenuProps) => {
     }
   }, [selectedMockType, company]);
 
-  const handleAddMock = () => {
-    console.log("Mock Interview Added:", {
-      title: mockTitle,
-      description: selectedDescription,
-      type: selectedMockType,
-    });
+  const handleAddMock = async () => {
+    try {
+      const response = await postMockTemplate(
+        mockTitle,
+        selectedMockType,
+        selectedDescription,
+        interviewId
+      );
+
+      if (response?.status === 200) {
+        console.log("Mock Interview Added:", {
+          title: mockTitle,
+          description: selectedDescription,
+          type: selectedMockType,
+        });
+
+        console.log("Mock Interview Added:", response.template);
+      }
+    } catch (error) {
+      console.log(
+        error,
+        "Something went wrong with adding the mock interview."
+      );
+    }
+
     setMockTitle("");
     setSelectedMockType("");
     setSelectedDescription("");
@@ -63,6 +91,16 @@ const AddMockMenu = ({ company }: AddMockMenuProps) => {
         </DialogHeader>
         <div className='grid gap-4 py-4'>
           <div>
+            <label htmlFor='mock-type' className='block text-sm font-medium'>
+              Interview Type
+            </label>
+            <SelectMockType
+              onTypeChange={setSelectedMockType}
+              onDescriptionChange={setSelectedDescription}
+              value={selectedMockType}
+            />
+          </div>
+          <div>
             <label htmlFor='mock-title' className='block text-sm font-medium'>
               Mock Interview Title
             </label>
@@ -71,16 +109,6 @@ const AddMockMenu = ({ company }: AddMockMenuProps) => {
               placeholder='Enter the mock interview title'
               value={mockTitle}
               onChange={(e) => setMockTitle(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor='mock-type' className='block text-sm font-medium'>
-              Interview Type
-            </label>
-            <SelectMockType
-              onTypeChange={setSelectedMockType}
-              onDescriptionChange={setSelectedDescription}
-              value={selectedMockType}
             />
           </div>
           <div>

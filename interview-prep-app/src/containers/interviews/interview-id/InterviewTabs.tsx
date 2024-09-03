@@ -47,7 +47,7 @@ const InterviewTabs = ({
         {/* <button className='tab add-template' onClick={onAddTemplate}>
           + Mock Interview
         </button> */}
-        <AddMockMenu company={interview.company} />
+        <AddMockMenu interviewId={interview.id} company={interview.company} />
       </div>
       <div className='tab-content'>
         {activeTab === 0 ? (
