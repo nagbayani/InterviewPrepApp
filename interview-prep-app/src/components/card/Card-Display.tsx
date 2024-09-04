@@ -18,7 +18,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
-import "@/styles/cardForm.css";
+import "../../styles/cardForm.css";
 import { useCardStore } from "@/_store/index";
 
 import TagsPopover from "../menus/card-tags/TagsPopover";

@@ -9,7 +9,10 @@ interface ThumbnailProps {
  */
 const Thumbnail: React.FC<ThumbnailProps> = ({ gradientStyle }) => {
   return (
-    <div className='w-8 h-8 rounded-sm' style={{ background: gradientStyle }} />
+    <div
+      className='w-8 h-8 rounded-sm mx-auto'
+      style={{ background: gradientStyle }}
+    />
   );
 };
 

@@ -35,6 +35,12 @@ export const TipTapEditor = ({
     initialValue
   );
 
+  const [editorInitialized, setEditorInitialized] = useState(false);
+
+  useEffect(() => {
+    setEditorInitialized(true);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "s") {
@@ -74,6 +80,7 @@ export const TipTapEditor = ({
       onTextChange(editor.getText());
       setSaveStatus("Unsaved");
     },
+
     // onUpdate: debounce(({ editor: e }) => {
     //   logContent(e);
     // }, 500),
@@ -90,8 +97,6 @@ export const TipTapEditor = ({
 
   return (
     editor && (
-      // <section className='flex flex-col gap-4 w-full border-red-600 border-2 justify-center'>
-      //   </section>
       <>
         <EditorContent
           className='w-full flex justify-center min-h-[500px] max-h-[500px] border-black border-2 scrollbar-thin scrollbar-thumb-rounded overflow-y-scroll'

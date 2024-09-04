@@ -27,6 +27,8 @@ model User {
   cards     Card[]
   tags      Tag[]
   mockTemplates MockTemplate[] 
+  interviews Interview[] 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   accounts  Account[]
@@ -123,11 +125,15 @@ model MockTemplate {
   id          String   @id @default(cuid())
   title       String
   description String?
+  type       String
   author      User     @relation(fields: [authorId], references: [id])
   authorId    String
   cards       MockTemplateCard[]  // Many-to-many relationship with cards through MockTemplateCard
+  interview    Interview  @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  interviewId  String     
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
 }
 
 model MockTemplateCard {
@@ -137,3 +143,18 @@ model MockTemplateCard {
   card       Card         @relation(fields: [cardId], references: [id], onDelete: Cascade)
   @@id([templateId, cardId]) // Composite primary key to ensure unique pairing
 }
+
+model Interview {
+  id             String        @id @default(cuid())
+  company       String
+  jobPosition    String
+  expectedSalary String?
+  jobDescription String?
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  mockTemplates  MockTemplate[] // One-to-many relation with MockTemplate
+  mockTemplateId String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+

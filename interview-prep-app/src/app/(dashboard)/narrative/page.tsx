@@ -2,9 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
-import { auth } from "../../../../../auth";
+import { auth } from "../../../../auth";
 
-const JobRoles = async () => {
+const Narrative = async () => {
   const session = await auth();
   if (!session) {
     return redirect("/login");
@@ -14,7 +14,7 @@ const JobRoles = async () => {
     return (
       <div className='dashboard-wrapper p-8 '>
         <h1 className='ml-[0] '></h1>
-        <h1 style={{ fontSize: "var(--step-1)" }}>Job Roles</h1>
+        <h1 style={{ fontSize: "var(--step-1)" }}>Narrative</h1>
       </div>
     );
   }
@@ -28,4 +28,4 @@ const JobRoles = async () => {
   );
 };
 
-export default JobRoles;
+export default Narrative;

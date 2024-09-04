@@ -36,15 +36,16 @@ export async function GET(
 export async function PUT(req: NextRequest, res: NextResponse) {
   const user = await currentUser();
 
-  const { mockId, title, description, cardIds } = (await req.json()) as {
+  const { mockId, title, type, description, cardIds } = (await req.json()) as {
     mockId: string;
     title: string;
+    type: string;
     description?: string;
     cardIds: string[]; // Array of card IDs to be added to the template
   };
 
   // Update the Mock Template metadata (title, description)
-  const data = { templateId: mockId, title, description };
+  const data = { mockId, title, type, description };
 
   try {
     const updatedTemplate = await updateMockTemplate(data);

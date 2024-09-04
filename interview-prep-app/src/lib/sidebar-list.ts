@@ -6,7 +6,11 @@ import {
   SquarePen,
   LayoutGrid,
   LucideIcon,
+  BookDown,
+  SquareUserIcon,
+  CalendarCheck,
 } from "lucide-react";
+
 import { DeckData } from "@/types/data-types";
 import gradients from "./colors/thumbnail-gradients";
 
@@ -50,6 +54,30 @@ export function getMenuList(
       groupLabel: "",
       menus: [
         {
+          href: "/starter-packs",
+          label: "Starter Packs",
+          active: pathname.includes("/starter-packs"),
+          icon: BookDown,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/narrative",
+          label: "Resume & Narrative",
+          active: pathname.includes("/narrative"),
+          icon: SquareUserIcon,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "",
+      menus: [
+        {
           href: "/decks",
           label: "Decks",
           active: pathname.includes("/decks"),
@@ -65,19 +93,8 @@ export function getMenuList(
           href: "/interviews",
           label: "Interviews",
           active: pathname.includes("/interviews"),
-          icon: Bookmark,
-          submenus: [
-            {
-              href: "/interviews/mock-templates",
-              label: "Mock Templates",
-              active: pathname.includes("/interviews/mock-templates"),
-            },
-            {
-              href: "/interviews/job-roles", // Or whatever name you prefer
-              label: "Job Positions",
-              active: pathname.includes("/interviews/job-roles"),
-            },
-          ],
+          icon: CalendarCheck,
+          submenus: [],
         },
       ],
     },

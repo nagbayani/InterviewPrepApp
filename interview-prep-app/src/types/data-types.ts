@@ -54,16 +54,30 @@ export type DeckData = {
   title: string;
   thumbnail: string | null;
   description: string | null;
+  cards: CardData[];
 };
 
-export type MockTemplateData = {
+export interface MockTemplateData {
   id: string;
   title: string;
   description: string;
+  type: string;
   cards: MockTemplateCardData[];
-};
+  interviewId: string;
+}
 
 export type MockTemplateCardData = {
   cardId: string;
   templateId: string;
 };
+
+export interface InterviewData {
+  id: string;
+  company: string;
+  jobPosition: string;
+  expectedSalary?: string;
+  jobDescription?: string;
+  createdAt: string;
+  updatedAt: string;
+  mockTemplates: MockTemplateData[] | null;
+}

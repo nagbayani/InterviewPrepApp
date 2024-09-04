@@ -25,8 +25,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
   );
 
   const templates = templatesDb.map((template) => {
-    const { authorId, ...safeTemplate } = template;
-    return safeTemplate;
+    const { authorId, cards, ...safeTemplate } = template;
+    return {
+      ...safeTemplate,
+      cards, // Include the cards field from MockTemplateCard
+    };
   });
 
   // data= { decks: data}
@@ -35,8 +38,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function POST(req: NextRequest) {
-  const { title } = (await req.json()) as {
+  const { title, description, type, interviewId } = (await req.json()) as {
     title: string;
+    description: string;
+    type: string;
+    interviewId: string;
   };
 
   const user = await currentUser();
@@ -46,6 +52,9 @@ export async function POST(req: NextRequest) {
       data: {
         title,
         authorId: user.session?.user.id ?? "",
+        description,
+        type,
+        interviewId,
       },
     });
 
@@ -54,9 +63,10 @@ export async function POST(req: NextRequest) {
       status: 200,
       template,
     });
-  } catch {
+  } catch (error) {
     return NextResponse.json({
-      message: "Error creating template",
+      message: `Error creating template, ${error} `,
+      data: `${user.session?.user.id},${title}, ${description}, ${type}, ${interviewId}`,
       status: 400,
     });
   }

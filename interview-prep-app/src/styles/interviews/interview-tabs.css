@@ -1,0 +1,40 @@
+.interview-tabs-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #f1f1f1;
+  margin-right: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.tab:hover {
+  background-color: red;
+}
+
+.tab.active {
+  background-color: red;
+  border-bottom: 1px solid transparent;
+}
+
+.tab.add-template {
+  margin-left: auto;
+  background-color: #d1e7dd;
+}
+
+.tab-content {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+}

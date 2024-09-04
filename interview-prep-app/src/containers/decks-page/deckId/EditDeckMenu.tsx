@@ -112,6 +112,18 @@ const EditDeckMenu = ({
         <div className='space-y-4'>
           <div>
             <label className='block text-sm font-medium text-gray-700'>
+              Thumbnail
+            </label>
+            <DeckIcon
+              deckId={deckId}
+              currentThumbnail={localThumbnail}
+              gradientStyle={
+                localThumbnail || "linear-gradient(to right, #e66465, #9198e5)"
+              }
+            />
+          </div>
+          <div>
+            <label className='block text-sm font-medium text-gray-700'>
               Title
             </label>
             <Input
@@ -129,18 +141,6 @@ const EditDeckMenu = ({
               id='message-2'
               value={localDescription}
               onChange={(e) => setLocalDescription(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>
-              Thumbnail
-            </label>
-            <DeckIcon
-              deckId={deckId}
-              currentThumbnail={localThumbnail}
-              gradientStyle={
-                localThumbnail || "linear-gradient(to right, #e66465, #9198e5)"
-              }
             />
           </div>
         </div>

@@ -3,7 +3,6 @@ import {
   MockTemplateData,
   MockTemplateCardData,
   CardData,
-
 } from "@/types/data-types";
 
 // Zustand Store
@@ -16,9 +15,9 @@ interface MockTemplateState {
     data: Partial<MockTemplateData>
   ) => void;
   setMockTemplates: (templates: MockTemplateData[]) => void;
-  setMockTemplateCards: (mockTemplateCards: MockTemplateCardData[]) => void;
   addMockTemplate: (template: MockTemplateData) => void;
   deleteMockTemplate: (templateId: string) => void;
+  setMockTemplateCards: (mockTemplateCards: MockTemplateCardData[]) => void;
   addMockTemplateCard: (mockTemplateCard: MockTemplateCardData) => void;
   deleteMockTemplateCard: (templateId: string, cardId: string) => void;
 }
@@ -67,6 +66,13 @@ export const useMockTemplateStore = create<MockTemplateState>((set) => ({
       };
     }),
 
+  deleteMockTemplate: (templateId: string) =>
+    set((state) => {
+      const newMockTemplates = { ...state.mockTemplates };
+      delete newMockTemplates[templateId];
+      return { mockTemplates: newMockTemplates };
+    }),
+
   setMockTemplateCards: (mockTemplateCards) => {
     const mockTemplateCardRecord = mockTemplateCards.reduce(
       (acc, mockTemplateCard) => {
@@ -81,14 +87,6 @@ export const useMockTemplateStore = create<MockTemplateState>((set) => ({
     );
     set({ mockTemplateCards: mockTemplateCardRecord });
   },
-
-  deleteMockTemplate: (templateId: string) =>
-    set((state) => {
-      const newMockTemplates = { ...state.mockTemplates };
-      delete newMockTemplates[templateId];
-      return { mockTemplates: newMockTemplates };
-    }),
-
   addMockTemplateCard: (mockTemplateCard: MockTemplateCardData) =>
     set((state) => {
       const newMockTemplateCards = { ...state.mockTemplateCards };
