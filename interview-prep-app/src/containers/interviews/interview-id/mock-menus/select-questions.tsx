@@ -68,8 +68,12 @@ const SelectQuestions = ({
           <h2>Select a Deck</h2>
           <ul className='decks-list'>
             {Object.values(decks).map((deck: DeckData) => (
-              <li key={deck.id}>
-                <Button variant='ghost' onClick={() => handleDeckSelect(deck)}>
+              <li key={deck.id} className='w-full'>
+                <Button
+                  variant='ghost'
+                  onClick={() => handleDeckSelect(deck)}
+                  className='w-full'
+                >
                   {deck.title}
                 </Button>
               </li>

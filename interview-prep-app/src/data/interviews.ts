@@ -4,9 +4,9 @@ import prisma from "@/lib/db";
 export const getInterviewsByUserId = async (userId: string) => {
   const interviews = await prisma.interview.findMany({
     where: { userId },
-    // include: {
-    //   mockTemplates: true, // Include related mock templates if needed
-    // },
+    include: {
+      mockTemplates: true, // Include related mock templates if needed
+    },
   });
 
   return interviews;

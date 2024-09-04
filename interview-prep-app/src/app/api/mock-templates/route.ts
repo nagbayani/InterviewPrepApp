@@ -25,8 +25,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
   );
 
   const templates = templatesDb.map((template) => {
-    const { authorId, ...safeTemplate } = template;
-    return safeTemplate;
+    const { authorId, cards, ...safeTemplate } = template;
+    return {
+      ...safeTemplate,
+      cards, // Include the cards field from MockTemplateCard
+    };
   });
 
   // data= { decks: data}

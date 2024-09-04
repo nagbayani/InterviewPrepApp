@@ -24,12 +24,12 @@ export const getMockTemplateById = async (templateId: string) => {
 export const updateMockTemplate = async (data: {
   title: string;
   description?: string;
-  templateId: string;
+  mockId: string;
 }) => {
   console.log("UPDATE MOCK TEMPLATE DATA", data);
 
   const template = await prisma.mockTemplate.update({
-    where: { id: data.templateId },
+    where: { id: data.mockId },
     data: {
       title: data.title,
       description: data.description,

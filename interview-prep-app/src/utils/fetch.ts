@@ -235,3 +235,30 @@ export const postMockTemplate = async (
     console.log("Error creating mock template");
   }
 };
+
+export const putMockTemplate = async (
+  title: string,
+  type: string,
+  description: string,
+  // interviewId: string,
+  mockId: string,
+  cardIds: string[]
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/mock-templates/${mockId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ mockId, title, type, description, cardIds }),
+      }
+    );
+    const data = await response.json();
+    console.log("Put Mock Template Data: ", data);
+    return data;
+  } catch (error) {
+    console.log(`Error updating mock template: ${error}`);
+  }
+};

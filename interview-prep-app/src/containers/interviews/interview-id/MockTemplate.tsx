@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LuPlus } from "react-icons/lu";
 import QuestionPool from "./mock-menus/question-pool-modal";
 import AddQuestionsModal from "./mock-menus/add-questions-modal";
+import MockCarousel from "./mock-menus/mock-carousel";
 interface MockTemplateProps {
   template: MockTemplateData;
 }
@@ -21,17 +22,26 @@ interface MockTemplateProps {
  *
  */
 const MockTemplate = ({ template }: MockTemplateProps) => {
+  const { mockTemplates, mockTemplateCards } = useMockTemplateStore(
+    (state) => ({
+      mockTemplates: state.mockTemplates,
+      mockTemplateCards: state.mockTemplateCards,
+    })
+  );
   return (
     <div className='mock-template'>
-      <h2>{template.title}</h2>
+      <h1 className='text-3xl'>{template.title}</h1>
       <p>{template.description}</p>
-      <AddQuestionsModal mockTemplateId={template.id} />
-      <Button variant='textIcon'>
-        <LuPlus />
-        AI Generate Questions
-      </Button>
-      <QuestionPool mockTemplateId={template.id} />
-      {/* Display template details here */}
+      <div className='flex gap-2'>
+        <AddQuestionsModal mockTemplateId={template.id} />
+        <Button variant='textIcon'>
+          <LuPlus />
+          AI Generate Questions
+        </Button>
+        <QuestionPool mockTemplateId={template.id} />
+      </div>
+      {/* Display Mock Carousel Here*/}
+      <MockCarousel template={template} />
     </div>
   );
 };

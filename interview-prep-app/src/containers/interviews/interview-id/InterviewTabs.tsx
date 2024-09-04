@@ -36,17 +36,15 @@ const InterviewTabs = ({
           Job Details
         </button>
         {mockTemplates?.map((template, index) => (
-          <button
+          <span
             key={template.id}
             className={`tab ${activeTab === index + 1 ? "active" : ""}`}
             onClick={() => handleTabClick(index + 1)}
           >
             {template.title}
-          </button>
+          </span>
         ))}
-        {/* <button className='tab add-template' onClick={onAddTemplate}>
-          + Mock Interview
-        </button> */}
+
         <AddMockMenu interviewId={interview.id} company={interview.company} />
       </div>
       <div className='tab-content'>

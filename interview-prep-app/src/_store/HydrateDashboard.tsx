@@ -8,6 +8,7 @@ import {
   CardData,
   TagData,
   MockTemplateData,
+  MockTemplateCardData,
   InterviewData,
 } from "@/types/data-types";
 import { set } from "zod";
@@ -58,11 +59,17 @@ const HydrateDashboard = ({
     setTags: state.setTags,
   }));
 
-  const { mockTemplates: mockTemplatesData, setMockTemplates } =
-    useMockTemplateStore((state) => ({
-      mockTemplates: state.mockTemplates,
-      setMockTemplates: state.setMockTemplates,
-    }));
+  const {
+    mockTemplates: mockTemplatesData,
+    mockTemplateCards,
+    setMockTemplates,
+    setMockTemplateCards,
+  } = useMockTemplateStore((state) => ({
+    mockTemplates: state.mockTemplates,
+    setMockTemplates: state.setMockTemplates,
+    setMockTemplateCards: state.setMockTemplateCards,
+    mockTemplateCards: state.mockTemplateCards,
+  }));
 
   useEffect(() => {
     setDecks(decks);
@@ -70,6 +77,16 @@ const HydrateDashboard = ({
     setTags(tags);
     setMockTemplates(mockTemplates);
     setInterviews(interviews);
+
+    // Extract mockTemplateCards from the mockTemplates
+    // Flatten the mockTemplateCards across all templates
+    const mockTemplateCards = mockTemplates.flatMap((template) =>
+      template.cards.map((card) => ({
+        templateId: template.id,
+        cardId: card.cardId,
+      }))
+    );
+    setMockTemplateCards(mockTemplateCards); // Set mockTemplateCards in Zustand store
   }, [
     decks,
     cards,
@@ -83,12 +100,14 @@ const HydrateDashboard = ({
     setInterviews,
   ]);
 
-  // useEffect(() => {
-  //   console.log("New Decks in store: ", decksData);
-  //   console.log("New Cards in store: ", cardsData);
-  //   console.log("New Tags in store: ", tagsData);
-  //   console.log("New Mock Templates in store: ", mockTemplatesData);
-  // }, [decksData, cardsData, tagsData, mockTemplatesData]);
+  useEffect(() => {
+    // console.log("New Decks in store: ", decksData);
+    // console.log("New Cards in store: ", cardsData);
+    // console.log("New Tags in store: ", tagsData);
+    console.log("New Mock Templates in store: ", mockTemplatesData);
+    console.log("Mock Template Cards in store: ", mockTemplateCards);
+    // console.log("New Interviews in store: ", interviewsData);
+  }, [decksData, cardsData, tagsData, mockTemplatesData]);
 
   return null;
 };

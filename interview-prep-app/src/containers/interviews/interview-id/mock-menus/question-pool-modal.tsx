@@ -49,7 +49,7 @@ const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant='outline'>Question Pool</Button>
       </DialogTrigger>
       <DialogContent>
@@ -57,15 +57,13 @@ const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
           <DialogTitle>A list of all questions for this interview.</DialogTitle>
           <DialogClose />
         </DialogHeader>
-        <DialogDescription>
-          <ul>
-            {questions.map((question) => (
-              <li key={question.id}>
-                <strong>{question.question}</strong>
-              </li>
-            ))}
-          </ul>
-        </DialogDescription>
+        <ul>
+          {questions.map((question) => (
+            <li key={question.id}>
+              <strong>{question.question}</strong>
+            </li>
+          ))}
+        </ul>
         <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
