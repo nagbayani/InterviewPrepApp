@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CardData } from "@/types/data-types"; // Ensure you import your CardData type
+import QuestionCard from "./question-pool-card";
 
 interface QuestionPoolProps {
   mockTemplateId: string;
@@ -60,7 +61,11 @@ const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
         <ul>
           {questions.map((question) => (
             <li key={question.id}>
-              <strong>{question.question}</strong>
+              <QuestionCard
+                key={question.id}
+                question={question}
+                mockTemplateId={mockTemplateId} // Pass the mockTemplateId for deletion
+              />
             </li>
           ))}
         </ul>

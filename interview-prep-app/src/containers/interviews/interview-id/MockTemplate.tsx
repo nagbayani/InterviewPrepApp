@@ -32,16 +32,18 @@ const MockTemplate = ({ template }: MockTemplateProps) => {
     <div className='mock-template'>
       <h1 className='text-3xl'>{template.title}</h1>
       <p>{template.description}</p>
-      <div className='flex gap-2'>
-        <AddQuestionsModal mockTemplateId={template.id} />
-        <Button variant='textIcon'>
-          <LuPlus />
-          AI Generate Questions
-        </Button>
-        <QuestionPool mockTemplateId={template.id} />
+      <div className='flex flex-col items-center gap-10'>
+        <div className='flex gap-2'>
+          <AddQuestionsModal mockTemplateId={template.id} />
+          <Button variant='textIcon'>
+            <LuPlus />
+            AI Generate Questions
+          </Button>
+          <QuestionPool mockTemplateId={template.id} />
+        </div>
+        {/* Display Mock Carousel Here*/}
+        <MockCarousel template={template} />
       </div>
-      {/* Display Mock Carousel Here*/}
-      <MockCarousel template={template} />
     </div>
   );
 };
