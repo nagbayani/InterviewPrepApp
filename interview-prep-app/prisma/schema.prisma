@@ -150,6 +150,8 @@ model Interview {
   jobPosition    String
   expectedSalary String?
   jobDescription String?
+  skills         String?
+  qualifications String?
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   mockTemplates  MockTemplate[] // One-to-many relation with MockTemplate

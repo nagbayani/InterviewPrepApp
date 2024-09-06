@@ -77,6 +77,8 @@ export interface InterviewData {
   jobPosition: string;
   expectedSalary?: string;
   jobDescription?: string;
+  skills?: string;
+  qualifications?: string;
   createdAt: string;
   updatedAt: string;
   mockTemplates: MockTemplateData[] | null;
