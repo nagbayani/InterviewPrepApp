@@ -115,14 +115,12 @@ const InterviewLink = ({
       </div>
       <div className='flex gap-2 justify-between items-center'>
         <div className='flex gap-2 items-center'>
-          <h1 id='interviewlink-title'>{company}</h1>
+          <h1 id='interviewlink-title'>{jobPosition}</h1>
         </div>
       </div>
 
       <div className='interviewlink-description w-full h-full min-h-[100px]'>
-        <p>{description}</p>
-        <p>Position: {jobPosition}</p>
-        {/* Add any other details you'd like to display */}
+        <p>{company}</p>
       </div>
     </div>
   );
