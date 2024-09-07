@@ -12,7 +12,7 @@ import { tagColors } from "@/lib/colors/tag-colors";
  */
 
 const Tag = ({ tag }: { tag: TagData }) => {
-  const selectedColor = tagColors.find((c) => c.textColor === tag.color);
+  const selectedColor = tagColors.find((c) => c.backgroundColor === tag.color);
 
   return (
     <div

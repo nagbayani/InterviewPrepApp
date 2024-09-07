@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import NarrativeTips from "./NarrativeTips"; // Assuming you moved the content here
+import UploadResumeDialog from "./resume-test";
 
 export function NarrativeTabs() {
   return (
@@ -50,8 +52,7 @@ export function NarrativeTabs() {
             <div className='space-y-2'>
               {/* You can add your editable resume card components here */}
               <p>This is where you will be able to edit your resume cards.</p>
-              <Button variant='outline'>Add New Card</Button>
-              {/* Render dynamic content or cards for editing */}
+              <UploadResumeDialog />
             </div>
           </CardContent>
           <CardFooter>

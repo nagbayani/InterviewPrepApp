@@ -4,6 +4,7 @@ import authConfig from "./auth.config";
 import prisma from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { getAccountByUserId } from "@/data/account";
+import { setupNewUser } from "@/actions/setupNewUser";
 
 export const {
   handlers: { GET, POST },
@@ -25,6 +26,19 @@ export const {
         where: { id: user.id },
         data: { emailVerified: new Date() },
       });
+    },
+    async signIn({ user, account, isNewUser }) {
+      // If this is a new user, set up their default tags, decks, and cards
+      if (isNewUser && account?.provider !== "credentials") {
+        const existingDecks = await prisma.deck.findMany({
+          where: { authorId: user.id },
+        });
+
+        // If the user has no decks (meaning they're a new user), set up the default ones
+        if (user.id && existingDecks.length === 0) {
+          await setupNewUser(user.id);
+        }
+      }
     },
   },
   // cookies: {

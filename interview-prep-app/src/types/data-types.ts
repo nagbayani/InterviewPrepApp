@@ -4,7 +4,6 @@ export type CardData = {
   updatedAt: string;
   question: string;
   answer: string;
-  category: string;
   authorId: string;
   deckId: string;
   tags: TagData[] | null;
