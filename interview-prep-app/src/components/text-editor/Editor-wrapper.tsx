@@ -136,6 +136,7 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
         // Update the editor with the generated answer
         setValue(result.generatedAnswer);
 
+        console.log("Editor instance", editorInstance);
         // Insert generated content directly into the editor
         editorInstance?.commands.setContent(result.generatedAnswer);
 

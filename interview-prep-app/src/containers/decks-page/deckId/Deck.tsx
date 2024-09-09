@@ -91,11 +91,11 @@ const Deck = ({ deckDb }: DeckProps) => {
       updateDeck(oldDeckId, { cards: updatedOldDeckCards });
       updateDeck(newDeckId, { cards: updatedNewDeckCards });
 
-      try {
-        setCards(response.cards);
-      } catch {
-        console.log("Error fetching updated cards in Deck component.");
-      }
+      // try {
+      //   // setCards(response.cards);
+      // } catch {
+      //   console.log("Error fetching updated cards in Deck component.");
+      // }
     }
   };
 
