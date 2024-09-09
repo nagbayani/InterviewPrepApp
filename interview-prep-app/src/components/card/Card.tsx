@@ -4,7 +4,7 @@ import { useModal } from "@/containers/modal/ModalContext";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { CardData, TagData } from "@/types/data-types";
-import { useCardStore, useTagStore } from "@/_store/index";
+import { useCardStore, useDeckStore, useTagStore } from "@/_store/index";
 import Tag from "./Tag";
 import "../../styles/deck/deckCard.css";
 
@@ -26,6 +26,12 @@ export const DeckCard = ({
 }) => {
   const router = useRouter();
   const { openModal } = useModal();
+  // Access the deckStore and retrieve actions like updateDeck or setDecks
+  const { decks, updateDeck } = useDeckStore((state) => ({
+    decks: state.decks,
+    updateDeck: state.updateDeck,
+  }));
+
   const { cards: cardsData, deleteCard } = useCardStore((state) => ({
     cards: state.cards,
     deleteCard: state.deleteCard,
@@ -64,6 +70,15 @@ export const DeckCard = ({
       if (response.ok) {
         deleteCard(card.id); // Remove card from Zustand store
         console.log("Card deleted from deck.", cardsData);
+
+        // Update the deck when a card is deleted
+        const updatedDeck = {
+          ...decks[deckId],
+          cards: decks[deckId].cards.filter(
+            (deckCard) => deckCard.id !== card.id
+          ),
+        };
+        updateDeck(deckId, updatedDeck);
       }
     } catch {
       console.error("Error deleting card from deck.");

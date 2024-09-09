@@ -19,7 +19,7 @@ import EditDeckMenu from "./EditDeckMenu";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface DeckProps {
-  deck: DeckData;
+  deckDb: DeckData;
 }
 
 /**
@@ -27,7 +27,7 @@ interface DeckProps {
  * [deckId] page Deck Client Component that holds all rendered cards, and will add new cards.
  *
  */
-const Deck = ({ deck }: DeckProps) => {
+const Deck = ({ deckDb }: DeckProps) => {
   // retrieve list of cards
   const {
     cards: cardsData,
@@ -42,19 +42,26 @@ const Deck = ({ deck }: DeckProps) => {
     deleteCard: state.deleteCard,
     setCards: state.setCards,
   }));
-  // const { deck } = useDeckStore((state) => ({
-  //   deck: state.decks[deck.id],
-  // }));
+
+  const deck = useDeckStore((state) => state.decks[deckDb.id]);
 
   const { decks: decksData, updateDeck } = useDeckStore((state) => ({
     decks: state.decks,
     updateDeck: state.updateDeck,
   }));
 
-  const deckInStore = decksData[deck.id];
+  // const deckInStore = decksData[deckDb.id];
 
   const handleCardUpdate = (cardId: string, newDeckId: string) => {
     updateCard(cardId, { deckId: newDeckId });
+
+    // Update the deck by replacing the updated card in the deck's card list
+    const updatedCards = deck.cards.map((card) =>
+      card.id === cardId ? { ...card, deckId: newDeckId } : card
+    );
+
+    // Update the deck in Zustand's deck store
+    updateDeck(deckDb.id, { cards: updatedCards });
   };
 
   const handleCardMove = async (
@@ -66,6 +73,24 @@ const Deck = ({ deck }: DeckProps) => {
     const response = await moveCardPUT(cardId, newDeckId, oldDeckId);
     console.log(response, "HandleCardMove Response");
     if (response) {
+      // Call the function to update the card's deckId
+      handleCardUpdate(cardId, newDeckId);
+
+      // Remove the card from the old deck
+      const updatedOldDeckCards = decksData[oldDeckId].cards.filter(
+        (card) => card.id !== cardId
+      );
+
+      // Add the card to the new deck
+      const updatedNewDeckCards = [
+        ...decksData[newDeckId].cards,
+        cardsData[cardId],
+      ];
+
+      // Update both the old and new decks in Zustand's deck store
+      updateDeck(oldDeckId, { cards: updatedOldDeckCards });
+      updateDeck(newDeckId, { cards: updatedNewDeckCards });
+
       try {
         setCards(response.cards);
       } catch {
@@ -74,16 +99,14 @@ const Deck = ({ deck }: DeckProps) => {
     }
   };
 
-  const [title, setTitle] = useState(deckInStore?.title || "");
-  const [description, setDescription] = useState(
-    deckInStore?.description || ""
-  );
-  const [thumbnail, setThumbnail] = useState(deckInStore?.thumbnail || "");
+  const [title, setTitle] = useState(deck?.title || "");
+  const [description, setDescription] = useState(deck?.description || "");
+  const [thumbnail, setThumbnail] = useState(deck?.thumbnail || "");
 
   return (
     <section className='deck-wrapper-container '>
       <EditDeckMenu
-        deckId={deck.id}
+        deckId={deckDb.id}
         title={title}
         description={description}
         thumbnail={thumbnail}
@@ -100,18 +123,19 @@ const Deck = ({ deck }: DeckProps) => {
           <Send size={12} />
           <span>Send</span>
         </Button>
-        <AddCardModal deckId={deck.id} />
+        <AddCardModal deckId={deckDb.id} />
       </div>
       <Card className='rounded-lg border-none w-full h-[100vh]  bg-slate-0 '>
         <CardContent>
           {/* <div className='flex flex-col items-center gap-8 mx-4 h-full'> */}
           <div className='cards-list'>
-            {/* Render cards from Zustand state to Card components */}
-            {Object.values(cardsData).map((card, index) => (
+            {/* Render cards from Zustand Deck state to Card components */}
+
+            {deck.cards.map((card, index) => (
               <DeckCard
                 key={card.id}
                 card={card}
-                deckId={deck.id}
+                deckId={deckDb.id}
                 index={index + 1}
                 onUpdateCard={handleCardUpdate}
                 onMoveCard={handleCardMove}

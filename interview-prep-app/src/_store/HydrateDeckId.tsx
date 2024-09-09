@@ -5,22 +5,19 @@ import { DeckData, CardData, TagData, CardTagData } from "@/types/data-types";
 
 interface HydrateStoreProps {
   // decks: DeckData[];
-  cards: CardData[];
+  // cards: CardData[];
   tags: TagData[];
   cardTags: CardTagData[];
 }
 
-const HydrateStore = ({ tags, cardTags, cards }: HydrateStoreProps) => {
-  const setDecks = useDeckStore((state) => state.setDecks);
-  const setCards = useCardStore((state) => state.setCards);
+const HydrateStore = ({ tags, cardTags }: HydrateStoreProps) => {
   const setTags = useTagStore((state) => state.setTags);
   const setCardTags = useTagStore((state) => state.setCardTags);
 
   useEffect(() => {
     setTags(tags);
     setCardTags(cardTags);
-    setCards(cards);
-  }, [tags, cardTags, setTags, setCardTags, cards, setCards]);
+  }, [tags, cardTags, setTags, setCardTags]);
 
   return null;
 };

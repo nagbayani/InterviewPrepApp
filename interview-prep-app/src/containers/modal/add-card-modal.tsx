@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LuPlus } from "react-icons/lu";
 import { CardData, TagData, CardTagData } from "@/types/data-types";
-import { useCardStore, useTagStore } from "@/_store/index";
+import { useCardStore, useTagStore, useDeckStore } from "@/_store/index";
 import Tag from "@/components/card/Tag";
 import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
 
@@ -31,6 +31,12 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
 
   const { addCardTag } = useTagStore((state) => ({
     addCardTag: state.addCardTag,
+  }));
+
+  // Access updateDeck action from deckStore
+  const { updateDeck, decks } = useDeckStore((state) => ({
+    updateDeck: state.updateDeck,
+    decks: state.decks,
   }));
 
   const handleSave = async () => {
@@ -87,6 +93,12 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
           });
           // Add card to Zustand store
           addCard(newCard);
+          // Update the deck's cards in the Zustand store
+          const updatedDeck = {
+            ...decks[deckId],
+            cards: [...decks[deckId].cards, newCard],
+          };
+          updateDeck(deckId, updatedDeck);
         }
 
         // Clear the form fields after submission

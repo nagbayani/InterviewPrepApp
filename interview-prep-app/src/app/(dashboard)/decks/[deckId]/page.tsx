@@ -26,16 +26,15 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
   return (
     <ContentLayout title={deck.title}>
       {/* Pass data response to Deck client component */}
-      <Deck deck={deck} />
+      <Deck deckDb={deck} />
       {/* <Deck deck={deck} cards={cards} decks={decks} tags={tags} /> */}
 
       {/* rename this for a single deck store */}
-      {/* <HydrateStore
+      <HydrateStore
         // decks={decks}
-        cards={cards}
         tags={tags}
         cardTags={cardTags}
-      /> */}
+      />
     </ContentLayout>
   );
 };
