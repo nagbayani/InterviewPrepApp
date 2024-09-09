@@ -12,6 +12,7 @@ interface EditorProp {
   onChange: (value: JSONContent) => void;
   onTextChange: (text: string) => void; // Extract text from the Editor
   onSave: () => void;
+  onEditorReady: (editor: Editor) => void; // Pass the editor instance
 }
 
 export const TipTapEditor = ({
@@ -19,6 +20,7 @@ export const TipTapEditor = ({
   onChange,
   onTextChange,
   onSave,
+  onEditorReady,
 }: EditorProp) => {
   const logContent = useCallback((e: Editor) => console.log(e.getJSON()), []);
 
@@ -64,6 +66,7 @@ export const TipTapEditor = ({
     }, 500);
   }, 750);
 
+  // Editor initialization
   const editor = useEditor({
     extensions: getExtensions({ openLinkModal }),
     content: initialValue,
@@ -85,15 +88,11 @@ export const TipTapEditor = ({
     //   logContent(e);
     // }, 500),
   });
-
-  // useEffect(() => {
-  //   if (editor && initialValue) {
-  //     editor.commands.setContent(initialValue, false);
-  //   }
-  // }, [editor, initialValue]);
-
-  // const addTable = () =>
-  //   editor?.commands.insertTable({ rows: 3, cols: 3, withHeaderRow: true });
+  useEffect(() => {
+    if (editor) {
+      onEditorReady(editor); // Call the callback once the editor is ready
+    }
+  }, [editor, onEditorReady]);
 
   return (
     editor && (

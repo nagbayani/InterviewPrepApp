@@ -20,21 +20,18 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { cardId: string } }
 ) {
-  const { question, answer, deckId, category, authorId } =
-    (await req.json()) as {
-      question: string;
-      answer: string;
-      deckId: string;
-      category: string;
-      authorId: string;
-    };
+  const { question, answer, deckId, authorId } = (await req.json()) as {
+    question: string;
+    answer: string;
+    deckId: string;
+    authorId: string;
+  };
 
   try {
     const card = await createCard({
       question,
       answer,
       deckId,
-      category,
       authorId,
     });
     return NextResponse.json({
@@ -54,16 +51,14 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { cardId: string } }
 ) {
-  const { question, answer, deckId, category, authorId, cardId } =
-    (await req.json()) as {
-      question: string;
-      answer: string;
-      deckId: string;
-      category: string;
-      authorId: string;
-      cardId: string;
-    };
-  const data = { question, answer, deckId, category, authorId, cardId };
+  const { question, answer, deckId, authorId, cardId } = (await req.json()) as {
+    question: string;
+    answer: string;
+    deckId: string;
+    authorId: string;
+    cardId: string;
+  };
+  const data = { question, answer, deckId, authorId, cardId };
   try {
     const card = await updateCard(data);
     // console.log("API ENDPOINT PUT, CARD SAVED", card);

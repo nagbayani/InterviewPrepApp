@@ -23,22 +23,6 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Save the extracted details to the UserResume table
-    // const savedResume = await prisma.userResume.upsert({
-    //   where: { userId: userId },
-    //   update: {
-    //     skills: resumeDetails.skills,
-    //     experience: resumeDetails.experience,
-    //     projects: resumeDetails.projects,
-    //   },
-    //   create: {
-    //     userId: userId,
-    //     skills: resumeDetails.skills,
-    //     experience: resumeDetails.experience,
-    //     projects: resumeDetails.projects,
-    //   },
-    // });
-
     return NextResponse.json({
       message: "Resume details extracted and saved successfully",
       status: 200,

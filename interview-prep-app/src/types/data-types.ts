@@ -30,6 +30,7 @@ export interface DeckDataResponse {
     authorId: string;
     thumbnail: string | null;
     description: string | null;
+    cards: CardData[];
   };
   cards: {
     id: string;

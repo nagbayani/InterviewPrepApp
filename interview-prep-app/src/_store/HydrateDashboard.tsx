@@ -98,16 +98,24 @@ const HydrateDashboard = ({
     setTags,
     setMockTemplates,
     setInterviews,
+    setMockTemplateCards,
   ]);
 
-  useEffect(() => {
-    console.log("New Decks in store: ", decksData);
-    console.log("New Cards in store: ", cardsData);
-    console.log("New Tags in store: ", tagsData);
-    console.log("New Mock Templates in store: ", mockTemplatesData);
-    console.log("Mock Template Cards in store: ", mockTemplateCards);
-    console.log("New Interviews in store: ", interviewsData);
-  }, [decksData, cardsData, tagsData, mockTemplatesData]);
+  // useEffect(() => {
+  //   console.log("New Decks in store: ", decksData);
+  //   console.log("New Cards in store: ", cardsData);
+  //   console.log("New Tags in store: ", tagsData);
+  //   console.log("New Mock Templates in store: ", mockTemplatesData);
+  //   console.log("Mock Template Cards in store: ", mockTemplateCards);
+  //   console.log("New Interviews in store: ", interviewsData);
+  // }, [
+  //   decksData,
+  //   cardsData,
+  //   tagsData,
+  //   mockTemplatesData,
+  //   mockTemplateCards,
+  //   interviewsData,
+  // ]);
 
   return null;
 };

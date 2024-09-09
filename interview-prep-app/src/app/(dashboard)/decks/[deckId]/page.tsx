@@ -30,12 +30,12 @@ const DeckIdPage = async ({ params }: { params: { deckId: string } }) => {
       {/* <Deck deck={deck} cards={cards} decks={decks} tags={tags} /> */}
 
       {/* rename this for a single deck store */}
-      <HydrateStore
+      {/* <HydrateStore
         // decks={decks}
         cards={cards}
         tags={tags}
         cardTags={cardTags}
-      />
+      /> */}
     </ContentLayout>
   );
 };

@@ -5,7 +5,6 @@ import { DeckData, CardData, TagData, CardTagData } from "@/types/data-types";
 
 interface HydrateStoreProps {
   // decks: DeckData[];
-  // cards: CardData[];
   cards: CardData[];
   tags: TagData[];
   cardTags: CardTagData[];
@@ -21,7 +20,7 @@ const HydrateStore = ({ tags, cardTags, cards }: HydrateStoreProps) => {
     setTags(tags);
     setCardTags(cardTags);
     setCards(cards);
-  }, [tags, cardTags, setTags, setCardTags]);
+  }, [tags, cardTags, setTags, setCardTags, cards, setCards]);
 
   return null;
 };

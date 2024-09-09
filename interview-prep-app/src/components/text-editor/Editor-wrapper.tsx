@@ -7,15 +7,16 @@ import { useState, useEffect, use } from "react";
 import { defaultValue } from "@/lib/content";
 import { useCardStore } from "@/_store";
 import { TipTapEditor } from "./Editor";
-import SaveButton from "../buttons/save-button";
+import { Editor } from "@tiptap/core";
 
+import SaveButton from "../buttons/save-button";
+import GenAnswerButton from "../buttons/gen-answer-button";
 interface Data {
   id: string; // cardID
   createdAt: string;
   updatedAt: string;
   question: string;
   answer: string;
-  category: string;
   authorId: string;
   deckId: string;
 }
@@ -39,6 +40,8 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
   } catch (e) {
     initialContent = defaultValue;
   }
+  const [editorInstance, setEditorInstance] = useState<Editor | null>(null); // Store editor instance
+
   // initial state is passed down answer or default value
   const [value, setValue] = useState<JSONContent>(
     initialContent || defaultValue
@@ -48,6 +51,12 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">(
     "idle"
   );
+
+  // GenAnswerButton status
+  const [genAnswerStatus, setGenAnswerStatus] = useState<
+    "idle" | "saving" | "saved"
+  >("idle");
+
   const [plainText, setPlainText] = useState<string>(""); // State to hold plain text
 
   // press save, sends POST to API
@@ -63,7 +72,6 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
         question: data.question,
         answer: JSON.stringify(value), // Convert JSONContent to string
         deckId: data.deckId,
-        category: data.category,
         authorId: data.authorId,
         cardId: data.id,
       }),
@@ -88,18 +96,11 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
   };
 
   const handleTextChange = (text: string) => {
-    setPlainText(text);
+    // Replace multiple line breaks and normalize the spacing
+    const normalizedText = text.replace(/\n\s*\n/g, "\n").trim();
+    setPlainText(normalizedText);
+    console.log("PLAIN TEXT", normalizedText);
   };
-
-  // useEffect(() => {
-  //   // const content = window.localStorage.getItem("novel-content");
-  //   // console.log("CONTENT", content); // this works
-  //   // if (content) setInitialContent(JSON.parse(content));
-  //   // if (value) console.log("VALUE", value);
-  //   // else setInitialContent(defaultValue);
-  //   // console.log("WRAPPER VALUE", value);
-  //   // console.log("WRAPPER VALUE STRINGIFY", JSON.stringify(value));
-  // }, [value, data]);
 
   useEffect(() => {
     if (card) {
@@ -113,6 +114,47 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
     }
   }, [card]);
 
+  const handleGenerateAnswer = async () => {
+    setGenAnswerStatus("saving"); // Set status to "saving" when starting the request
+
+    try {
+      const response = await fetch("/api/generate-answer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          question: data.question,
+          answer: plainText,
+          cardId: data.id,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Generated answer CLIENT:", result.generatedAnswer);
+        // Update the editor with the generated answer
+        setValue(result.generatedAnswer);
+
+        // Insert generated content directly into the editor
+        editorInstance?.commands.setContent(result.generatedAnswer);
+
+        // Update the card in the store
+        updateCard(data.id, { answer: JSON.stringify(result.generatedAnswer) });
+
+        setGenAnswerStatus("saved"); // Set status to "saved" upon successful response
+
+        console.log("Updated card in store");
+      } else {
+        console.log("Failed to generate answer");
+        setGenAnswerStatus("idle"); // Set status to "idle" in case of an error
+      }
+    } catch (error) {
+      console.log("Error generating answer", error);
+      setGenAnswerStatus("idle"); // Set status to "idle" in case of an error
+    }
+  };
+
   return (
     <>
       <div className='flex flex-col  max-h-[600px]'>
@@ -121,8 +163,15 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
           onChange={handleEditorChange}
           onTextChange={handleTextChange}
           onSave={handleSave}
+          onEditorReady={setEditorInstance} // Pass the editor instance to EditorWrapper
         />
-        <SaveButton status={saveStatus} onClick={handleSave} />
+        <div className='flex gap-8 p-2'>
+          <SaveButton status={saveStatus} onClick={handleSave} />
+          <GenAnswerButton
+            onClick={handleGenerateAnswer}
+            status={genAnswerStatus}
+          />
+        </div>
       </div>
     </>
   );

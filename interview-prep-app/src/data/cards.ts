@@ -29,7 +29,6 @@ export const createCard = async (data: {
   question: string;
   answer: string;
   deckId: string;
-  category: string;
   authorId: string;
 }) => {
   const card = await prisma.card.create({
@@ -43,7 +42,6 @@ export const updateCard = async (data: {
   question: string;
   answer: string;
   deckId: string;
-  category: string;
   authorId: string;
   cardId: string;
 }) => {

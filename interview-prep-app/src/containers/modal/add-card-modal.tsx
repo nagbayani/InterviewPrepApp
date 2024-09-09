@@ -57,6 +57,7 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
       if (response.ok) {
         const data = await response.json();
         const newCard: CardData = data.card;
+        console.log("New Card:", newCard);
 
         // Create card-tag relationships
         const cardTagPromises = selectedTags.map(async (tag) => {

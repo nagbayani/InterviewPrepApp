@@ -42,6 +42,9 @@ const Deck = ({ deck }: DeckProps) => {
     deleteCard: state.deleteCard,
     setCards: state.setCards,
   }));
+  // const { deck } = useDeckStore((state) => ({
+  //   deck: state.decks[deck.id],
+  // }));
 
   const { decks: decksData, updateDeck } = useDeckStore((state) => ({
     decks: state.decks,
