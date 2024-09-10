@@ -15,6 +15,7 @@ import { Send, SlidersHorizontal } from "lucide-react";
 import { AddCardModal } from "@/containers/modal/add-card-modal";
 import { DeckData } from "@/types/data-types";
 import EditDeckMenu from "./EditDeckMenu";
+import GenerateDeckMenu from "./GenerateDeckMenu";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -90,12 +91,6 @@ const Deck = ({ deckDb }: DeckProps) => {
       // Update both the old and new decks in Zustand's deck store
       updateDeck(oldDeckId, { cards: updatedOldDeckCards });
       updateDeck(newDeckId, { cards: updatedNewDeckCards });
-
-      // try {
-      //   // setCards(response.cards);
-      // } catch {
-      //   console.log("Error fetching updated cards in Deck component.");
-      // }
     }
   };
 
@@ -123,6 +118,7 @@ const Deck = ({ deckDb }: DeckProps) => {
           <Send size={12} />
           <span>Send</span>
         </Button>
+        <GenerateDeckMenu deckId={deckDb.id} />
         <AddCardModal deckId={deckDb.id} />
       </div>
       <Card className='rounded-lg border-none w-full h-[100vh]  bg-slate-0 '>

@@ -7,9 +7,18 @@ const client = new OpenAI({
 interface Props {
   question: string;
   answer: string;
+  projects?: string;
+  skills?: string;
+  experience?: string;
 }
 
-export const generateAnswer = async ({ question, answer }: Props) => {
+export const generateAnswer = async ({
+  question,
+  answer,
+  projects,
+  skills,
+  experience,
+}: Props) => {
   try {
     // OpenAI Chat Completion request
     const completion = await client.chat.completions
@@ -17,15 +26,18 @@ export const generateAnswer = async ({ question, answer }: Props) => {
         messages: [
           {
             role: "user",
-            content: `Given the following interview question and the user's current answer, please improve the answer without sounding like a robot, and return it in a clear and concise way. 
+            content: `Given the following interview question, the user's current answer, and the user's projects, skills, and experience please improve the answer, and return it in a clear and concise way. 
 
             Question: "${question}"
             Current Answer: "${answer}"
+            Projects: "${projects}"
+            Skills: "${skills}"
+            Experience: "${experience}"
 
             Please return only the improved answer as text.`,
           },
         ],
-        model: "gpt-4o-mini", // You can change the model if needed
+        model: "gpt-4o-mini",
       })
       .asResponse();
 

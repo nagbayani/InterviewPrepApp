@@ -32,6 +32,7 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
     updateCard: state.updateCard,
   }));
   // console.log("DATA ANSWER", data.answer);
+  console.log("EDITOR WRAPPER CARD", card.answer);
 
   // *** Convert data.answer to JSONContent ***
   let initialContent: JSONContent;
@@ -105,9 +106,11 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
   useEffect(() => {
     if (card) {
       try {
+        console.log("CARD EXISTS", card.answer);
         const parsedAnswer = JSON.parse(card.answer);
         setValue(parsedAnswer);
       } catch {
+        console.log("CARD DOES NOT EXIST, default value");
         const parsedAnswer = defaultValue;
         setValue(parsedAnswer);
       }
@@ -118,7 +121,7 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
     setGenAnswerStatus("saving"); // Set status to "saving" when starting the request
 
     try {
-      const response = await fetch("/api/generate-answer", {
+      const response = await fetch(`/api/generate-answer/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

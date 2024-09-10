@@ -41,8 +41,9 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
     card: state.cards[cardDb.id],
     updateCard: state.updateCard,
   }));
-  console.log("CardDisplay.tsx component - Zustand card", card);
-  console.log("CardDisplay.tsx component - cardDb", cardDb);
+  // console.log("CardDisplay.tsx component - Zustand card", card);
+  // console.log("Card Zustand Answer", card.answer);
+  // console.log("CardDisplay.tsx component - cardDb", cardDb);
 
   const [isEditing, setIsEditing] = useState({
     question: false,
