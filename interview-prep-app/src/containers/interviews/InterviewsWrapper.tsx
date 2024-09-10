@@ -34,7 +34,7 @@ const InterviewsWrapper = ({ interviews }: { interviews: any }) => {
   // Update Zustand store with interview data from database
   useEffect(() => {
     setInterviews(interviews);
-    console.log("Interviews in InterviewsWrapper: ", interviewsData);
+    // console.log("Interviews in InterviewsWrapper: ", interviewsData);
   }, [interviews, setInterviews]);
 
   return (
