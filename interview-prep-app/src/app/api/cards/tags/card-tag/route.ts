@@ -22,9 +22,12 @@ export async function GET(req: NextRequest) {
 
 // create a new cardtag
 export async function POST(req: NextRequest) {
-  const { cardId, tagId } = await req.json();
-  console.log("Creating cardTag with cardId:", cardId, "tagId:", tagId);
   try {
+    const { cardId, tagId } = (await req.json()) as {
+      cardId: string;
+      tagId: string;
+    };
+    console.log("Creating cardTag with cardId:", cardId, "tagId:", tagId);
     const cardTag = await createCardTag({ cardId, tagId });
     return NextResponse.json({ message: "CardTag created", cardTag });
   } catch (error) {

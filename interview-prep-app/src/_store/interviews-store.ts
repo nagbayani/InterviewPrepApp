@@ -50,15 +50,21 @@ export const useInterviewStore = create<InterviewState>((set) => ({
    * @returns
    */
   updateInterview: (interviewId, data) =>
-    set((state) => ({
-      interviews: {
-        ...state.interviews,
-        [interviewId]: {
-          ...state.interviews[interviewId],
-          ...data,
-        },
-      },
-    })),
+    set(
+      (state) => (
+        console.log("ZUSTAND UPDATE INTERVIEW ID", interviewId),
+        console.log("ZUSTAND UPDATE INTERVIEW DATA", data),
+        {
+          interviews: {
+            ...state.interviews,
+            [interviewId]: {
+              ...state.interviews[interviewId],
+              ...data,
+            },
+          },
+        }
+      )
+    ),
 
   /**
    * Deletes an interview by its ID

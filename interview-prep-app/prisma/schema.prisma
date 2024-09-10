@@ -28,11 +28,11 @@ model User {
   tags      Tag[]
   mockTemplates MockTemplate[] 
   interviews Interview[] 
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   accounts  Account[]
   emailVerified DateTime?
+  userResume UserResume?
   // role      UserRole @default(USER)
   // isTwoFactorEnabled Boolean @default(false)
   // twoFactorConfirmation TwoFactorConfirmation?
@@ -68,7 +68,17 @@ model VerificationToken {
 
   @@unique([email, token])
 }
-
+model UserResume {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  pdfUrl      String?   // URL of the uploaded PDF file
+  skills      String   
+  experience  String   
+  projects    String  
+}
 
 model Deck {
   id        String   @id @default(cuid())
@@ -84,13 +94,13 @@ model Deck {
 
 
 
+
 model Card {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt 
   question  String
   answer    String 
-  category  String
   author    User    @relation(fields: [authorId], references: [id])
   authorId  String
   deck      Deck    @relation(fields: [deckId], references: [id])
@@ -150,6 +160,8 @@ model Interview {
   jobPosition    String
   expectedSalary String?
   jobDescription String?
+  skills         String?
+  qualifications String?
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   mockTemplates  MockTemplate[] // One-to-many relation with MockTemplate

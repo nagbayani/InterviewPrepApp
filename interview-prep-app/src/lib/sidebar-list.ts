@@ -50,18 +50,18 @@ export function getMenuList(
         },
       ],
     },
-    {
-      groupLabel: "",
-      menus: [
-        {
-          href: "/starter-packs",
-          label: "Starter Packs",
-          active: pathname.includes("/starter-packs"),
-          icon: BookDown,
-          submenus: [],
-        },
-      ],
-    },
+    // {
+    //   groupLabel: "",
+    //   menus: [
+    //     {
+    //       href: "/starter-packs",
+    //       label: "Starter Packs",
+    //       active: pathname.includes("/starter-packs"),
+    //       icon: BookDown,
+    //       submenus: [],
+    //     },
+    //   ],
+    // },
     {
       groupLabel: "",
       menus: [

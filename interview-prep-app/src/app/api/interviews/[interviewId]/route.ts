@@ -42,6 +42,8 @@ export async function PUT(
     jobPosition,
     expectedSalary,
     jobDescription,
+    skills,
+    qualifications,
     mockTemplateId,
   } = await req.json();
 
@@ -61,6 +63,8 @@ export async function PUT(
       jobPosition,
       expectedSalary,
       jobDescription,
+      skills,
+      qualifications,
     });
 
     return NextResponse.json({

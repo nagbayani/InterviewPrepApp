@@ -30,7 +30,7 @@ const Interview = ({ interview, mockTemplates }: InterviewPageProps) => {
   return (
     <div className='interview-page-container'>
       <InterviewTabs
-        jobDetails={<JobDetailsForm interview={interview} />}
+        jobDetails={<JobDetailsForm interviewDb={interview} />}
         // Dynamically map through the mock templates to pass to the InterviewTabs
         mockTemplates={
           currentMockTemplates.length > 0

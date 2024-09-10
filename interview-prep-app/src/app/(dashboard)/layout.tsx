@@ -52,7 +52,7 @@ const authCheck = async () => {
     // console.log("TAGS in Layout", tags);
     // console.log("CARDS in Layout", cardsDb);
 
-    console.log("MOCK TEMPLATES in Layout", mockTemplates);
+    // console.log("MOCK TEMPLATES in Layout", mockTemplates);
 
     // add cards
     // add mock templates

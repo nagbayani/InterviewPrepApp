@@ -127,7 +127,7 @@ export const fetchAllMockTemplates = async (cookieHeader: string) => {
       },
     });
     const data = await res.json();
-    console.log("In Page, MockTemplates Data: ", data);
+    // console.log("In Page, MockTemplates Data: ", data);
     return data;
   } catch (error) {
     console.log(error, "Something Went Wrong retrieving MockTemplates.");
@@ -193,6 +193,51 @@ export const fetchSingleInterview = async (
       error,
       "Something went wrong with retrieving the interview template"
     );
+  }
+};
+
+export const updateInterviewPUT = async ({
+  interviewId,
+  company,
+  jobPosition,
+  expectedSalary,
+  jobDescription,
+  skills,
+  qualifications,
+}: {
+  interviewId: string;
+  company: string;
+  jobPosition: string;
+  expectedSalary: string;
+  jobDescription: string;
+  skills: string;
+  qualifications: string;
+}) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interviews/${interviewId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          interviewId,
+          company,
+          jobPosition,
+          expectedSalary,
+          jobDescription,
+          skills,
+          qualifications,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log("Update Interview Data: ", data);
+    return data;
+  } catch (error) {
+    console.error(error, "Something Went Wrong updating the interview.");
+    alert("Failed to update the interview. Please try again.");
   }
 };
 

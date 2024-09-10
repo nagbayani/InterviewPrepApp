@@ -41,20 +41,9 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
     card: state.cards[cardDb.id],
     updateCard: state.updateCard,
   }));
-
-  // Zustand Tag Store
-  // const { cardTags, tags, setCardTags } = useTagStore((state) => ({
-  //   cardTags: state.cardTags,
-  //   tags: state.tags,
-  //   setCardTags: state.setCardTags,
-  // }));
-
-  // Get tags associated with this card
-  // const cardTagIds = cardTags[card.id]
-  //   ? Object.keys(cardTags[card.id])
-  //   : [];
-  // const cardTagsData = cardTagIds.map((tagId) => tags[tagId]);
-  // console.log("cardTagsData", cardTagsData);
+  // console.log("CardDisplay.tsx component - Zustand card", card);
+  // console.log("Card Zustand Answer", card.answer);
+  // console.log("CardDisplay.tsx component - cardDb", cardDb);
 
   const [isEditing, setIsEditing] = useState({
     question: false,
