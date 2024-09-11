@@ -28,9 +28,11 @@ import { useModal } from "./ModalContext";
 export function Modal({
   children,
   data,
+  loading,
 }: {
   children: React.ReactNode;
   data: CardData;
+  loading?: boolean; // A flag to indicate whether data is still loading
 }) {
   const { open, closeModal, openModal } = useModal();
   const router = useRouter();
@@ -56,7 +58,11 @@ export function Modal({
     <>
       <Drawer open={open} onOpenChange={handleOpenChange} dismissible={false}>
         <DrawerContent>
-          {children}
+          {loading ? (
+            <div className='text-center'>Loading...</div> // Show loading state
+          ) : (
+            children // Show actual content when data is loaded
+          )}
           <DrawerFooter></DrawerFooter>
         </DrawerContent>
       </Drawer>

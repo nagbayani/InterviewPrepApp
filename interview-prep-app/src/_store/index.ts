@@ -4,22 +4,28 @@ import { CardData, DeckData, TagData, CardTagData } from "@/types/data-types";
 import { StringifyOptions } from "querystring";
 
 // Zustand Store
-// State for Tags (Cards)
 interface TagState {
-  tags: Record<string, TagData>;
-  cardTags: Record<string, Record<string, CardTagData>>;
-  updateTag: (tagId: string, data: Partial<TagData>) => void;
-  setTags: (tags: TagData[]) => void;
-  setCardTags: (cardTags: CardTagData[]) => void;
-  addTag: (tag: TagData) => void;
-  deleteTag: (tagId: string) => void;
-  addCardTag: (cardTag: CardTagData) => void;
-  deleteCardTag: (cardId: string, tagId: string) => void;
+  tags: Record<string, TagData>; // A record of tags keyed by tag ID
+  cardTags: Record<string, Record<string, CardTagData>>; // A nested record of card-tags, keyed by card ID and then tag ID
+  updateTag: (tagId: string, data: Partial<TagData>) => void; // Updates a tag with new data
+  setTags: (tags: TagData[]) => void; // Sets the entire tags state from an array of TagData
+  setCardTags: (cardTags: CardTagData[]) => void; // Sets the entire cardTags state from an array of CardTagData
+  addTag: (tag: TagData) => void; // Adds a new tag to the state
+  deleteTag: (tagId: string) => void; // Deletes a tag from the state by its ID
+  addCardTag: (cardTag: CardTagData) => void; // Adds a card-tag relationship to the state
+  deleteCardTag: (cardId: string, tagId: string) => void; // Deletes a card-tag relationship from the state
 }
 
 export const useTagStore = create<TagState>((set) => ({
-  tags: {},
-  cardTags: {},
+  // Initial state for tags and cardTags
+  tags: {}, // Initialize tags as an empty object
+  cardTags: {}, // Initialize cardTags as an empty object
+
+  /**
+   * Updates a tag with new data.
+   * @param tagId - The ID of the tag to update.
+   * @param data - Partial data to update the tag with.
+   */
   updateTag: (tagId, data) =>
     set((state) => ({
       tags: {
@@ -30,6 +36,11 @@ export const useTagStore = create<TagState>((set) => ({
         },
       },
     })),
+
+  /**
+   * Adds a new tag to the state.
+   * @param tag - The TagData object to add.
+   */
   addTag: (tag: TagData) =>
     set((state) => ({
       tags: {
@@ -37,6 +48,11 @@ export const useTagStore = create<TagState>((set) => ({
         [tag.id]: tag,
       },
     })),
+
+  /**
+   * Sets the entire tags state from an array of TagData.
+   * @param tags - An array of TagData objects.
+   */
   setTags: (tags) =>
     set(() => ({
       tags: Array.isArray(tags)
@@ -50,41 +66,77 @@ export const useTagStore = create<TagState>((set) => ({
         : {}, // Return an empty object if tags is not an array
     })),
 
+  /**
+   * Sets the entire cardTags state from an array of CardTagData.
+   * @param cardTags - An array of CardTagData objects.
+   */
   setCardTags: (cardTags) => {
+    // Reduce the array into a nested record of cardTags
     const cardTagRecord = cardTags.reduce((acc, cardTag) => {
       if (!acc[cardTag.cardId]) {
+        // Initialize the nested object for the cardId if it doesn't exist
         acc[cardTag.cardId] = {};
       }
+      // Assign the cardTag to the nested object under cardId and tagId
       acc[cardTag.cardId][cardTag.tagId] = cardTag;
       return acc;
     }, {} as Record<string, Record<string, CardTagData>>);
+
+    // Update the state with the new cardTags record
     set({ cardTags: cardTagRecord });
   },
+
+  /**
+   * Deletes a tag from the state by its ID.
+   * @param tagId - The ID of the tag to delete.
+   */
   deleteTag: (tagId: string) =>
     set((state) => {
+      // Create a shallow copy of the tags
       const newTags = { ...state.tags };
+      // Delete the tag with the specified tagId
       delete newTags[tagId];
+      // Return the new state with updated tags
       return { tags: newTags };
     }),
+
+  /**
+   * Adds a card-tag relationship to the state.
+   * @param cardTag - The CardTagData object to add.
+   */
   addCardTag: (cardTag: CardTagData) =>
     set((state) => {
       console.log("Adding card tag: ", cardTag);
+      // Create a shallow copy of the current cardTags
       const newCardTags = { ...state.cardTags };
+      // Initialize the nested object for the cardId if it doesn't exist
       if (!newCardTags[cardTag.cardId]) {
         newCardTags[cardTag.cardId] = {};
       }
+      // Assign the cardTag to the nested object under cardId and tagId
       newCardTags[cardTag.cardId][cardTag.tagId] = cardTag;
+      // Return the new state with updated cardTags
       return { cardTags: newCardTags };
     }),
+
+  /**
+   * Deletes a card-tag relationship from the state.
+   * @param cardId - The ID of the card.
+   * @param tagId - The ID of the tag.
+   */
   deleteCardTag: (cardId: string, tagId: string) =>
     set((state) => {
+      // Create a shallow copy of the current cardTags
       const newCardTags = { ...state.cardTags };
+      // Check if the cardId exists in cardTags
       if (newCardTags[cardId]) {
         delete newCardTags[cardId][tagId];
+        // If no tags are left under this cardId, delete the cardId
         if (Object.keys(newCardTags[cardId]).length === 0) {
           delete newCardTags[cardId];
         }
       }
+      // Return the new state with updated cardTags
       return { cardTags: newCardTags };
     }),
 }));
@@ -169,13 +221,25 @@ interface DeckState {
   setDecks: (decks: DeckData[]) => void;
   addDeck: (deck: DeckData) => void;
   deleteDeck: (deckId: string) => void;
+  unassignedDeck: string | null; // To store only the unassigned deck's ID
+  setUnassignedDeck: (deckId: string) => void; // Method to set the unassigned deck's ID
 }
 
 export const useDeckStore = create<DeckState>((set) => ({
   decks: {},
+  unassignedDeck: null, // Initialize with null (no unassigned deck ID yet)
 
   /**
-   *
+   * Sets the unassigned deck ID (only one deck can be unassigned)
+   * @param deckId
+   */
+  setUnassignedDeck: (deckId: string) =>
+    set(() => ({
+      unassignedDeck: deckId,
+    })),
+
+  /**
+   * Updates the deck by its ID with the new data
    * @param deckId
    * @param data
    * @returns
@@ -221,12 +285,11 @@ export const useDeckStore = create<DeckState>((set) => ({
           )
         : {}; // Return an empty object if decks is not an array
 
-      // console.log("Setting new Decks: ", newDecks); // Log the new decks object
-
       return {
         decks: newDecks,
       };
     }),
+
   /**
    * Deletes a deck by its ID
    * @param deckId

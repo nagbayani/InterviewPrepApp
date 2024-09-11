@@ -70,11 +70,13 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     for (const cardId of cardsToRemove) {
       await removeCardFromMockTemplate(mockId, cardId);
     }
+    // Fetch the updated template including its cards after modifications
+    const updatedTemplateWithCards = await getMockTemplateById(mockId);
 
     return NextResponse.json({
       message: "Mock template updated with cards",
       status: 200,
-      template: updatedTemplate,
+      template: updatedTemplateWithCards,
     });
   } catch (error) {
     return NextResponse.json({

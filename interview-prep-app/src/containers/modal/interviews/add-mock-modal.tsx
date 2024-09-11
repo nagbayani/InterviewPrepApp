@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import SelectMockType from "./select-mock-type";
 import { postMockTemplate } from "@/utils/fetch";
 import { useMockTemplateStore } from "@/_store/mock-store";
+import { useInterviewStore } from "@/_store/interviews-store";
+import { MockTemplateData } from "@/types/data-types";
 
 interface AddMockMenuProps {
   company: string;
@@ -31,6 +33,9 @@ const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
       addMockTemplate: state.addMockTemplate,
     }));
 
+  const { updateInterview } = useInterviewStore((state) => ({
+    updateInterview: state.updateInterview,
+  }));
   useEffect(() => {
     if (selectedMockType) {
       setMockTitle(`${company} ${selectedMockType}`);
@@ -51,6 +56,29 @@ const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
           title: mockTitle,
           description: selectedDescription,
           type: selectedMockType,
+        });
+
+        const newMockTemplate: MockTemplateData = {
+          id: response.template.id,
+          title: response.template.title,
+          description: response.template.description,
+          type: response.template.type,
+          interviewId: response.template.interviewId,
+          cards: [],
+        };
+        // Add mock template to Zustand store
+        addMockTemplate(newMockTemplate);
+
+        // Get the current interview (assuming interviewId is available in your component)
+        const interviewId = newMockTemplate.interviewId; // Replace with actual interviewId if needed
+
+        // Retrieve the current interview from the store
+        const interview = useInterviewStore.getState().interviews[interviewId];
+        console.log("Interview,", interview);
+
+        // Update the interview with the new mock template
+        updateInterview(interviewId, {
+          mockTemplates: [...(interview.mockTemplates || []), newMockTemplate],
         });
 
         console.log("Mock Interview Added:", response.template);

@@ -90,6 +90,7 @@ model Deck {
   authorId  String
   thumbnail  String?  
   description String?
+  unassigned  Boolean   @default(false) // New field for unassigned status, used for storing unassigned cards
 }
 
 
@@ -107,6 +108,7 @@ model Card {
   deckId    String
   tags      CardTags[]  // each card can have multiple tags
   mockTemplates MockTemplateCard[] // Relation to MockTemplateCard for importing cards into templates
+
 
 }
 
