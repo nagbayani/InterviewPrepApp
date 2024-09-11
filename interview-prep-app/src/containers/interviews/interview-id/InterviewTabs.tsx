@@ -2,23 +2,17 @@ import React, { useState } from "react";
 import "../../../styles/interviews/interview-tabs.css";
 import AddMockMenu from "@/containers/modal/interviews/add-mock-modal";
 import { InterviewData } from "@/types/data-types";
+import { useInterviewStore } from "@/_store/interviews-store";
+import MockTemplate from "./MockTemplate";
 
 interface InterviewTabsProps {
   jobDetails: React.ReactNode;
-  mockTemplates:
-    | { id: string; title: string; content: React.ReactNode }[]
-    | null;
-  onAddTemplate: () => void;
-  interview: InterviewData;
+  interviewId: string;
 }
 
-const InterviewTabs = ({
-  jobDetails,
-  mockTemplates,
-  onAddTemplate,
-  interview,
-}: InterviewTabsProps) => {
+const InterviewTabs = ({ jobDetails, interviewId }: InterviewTabsProps) => {
   const [activeTab, setActiveTab] = useState(0);
+  const interview = useInterviewStore((state) => state.interviews[interviewId]);
 
   // need to import Job Deatails
   const handleTabClick = (index: number) => {
@@ -35,7 +29,7 @@ const InterviewTabs = ({
         >
           Job Details
         </button>
-        {mockTemplates?.map((template, index) => (
+        {interview.mockTemplates?.map((template, index) => (
           <span
             key={template.id}
             className={`tab ${activeTab === index + 1 ? "active" : ""}`}
@@ -50,8 +44,8 @@ const InterviewTabs = ({
       <div className='tab-content'>
         {activeTab === 0 ? (
           jobDetails
-        ) : mockTemplates && mockTemplates.length > 0 ? (
-          mockTemplates[activeTab - 1]?.content
+        ) : interview?.mockTemplates && interview.mockTemplates.length > 0 ? (
+          <MockTemplate template={interview.mockTemplates[activeTab - 1]} />
         ) : (
           <div>No mock templates available.</div>
         )}

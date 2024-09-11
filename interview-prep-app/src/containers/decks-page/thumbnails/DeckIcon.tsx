@@ -12,12 +12,14 @@ interface DeckIconProps {
   deckId: string;
   gradientStyle: string;
   currentThumbnail: string | null;
+  onThumbnailChange: (thumbnail: string) => void; // updates the thumbnail in EditDeckMenu
 }
 
 const DeckIcon: React.FC<DeckIconProps> = ({
   deckId,
   gradientStyle,
   currentThumbnail,
+  onThumbnailChange,
 }) => {
   const [selectedGradient, setSelectedGradient] = useState<string | null>(
     currentThumbnail
@@ -49,6 +51,7 @@ const DeckIcon: React.FC<DeckIconProps> = ({
       }
 
       updateDeck(deckId, { thumbnail: selectedGradient });
+      onThumbnailChange(selectedGradient || ""); // Update the thumbnail in EditDeckMenu when saved
     } catch (error) {
       console.error("Error updating the thumbnail:", error);
     }

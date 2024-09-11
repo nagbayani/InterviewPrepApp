@@ -44,6 +44,7 @@ const authCheck = async () => {
     const interviewDb = await fetchAllInterviews(cookieHeader);
 
     const decks = decksDb.decks;
+    const unassignedDeck = decksDb.unassignedDeck;
     // const cards = cardsDb.cards;
     const tags = tagsDb.tags;
     const mockTemplates = mockTemplatesDb.templates;
@@ -64,6 +65,7 @@ const authCheck = async () => {
       tags,
       mockTemplates,
       interviews,
+      unassignedDeck,
     };
     return userData;
   }
@@ -77,6 +79,7 @@ export default async function Layout({ children }: LayoutProps) {
   const tags = data?.tags ?? [];
   const mockTemplates = data?.mockTemplates ?? [];
   const interviews = data?.interviews ?? [];
+  const unassignedDeck = data?.unassignedDeck ?? [];
   // const decks = data?.decksData.decks;
   // const user = data?.session?.user;
   // console.log("DECKS in Layout", decks);
@@ -91,6 +94,7 @@ export default async function Layout({ children }: LayoutProps) {
         tags={tags}
         mockTemplates={mockTemplates}
         interviews={interviews}
+        unassignedDeck={unassignedDeck}
       ></HydrateDashboard>
       <DashboardLayout>{children}</DashboardLayout>
     </>

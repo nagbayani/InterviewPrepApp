@@ -89,13 +89,20 @@ export const useMockTemplateStore = create<MockTemplateState>((set) => ({
   },
   addMockTemplateCard: (mockTemplateCard: MockTemplateCardData) =>
     set((state) => {
-      const newMockTemplateCards = { ...state.mockTemplateCards };
-      if (!newMockTemplateCards[mockTemplateCard.templateId]) {
-        newMockTemplateCards[mockTemplateCard.templateId] = {};
-      }
+      console.log("Adding mock template card: ", mockTemplateCard);
+      // Deep copy of the state to avoid mutation
+      const newMockTemplateCards = {
+        ...state.mockTemplateCards,
+        [mockTemplateCard.templateId]: {
+          ...(state.mockTemplateCards[mockTemplateCard.templateId] || {}),
+        },
+      };
+
+      // Add the new card under the appropriate templateId
       newMockTemplateCards[mockTemplateCard.templateId][
         mockTemplateCard.cardId
       ] = mockTemplateCard;
+
       return { mockTemplateCards: newMockTemplateCards };
     }),
 

@@ -27,6 +27,7 @@ interface HydrateDashboardProps {
   tags: TagData[];
   mockTemplates: MockTemplateData[];
   interviews: InterviewData[];
+  unassignedDeck: DeckData;
 }
 
 const HydrateDashboard = ({
@@ -35,6 +36,7 @@ const HydrateDashboard = ({
   tags,
   mockTemplates,
   interviews,
+  unassignedDeck,
 }: HydrateDashboardProps) => {
   // const setDecks = useDeckStore((state) => state.setDecks);
   const { interviews: interviewsData, setInterviews } = useInterviewStore(
@@ -43,10 +45,15 @@ const HydrateDashboard = ({
       setInterviews: state.setInterviews,
     })
   );
-  const { decks: decksData, setDecks } = useDeckStore((state) => ({
+  const {
+    decks: decksData,
+    setDecks,
+    setUnassignedDeck,
+  } = useDeckStore((state) => ({
     decks: state.decks,
     addDeck: state.addDeck,
     setDecks: state.setDecks,
+    setUnassignedDeck: state.setUnassignedDeck,
   }));
 
   const { cards: cardsData, setCards } = useCardStore((state) => ({
@@ -77,28 +84,33 @@ const HydrateDashboard = ({
     setTags(tags);
     setMockTemplates(mockTemplates);
     setInterviews(interviews);
+    setUnassignedDeck(unassignedDeck.id);
 
     // Extract mockTemplateCards from the mockTemplates
     // Flatten the mockTemplateCards across all templates
-    const mockTemplateCards = mockTemplates.flatMap((template) =>
+    const mockTemplateCardsArray = mockTemplates.flatMap((template) =>
       template.cards.map((card) => ({
         templateId: template.id,
         cardId: card.cardId,
       }))
     );
-    setMockTemplateCards(mockTemplateCards); // Set mockTemplateCards in Zustand store
+    console.log("Mock Template Cards Array: ", mockTemplateCardsArray);
+    // Set the flattened array of MockTemplateCardData in Zustand store
+    setMockTemplateCards(mockTemplateCardsArray);
   }, [
     decks,
     cards,
     tags,
     mockTemplates,
     interviews,
+    unassignedDeck,
     setDecks,
     setCards,
     setTags,
     setMockTemplates,
     setInterviews,
     setMockTemplateCards,
+    setUnassignedDeck,
   ]);
 
   // useEffect(() => {

@@ -55,6 +55,7 @@ export type DeckData = {
   thumbnail: string | null;
   description: string | null;
   cards: CardData[];
+  unassigned: boolean;
 };
 
 export interface MockTemplateData {

@@ -34,10 +34,15 @@ import { AddDeckModal } from "../modal/add-deck-modal";
  */
 const DecksWrapper = ({ decks }: { decks: any }) => {
   // Zustand store:  State Management for Decks
-  const { decks: decksData, setDecks } = useDeckStore((state) => ({
+  const {
+    decks: decksData,
+    setDecks,
+    unassignedDeck,
+  } = useDeckStore((state) => ({
     decks: state.decks,
     addDeck: state.addDeck,
     setDecks: state.setDecks,
+    unassignedDeck: state.unassignedDeck,
   }));
 
   const [loading, setLoading] = useState(false);
@@ -77,9 +82,8 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
         <AddDeckModal />
       </div>
       <ul className='decks-list gap-4 p-16'>
-        {/* <li className='add-wrapper'></li> */}
         {Object.values(decksData)
-          .reverse()
+          // .reverse()
           .map((deck: DeckData) => {
             // Find the matching gradient style based on the thumbnail
             const matchedGradient = gradients.find(
@@ -91,6 +95,23 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
               ? matchedGradient.style
               : "linear-gradient(to right, #e66465, #9198e5)"; // Default gradient
 
+            // Check if this is the unassigned deck
+            if (unassignedDeck && deck.id === unassignedDeck.id) {
+              console.log("Unassigned Deck: ", unassignedDeck);
+              return (
+                <li key={deck.id}>
+                  <DeckLink
+                    id={deck.id}
+                    title={unassignedDeck.title}
+                    path={`/decks/unassigned`} // Path to unassigned deck
+                    thumbnail={gradientStyle}
+                    description={unassignedDeck.description || ""}
+                  />
+                </li>
+              );
+            }
+
+            // Otherwise return the normal deck
             return (
               <li key={deck.id}>
                 <DeckLink

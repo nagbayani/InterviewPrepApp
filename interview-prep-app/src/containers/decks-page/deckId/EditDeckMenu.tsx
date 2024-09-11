@@ -117,6 +117,7 @@ const EditDeckMenu = ({
             <DeckIcon
               deckId={deckId}
               currentThumbnail={localThumbnail}
+              onThumbnailChange={setLocalThumbnail} // Pass the handler to update thumbnail
               gradientStyle={
                 localThumbnail || "linear-gradient(to right, #e66465, #9198e5)"
               }

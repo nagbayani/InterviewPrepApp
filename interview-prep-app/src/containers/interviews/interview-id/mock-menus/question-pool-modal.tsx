@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useMockTemplateStore } from "@/_store/mock-store";
 import { useCardStore } from "@/_store";
 import {
@@ -7,12 +7,10 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CardData } from "@/types/data-types"; // Ensure you import your CardData type
 import QuestionCard from "./question-pool-card";
 
 interface QuestionPoolProps {
@@ -20,33 +18,26 @@ interface QuestionPoolProps {
 }
 
 const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
-  const [questions, setQuestions] = useState<CardData[]>([]);
-  const { mockTemplates, mockTemplateCards } = useMockTemplateStore(
-    (state) => ({
-      mockTemplates: state.mockTemplates,
-      mockTemplateCards: state.mockTemplateCards,
-    })
-  );
+  const { mockTemplateCards } = useMockTemplateStore((state) => ({
+    mockTemplateCards: state.mockTemplateCards,
+  }));
+
   const { cards } = useCardStore((state) => ({
     cards: state.cards,
   }));
 
-  useEffect(() => {
-    // Access the mock template directly by its ID from the record
-    const mockTemplate = mockTemplates[mockTemplateId];
+  // Get the mockTemplateCards related to the specific mockTemplateId
+  const templateCards = mockTemplateCards?.[mockTemplateId] || {};
 
-    if (mockTemplate) {
-      // Get the mockTemplateCards related to the specific mockTemplateId
-      const templateCards = mockTemplateCards[mockTemplateId] || {};
-
-      // Retrieve the full CardData for each cardId
-      const cardsData = Object.values(templateCards)
-        .map((templateCard) => cards[templateCard.cardId])
-        .filter((card): card is CardData => !!card); // Filter out any undefined values
-
-      setQuestions(cardsData);
-    }
-  }, [mockTemplateId, mockTemplates, mockTemplateCards, cards]);
+  // Log for debugging
+  console.log("Mock Template", mockTemplateCards);
+  console.log(
+    "Template Cards:",
+    Object.values(templateCards).map(
+      (templateCard) => cards[templateCard.cardId]
+    )
+  );
+  // console.log("Cards in Store:", cards);
 
   return (
     <Dialog>
@@ -59,15 +50,31 @@ const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
           <DialogClose />
         </DialogHeader>
         <ul>
-          {questions.map((question) => (
-            <li key={question.id}>
-              <QuestionCard
-                key={question.id}
-                question={question}
-                mockTemplateId={mockTemplateId} // Pass the mockTemplateId for deletion
-              />
-            </li>
-          ))}
+          {Object.values(templateCards).length > 0 ? (
+            Object.values(templateCards).map((templateCard) => {
+              console.log("Template Card:", templateCard);
+              console.log("Card ID:", templateCard.cardId);
+              console.log(
+                "Card based on Template Card:",
+                cards?.[templateCard?.cardId]
+              );
+              const card = cards?.[templateCard?.cardId]; // Get the full card details using the cardId
+              if (!card) {
+                return <li key={templateCard.cardId}>Card not found</li>; // Handle case where card is undefined
+              }
+              return (
+                <li key={card.id}>
+                  <QuestionCard
+                    key={card.id}
+                    question={card}
+                    mockTemplateId={mockTemplateId} // Pass the mockTemplateId for deletion
+                  />
+                </li>
+              );
+            })
+          ) : (
+            <li>No questions available.</li>
+          )}
         </ul>
         <DialogFooter></DialogFooter>
       </DialogContent>
