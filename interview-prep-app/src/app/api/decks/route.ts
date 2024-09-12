@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/db";
 import { currentUser } from "@/lib/auth";
-import { getDecksByUserId } from "@/data/decks";
+import { getDecksByUserId, getOrCreateUnassignedDeck } from "@/data/decks";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   // check session
@@ -21,6 +21,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   const decksDb = await getDecksByUserId(user.session?.user.id || "");
+  const unassignedDeck = await getOrCreateUnassignedDeck(
+    user.session?.user.id || ""
+  );
   // Filter out sensitive information
   const decks = decksDb.map((deck) => {
     const { authorId, ...safeDeck } = deck;
@@ -28,7 +31,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   });
   // data= { decks: data}
 
-  return NextResponse.json({ decks });
+  return NextResponse.json({ decks, unassignedDeck });
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {

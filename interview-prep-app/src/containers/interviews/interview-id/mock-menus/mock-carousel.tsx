@@ -24,34 +24,58 @@ const MockCarousel = ({ template }: MockCarouselProps) => {
     cards: state.cards, // Access all cards from the card store
   }));
 
-  const templateCards = mockTemplateCards[template.id] || {}; // Get cards for this template
+  // Get the template cards for the current template ID
+  const templateCards = mockTemplateCards?.[template.id];
+
+  // Log for debugging
+  console.log("Template Cards:", templateCards);
+  console.log(
+    "Template Cards with Questions:",
+    templateCards
+      ? Object.values(templateCards).map(
+          (templateCard) => cards[templateCard.cardId]
+        )
+      : []
+  );
 
   return (
     <div className='mock-carousel'>
       <Carousel className='w-full max-w-lg'>
         <CarouselContent>
-          {Object.values(templateCards).map((mockTemplateCard, index) => {
-            const card = cards[mockTemplateCard.cardId]; // Get the card details using the cardId
+          {templateCards && Object.values(templateCards).length > 0 ? (
+            Object.values(templateCards).map((mockTemplateCard, index) => {
+              const card = cards[mockTemplateCard.cardId]; // Get the card details using the cardId
+              console.log(
+                "carousel cards length",
+                Object.values(templateCards).length
+              );
 
-            if (!card) return null; // If card is not found, skip rendering
+              if (!card) {
+                console.warn(
+                  `Card with ID ${mockTemplateCard.cardId} not found in the store.`
+                );
+                return null; // Skip rendering if the card isn't found
+              }
 
-            return (
-              <CarouselItem key={mockTemplateCard.cardId}>
-                <div className='p-1'>
-                  <Card>
-                    <CardContent className='flex aspect-square items-center justify-center p-6'>
-                      <div>
-                        <h2 className='text-2xl font-semibold'>
-                          {card.question || `Card ${index + 1}`}
-                        </h2>
-                        {/* <p>{card.answer}</p>  */}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            );
-          })}
+              return (
+                <CarouselItem key={mockTemplateCard.cardId}>
+                  <div className='p-1'>
+                    <Card>
+                      <CardContent className='flex aspect-square items-center justify-center p-6'>
+                        <div>
+                          <h2 className='text-2xl font-semibold'>
+                            {card.question || `Card ${index + 1}`}
+                          </h2>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              );
+            })
+          ) : (
+            <p>No cards added to this template.</p> // Display a message if there are no cards
+          )}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />

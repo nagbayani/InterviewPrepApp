@@ -4,7 +4,6 @@ export type CardData = {
   updatedAt: string;
   question: string;
   answer: string;
-  category: string;
   authorId: string;
   deckId: string;
   tags: TagData[] | null;
@@ -31,6 +30,7 @@ export interface DeckDataResponse {
     authorId: string;
     thumbnail: string | null;
     description: string | null;
+    cards: CardData[];
   };
   cards: {
     id: string;
@@ -55,6 +55,7 @@ export type DeckData = {
   thumbnail: string | null;
   description: string | null;
   cards: CardData[];
+  unassigned: boolean;
 };
 
 export interface MockTemplateData {
@@ -77,6 +78,8 @@ export interface InterviewData {
   jobPosition: string;
   expectedSalary?: string;
   jobDescription?: string;
+  skills?: string;
+  qualifications?: string;
   createdAt: string;
   updatedAt: string;
   mockTemplates: MockTemplateData[] | null;

@@ -34,10 +34,15 @@ import { AddDeckModal } from "../modal/add-deck-modal";
  */
 const DecksWrapper = ({ decks }: { decks: any }) => {
   // Zustand store:  State Management for Decks
-  const { decks: decksData, setDecks } = useDeckStore((state) => ({
+  const {
+    decks: decksData,
+    setDecks,
+    unassignedDeck,
+  } = useDeckStore((state) => ({
     decks: state.decks,
     addDeck: state.addDeck,
     setDecks: state.setDecks,
+    unassignedDeck: state.unassignedDeck,
   }));
 
   const [loading, setLoading] = useState(false);
@@ -56,11 +61,11 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
    */
 
   return (
-    <section className='deck-wrapper-container h-100vh overflow-x-scroll'>
+    <section className='deck-wrapper-container h-100vh '>
       <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
 
       <div className='flex justify-center gap-4'>
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger>
             <div className=' w-[250px] rounded-md m-auto text-center place-self-center bg-[#642eff] px-0 py-2 hover:bg-black text-white  transition-colors duration-300 ease-in-out flex items-center justify-center'>
               Filter
@@ -71,15 +76,14 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
               Send
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         {/* Add Deck Button Menu */}
         <AddDeckModal />
       </div>
-      <ul className='decks-list gap-4 p-16'>
-        {/* <li className='add-wrapper'></li> */}
+      <ul className='decks-list gap-4 py-4 px-16'>
         {Object.values(decksData)
-          .reverse()
+          // .reverse()
           .map((deck: DeckData) => {
             // Find the matching gradient style based on the thumbnail
             const matchedGradient = gradients.find(
@@ -91,6 +95,23 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
               ? matchedGradient.style
               : "linear-gradient(to right, #e66465, #9198e5)"; // Default gradient
 
+            // Check if this is the unassigned deck
+            if (unassignedDeck && deck.id === unassignedDeck) {
+              console.log("Unassigned Deck: ", unassignedDeck);
+              return (
+                <li key={deck.id}>
+                  <DeckLink
+                    id={deck.id}
+                    title={deck.title}
+                    path={`/decks/unassigned`} // Path to unassigned deck
+                    thumbnail={gradientStyle}
+                    description={deck.description || ""}
+                  />
+                </li>
+              );
+            }
+
+            // Otherwise return the normal deck
             return (
               <li key={deck.id}>
                 <DeckLink

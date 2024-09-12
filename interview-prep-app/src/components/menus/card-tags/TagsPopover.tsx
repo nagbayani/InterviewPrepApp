@@ -35,7 +35,8 @@ const TagsPopover = ({ tags, cardId, triggerElement }: OpenTagsMenuProps) => {
             size={"tag"}
             onClick={() => setIsTriggerElementVisible(true)}
           >
-            <LuPlus />
+            {/* <LuPlus /> */}
+            <span className='text-[10px]'>+Tag</span>
           </Button>
         )}
       </PopoverTrigger>

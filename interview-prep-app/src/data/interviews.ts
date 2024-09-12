@@ -30,6 +30,8 @@ export const updateInterview = async (data: {
   jobPosition: string;
   expectedSalary?: string | null;
   jobDescription?: string | null;
+  skills?: string | null;
+  qualifications?: string | null;
 }) => {
   console.log("UPDATE INTERVIEW DATA", data);
 
@@ -40,6 +42,8 @@ export const updateInterview = async (data: {
       jobPosition: data.jobPosition,
       expectedSalary: data.expectedSalary,
       jobDescription: data.jobDescription,
+      skills: data.skills,
+      qualifications: data.qualifications,
     },
   });
 

@@ -34,7 +34,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
       question,
       answer,
       deckId,
-      category: "default",
       authorId: user.session?.user.id ?? "",
     });
 

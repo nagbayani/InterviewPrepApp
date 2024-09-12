@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LuPlus } from "react-icons/lu";
 import { CardData, TagData, CardTagData } from "@/types/data-types";
-import { useCardStore, useTagStore } from "@/_store/index";
+import { useCardStore, useTagStore, useDeckStore } from "@/_store/index";
 import Tag from "@/components/card/Tag";
 import AddCardTagsMenu from "@/components/menus/card-tags/AddCardTagsMenu";
 
@@ -31,6 +31,12 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
 
   const { addCardTag } = useTagStore((state) => ({
     addCardTag: state.addCardTag,
+  }));
+
+  // Access updateDeck action from deckStore
+  const { updateDeck, decks } = useDeckStore((state) => ({
+    updateDeck: state.updateDeck,
+    decks: state.decks,
   }));
 
   const handleSave = async () => {
@@ -57,6 +63,7 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
       if (response.ok) {
         const data = await response.json();
         const newCard: CardData = data.card;
+        console.log("New Card:", newCard);
 
         // Create card-tag relationships
         const cardTagPromises = selectedTags.map(async (tag) => {
@@ -86,6 +93,12 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
           });
           // Add card to Zustand store
           addCard(newCard);
+          // Update the deck's cards in the Zustand store
+          const updatedDeck = {
+            ...decks[deckId],
+            cards: [...decks[deckId].cards, newCard],
+          };
+          updateDeck(deckId, updatedDeck);
         }
 
         // Clear the form fields after submission
@@ -97,36 +110,43 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
     }
   };
 
-  useEffect(() => {
-    console.log("Selected Tags:", selectedTags);
-  }, [selectedTags]);
+  const handleClose = () => {
+    setCardQuestion("");
+    setSelectedTags([]);
+  };
+
+  // useEffect(() => {
+  //   console.log("Selected Tags:", selectedTags);
+  // }, [selectedTags]);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => !open && handleClose()}>
       <DialogTrigger asChild>
         <Button variant='outline'>
           <LuPlus />
           Add Card
         </Button>
       </DialogTrigger>
-      <DialogContent className='overflow-visible'>
+      <DialogContent className='overflow-visible max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>New Card</DialogTitle>
           <DialogDescription>Add a new card to the deck</DialogDescription>
         </DialogHeader>
         <div className='grid gap-2'>
           <div>
-            <Label htmlFor='card-tag' className='my-1'>
-              Tags
-            </Label>
             {/* Render selected tags here */}
+            <div className='flex gap-2 mb-2 items-center'>
+              <Label htmlFor='card-tag' className='my-1'>
+                Tags
+              </Label>
+              {/* New Popover Menu for Tags */}
+              <AddCardTagsMenu onSelectTags={setSelectedTags} />
+            </div>
             <div className='flex flex-wrap gap-2 mb-2'>
               {selectedTags.map((tag) => (
                 <Tag key={tag.id} tag={tag} />
               ))}
             </div>
-            {/* New Popover Menu for Tags */}
-            <AddCardTagsMenu onSelectTags={setSelectedTags} />
           </div>
           <div>
             <Label htmlFor='card-question' className='my-1'>

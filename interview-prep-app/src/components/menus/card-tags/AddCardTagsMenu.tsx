@@ -40,21 +40,14 @@ export default function AddCardTagsMenu({
   return (
     <Popover open={isOpen} onOpenChange={handlePopoverToggle}>
       <PopoverTrigger asChild>
-        <Button variant='outline' onClick={handlePopoverToggle}>
+        <Button variant='editTag' size={"tag"} onClick={handlePopoverToggle}>
           Select Tags
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className='p-4 z-[100] pointer-events-auto'
+        className='p-4 max-h-80 overflow-y-scroll'
         onClick={preventClose}
       >
-        {/* <Input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onClick={() => {
-            console.log("clicked");
-          }}
-        ></Input> */}
         <AddCardTagsList
           selectedTags={selectedTags}
           handleTagToggle={handleTagToggle}

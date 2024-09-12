@@ -25,14 +25,14 @@ const buttonVariants = cva(
         editCard:
           "bg-gray-200 hover:bg-gray-300 hover:bg-slate-500  rounded-none",
         editTag:
-          "rounded-[5px] border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "rounded-[5px] text-[10px] border border-input bg-background hover:bg-accent hover:text-accent-foreground p-0",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-        tag: "h-8 w-8",
+        tag: "px-2 py-1 h-auto w-auto", // Custom size for the tag
       },
     },
     defaultVariants: {

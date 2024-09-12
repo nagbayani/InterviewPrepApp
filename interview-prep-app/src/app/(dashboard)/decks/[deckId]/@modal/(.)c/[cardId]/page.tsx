@@ -4,6 +4,7 @@ import { fetchSingleCard } from "@/utils/fetch";
 import { currentUser } from "@/lib/auth";
 import type { CardData } from "@/types/data-types";
 import { getTagsByUserId } from "@/data/tags";
+import CardDisplay from "@/components/card/Card-Display";
 
 type Props = {
   params: {
@@ -22,14 +23,17 @@ const CardPage = async ({ params: { cardId } }: Props) => {
 
   const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
 
-  if (!cardData?.id) {
-    return <h1 className='text-center'>No Data Found for that Card ID.</h1>;
-  }
+  // if (!cardData?.id) {
+  //   return <h1 className='text-center'>No Data Found for that Card ID.</h1>;
+  // }
+  // Check if data is not yet loaded and return loading state
+  const isLoading = !cardData;
 
   return (
     <>
       <Modal data={cardData}>
-        <CardModalContent cardData={cardData} userTags={userTags} />
+        {/* // <CardModalContent cardData={cardData!} userTags={userTags} /> */}
+        <CardDisplay cardDb={cardData} userTags={userTags} />
       </Modal>
     </>
   );

@@ -14,7 +14,7 @@ const HomePage = async () => {
   const session = await auth();
 
   if (session?.user) {
-    console.log(session, "SESSION HOME");
+    // console.log(session, "SESSION HOME");
     return (
       <ContentLayout title={"Home"}>
         {/* <div className='dashboard-wrapper'> */}

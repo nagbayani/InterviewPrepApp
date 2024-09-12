@@ -41,20 +41,9 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
     card: state.cards[cardDb.id],
     updateCard: state.updateCard,
   }));
-
-  // Zustand Tag Store
-  // const { cardTags, tags, setCardTags } = useTagStore((state) => ({
-  //   cardTags: state.cardTags,
-  //   tags: state.tags,
-  //   setCardTags: state.setCardTags,
-  // }));
-
-  // Get tags associated with this card
-  // const cardTagIds = cardTags[card.id]
-  //   ? Object.keys(cardTags[card.id])
-  //   : [];
-  // const cardTagsData = cardTagIds.map((tagId) => tags[tagId]);
-  // console.log("cardTagsData", cardTagsData);
+  // console.log("CardDisplay.tsx component - Zustand card", card);
+  // console.log("Card Zustand Answer", card.answer);
+  // console.log("CardDisplay.tsx component - cardDb", cardDb);
 
   const [isEditing, setIsEditing] = useState({
     question: false,
@@ -186,8 +175,7 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
     <div className={`card-form-container`}>
       <Form {...form}>
         {/* Render Card Tags */}
-        <p>Tags</p>
-        <div className='flex items-center gap-4 '>
+        <div className='flex items-center gap-2 '>
           {cardDb.tags?.map((tag) => (
             <TagsPopover
               key={tag.id}
@@ -242,7 +230,7 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
           <div className='flex-1 lg:basis-2/3'>
             <EditorWrapper data={cardDb} cardId={card.id} />
           </div>
-          <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md'>
+          <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md max-h-[500px]'>
             {/* Feedback Box Content */}
             <h2 className='text-lg font-semibold mb-2'>Feedback</h2>
             <p className='text-gray-700'>Your feedback content goes here.</p>
