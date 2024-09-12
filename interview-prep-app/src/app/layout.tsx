@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={inter.className}>
         <Provider>
-          <main className='w-full'>
+          <main className='w-full h-screen'>
             {children}
             <Toaster />
           </main>

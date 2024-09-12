@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import User from "@/components/User";
-import { authOptions } from "@/lib/testAuth";
 import { auth } from "../../auth";
 export default async function Home() {
   const session = await auth();
