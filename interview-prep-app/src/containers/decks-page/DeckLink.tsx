@@ -27,14 +27,11 @@ const DeckLink = ({
   thumbnail,
   description,
 }: DeckLinkProps) => {
-  const {
-    decks: decksData,
-    updateDeck,
-    deleteDeck,
-  } = useDeckStore((state) => ({
+  const { decks, deck, updateDeck, deleteDeck } = useDeckStore((state) => ({
     decks: state.decks,
     updateDeck: state.updateDeck,
     deleteDeck: state.deleteDeck,
+    deck: state.decks[id],
   }));
 
   const pathname = usePathname();
@@ -110,48 +107,41 @@ const DeckLink = ({
     }
   };
 
+  // Format the updatedAt value to "Updated Aug 24, 2024"
+  const formattedUpdatedAt = new Date(deck.updatedAt).toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }
+  );
+
   return (
     <div
       className={`decklink-container ${
         pathname === path && "decklink-container"
       }`}
     >
-      <div className='self-end'>
+      <div className='flex '>
+        <div
+          className='decklink-thumbnail flex-grow mr-2'
+          style={{ backgroundImage: thumbnail }}
+        ></div>
         <DeckLinkMenu path={path} onDelete={handleDeleteDeck} />
       </div>
-      <div className='flex gap-2 justify-between items-center'>
-        <div className='flex gap-2 items-center'>
-          <div
-            className='decklink-thumbnail'
-            style={{ backgroundImage: thumbnail }}
-          ></div>
-          <h1 id='decklink-title'>{title}</h1>
-        </div>
+      <div className='flex gap-2 justify-start mt-2 items-center'>
+        <h1 id='decklink-title'>{title}</h1>
+        {/* <div className='flex gap-2 items-center'>
+        </div> */}
       </div>
-
-      <div className='decklink-description w-full h-full min-h-[100px]'>
+      <div className='decklink-description gap-4 w-full h-full min-h-[100px]'>
         <p>{description}</p>
         {/* last opened  */}
       </div>
+      <p>{`Updated ${formattedUpdatedAt}`}</p> {/* Render the formatted date */}
     </div>
   );
 };
 
 export default DeckLink;
-
-{
-  /* {titleEditing ? (
-  <>
-    <CardInput
-      onBlur={handleInputBlur}
-      onChange={handleChange}
-      value={titleValue}
-      onKeyDown={handleKeyDown}
-    />
-  </>
-) : (
-  <>
-    <span onClick={() => setTitleEdit(true)}>{titleValue}</span>
-  </>
-)} */
-}

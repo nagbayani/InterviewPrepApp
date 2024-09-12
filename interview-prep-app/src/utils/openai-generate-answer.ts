@@ -33,8 +33,7 @@ export const generateAnswer = async ({
             Projects: "${projects}"
             Skills: "${skills}"
             Experience: "${experience}"
-
-            Please return only the improved answer as text.`,
+            Please Use a conversational tone, don't use too many complicated words! Please strictly return only the improved answer as text.`,
           },
         ],
         model: "gpt-4o-mini",

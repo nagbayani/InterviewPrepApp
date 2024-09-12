@@ -81,17 +81,7 @@ export function AddDeckModal() {
               onChange={(e) => setDeckTitle(e.target.value)}
             />
           </div>
-          {/* <div className='grid grid-cols-4 items-center gap-4'>
-            <Label htmlFor='deck-description' className='text-right'>
-              Description
-            </Label>
-            <Input
-              id='deck-description'
-              className='col-span-3'
-              value={deckDescription}
-              onChange={(e) => setDeckDescription(e.target.value)}
-            />
-          </div> */}
+
           <div className='grid w-full gap-1.5'>
             <Label htmlFor='message-2'>Description</Label>
             <Textarea

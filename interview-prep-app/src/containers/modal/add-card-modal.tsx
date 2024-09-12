@@ -110,36 +110,43 @@ export function AddCardModal({ deckId }: AddCardModalProps) {
     }
   };
 
-  useEffect(() => {
-    console.log("Selected Tags:", selectedTags);
-  }, [selectedTags]);
+  const handleClose = () => {
+    setCardQuestion("");
+    setSelectedTags([]);
+  };
+
+  // useEffect(() => {
+  //   console.log("Selected Tags:", selectedTags);
+  // }, [selectedTags]);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => !open && handleClose()}>
       <DialogTrigger asChild>
         <Button variant='outline'>
           <LuPlus />
           Add Card
         </Button>
       </DialogTrigger>
-      <DialogContent className='overflow-visible'>
+      <DialogContent className='overflow-visible max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>New Card</DialogTitle>
           <DialogDescription>Add a new card to the deck</DialogDescription>
         </DialogHeader>
         <div className='grid gap-2'>
           <div>
-            <Label htmlFor='card-tag' className='my-1'>
-              Tags
-            </Label>
             {/* Render selected tags here */}
+            <div className='flex gap-2 mb-2 items-center'>
+              <Label htmlFor='card-tag' className='my-1'>
+                Tags
+              </Label>
+              {/* New Popover Menu for Tags */}
+              <AddCardTagsMenu onSelectTags={setSelectedTags} />
+            </div>
             <div className='flex flex-wrap gap-2 mb-2'>
               {selectedTags.map((tag) => (
                 <Tag key={tag.id} tag={tag} />
               ))}
             </div>
-            {/* New Popover Menu for Tags */}
-            <AddCardTagsMenu onSelectTags={setSelectedTags} />
           </div>
           <div>
             <Label htmlFor='card-question' className='my-1'>
