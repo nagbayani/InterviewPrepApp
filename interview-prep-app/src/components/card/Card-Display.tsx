@@ -175,8 +175,7 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
     <div className={`card-form-container`}>
       <Form {...form}>
         {/* Render Card Tags */}
-        <p>Tags</p>
-        <div className='flex items-center gap-4 '>
+        <div className='flex items-center gap-2 '>
           {cardDb.tags?.map((tag) => (
             <TagsPopover
               key={tag.id}
@@ -231,7 +230,7 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
           <div className='flex-1 lg:basis-2/3'>
             <EditorWrapper data={cardDb} cardId={card.id} />
           </div>
-          <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md'>
+          <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md max-h-[500px]'>
             {/* Feedback Box Content */}
             <h2 className='text-lg font-semibold mb-2'>Feedback</h2>
             <p className='text-gray-700'>Your feedback content goes here.</p>

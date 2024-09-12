@@ -94,13 +94,17 @@ const EditDeckMenu = ({
       <DialogTrigger asChild>
         <div className='deck-wrapper-header cursor-pointer flex items-center'>
           <div
-            className='w-[80px] h-[80px] rounded-[4px]'
+            className='w-[80px] h-[80px] rounded-[4px] border border-transparent hover:border-black'
             style={{ background: getGradientStyle(thumbnail) || "" }}
           />
 
-          <div className='deck-title-wrap gap-2 ml-4'>
-            <h1>{title}</h1>
-            <div className='deck-description'>{description}</div>
+          <div className='deck-title-wrap ml-0'>
+            <h1 className='p-1 rounded-[4px] border border-transparent hover:border-black '>
+              {title}
+            </h1>
+            <div className='p-1 rounded-[4px] deck-description border  border-transparent hover:border-black'>
+              {description}
+            </div>
           </div>
         </div>
       </DialogTrigger>
