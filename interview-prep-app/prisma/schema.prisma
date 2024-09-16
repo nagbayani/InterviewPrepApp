@@ -15,34 +15,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Plan {
+  free
+  premium
+}
+
+enum SubscriptionPeriod {
+  monthly
+}
+
 // datasource db {
 //   provider = "sqlite"
 //   url ="file:./dev.db"
 // }
-
-  //url      = env("DATABASE_URL")
+//url      = env("DATABASE_URL")
 
 model User {
-  id        String  @id @default(cuid())
-  name      String?  
-  email     String  @unique
-  password  String?  
-  image     String?  
-  decks     Deck[]
-  cards     Card[]
-  tags      Tag[]
-  mockTemplates MockTemplate[] 
-  interviews Interview[] 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  accounts  Account[]
-  emailVerified DateTime?
-  userResume UserResume?
+  id                 String  @id @default(cuid())
+  name               String?  
+  email              String  @unique
+  password           String?  
+  image              String?  
+  decks              Deck[]
+  cards              Card[]
+  tags               Tag[]
+  mockTemplates      MockTemplate[] 
+  interviews         Interview[] 
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  accounts           Account[]
+  emailVerified      DateTime?
+  userResume         UserResume?
   stripeCustomerId   String?  @unique
-  isActive                Boolean            @default(false)
+  isActive           Boolean            @default(false)
+  Subscription       Subscription?
+  plan               Plan               @default(free) 
   // role      UserRole @default(USER)
   // isTwoFactorEnabled Boolean @default(false)
   // twoFactorConfirmation TwoFactorConfirmation?
+}
+
+model Subscription {
+  id        String             @id @default(cuid()) @map("_id")
+  userId    String             @unique
+  plan      Plan
+  period    SubscriptionPeriod
+  startDate DateTime @default(now())
+  endDate   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User User @relation(fields: [userId], references: [id])
 }
 
 model Account {
@@ -72,9 +94,9 @@ model VerificationToken {
   email String
   token String @unique
   expires DateTime
-
   @@unique([email, token])
 }
+
 model UserResume {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
