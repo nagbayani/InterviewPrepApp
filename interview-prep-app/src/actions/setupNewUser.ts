@@ -10,6 +10,16 @@ export const setupNewUser = async (userId: string) => {
       authorId: userId,
     })),
   });
+  
+  // Create default limits for the user - for free plan
+  await prisma.generatedLimits.create({
+    data: {
+      userId: userId,
+      generatedAnswers: 0,
+      generatedBundles: 0,
+      generatedFeedback: 0,
+    },
+  });
 
   // Fetch all the tags to use in the card creation process
   const tags = await prisma.tag.findMany({
