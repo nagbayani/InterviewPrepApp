@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "../../styles/interviews/interview-link.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useInterviewStore } from "@/_store/interviews-store";
 import InterviewLinkMenu from "./InterviewLinkMenu";
 
@@ -32,6 +32,7 @@ const InterviewLink = ({
   }));
 
   const pathname = usePathname();
+  const router = useRouter(); // Use Next.js router for navigation
 
   const [titleEditing, setTitleEdit] = useState(false);
   const [titleValue, setTitleValue] = useState(company);
@@ -109,6 +110,7 @@ const InterviewLink = ({
       className={`interviewlink-container ${
         pathname === path && "interviewlink-container"
       }`}
+      onDoubleClick={() => router.push(path)}
     >
       <div className='self-end'>
         <InterviewLinkMenu path={path} onDelete={handleDeleteInterview} />

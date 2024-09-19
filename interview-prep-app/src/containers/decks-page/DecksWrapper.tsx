@@ -103,7 +103,7 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
                   <DeckLink
                     id={deck.id}
                     title={deck.title}
-                    path={`/decks/unassigned`} // Path to unassigned deck
+                    path={`/decks/${deck.id}`} // Path to unassigned deck
                     thumbnail={gradientStyle}
                     description={deck.description || ""}
                   />

@@ -42,7 +42,7 @@ const InterviewsWrapper = ({ interviews }: { interviews: any }) => {
       <h1 style={{ fontSize: "var(--step-2)" }}>Interviews</h1>
 
       <div className='flex justify-center gap-4'>
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger>
             <div className='w-[250px] rounded-md m-auto text-center place-self-center bg-[#642eff] px-0 py-2 hover:bg-black text-white transition-colors duration-300 ease-in-out flex items-center justify-center'>
               Filter
@@ -53,7 +53,7 @@ const InterviewsWrapper = ({ interviews }: { interviews: any }) => {
               Send
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         {/* Add Interview Button Menu */}
         <AddInterviewModal />

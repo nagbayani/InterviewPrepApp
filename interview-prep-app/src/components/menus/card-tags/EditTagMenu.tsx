@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { TagData } from "@/types/data-types";
 import { tagColors } from "@/lib/colors/tag-colors";
 import { useTagStore } from "@/_store/index";
+import { EditTag } from "@/components/card/EditTag";
 
 interface EditTagMenuProps {
   tag: TagData;
@@ -13,8 +14,6 @@ interface EditTagMenuProps {
 export default function EditTagMenu({ tag, onBack }: EditTagMenuProps) {
   const [tagName, setTagName] = useState(tag.name);
   const [tagColor, setTagColor] = useState(tag.color);
-
-  console.log("Tag", tag.id);
 
   // Get the updateTag function from the store
   const { updateTag } = useTagStore((state) => ({
@@ -58,11 +57,20 @@ export default function EditTagMenu({ tag, onBack }: EditTagMenuProps) {
   };
   return (
     <div className='pointer-events-auto'>
-      <h2>Edit Tag</h2>
+      <div className='p-16'>
+        <EditTag
+          tag={{
+            id: tag.id,
+            name: tagName,
+            color: tagColor,
+            authorId: tag.authorId,
+          }}
+        />
+
+        {/* INSERT TAG IN THIS DIV  */}
+      </div>
       <div className='mb-4'>
-        <label className='block text-sm font-medium text-gray-700'>
-          Tag Name
-        </label>
+        <label className='block text-sm font-medium text-gray-700'>Title</label>
         <Input
           value={tagName}
           onChange={(e) => setTagName(e.target.value)}
@@ -77,14 +85,15 @@ export default function EditTagMenu({ tag, onBack }: EditTagMenuProps) {
           {tagColors.map((color) => (
             <div
               key={color.name}
-              onClick={() => handleColorSelect(color.textColor)}
+              onClick={() => handleColorSelect(color.backgroundColor)}
               className={`w-12 h-12 cursor-pointer hover:border-black hover:border-2 rounded-[4px] ${
-                tagColor === color.textColor
+                tagColor === color.backgroundColor
                   ? "border-4 border-black"
-                  : "border-2 border-transparent"
+                  : "border-[1px] border-transparent"
               }`}
               style={{
-                backgroundColor: color.borderColor,
+                backgroundColor: color.backgroundColor,
+                borderColor: color.borderColor,
               }}
             ></div>
           ))}

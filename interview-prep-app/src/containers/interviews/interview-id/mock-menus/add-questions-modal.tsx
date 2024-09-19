@@ -88,7 +88,7 @@ const AddQuestionsModal = ({ mockTemplateId }: AddQuestionsModalProps) => {
       <DialogTrigger asChild>
         <Button variant='outline'>Add Questions</Button>
       </DialogTrigger>
-      <DialogContent className='w-[800px]'>
+      <DialogContent className='w-[800px] top-[50%] max-h-[80vh] overflow-y-auto'>
         <DialogHeader>
           <DialogTitle>Select Questions to Add</DialogTitle>
           <DialogDescription>
@@ -97,7 +97,7 @@ const AddQuestionsModal = ({ mockTemplateId }: AddQuestionsModalProps) => {
         </DialogHeader>
         <div className='flex gap-4'>
           {/* Select Questions Section */}
-          <div className='w-1/2'>
+          <div className='w-1/2 overflow-y-auto'>
             <SelectQuestions
               selectedCardsByDeck={selectedCardsByDeck}
               setSelectedCardsByDeck={setSelectedCardsByDeck}
@@ -105,7 +105,7 @@ const AddQuestionsModal = ({ mockTemplateId }: AddQuestionsModalProps) => {
           </div>
 
           {/* Selected Questions Section */}
-          <div className='w-1/2 bg-gray-100 p-4 rounded-md'>
+          <div className='w-1/2 bg-gray-100 p-4 rounded-md overflow-hidden'>
             <h3 className='text-lg font-semibold'>Selected Questions</h3>
             <ul className='space-y-4'>
               {selectedQuestions.length > 0 ? (
@@ -123,10 +123,12 @@ const AddQuestionsModal = ({ mockTemplateId }: AddQuestionsModalProps) => {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleAddQuestions}>Add Selected Questions</Button>
           <DialogClose asChild onClick={handleClose}>
-            <Button variant='outline'>Cancel</Button>
+            <Button variant='outline' className='mr-auto'>
+              Cancel
+            </Button>
           </DialogClose>
+          <Button onClick={handleAddQuestions}>Add Selected Questions</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

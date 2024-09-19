@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import "../../styles/deck/deckLink.css";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CardInput } from "@/components/ui/cardinput";
 import { useDeckStore } from "@/_store";
 import DeckLinkMenu from "./DeckLinkMenu";
@@ -35,6 +35,7 @@ const DeckLink = ({
   }));
 
   const pathname = usePathname();
+  const router = useRouter();
 
   const [titleEditing, setTitleEdit] = useState(false);
   const [titleValue, setTitleValue] = useState(title);
@@ -122,6 +123,7 @@ const DeckLink = ({
       className={`decklink-container ${
         pathname === path && "decklink-container"
       }`}
+      onDoubleClick={() => router.push(path)}
     >
       <div className='flex '>
         <div

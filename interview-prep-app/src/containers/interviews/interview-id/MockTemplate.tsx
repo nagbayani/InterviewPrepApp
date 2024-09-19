@@ -34,7 +34,7 @@ const MockTemplate = ({ template }: MockTemplateProps) => {
       <h1 className='text-3xl'>{template.title}</h1>
       <p>{template.description}</p>
       <div className='flex flex-col items-center gap-10'>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 mt-4'>
           <AddQuestionsModal mockTemplateId={template.id} />
           {/* <Button variant='textIcon'>
             <LuPlus />

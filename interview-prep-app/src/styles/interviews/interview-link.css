@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 .interviewlink-container {
+  background-color: #fefcf6;
+
   padding-top: 25px;
   padding-left: 25px;
   padding: 12px 12px 16px;
@@ -53,7 +55,7 @@
   font-size: var(--step--3);
   font-weight: 500;
   color: #101010;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis; /* Ensures long titles are truncated with ellipsis */

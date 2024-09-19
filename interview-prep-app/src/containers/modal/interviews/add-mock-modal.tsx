@@ -104,7 +104,9 @@ const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
   return (
     <Dialog onOpenChange={handleClose}>
       <DialogTrigger asChild>
-        <Button variant='outline'>+ Mock Interview</Button>
+        <Button variant='outline' className='mx-0 self-end'>
+          + Mock Interview
+        </Button>
       </DialogTrigger>
       <DialogContent
         onInteractOutside={(e) => {
