@@ -32,6 +32,16 @@ export interface DeckDataResponse {
     description: string | null;
     cards: CardData[];
   };
+  unassignedDeck: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    title: string;
+    authorId: string;
+    thumbnail: string | null;
+    description: string | null;
+    cards: CardData[];
+  } | null;
   cards: {
     id: string;
     createdAt: string;

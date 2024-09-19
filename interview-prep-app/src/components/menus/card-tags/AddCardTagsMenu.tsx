@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import AddCardTagsList from "./AddCardTagsList";
 import { TagData } from "@/types/data-types";
+import { Plus } from "lucide-react";
 
 interface AddCardTagsMenuProps {
   onSelectTags: (selectedTags: TagData[]) => void;
@@ -40,21 +41,15 @@ export default function AddCardTagsMenu({
   return (
     <Popover open={isOpen} onOpenChange={handlePopoverToggle}>
       <PopoverTrigger asChild>
-        <Button variant='outline' onClick={handlePopoverToggle}>
+        <Button variant='textIcon' size={"tag"} onClick={handlePopoverToggle}>
+          <Plus size={12} />
           Select Tags
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className='p-4 z-[100] pointer-events-auto'
+        className='p-4 max-h-100 overflow-y-scroll'
         onClick={preventClose}
       >
-        {/* <Input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onClick={() => {
-            console.log("clicked");
-          }}
-        ></Input> */}
         <AddCardTagsList
           selectedTags={selectedTags}
           handleTagToggle={handleTagToggle}

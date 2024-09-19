@@ -24,7 +24,7 @@ const InterviewTabs = ({ jobDetails, interviewId }: InterviewTabsProps) => {
     <div className='interview-tabs-container'>
       <div className='tabs'>
         <button
-          className={`tab ${activeTab === 0 ? "active" : ""}`}
+          className={`tab  ${activeTab === 0 ? "active" : ""}`}
           onClick={() => handleTabClick(0)}
         >
           Job Details

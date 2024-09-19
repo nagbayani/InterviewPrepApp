@@ -16,6 +16,7 @@ import SaveButton from "@/components/buttons/save-button";
 import { Button } from "@/components/ui/button";
 import { useInterviewStore } from "@/_store/interviews-store";
 import { updateInterviewPUT } from "@/utils/fetch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface JobDetailsFormProps {
   interviewDb: InterviewData;
@@ -145,115 +146,132 @@ const JobDetailsForm = ({ interviewDb }: JobDetailsFormProps) => {
   // Format the skills and qualifications with bullet points
 
   return (
-    <div className='flex flex-col w-full h-full items-center justify-center gap-8'>
-      {/* Upload job description */}
-      <Card className='min-w-full max-w-lg h-full'>
-        <CardHeader>
-          <CardTitle>Upload Job Details</CardTitle>
-          <CardDescription>
-            Copy and paste entire job description to extract details
-          </CardDescription>
-        </CardHeader>
-        <CardContent className='h-full'>
-          <div className='grid gap-4 h-full'>
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='jobDescription'>Job Description</Label>
-              <Textarea
-                id='jobDescription'
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                placeholder='Describe the job position'
-              />
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className='flex justify-between'>
-          <Button onClick={uploadJobDescription}>Upload</Button>
-        </CardFooter>
-      </Card>
+    // <div className='flex flex-col w-full h-full items-center justify-center gap-8'>
+    <Tabs defaultValue='upload-details' className='w-full  mx-auto p-6'>
+      <TabsList className='grid grid-cols-2 mb-6'>
+        <TabsTrigger value='upload-details'>Upload Job Details</TabsTrigger>
+        <TabsTrigger value='edit-details'>Job Summary</TabsTrigger>
+      </TabsList>
 
-      <MoveRight />
+      <TabsContent value='upload-details'>
+        {/* Upload job description */}
+        <Card className='min-w-full max-w-lg h-full border-none shadow-none'>
+          <CardHeader>
+            <CardTitle>
+              {" "}
+              <span className='text-2xl'>
+                Provide some information about the job you&apos;re preparing to
+                interview for.
+              </span>
+            </CardTitle>
+            <CardDescription>
+              Copy and paste entire job description to extract details
+            </CardDescription>
+          </CardHeader>
+          <CardContent className='h-full'>
+            <div className='grid gap-4 h-full'>
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='jobDescription'>Job Description</Label>
+                <Textarea
+                  id='jobDescription'
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  placeholder='Describe the job position'
+                />
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className='flex justify-between'>
+            <Button onClick={uploadJobDescription}>Upload</Button>
+          </CardFooter>
+        </Card>
+      </TabsContent>
 
-      {/* Container to Fill in details */}
-      <Card className='min-w-full max-w-lg'>
-        <CardHeader>
-          <CardTitle>Edit Job Details</CardTitle>
-          <CardDescription>
-            Update the details of your interview
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className='grid gap-4'>
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='company'>Company</Label>
-              <Input
-                id='company'
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                placeholder='Company Name'
-              />
-            </div>
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='jobPosition'>Job Position</Label>
-              <Input
-                id='jobPosition'
-                value={jobPosition}
-                onChange={(e) => setJobPosition(e.target.value)}
-                placeholder='Job Position'
-              />
-            </div>
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='expectedSalary'>Expected Salary</Label>
-              <Input
-                id='expectedSalary'
-                value={expectedSalary}
-                onChange={(e) => setExpectedSalary(e.target.value)}
-                placeholder='Expected Salary'
-              />
-            </div>
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='jobDescription'>Job Responsibilities</Label>
-              <Textarea
-                id='jobDescription'
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                placeholder='Describe the responsibilities'
-              />
-            </div>
+      <TabsContent value='edit-details'>
+        {/* Container to Fill in details */}
+        <Card className='min-w-full max-w-lg border-none shadow-none'>
+          <CardHeader>
+            <CardTitle>
+              <span className='text-2xl'>Edit Job Details</span>
+            </CardTitle>
+            <CardDescription>
+              Update the details of your interview
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className='grid gap-4'>
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='company'>Company</Label>
+                <Input
+                  id='company'
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  placeholder='Company Name'
+                />
+              </div>
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='jobPosition'>Job Position</Label>
+                <Input
+                  id='jobPosition'
+                  value={jobPosition}
+                  onChange={(e) => setJobPosition(e.target.value)}
+                  placeholder='Job Position'
+                />
+              </div>
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='expectedSalary'>Expected Salary</Label>
+                <Input
+                  id='expectedSalary'
+                  value={expectedSalary}
+                  onChange={(e) => setExpectedSalary(e.target.value)}
+                  placeholder='Expected Salary'
+                />
+              </div>
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='jobDescription'>Job Responsibilities</Label>
+                <Textarea
+                  id='jobDescription'
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  placeholder='Describe the responsibilities'
+                />
+              </div>
 
-            {/* Preferred Skills as bullet points in Textarea */}
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='preferredSkills'>Preferred Skills</Label>
-              <Textarea
-                id='preferredSkills'
-                value={preferredSkills}
-                onChange={(e) => setPreferredSkills(e.target.value)}
-                placeholder='Preferred Skills'
-              />
-            </div>
+              {/* Preferred Skills as bullet points in Textarea */}
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='preferredSkills'>Preferred Skills</Label>
+                <Textarea
+                  id='preferredSkills'
+                  value={preferredSkills}
+                  onChange={(e) => setPreferredSkills(e.target.value)}
+                  placeholder='Preferred Skills'
+                />
+              </div>
 
-            {/* Preferred Qualifications as bullet points in Textarea */}
-            <div className='flex flex-col space-y-1.5'>
-              <Label htmlFor='preferredQualifications'>
-                Preferred Qualifications
-              </Label>
-              <Textarea
-                id='preferredQualifications'
-                value={preferredQualifications}
-                onChange={(e) => setPreferredQualifications(e.target.value)}
-                placeholder='Preferred Qualifications'
-              />
+              {/* Preferred Qualifications as bullet points in Textarea */}
+              <div className='flex flex-col space-y-1.5'>
+                <Label htmlFor='preferredQualifications'>
+                  Preferred Qualifications
+                </Label>
+                <Textarea
+                  id='preferredQualifications'
+                  value={preferredQualifications}
+                  onChange={(e) => setPreferredQualifications(e.target.value)}
+                  placeholder='Preferred Qualifications'
+                />
+              </div>
             </div>
-          </div>
-        </CardContent>
-        <CardFooter className='flex justify-between'>
-          <Button variant='outline' onClick={() => console.log("Cancel")}>
-            Cancel
-          </Button>
-          <SaveButton status={saveStatus} onClick={handleSave} />
-        </CardFooter>
-      </Card>
-    </div>
+          </CardContent>
+          <CardFooter className='flex justify-between'>
+            <Button variant='outline' onClick={() => console.log("Cancel")}>
+              Cancel
+            </Button>
+            <SaveButton status={saveStatus} onClick={handleSave} />
+          </CardFooter>
+        </Card>
+      </TabsContent>
+    </Tabs>
+    // </div>
   );
 };
 

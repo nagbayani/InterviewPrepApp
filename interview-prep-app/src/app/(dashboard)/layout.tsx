@@ -44,7 +44,9 @@ const authCheck = async () => {
     const interviewDb = await fetchAllInterviews(cookieHeader);
 
     const decks = decksDb.decks;
+    // console.log("DECKS in Layout", decks);
     const unassignedDeck = decksDb.unassignedDeck;
+    console.log("UNASSIGNED DECK in Layout", unassignedDeck);
     // const cards = cardsDb.cards;
     const tags = tagsDb.tags;
     const mockTemplates = mockTemplatesDb.templates;

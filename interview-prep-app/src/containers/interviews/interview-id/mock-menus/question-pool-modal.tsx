@@ -44,7 +44,7 @@ const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
       <DialogTrigger asChild>
         <Button variant='outline'>Question Pool</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>A list of all questions for this interview.</DialogTitle>
           <DialogClose />
@@ -63,7 +63,7 @@ const QuestionPool = ({ mockTemplateId }: QuestionPoolProps) => {
                 return <li key={templateCard.cardId}>Card not found</li>; // Handle case where card is undefined
               }
               return (
-                <li key={card.id}>
+                <li key={card.id} className='my-4'>
                   <QuestionCard
                     key={card.id}
                     question={card}

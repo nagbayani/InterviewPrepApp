@@ -6,24 +6,26 @@ import { getDecksByUserId, getOrCreateUnassignedDeck } from "@/data/decks";
 export async function GET(req: NextRequest, res: NextResponse) {
   // check session
   const user = await currentUser();
-  // console.log(user, "API ENDPOINT USER");
+
+  console.log(user, "API ENDPOINT USER");
   // console.log(req.cookies, "API ENDPOINT COOKIES");
 
   // Extract cookies from the request
   // const cookieHeader = req.headers.get("cookie");
 
   // console.log(req.headers.get("Cookie"), "API ENDPOINT COOKIE HEADER");
-  if (!user) {
+  if (!user || !user.session?.user.id) {
     return NextResponse.json({
       message: `No User Session`,
       status: 401,
     });
   }
 
-  const decksDb = await getDecksByUserId(user.session?.user.id || "");
-  const unassignedDeck = await getOrCreateUnassignedDeck(
-    user.session?.user.id || ""
-  );
+  const decksDb = await getDecksByUserId(user.session?.user.id);
+  console.log("user id", user.session?.user.id);
+  console.log(decksDb, "DECKS DB");
+  const unassignedDeck = await getOrCreateUnassignedDeck(user.session?.user.id);
+  // need to add unassigned
   // Filter out sensitive information
   const decks = decksDb.map((deck) => {
     const { authorId, ...safeDeck } = deck;

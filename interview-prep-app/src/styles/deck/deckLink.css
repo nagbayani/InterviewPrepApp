@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   background-color: #fefcf6;
-  gap: 5px;
+  /* gap: 5px; */
   margin: 5px 0px;
   border: 0.1em solid rgb(16, 16, 16, 0.5);
   border-radius: 5px;
@@ -53,10 +53,10 @@
 }
 
 .decklink-container .decklink-thumbnail {
-  width: 40px;
+  /* width: 80%; */
   height: 40px;
   border-radius: 4px;
-  border: 0.1em solid #9ca3af;
+  /* border: 0.1em solid #9ca3af; */
   flex-shrink: 0; /* Prevents the thumbnail from shrinking */
 }
 
@@ -64,7 +64,7 @@
   font-size: var(--step--3);
   font-weight: 500;
   color: #101010;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   white-space: wrap;
   overflow: hidden;
   text-overflow: ellipsis; /* Ensures long titles are truncated with ellipsis */

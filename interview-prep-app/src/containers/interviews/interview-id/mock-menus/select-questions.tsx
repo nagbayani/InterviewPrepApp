@@ -3,6 +3,8 @@ import { useDeckStore } from "@/_store/index";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DeckData, CardData } from "@/types/data-types";
+import { ChevronLeft } from "lucide-react";
+
 import "../../../../styles/interviews/select-questions.css";
 
 interface SelectQuestionsProps {
@@ -44,19 +46,21 @@ const SelectQuestions = ({
     <div className='select-questions-container'>
       {selectedDeck ? (
         <div className='deck-cards-view'>
-          <Button variant='outline' onClick={handleBackClick}>
-            Back to Decks
+          <Button variant='textIcon' onClick={handleBackClick}>
+            <ChevronLeft size={12} />
+            <span>Back</span>
           </Button>
-          <h2>{selectedDeck.title}</h2>
-          <ul className='cards-list'>
+          <h2 className='text-2xl mt-4'>{selectedDeck.title}</h2>
+          <ul className='cards-list gap-4'>
             {selectedDeck.cards.map((card: CardData) => (
-              <li key={card.id}>
+              <li key={card.id} className='flex my-2 gap-2 items-start'>
                 <Checkbox
                   id={card.id}
                   checked={!!selectedCardsByDeck[selectedDeck.id]?.[card.id]}
                   onCheckedChange={() =>
                     handleCardSelect(selectedDeck.id, card.id)
                   }
+                  className='mt-1'
                 />
                 <label htmlFor={card.id}>{card.question}</label>
               </li>
@@ -65,8 +69,8 @@ const SelectQuestions = ({
         </div>
       ) : (
         <div className='decks-view'>
-          <h2>Select a Deck</h2>
-          <ul className='decks-list'>
+          {/* <h2>Select a Deck</h2> */}
+          <ul className='flex-col'>
             {Object.values(decks).map((deck: DeckData) => (
               <li key={deck.id} className='w-full'>
                 <Button
