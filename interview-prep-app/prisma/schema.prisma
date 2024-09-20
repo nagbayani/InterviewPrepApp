@@ -170,5 +170,9 @@ model Interview {
   mockTemplateId String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+  location       String?
+  dateApplied    DateTime?
+  dateFollowUp   DateTime?
+  status         String?
 }
 

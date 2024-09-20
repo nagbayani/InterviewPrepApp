@@ -90,7 +90,11 @@ export interface InterviewData {
   jobDescription?: string;
   skills?: string;
   qualifications?: string;
-  createdAt: string;
-  updatedAt: string;
+  location?: string;
+  dateApplied?: string; // DateTime in Prisma, converted to string for TypeScript
+  dateFollowUp?: string; // DateTime in Prisma, converted to string for TypeScript
+  status?: string;
+  createdAt: string; // DateTime in Prisma, stored as string in TypeScript
+  updatedAt: string; // DateTime in Prisma, stored as string in TypeScript
   mockTemplates: MockTemplateData[] | null;
 }

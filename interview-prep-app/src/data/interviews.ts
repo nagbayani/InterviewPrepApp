@@ -94,3 +94,70 @@ export const createInterview = async (data: {
 
   return interview;
 };
+
+// Update an interview by interview ID (PATCH - partial update)
+export const patchUpdateInterview = async (data: {
+  interviewId: string;
+  company?: string;
+  jobPosition?: string;
+  expectedSalary?: string | null;
+  jobDescription?: string | null;
+  skills?: string | null;
+  qualifications?: string | null;
+  location?: string | null;
+  dateApplied?: Date | null; // Date type for Prisma DateTime fields
+  dateFollowUp?: Date | null; // Date type for Prisma DateTime fields
+  status?: string | null;
+}) => {
+  console.log("PATCH UPDATE INTERVIEW DATA", data);
+
+  // Construct the update data object dynamically
+  const updateData: Record<string, any> = {};
+
+  if (data.company !== undefined) {
+    updateData.company = data.company;
+  }
+  if (data.jobPosition !== undefined) {
+    updateData.jobPosition = data.jobPosition;
+  }
+  if (data.expectedSalary !== undefined) {
+    updateData.expectedSalary = data.expectedSalary;
+  }
+  if (data.jobDescription !== undefined) {
+    updateData.jobDescription = data.jobDescription;
+  }
+  if (data.skills !== undefined) {
+    updateData.skills = data.skills;
+  }
+  if (data.qualifications !== undefined) {
+    updateData.qualifications = data.qualifications;
+  }
+  if (data.location !== undefined) {
+    updateData.location = data.location;
+  }
+  if (data.dateApplied !== undefined) {
+    updateData.dateApplied = data.dateApplied;
+  }
+  if (data.dateFollowUp !== undefined) {
+    updateData.dateFollowUp = data.dateFollowUp;
+  }
+  if (data.status !== undefined) {
+    updateData.status = data.status;
+  }
+
+  // Ensure there's at least one field to update
+  if (Object.keys(updateData).length === 0) {
+    throw new Error("No fields provided for update");
+  }
+
+  const interview = await prisma.interview.update({
+    where: { id: data.interviewId },
+    data: updateData,
+  });
+
+  if (interview) {
+    console.log("Interview updated in database");
+  }
+
+  return interview;
+};

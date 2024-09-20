@@ -19,7 +19,7 @@ interface Props {
   interviews: InterviewData[];
 }
 
-const InterviewsWrapper = ({ interviews }: { interviews: any }) => {
+const InterviewsWrapper = ({ interviews }: Props) => {
   // Zustand store:  State Management for Interviews
   const { interviews: interviewsData, setInterviews } = useInterviewStore(
     (state) => ({
