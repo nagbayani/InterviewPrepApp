@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,17 +24,6 @@ const AddInterviewStage = ({ interviewId }: Props) => {
 
   // Ensure interviewStages is not undefined and initialize it as an empty array if necessary
   const interviewStages = interview?.interviewStages || [];
-  // console.log("Interview Stages, ", interviewStages);
-
-  // Ensure the state stays in sync with the latest interviewStages
-  const [stages, setStages] = useState(interviewStages);
-
-  // Sync Zustand interview stages with local state whenever the interviewStages are updated
-  useEffect(() => {
-    if (interviewStages.length !== stages.length) {
-      setStages(interviewStages);
-    }
-  }, [interviewStages, stages]);
 
   // Add a new interview stage
   const handleAddStage = async () => {
@@ -44,10 +32,9 @@ const AddInterviewStage = ({ interviewId }: Props) => {
       if (response?.status === 200) {
         console.log("Interview Stage Added:", { interviewId: interview.id });
 
-        // Update Zustand store and local state
-        const updatedStages = [...stages, response.stage];
+        // Update Zustand store directly without needing local state
+        const updatedStages = [...interviewStages, response.stage];
         updateInterview(interview.id, { interviewStages: updatedStages });
-        setStages(updatedStages); // Update local state
       }
     } catch (error) {
       console.error("Error adding interview stage:", error);
@@ -56,7 +43,8 @@ const AddInterviewStage = ({ interviewId }: Props) => {
 
   // Remove an interview stage (for UI purposes)
   const handleRemoveStage = (index: number) => {
-    setStages((prevStages) => prevStages.filter((_, i) => i !== index));
+    const updatedStages = interviewStages.filter((_, i) => i !== index);
+    updateInterview(interview.id, { interviewStages: updatedStages });
   };
 
   return (
@@ -70,8 +58,8 @@ const AddInterviewStage = ({ interviewId }: Props) => {
         </DialogHeader>
 
         {/* Render the interview stages */}
-        {stages.length > 0 ? (
-          stages.map((stage, index) => (
+        {interviewStages.length > 0 ? (
+          interviewStages.map((stage, index) => (
             <InterviewStage
               key={index}
               index={index}

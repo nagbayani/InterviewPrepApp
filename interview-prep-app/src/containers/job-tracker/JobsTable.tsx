@@ -36,6 +36,7 @@ import { Label } from "@/components/ui/label"; // Import Label from ShadCN
 import { format, set } from "date-fns";
 
 import { patchUpdateInterview } from "@/utils/fetch";
+import { InterviewStageData } from "@/types/data-types";
 
 import AddInterviewStage from "./AddInterviewStage";
 
@@ -178,6 +179,19 @@ const JobsTable = () => {
     updateInterview(id, { [field]: e.target.value });
   };
 
+  /**
+   * Get the latest interview stage based on the `stageDate`.
+   */
+  const getLatestStage = (stages: InterviewStageData[]) => {
+    if (!stages || stages.length === 0) return null;
+    return stages.reduce((latest, stage) => {
+      if (!latest) return stage;
+      return new Date(stage.stageDate || 0) > new Date(latest.stageDate || 0)
+        ? stage
+        : latest;
+    }, null as InterviewStageData | null);
+  };
+
   return (
     <Table>
       <TableCaption>A list of your current job applications.</TableCaption>
@@ -196,83 +210,48 @@ const JobsTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Object.values(interviewsData).map((interview: InterviewData) => (
-          <TableRow key={interview.id}>
-            {/* Editable Job Position */}
-            <TableCell className='font-medium min-w-[180px]'>
-              {editingCell?.rowId === interview.id &&
-              editingCell?.field === "jobPosition" ? (
-                <Input
-                  type='text'
-                  value={interview.jobPosition || ""}
-                  onChange={(e) =>
-                    handleInputChange(e, interview.id, "jobPosition")
-                  }
-                  onBlur={() =>
-                    handleSaveClick(
-                      interview.id,
-                      "jobPosition",
-                      interview.jobPosition
-                    )
-                  }
-                  onKeyDown={(e) =>
-                    handleKeyDown(e, interview.id, "jobPosition")
-                  }
-                  className='w-full'
-                />
-              ) : (
-                <Label
-                  onClick={() => handleEditClick(interview.id, "jobPosition")}
-                >
-                  {interview.jobPosition}
-                </Label>
-              )}
-            </TableCell>
-            {/* Editable Company */}
-            <TableCell className='min-w-[180px]'>
-              {editingCell?.rowId === interview.id &&
-              editingCell?.field === "company" ? (
-                <Input
-                  type='text'
-                  value={interview.company || ""}
-                  onChange={(e) =>
-                    handleInputChange(e, interview.id, "company")
-                  }
-                  onBlur={() =>
-                    handleSaveClick(interview.id, "company", interview.company)
-                  }
-                  onKeyDown={(e) => handleKeyDown(e, interview.id, "company")}
-                  className='w-full'
-                />
-              ) : (
+        {Object.values(interviewsData).map((interview: InterviewData) => {
+          const latestStage = getLatestStage(interview.interviewStages || []);
+
+          return (
+            <TableRow key={interview.id}>
+              {/* Editable Job Position */}
+              <TableCell className='font-medium min-w-[180px]'>
+                {editingCell?.rowId === interview.id &&
+                editingCell?.field === "jobPosition" ? (
+                  <Input
+                    type='text'
+                    value={interview.jobPosition || ""}
+                    onChange={(e) =>
+                      handleInputChange(e, interview.id, "jobPosition")
+                    }
+                    onBlur={() =>
+                      handleSaveClick(
+                        interview.id,
+                        "jobPosition",
+                        interview.jobPosition
+                      )
+                    }
+                    className='w-full'
+                  />
+                ) : (
+                  <Label
+                    onClick={() => handleEditClick(interview.id, "jobPosition")}
+                  >
+                    {interview.jobPosition}
+                  </Label>
+                )}
+              </TableCell>
+
+              {/* Editable Company */}
+              <TableCell className='min-w-[180px]'>
                 <Label onClick={() => handleEditClick(interview.id, "company")}>
                   {interview.company}
                 </Label>
-              )}
-            </TableCell>
-            {/* Editable Salary */}
-            <TableCell className='max-w-[100px]'>
-              {editingCell?.rowId === interview.id &&
-              editingCell?.field === "expectedSalary" ? (
-                <Input
-                  type='text'
-                  value={interview.expectedSalary || ""}
-                  onChange={(e) =>
-                    handleInputChange(e, interview.id, "expectedSalary")
-                  }
-                  onBlur={() =>
-                    handleSaveClick(
-                      interview.id,
-                      "expectedSalary",
-                      interview.expectedSalary || "N/A"
-                    )
-                  }
-                  onKeyDown={(e) =>
-                    handleKeyDown(e, interview.id, "expectedSalary")
-                  }
-                  className='w-full'
-                />
-              ) : (
+              </TableCell>
+
+              {/* Editable Salary */}
+              <TableCell className='max-w-[100px]'>
                 <Label
                   onClick={() =>
                     handleEditClick(interview.id, "expectedSalary")
@@ -282,127 +261,90 @@ const JobsTable = () => {
                     ? `$${interview.expectedSalary}`
                     : "N/A"}
                 </Label>
-              )}
-            </TableCell>
-            {/* Editable Location */}
-            <TableCell className='min-w-[180px]'>
-              {editingCell?.rowId === interview.id &&
-              editingCell?.field === "location" ? (
-                <Input
-                  type='text'
-                  value={interview.location || ""}
-                  onChange={(e) =>
-                    handleInputChange(e, interview.id, "location")
-                  }
-                  onBlur={() =>
-                    handleSaveClick(
-                      interview.id,
-                      "location",
-                      interview.location || "N/A"
-                    )
-                  }
-                  onKeyDown={(e) => handleKeyDown(e, interview.id, "location")}
-                  className='w-full '
-                />
-              ) : (
+              </TableCell>
+
+              {/* Editable Location */}
+              <TableCell className='min-w-[180px]'>
                 <Label
                   onClick={() => handleEditClick(interview.id, "location")}
                 >
                   {interview.location || "N/A"}
                 </Label>
-              )}
-            </TableCell>
-            {/* Status Dropdown Select */}
-            <TableCell className='mr-16'>
-              <Select
-                onValueChange={(newStatus) =>
-                  handleStatusChange(interview.id, newStatus)
-                }
-                defaultValue={interview.status || "Applying"}
-              >
-                <SelectTrigger className='w-[150px]'>
-                  <SelectValue placeholder='Select Status' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Status</SelectLabel>
-                    {statusOptions.map((status) => (
-                      <SelectItem key={status} value={status}>
-                        {status}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </TableCell>
-            {/* <TableCell>
-              {" "}
-              {interview.createdAt
-                ? format(new Date(interview.createdAt), "MM/dd/yyyy")
-                : "N/A"}
-            </TableCell> */}
-            {/* <TableCell>{interview.deadline || "N/A"}</TableCell> */}
-            {/* Date Applied Popover */}
-            <TableCell>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant={"outline"} className='w-[150px]'>
-                    {selectedDateApplied
-                      ? format(selectedDateApplied, "MM/dd/yyyy")
-                      : interview.dateApplied
-                      ? format(new Date(interview.dateApplied), "MM/dd/yyyy")
-                      : "Pick a date"}
-                    <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className='w-auto p-0' align='start'>
-                  <Calendar
-                    mode='single'
-                    selected={selectedDateApplied || undefined}
-                    onSelect={(date: Date | undefined) => {
-                      setSelectedDateApplied(date || null);
-                      if (date) {
-                        handleDateApplied(interview.id, date);
-                      }
-                    }}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </TableCell>
-            <TableCell>
-              <AddInterviewStage interviewId={interview.id} />
-            </TableCell>
-            {/* Follow Up Date Popover */}
-            {/* <TableCell>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant={"outline"} className='w-[150px]'>
-                    {selectedDateFollowUp
-                      ? format(selectedDateFollowUp, "MM/dd/yyyy")
-                      : interview.dateFollowUp
-                      ? format(new Date(interview.dateFollowUp), "MM/dd/yyyy")
-                      : "Pick a date"}
-                    <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className='w-auto p-0' align='start'>
-                  <Calendar
-                    mode='single'
-                    selected={selectedDateFollowUp || undefined}
-                    onSelect={(date) => {
-                      setSelectedDateFollowUp(date || null);
-                      if (date) {
-                        handleDateFollowUp(interview.id, date);
-                      }
-                    }}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-            </TableCell> */}
-          </TableRow>
-        ))}
+              </TableCell>
+
+              {/* Status Dropdown Select */}
+              <TableCell className='mr-16'>
+                <Select
+                  onValueChange={(newStatus) =>
+                    handleStatusChange(interview.id, newStatus)
+                  }
+                  defaultValue={interview.status || "Applying"}
+                >
+                  <SelectTrigger className='w-[150px]'>
+                    <SelectValue placeholder='Select Status' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Status</SelectLabel>
+                      {statusOptions.map((status) => (
+                        <SelectItem key={status} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </TableCell>
+
+              {/* Date Applied Popover */}
+              <TableCell>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant={"outline"} className='w-[150px]'>
+                      {selectedDateApplied
+                        ? format(selectedDateApplied, "MM/dd/yyyy")
+                        : interview.dateApplied
+                        ? format(new Date(interview.dateApplied), "MM/dd/yyyy")
+                        : "Pick a date"}
+                      <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className='w-auto p-0' align='start'>
+                    <Calendar
+                      mode='single'
+                      selected={selectedDateApplied || undefined}
+                      onSelect={(date: Date | undefined) => {
+                        setSelectedDateApplied(date || null);
+                        if (date) {
+                          handleDateApplied(interview.id, date);
+                        }
+                      }}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </TableCell>
+
+              {/* Latest Interview Stage */}
+              <TableCell>
+                {latestStage ? (
+                  <div>
+                    <p>Stage: {latestStage.type}</p>
+                    <p>
+                      Date:{" "}
+                      {latestStage.stageDate
+                        ? format(new Date(latestStage.stageDate), "MM/dd/yyyy")
+                        : "N/A"}
+                    </p>
+                  </div>
+                ) : (
+                  <p>No stages yet</p>
+                )}
+                <AddInterviewStage interviewId={interview.id} />
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
       <TableFooter>
         <TableRow>
