@@ -251,8 +251,8 @@ export const patchUpdateInterview = async (
     skills?: string | null;
     qualifications?: string | null;
     location?: string | null;
-    dateApplied?: Date | null;
-    dateFollowUp?: Date | null;
+    dateApplied?: string | null;
+    dateFollowUp?: string | null;
     status?: string | null;
   }
 ): Promise<any> => {

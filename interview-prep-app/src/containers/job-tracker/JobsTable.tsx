@@ -37,6 +37,8 @@ import { format, set } from "date-fns";
 
 import { patchUpdateInterview } from "@/utils/fetch";
 
+import AddInterviewStage from "./AddInterviewStage";
+
 const statusOptions = [
   "Applying",
   "Applied",
@@ -70,6 +72,42 @@ const JobsTable = () => {
     rowId: string;
     field: string;
   } | null>(null);
+
+  /**
+   * For Date Applied Field: Update the date applied of an Job Application
+   */
+  const handleDateApplied = async (interviewId: string, date: Date) => {
+    setSelectedDateApplied(date || null);
+
+    try {
+      const formattedDate = date.toISOString();
+      const response = await patchUpdateInterview(interviewId, {
+        dateApplied: formattedDate,
+      });
+      if (response.status === 200) {
+        // Pass Date object directly
+        updateInterview(interviewId, { dateApplied: formattedDate });
+      }
+    } catch (error) {}
+  };
+
+  /**
+   * For Date Follow Up Field: Update the date of the Follow Up for an Job Application
+   */
+  const handleDateFollowUp = async (interviewId: string, date: Date) => {
+    setSelectedDateFollowUp(date || null);
+
+    try {
+      const formattedDate = date.toISOString();
+      const response = await patchUpdateInterview(interviewId, {
+        dateFollowUp: formattedDate,
+      });
+      if (response.status === 200) {
+        // Pass Date object directly
+        updateInterview(interviewId, { dateFollowUp: formattedDate });
+      }
+    } catch (error) {}
+  };
 
   /**
    * For Status Field: Update the status of an Job Application
@@ -150,10 +188,11 @@ const JobsTable = () => {
           <TableHead>Salary</TableHead>
           <TableHead>Location</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead>Date Saved</TableHead>
+          {/* <TableHead>Date Saved</TableHead> */}
           <TableHead>Date Applied</TableHead>
           {/* <TableHead>Deadline</TableHead> */}
-          <TableHead>Follow Up</TableHead>
+          {/* <TableHead>Follow Up</TableHead> */}
+          <TableHead>Interview Steps</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -296,12 +335,12 @@ const JobsTable = () => {
                 </SelectContent>
               </Select>
             </TableCell>{" "}
-            <TableCell>
+            {/* <TableCell>
               {" "}
               {interview.createdAt
                 ? format(new Date(interview.createdAt), "MM/dd/yyyy")
                 : "N/A"}
-            </TableCell>
+            </TableCell> */}
             {/* <TableCell>{interview.deadline || "N/A"}</TableCell> */}
             {/* Date Applied Popover */}
             <TableCell>
@@ -320,19 +359,22 @@ const JobsTable = () => {
                   <Calendar
                     mode='single'
                     selected={selectedDateApplied || undefined}
-                    onSelect={(date) => {
+                    onSelect={(date: Date) => {
                       setSelectedDateApplied(date || null);
+                      if (date) {
+                        handleDateApplied(interview.id, date);
+                      }
                     }}
-                    // disabled={(date) =>
-                    //   date > new Date() || date < new Date("1900-01-01")
-                    // }
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
             </TableCell>
-            {/* Follow Up Date Popover */}
             <TableCell>
+              <AddInterviewStage />
+            </TableCell>
+            {/* Follow Up Date Popover */}
+            {/* <TableCell>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant={"outline"} className='w-[150px]'>
@@ -350,16 +392,15 @@ const JobsTable = () => {
                     selected={selectedDateFollowUp || undefined}
                     onSelect={(date) => {
                       setSelectedDateFollowUp(date || null);
-                      // Here you can also update the Zustand store for this interview's dateFollowUp
+                      if (date) {
+                        handleDateFollowUp(interview.id, date);
+                      }
                     }}
-                    // disabled={(date) =>
-                    //   date > new Date() || date < new Date("1900-01-01")
-                    // }
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>
