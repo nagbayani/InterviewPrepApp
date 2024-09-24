@@ -22,6 +22,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const interviewsDb = await getInterviewsByUserId(user.session?.user.id || "");
   // Filter out sensitive information
   const interviews = interviewsDb.map((interview) => {
+    // console.log("Interview Stages, ", interview.interviewStages);
     const { userId, ...safeInterview } = interview;
     return safeInterview;
   });

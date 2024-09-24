@@ -19,11 +19,11 @@
   border-top-right-radius: 5px;
 }
 .tab:hover {
-  background-color: red;
+  background-color: #8c8780;
 }
 
 .tab.active {
-  background-color: red;
+  background-color: black;
   border-bottom: 1px solid transparent;
 }
 

@@ -33,6 +33,16 @@ export interface DeckDataResponse {
     unassigned: boolean;
     cards: CardData[];
   };
+  unassignedDeck: {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    title: string;
+    authorId: string;
+    thumbnail: string | null;
+    description: string | null;
+    cards: CardData[];
+  } | null;
   cards: {
     id: string;
     createdAt: string;
@@ -66,6 +76,7 @@ export interface MockTemplateData {
   type: string;
   cards: MockTemplateCardData[];
   interviewId: string;
+  interviewStage?: InterviewStageData | null; // One-to-one relation with InterviewStage
 }
 
 export type MockTemplateCardData = {
@@ -81,7 +92,23 @@ export interface InterviewData {
   jobDescription?: string;
   skills?: string;
   qualifications?: string;
-  createdAt: string;
-  updatedAt: string;
+  location?: string;
+  dateApplied?: string; // DateTime in Prisma, converted to string for TypeScript
+  dateFollowUp?: string; // DateTime in Prisma, converted to string for TypeScript
+  status?: string;
+  createdAt: string; // DateTime in Prisma, stored as string in TypeScript
+  updatedAt: string; // DateTime in Prisma, stored as string in TypeScript
   mockTemplates: MockTemplateData[] | null;
+  interviewStages: InterviewStageData[] | null;
+}
+
+// Data type for the InterviewStage
+export interface InterviewStageData {
+  id: string;
+  stageDate?: string; // DateTime in Prisma, stored as string in TypeScript
+  format?: string;
+  type?: string;
+  mockTemplateId?: string; // One-to-one relationship with MockTemplate
+  createdAt: string; // DateTime in Prisma, stored as string in TypeScript
+  updatedAt: string; // DateTime in Prisma, stored as string in TypeScript
 }

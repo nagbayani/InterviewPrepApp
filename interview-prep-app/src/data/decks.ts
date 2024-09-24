@@ -4,7 +4,7 @@ export const getDecksByUserId = async (userId: string) => {
   const decks = await prisma.deck.findMany({
     where: {
       authorId: userId,
-      // unassigned: false, // Only include decks where unassigned is false
+      // unassigned: true,
     },
     include: {
       cards: true, // includes cards related to the deck
@@ -60,6 +60,16 @@ export const deleteDeckById = async (deckId: string) => {
 
 // Find or create the unassigned deck for the current user
 export async function getOrCreateUnassignedDeck(userId: string) {
+  // Check if the user exists before attempting to create the deck
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+
+  // Look for an existing unassigned deck for the user
   let unassignedDeck = await prisma.deck.findFirst({
     where: {
       authorId: userId,
