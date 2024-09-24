@@ -19,13 +19,20 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import SelectMockType from "../modal/interviews/select-mock-type";
+import { InterviewStageData } from "@/types/data-types";
 
 interface InterviewStageProps {
   index: number;
   onDelete: () => void;
+  interviewId: string;
+  stage: InterviewStageData; 
 }
 
-const InterviewStage = ({ index, onDelete }: InterviewStageProps) => {
+const InterviewStage = ({
+  index,
+  onDelete,
+  interviewId,
+}: InterviewStageProps) => {
   const [selectedMockType, setSelectedMockType] = useState("");
   const [selectedDescription, setSelectedDescription] = useState("");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);

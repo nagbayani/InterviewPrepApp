@@ -75,6 +75,7 @@ export interface MockTemplateData {
   type: string;
   cards: MockTemplateCardData[];
   interviewId: string;
+  interviewStage?: InterviewStageData | null; // One-to-one relation with InterviewStage
 }
 
 export type MockTemplateCardData = {
@@ -97,4 +98,16 @@ export interface InterviewData {
   createdAt: string; // DateTime in Prisma, stored as string in TypeScript
   updatedAt: string; // DateTime in Prisma, stored as string in TypeScript
   mockTemplates: MockTemplateData[] | null;
+  interviewStages: InterviewStageData[] | null;
+}
+
+// Data type for the InterviewStage
+export interface InterviewStageData {
+  id: string;
+  stageDate?: string; // DateTime in Prisma, stored as string in TypeScript
+  format?: string;
+  type?: string;
+  mockTemplateId?: string; // One-to-one relationship with MockTemplate
+  createdAt: string; // DateTime in Prisma, stored as string in TypeScript
+  updatedAt: string; // DateTime in Prisma, stored as string in TypeScript
 }

@@ -350,3 +350,24 @@ export const putMockTemplate = async (
     console.log(`Error updating mock template: ${error}`);
   }
 };
+
+export const postInterviewStage = async (interviewId: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          interviewId,
+        }),
+      }
+    );
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.log(`Error posting new interview stage: ${error}`);
+  }
+};

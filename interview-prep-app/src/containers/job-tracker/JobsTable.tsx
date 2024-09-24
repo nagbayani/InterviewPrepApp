@@ -192,7 +192,7 @@ const JobsTable = () => {
           <TableHead>Date Applied</TableHead>
           {/* <TableHead>Deadline</TableHead> */}
           {/* <TableHead>Follow Up</TableHead> */}
-          <TableHead>Interview Steps</TableHead>
+          <TableHead>Interview Stage</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -359,7 +359,7 @@ const JobsTable = () => {
                   <Calendar
                     mode='single'
                     selected={selectedDateApplied || undefined}
-                    onSelect={(date: Date) => {
+                    onSelect={(date: Date | undefined) => {
                       setSelectedDateApplied(date || null);
                       if (date) {
                         handleDateApplied(interview.id, date);
@@ -371,7 +371,7 @@ const JobsTable = () => {
               </Popover>
             </TableCell>
             <TableCell>
-              <AddInterviewStage />
+              <AddInterviewStage interviewId={interview.id} />
             </TableCell>
             {/* Follow Up Date Popover */}
             {/* <TableCell>

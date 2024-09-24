@@ -87,18 +87,7 @@ export function getMenuList(
         },
       ],
     },
-    {
-      groupLabel: "",
-      menus: [
-        {
-          href: "/interviews",
-          label: "Interviews",
-          active: pathname.includes("/interviews"),
-          icon: Users,
-          submenus: [],
-        },
-      ],
-    },
+
     {
       groupLabel: "",
       menus: [
@@ -107,6 +96,18 @@ export function getMenuList(
           label: "Job Tracker",
           active: pathname.includes("/job-tracker"),
           icon: CalendarCheck,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/interviews",
+          label: "Interviews",
+          active: pathname.includes("/interviews"),
+          icon: Users,
           submenus: [],
         },
       ],

@@ -134,18 +134,18 @@ model CardTags {
 
 // Mock Interviews -- Interview Template import Cards -- probably add template to match in Cards table
 model MockTemplate {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  type       String
-  author      User     @relation(fields: [authorId], references: [id])
-  authorId    String
-  cards       MockTemplateCard[]  // Many-to-many relationship with cards through MockTemplateCard
-  interview    Interview  @relation(fields: [interviewId], references: [id], onDelete: Cascade)
-  interviewId  String     
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id             String        @id @default(cuid())
+  title          String
+  description    String?
+  type           String
+  author         User          @relation(fields: [authorId], references: [id])
+  authorId       String
+  cards          MockTemplateCard[]  // Many-to-many relationship with cards through MockTemplateCard
+  interview      Interview     @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  interviewId    String     
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  interviewStage  InterviewStage?
 }
 
 model MockTemplateCard {
@@ -167,6 +167,7 @@ model Interview {
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   mockTemplates  MockTemplate[] // One-to-many relation with MockTemplate
+  interviewStages InterviewStage[] // One-to-many relation with InterviewStage
   mockTemplateId String?
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
@@ -176,3 +177,16 @@ model Interview {
   status         String?
 }
 
+
+model InterviewStage {
+  id            String        @id @default(cuid())
+  stageDate     DateTime?
+  format        String?
+  type          String?
+  interview     Interview     @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  interviewId   String
+  mockTemplate    MockTemplate? @relation(fields: [mockTemplateId], references: [id], onDelete: SetNull)
+  mockTemplateId   String?       @unique // Must be unique for a one-to-one relationship to Mock Template 
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}

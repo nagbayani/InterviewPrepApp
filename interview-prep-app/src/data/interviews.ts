@@ -6,6 +6,7 @@ export const getInterviewsByUserId = async (userId: string) => {
     where: { userId },
     include: {
       mockTemplates: true, // Include related mock templates if needed
+      interviewStages: true, // Include interviewStages
     },
   });
 
