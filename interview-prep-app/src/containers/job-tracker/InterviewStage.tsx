@@ -141,10 +141,11 @@ const InterviewStage = ({
         const newMockTemplate = response.template;
         const updatedStage = response.interviewStage;
 
-        // Ensure interviewStages is initialized as an array if it's null
         const updatedStages = interview.interviewStages
-          ? [...interview.interviewStages, updatedStage]
-          : [updatedStage]; // If interviewStages is null, start with the new stage
+          ? interview.interviewStages.map((stage) =>
+              stage.id === updatedStage.id ? updatedStage : stage
+            )
+          : [updatedStage]; // If it's null, start with the updated stage
 
         const updatedMocks = interview.mockTemplates
           ? [...interview.mockTemplates, newMockTemplate]
@@ -183,11 +184,49 @@ const InterviewStage = ({
     // find out if interview stage has a mock template linked to it
   };
 
+  const handleDeleteStage = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage/${stage.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Filter out the deleted stage from the Zustand store
+        const updatedStages = interview.interviewStages
+          ? interview.interviewStages.filter((s) => s.id !== stage.id)
+          : [];
+
+        // Update the Zustand store with the remaining stages
+        updateInterview(interviewId, {
+          interviewStages: updatedStages,
+        });
+        onDelete();
+      } else {
+        console.error("Failed to delete the stage.");
+        alert("Failed to delete the stage. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting the stage:", error);
+      alert("Error deleting the stage. Please try again.");
+    }
+  };
+
   return (
     <div className='border p-4 rounded-lg mb-4'>
       <div className='flex justify-between items-center mb-4'>
         <h3>Stage {index + 1}</h3>
-        <Button variant={"destructive"} size={"sm"} className='ml-auto'>
+        <Button
+          variant={"destructive"}
+          size={"sm"}
+          className='ml-auto'
+          onClick={handleDeleteStage}
+        >
           x
         </Button>
       </div>
@@ -254,14 +293,7 @@ const InterviewStage = ({
           </Select>
         </div>
       </div>
-      {/* <Button
-        variant='destructive'
-        className='mt-4'
-        size={"tag"}
-        onClick={onDelete}
-      >
-        Remove Stage
-      </Button> */}
+
       <div className='flex justify-end mt-4'>
         <Button onClick={handlePractice}>
           <span>Practice</span>

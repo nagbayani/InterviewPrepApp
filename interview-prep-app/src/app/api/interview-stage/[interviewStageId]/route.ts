@@ -69,12 +69,13 @@ export async function POST(
   }
 }
 
-export async function DELETE({
-  params,
-}: {
-  params: { interviewStageId: string };
-}) {
-  const { interviewStageId } = params;
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { interviewStageId: string } }
+) {
+  const { interviewStageId } = params; // Access interviewStageId correctly
+  console.log("DELETE interview stage", interviewStageId);
+
   const user = await currentUser();
 
   if (!user) {
@@ -83,11 +84,13 @@ export async function DELETE({
       status: 401,
     });
   }
-  // delete interview stage by interviewStageId
+
   try {
+    // Delete interview stage by interviewStageId
     const deletedStage = await prisma.interviewStage.delete({
       where: { id: interviewStageId },
     });
+
     return NextResponse.json({
       message: "Interview stage deleted",
       status: 200,
@@ -107,7 +110,7 @@ export async function PATCH(
   { params }: { params: { interviewStageId: string } }
 ) {
   const user = await currentUser();
-  const interviewStageId = params.interviewStageId;
+  const { interviewStageId } = params;
 
   try {
     // Get the interview stage by ID to check if it exists and if the user is authorized
