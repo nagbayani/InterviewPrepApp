@@ -25,7 +25,7 @@ const AddInterviewStage = ({ interviewId }: Props) => {
 
   // Ensure interviewStages is not undefined and initialize it as an empty array if necessary
   const interviewStages = interview?.interviewStages || [];
-  console.log("Interview Stages, ", interviewStages);
+  // console.log("Interview Stages, ", interviewStages);
 
   // Ensure the state stays in sync with the latest interviewStages
   const [stages, setStages] = useState(interviewStages);
@@ -61,7 +61,7 @@ const AddInterviewStage = ({ interviewId }: Props) => {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>+ Add Interview</Button>
       </DialogTrigger>
       <DialogContent className='max-w-[800px]'>

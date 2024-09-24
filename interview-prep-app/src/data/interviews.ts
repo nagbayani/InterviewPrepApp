@@ -24,6 +24,16 @@ export const getInterviewById = async (interviewId: string) => {
   return interview;
 };
 
+export const getInterviewStageById = async (interviewStageId: string) => {
+  const interviewStage = await prisma.interviewStage.findUnique({
+    where: { id: interviewStageId },
+    include: {
+      interview: true, // Include the related interview
+    },
+  });
+  return interviewStage;
+};
+
 // Update an interview by interview ID
 export const updateInterview = async (data: {
   interviewId: string;
@@ -161,4 +171,44 @@ export const patchUpdateInterview = async (data: {
   }
 
   return interview;
+};
+
+// Update an interview stage by interviewStage ID (PATCH - partial update)
+export const patchUpdateInterviewStage = async (data: {
+  interviewStageId: string;
+  stageDate?: Date | null; // Date type for Prisma DateTime fields
+  format?: string | null;
+  type?: string | null;
+}) => {
+  console.log("PATCH UPDATE INTERVIEW STAGE DATA", data);
+
+  // Construct the update data object dynamically
+  const updateData: Record<string, any> = {};
+
+  if (data.stageDate !== undefined) {
+    updateData.stageDate = data.stageDate;
+  }
+  if (data.format !== undefined) {
+    updateData.format = data.format;
+  }
+  if (data.type !== undefined) {
+    updateData.type = data.type;
+  }
+
+  // Ensure there's at least one field to update
+  if (Object.keys(updateData).length === 0) {
+    throw new Error("No fields provided for update");
+  }
+
+  // Perform the update using Prisma
+  const interviewStage = await prisma.interviewStage.update({
+    where: { id: data.interviewStageId },
+    data: updateData,
+  });
+
+  if (interviewStage) {
+    console.log("Interview stage updated in database");
+  }
+
+  return interviewStage;
 };

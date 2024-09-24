@@ -241,6 +241,45 @@ export const updateInterviewPUT = async ({
   }
 };
 
+export const patchInterviewStage = async (
+  interviewStageId: string,
+  {
+    interviewId,
+    format,
+    type,
+    stageDate,
+  }: {
+    interviewId?: string | null;
+    format?: string | null;
+    type?: string | null;
+    stageDate?: string | null;
+  }
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage/${interviewStageId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          interviewStageId,
+          interviewId,
+          format,
+          type,
+          stageDate,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log("Patch Interview Stage Data: ", data);
+    return data;
+  } catch (error) {
+    console.error(error, "Something Went Wrong updating the interview stage.");
+    alert("Failed to update the interview stage. Please try again.");
+  }
+};
 export const patchUpdateInterview = async (
   interviewId: string,
   updatedData: {
@@ -369,5 +408,37 @@ export const postInterviewStage = async (interviewId: string) => {
     return data;
   } catch (error) {
     console.log(`Error posting new interview stage: ${error}`);
+  }
+};
+
+export const postInterviewStageMock = async (
+  interviewId: string,
+  {
+    interviewStageId,
+    title,
+    type,
+    description,
+  }: {
+    interviewStageId: string;
+    title: string;
+    type: string;
+    description: string;
+  }
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage/${interviewStageId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ interviewId, title, type, description }),
+      }
+    );
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.log(`Error posting new interview stage mock: ${error}`);
   }
 };

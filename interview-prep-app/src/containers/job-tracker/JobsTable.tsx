@@ -179,7 +179,7 @@ const JobsTable = () => {
   };
 
   return (
-    <Table className=''>
+    <Table>
       <TableCaption>A list of your current job applications.</TableCaption>
       <TableHeader>
         <TableRow>
@@ -334,7 +334,7 @@ const JobsTable = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-            </TableCell>{" "}
+            </TableCell>
             {/* <TableCell>
               {" "}
               {interview.createdAt
