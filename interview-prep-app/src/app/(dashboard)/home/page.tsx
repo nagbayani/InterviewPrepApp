@@ -3,8 +3,12 @@ import HomeBoard from "../../../containers/dashboard/HomeBoard";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import "../../../styles/dashboard.css";
+import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import { ContentLayout } from "@/containers/layouts/content-layout";
+import { Content } from "next/font/google";
+
+// import Layout from "./layout";
 
 const HomePage = async () => {
   const session = await auth();

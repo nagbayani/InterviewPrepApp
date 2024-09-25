@@ -15,15 +15,11 @@ import { WandSparkles } from "lucide-react";
 import { useDeckStore, useCardStore, useTagStore } from "@/_store/index";
 import GeneratedCard from "./GeneratedCard";
 import { set } from "zod";
-import useMembership from "@/hooks/use-membership";
-import { planLimitPUT } from "@/utils/fetchPlan";
 
 interface GenerateDeckMenuProps {
   deckId: string;
 }
 const GenerateDeckMenu = ({ deckId }: GenerateDeckMenuProps) => {
-  const { membership } = useMembership(); // Use the hook to check subscription status
-
   const [isGenerating, setIsGenerating] = useState(false);
 
   const [generatedQuestions, setGeneratedQuestions] = useState<
@@ -49,24 +45,6 @@ const GenerateDeckMenu = ({ deckId }: GenerateDeckMenuProps) => {
 
   const handleGenerateQuestions = async () => {
     setIsGenerating(true);
-    // Check if membership is null before proceeding
-    if (!membership) {
-      alert(
-        "Membership data is not available. Please check your subscription status."
-      );
-      setIsGenerating(false);
-      return;
-    }
-
-    // Check the plan limits first
-    const canGenerate = await planLimitPUT("generateQuestion", membership);
-
-    // If user has exceeded their limit, exit early
-    if (!canGenerate) {
-      setIsGenerating(false);
-      return;
-    }
-
     const tagsToAdd = Object.values(tags).map((tag) => tag.name);
     console.log("Tags to add:", tagsToAdd);
     try {

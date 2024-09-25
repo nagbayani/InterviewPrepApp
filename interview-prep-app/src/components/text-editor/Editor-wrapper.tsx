@@ -8,8 +8,6 @@ import { defaultValue } from "@/lib/content";
 import { useCardStore } from "@/_store";
 import { TipTapEditor } from "./Editor";
 import { Editor } from "@tiptap/core";
-import useMembership from "@/hooks/use-membership";
-import { planLimitPUT } from "@/utils/fetchPlan";
 
 import SaveButton from "../buttons/save-button";
 import GenAnswerButton from "../buttons/gen-answer-button";
@@ -29,8 +27,6 @@ interface EditorWrapperProps {
 }
 
 export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
-  const { membership } = useMembership(); // Use the hook to check subscription status
-
   const { card, updateCard } = useCardStore((state) => ({
     card: state.cards[cardId],
     updateCard: state.updateCard,
@@ -123,23 +119,6 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
 
   const handleGenerateAnswer = async () => {
     setGenAnswerStatus("saving"); // Set status to "saving" when starting the request
-
-    if (!membership) {
-      alert(
-        "Membership data is not available. Please check your subscription status."
-      );
-      setGenAnswerStatus("idle");
-      return;
-    }
-
-    // Check the plan limits first
-    const canGenerate = await planLimitPUT("generateAnswer", membership);
-
-    // If user has exceeded their limit, exit early
-    if (!canGenerate) {
-      setGenAnswerStatus("idle");
-      return;
-    }
 
     try {
       const response = await fetch(`/api/generate-answer/`, {

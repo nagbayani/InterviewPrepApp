@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // import Sidebar from "../../containers/sidebar-section/Sidebar";
 import DashboardLayout from "@/containers/layouts/dashboard-layout";
 import Navbar from "@/components/Navbar";
@@ -20,7 +20,6 @@ import {
   TagData,
   MockTemplateData,
 } from "@/types/data-types";
-import useMembership from "@/hooks/use-membership";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -57,6 +56,7 @@ const authCheck = async () => {
     // console.log("CARDS in Layout", cardsDb);
 
     // console.log("MOCK TEMPLATES in Layout", mockTemplates);
+
     // add cards
     // add mock templates
     // add tags
@@ -85,7 +85,6 @@ export default async function Layout({ children }: LayoutProps) {
   // const decks = data?.decksData.decks;
   // const user = data?.session?.user;
   // console.log("DECKS in Layout", decks);
-  // const { membership, loading, error } = useMembership(30000); // Poll every 30 seconds
 
   return (
     // <div className='dashboard-container'>
