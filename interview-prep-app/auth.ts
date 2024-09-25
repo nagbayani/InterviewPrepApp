@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { getAccountByUserId } from "@/data/account";
 import { setupNewUser } from "@/actions/setupNewUser";
+import Stripe from "stripe";
 
 export const {
   handlers: { GET, POST },
@@ -39,6 +40,30 @@ export const {
           await setupNewUser(user.id);
         }
       }
+    },
+    async createUser({ user }) {
+      if (user.id) {
+        await setupNewUser(user.id);
+      }
+      // Create stripe API client using the secret key env variable
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+        apiVersion: "2024-06-20",
+      });
+
+      // Create a stripe customer for the user with their email address
+      await stripe.customers
+        .create({
+          email: user.email!,
+        })
+        .then(async (customer) => {
+          // Use the Prisma Client to update the user in the database with their new Stripe customer ID
+          return prisma.user.update({
+            where: { id: user.id },
+            data: {
+              stripeCustomerId: customer.id,
+            },
+          });
+        });
     },
   },
   // cookies: {

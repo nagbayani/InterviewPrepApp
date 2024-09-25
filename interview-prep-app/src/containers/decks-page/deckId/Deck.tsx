@@ -29,6 +29,7 @@ interface DeckProps {
  *
  */
 const Deck = ({ deckDb }: DeckProps) => {
+
   // retrieve list of cards
   const {
     cards: cardsData,

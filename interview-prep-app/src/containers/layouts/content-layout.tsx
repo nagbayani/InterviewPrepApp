@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import useMembership from "@/hooks/use-membership";
 
 interface ContentLayoutProps {
   title: string;
