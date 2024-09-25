@@ -6,20 +6,7 @@ import { useDeckStore } from "@/_store/index";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { DeckData } from "@/types/data-types";
 import "../../styles/deck/deck-wrapper.css";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown";
+
 interface Props {
   decks: DeckData[];
 }
@@ -65,25 +52,13 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
       <h1 style={{ fontSize: "var(--step-2)" }}>Decks</h1>
 
       <div className='flex justify-center gap-4'>
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div className=' w-[250px] rounded-md m-auto text-center place-self-center bg-[#642eff] px-0 py-2 hover:bg-black text-white  transition-colors duration-300 ease-in-out flex items-center justify-center'>
-              Filter
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onSelect={() => console.log("Send")}>
-              Send
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
         {/* Add Deck Button Menu */}
         <AddDeckModal />
       </div>
+
       <ul className='decks-list gap-4 py-4 px-16'>
         {Object.values(decksData)
-          // .reverse()
+          .filter((deck: DeckData) => deck.id !== unassignedDeck) // Filter dynamically here
           .map((deck: DeckData) => {
             // Find the matching gradient style based on the thumbnail
             const matchedGradient = gradients.find(
@@ -95,23 +70,6 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
               ? matchedGradient.style
               : "linear-gradient(to right, #e66465, #9198e5)"; // Default gradient
 
-            // Check if this is the unassigned deck
-            if (unassignedDeck && deck.id === unassignedDeck) {
-              console.log("Unassigned Deck: ", unassignedDeck);
-              return (
-                <li key={deck.id}>
-                  <DeckLink
-                    id={deck.id}
-                    title={deck.title}
-                    path={`/decks/${deck.id}`} // Path to unassigned deck
-                    thumbnail={gradientStyle}
-                    description={deck.description || ""}
-                  />
-                </li>
-              );
-            }
-
-            // Otherwise return the normal deck
             return (
               <li key={deck.id}>
                 <DeckLink
@@ -124,6 +82,23 @@ const DecksWrapper = ({ decks }: { decks: any }) => {
               </li>
             );
           })}
+        {/* Render Unassigned Deck separately */}
+        {unassignedDeck && decksData[unassignedDeck] && (
+          // <div className='max-w-[400px] my-4 mx-auto'>
+          <DeckLink
+            id={decksData[unassignedDeck].id}
+            title={decksData[unassignedDeck].title}
+            path={`/decks/${decksData[unassignedDeck].id}`}
+            thumbnail={
+              gradients.find(
+                (gradient) =>
+                  gradient.name === decksData[unassignedDeck].thumbnail
+              )?.style || "linear-gradient(to right, #e66465, #9198e5)"
+            }
+            description={decksData[unassignedDeck].description || ""}
+          />
+          // </div>
+        )}
       </ul>
     </section>
   );
