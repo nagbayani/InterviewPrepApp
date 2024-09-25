@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
 import { NextResponse, NextRequest } from "next/server";
-import { generateAnswer } from "@/utils/openai-generate-answer";
 import { currentUser } from "@/lib/auth";
+import { generateAnswer } from "@/utils/openai-generate-answer";
 
 // Helper function to transform text into TipTap JSON structure
 
@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
     // Return the generated answer as a response
     return NextResponse.json({
       message: "Answer generated successfully",
+      status: 201,
       generatedAnswer: tipTapContent,
       requestId,
     });

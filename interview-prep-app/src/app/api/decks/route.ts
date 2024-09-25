@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   // check session
   const user = await currentUser();
 
-  console.log(user, "API ENDPOINT USER");
+  // console.log(user, "API ENDPOINT USER");
   // console.log(req.cookies, "API ENDPOINT COOKIES");
 
   // Extract cookies from the request
@@ -22,8 +22,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   const decksDb = await getDecksByUserId(user.session?.user.id);
-  console.log("user id", user.session?.user.id);
-  console.log(decksDb, "DECKS DB");
+  // console.log("user id", user.session?.user.id);
+  // console.log(decksDb, "DECKS DB");
   const unassignedDeck = await getOrCreateUnassignedDeck(user.session?.user.id);
   // need to add unassigned
   // Filter out sensitive information

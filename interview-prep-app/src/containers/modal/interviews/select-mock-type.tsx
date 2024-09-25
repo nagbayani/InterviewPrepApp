@@ -23,8 +23,11 @@ const SelectMockType = ({
   value,
 }: SelectMockTypeProps) => {
   const handleSelect = (value: string) => {
+    console.log("Selected Value:", value);
     const selectedMock = mockTypeList.find((mock) => mock.value === value);
     if (selectedMock) {
+      // console.log("Selected Mock:", selectedMock);
+      console.log("Selected Label", selectedMock.label);
       onTypeChange(selectedMock.label);
       onDescriptionChange(selectedMock.description);
     }
@@ -32,11 +35,9 @@ const SelectMockType = ({
 
   return (
     <Select onValueChange={handleSelect} value={value}>
-      <SelectTrigger className='w-[240px]'>
+      <SelectTrigger className='m-1'>
         <SelectValue placeholder='Select an interview type'>
-          {value
-            ? mockTypeList.find((mock) => mock.value === mock.value)?.label
-            : "Select an interview type"}
+          {value || "Select an interview type"}
         </SelectValue>
       </SelectTrigger>
       <SelectContent>

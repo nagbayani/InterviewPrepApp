@@ -9,6 +9,7 @@ import {
   BookDown,
   SquareUserIcon,
   CalendarCheck,
+  NotebookTabs,
 } from "lucide-react";
 
 import { DeckData } from "@/types/data-types";
@@ -86,6 +87,19 @@ export function getMenuList(
         },
       ],
     },
+
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/job-tracker",
+          label: "Job Tracker",
+          active: pathname.includes("/job-tracker"),
+          icon: CalendarCheck,
+          submenus: [],
+        },
+      ],
+    },
     {
       groupLabel: "",
       menus: [
@@ -93,7 +107,7 @@ export function getMenuList(
           href: "/interviews",
           label: "Interviews",
           active: pathname.includes("/interviews"),
-          icon: CalendarCheck,
+          icon: Users,
           submenus: [],
         },
       ],

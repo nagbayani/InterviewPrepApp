@@ -241,6 +241,88 @@ export const updateInterviewPUT = async ({
   }
 };
 
+export const patchInterviewStage = async (
+  interviewStageId: string,
+  {
+    interviewId,
+    format,
+    type,
+    stageDate,
+  }: {
+    interviewId?: string | null;
+    format?: string | null;
+    type?: string | null;
+    stageDate?: string | null;
+  }
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage/${interviewStageId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          interviewStageId,
+          interviewId,
+          format,
+          type,
+          stageDate,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log("Patch Interview Stage Data: ", data);
+    return data;
+  } catch (error) {
+    console.error(error, "Something Went Wrong updating the interview stage.");
+    alert("Failed to update the interview stage. Please try again.");
+  }
+};
+export const patchUpdateInterview = async (
+  interviewId: string,
+  updatedData: {
+    company?: string;
+    jobPosition?: string;
+    expectedSalary?: string | null;
+    jobDescription?: string | null;
+    skills?: string | null;
+    qualifications?: string | null;
+    location?: string | null;
+    dateApplied?: string | null;
+    dateFollowUp?: string | null;
+    status?: string | null;
+  }
+): Promise<any> => {
+  try {
+    // Construct the API URL using the environment variable
+    const apiUrl = `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interviews/${interviewId}`;
+
+    // Send the PATCH request with the updated data
+    const response = await fetch(apiUrl, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData), // Convert the updatedData to JSON
+    });
+
+    // Check if the response is successful (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`Failed to update interview: ${response.statusText}`);
+    }
+
+    // Parse the JSON response from the API
+    const result = await response.json();
+
+    return result; // Return the updated interview or response from the API
+  } catch (error) {
+    console.error("Error updating interview:", error);
+    throw error; // Rethrow the error to handle it in the calling function
+  }
+};
+
 type MockTemplateResponse = {
   message: string;
   status: number;
@@ -305,5 +387,58 @@ export const putMockTemplate = async (
     return data;
   } catch (error) {
     console.log(`Error updating mock template: ${error}`);
+  }
+};
+
+export const postInterviewStage = async (interviewId: string) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          interviewId,
+        }),
+      }
+    );
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.log(`Error posting new interview stage: ${error}`);
+  }
+};
+
+export const postInterviewStageMock = async (
+  interviewId: string,
+  {
+    interviewStageId,
+    title,
+    type,
+    description,
+  }: {
+    interviewStageId: string;
+    title: string;
+    type: string;
+    description: string;
+  }
+) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/api/interview-stage/${interviewStageId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ interviewId, title, type, description }),
+      }
+    );
+    const data = response.json();
+    return data;
+  } catch (error) {
+    console.log(`Error posting new interview stage mock: ${error}`);
   }
 };
