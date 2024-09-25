@@ -20,7 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CardSchema } from "@/schemas/cardSchema";
 import "../../styles/cardForm.css";
 import { useCardStore } from "@/_store/index";
-
+import CardFeedback from "./Card-Feedback";
 import TagsPopover from "../menus/card-tags/TagsPopover";
 import Tag from "./Tag";
 import { CardData, TagData } from "@/types/data-types";
@@ -230,11 +230,7 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
           <div className='flex-1 lg:basis-2/3'>
             <EditorWrapper data={cardDb} cardId={card.id} />
           </div>
-          <div className='flex-1 lg:basis-1/3 bg-gray-100 p-4 rounded-lg shadow-md max-h-[500px]'>
-            {/* Feedback Box Content */}
-            <h2 className='text-lg font-semibold mb-2'>Feedback</h2>
-            <p className='text-gray-700'>Your feedback content goes here.</p>
-          </div>
+          <CardFeedback cardId={card.id} />
         </div>
       </Form>
     </div>
