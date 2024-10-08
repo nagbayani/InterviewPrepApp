@@ -4,6 +4,9 @@ import { NextResponse, NextRequest } from "next/server";
 import { getOrCreateUnassignedDeck } from "@/data/decks";
 import { generateMockQuestions } from "@/utils/openai-gen-mock-questions";
 import { currentUser } from "@/lib/auth";
+import { mockInterviewStages } from "@/lib/mock-type-stages";
+
+type MockStageType = keyof typeof mockInterviewStages;
 
 export async function POST(req: NextRequest) {
   const {
@@ -20,7 +23,7 @@ export async function POST(req: NextRequest) {
   } = (await req.json()) as {
     mockTitle: string;
     mockDescription: string;
-    mockType: string;
+    mockType: MockStageType;
     company: string;
     jobPosition: string;
     jobDescription: string;
@@ -49,6 +52,9 @@ export async function POST(req: NextRequest) {
     where: { userId: user.session?.user.id },
   });
 
+  // Get stages for the mock interview type
+  const stages = mockInterviewStages[mockType] || [];
+
   // Handle the case where resume might be null or missing fields
   const projects = resume?.projects || "No projects found";
   const skills = resume?.skills || "No skills found";
@@ -68,9 +74,10 @@ export async function POST(req: NextRequest) {
       experience,
       tags,
       questionPool,
+      stages,
     });
     // Get or create an unassigned deck for the user
-    const unassignedDeck = await getOrCreateUnassignedDeck(userId);
+    // const unassignedDeck = await getOrCreateUnassignedDeck(userId);
 
     // If there was an error generating the answer, return an error response
     if (error) {
@@ -85,7 +92,7 @@ export async function POST(req: NextRequest) {
       status: 200,
       questions,
       requestId,
-      unassignedDeck: unassignedDeck,
+      // unassignedDeck: unassignedDeck,
     });
   } catch (error) {
     return NextResponse.json({

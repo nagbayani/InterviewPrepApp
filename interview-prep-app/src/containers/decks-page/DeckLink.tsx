@@ -95,7 +95,7 @@ const DeckLink = ({
         },
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         // Remove the deck from Zustand store
         deleteDeck(id);
       } else {

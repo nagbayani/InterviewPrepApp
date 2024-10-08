@@ -23,7 +23,7 @@ const CardPage = async ({ params: { cardId } }: Props) => {
 
   const userTags = await getTagsByUserId(userSession.session?.user.id ?? "");
 
-  // if (!cardData?.id) {
+  // if (!cardData?.id) { 
   //   return <h1 className='text-center'>No Data Found for that Card ID.</h1>;
   // }
   // Check if data is not yet loaded and return loading state

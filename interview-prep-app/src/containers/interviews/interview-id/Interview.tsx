@@ -5,6 +5,7 @@ import JobDetailsForm from "./JobDetailsForm";
 import MockTemplate from "./MockTemplate";
 import { useInterviewStore } from "@/_store/interviews-store";
 import { InterviewData, MockTemplateData } from "@/types/data-types";
+import InterviewDashboard from "./dashboard/InterviewDashboard";
 
 interface InterviewPageProps {
   interview: InterviewData;
@@ -19,10 +20,11 @@ const Interview = ({ interview, mockTemplates }: InterviewPageProps) => {
 
   return (
     <div className='interview-page-container'>
-      <InterviewTabs
+      {/* <InterviewTabs
         jobDetails={<JobDetailsForm interviewDb={interview} />}
         interviewId={interview.id} // Pass the interview ID to InterviewTabs
-      />
+      /> */}
+      <InterviewDashboard interviewId={interview.id} />
     </div>
   );
 };

@@ -226,7 +226,7 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
         {/* TipTap Rich Text Editor - User writes answer. */}
         {/* <EditorWrapper data={card} cardId={card.id} /> */}
         {/* Layout with EditorWrapper and Feedback */}
-        <div className='flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-8'>
+        <div className='w-full flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-8'>
           <div className='flex-1 lg:basis-2/3'>
             <EditorWrapper data={cardDb} cardId={card.id} />
           </div>

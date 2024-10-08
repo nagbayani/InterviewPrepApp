@@ -7,7 +7,7 @@ import { PenLine } from "lucide-react"; // Keep it consistent with other cards
 
 interface GeneratedCardProps {
   question: string;
-  generatedTags: string[];
+  generatedTags?: string[];
   index: number; // Add index for display
 }
 
@@ -25,10 +25,10 @@ const GeneratedCard = ({
 
   useEffect(() => {
     // Find the tags that match the `generatedTags` names
-    const matchingTags = generatedTags.map((tagName) =>
+    const matchingTags = generatedTags?.map((tagName) =>
       Object.values(tags).find((tag) => tag.name === tagName)
     );
-    setMatchedTags(matchingTags.filter(Boolean) as TagData[]);
+    setMatchedTags(matchingTags?.filter(Boolean) as TagData[]);
     setIsLoaded(true);
   }, [generatedTags, tags]);
 

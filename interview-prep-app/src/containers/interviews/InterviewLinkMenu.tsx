@@ -25,9 +25,7 @@ const InterviewLinkMenu = ({ path, onDelete }: InterviewLinkMenuProps) => {
             Open
           </DropdownMenuItem>
         </Link>
-        <DropdownMenuItem onSelect={() => console.log("Send")}>
-          Send
-        </DropdownMenuItem>
+
         <DropdownMenuItem onSelect={onDelete} className='my-4 text-red-600'>
           Delete
         </DropdownMenuItem>

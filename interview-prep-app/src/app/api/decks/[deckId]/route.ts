@@ -85,11 +85,12 @@ export async function DELETE(
     }
 
     // Delete the deck
-    await deleteDeckById(deckId);
+    const deletedDeck = await deleteDeckById(deckId);
 
     return NextResponse.json({
       message: "Deck deleted successfully",
       status: 200,
+      deck: deletedDeck,
     });
   } catch (error) {
     return NextResponse.json({

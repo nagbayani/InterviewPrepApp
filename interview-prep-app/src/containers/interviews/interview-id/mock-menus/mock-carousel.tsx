@@ -94,7 +94,13 @@ const MockCarousel = ({ template }: MockCarouselProps) => {
             );
           })
         ) : (
-          <p>No cards added to this template.</p> // Display a message if there are no cards
+          <CarouselItem>
+            <Card className=''>
+              <CardContent className='relative flex flex-col justify-center aspect-square p-6'>
+                <p className='text-xl '> No cards added to this template.</p>
+              </CardContent>
+            </Card>
+          </CarouselItem>
         )}
       </CarouselContent>
       <CarouselPrevious />

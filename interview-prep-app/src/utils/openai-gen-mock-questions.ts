@@ -18,6 +18,7 @@ interface Props {
   experience?: string;
   tags: string[];
   questionPool: string[];
+  stages: { value: string; label: string; description: string }[];
 }
 
 export const generateMockQuestions = async ({
@@ -34,6 +35,7 @@ export const generateMockQuestions = async ({
   experience,
   tags,
   questionPool,
+  stages,
 }: Props) => {
   try {
     const completion = await client.chat.completions
@@ -41,7 +43,7 @@ export const generateMockQuestions = async ({
         messages: [
           {
             role: "user",
-            content: `You are tasked with generating mock interview questions for the following scenario:
+            content: `You are tasked with generating a complete set of mock interview questions based on the following details:
 
             **Type of Mock Interview**: "${mockType}"
             **Mock Interview Title**: "${mockTitle}"
@@ -61,19 +63,46 @@ export const generateMockQuestions = async ({
               ", "
             )}"
 
-          **Existing Question Pool**: Here are the interview questions that have already been used for this user in relation to this type of mock interview and company. Ensure that the new questions generated are distinct from these:
+            **Existing Question Pool**: Here are the interview questions that have already been used for this user in relation to this type of mock interview and company. Ensure that the new questions generated are distinct from these:
 
             ${questionPool
               .map((question, index) => `${index + 1}. ${question}`)
               .join("\n")}
-            Based on all of this information, generate a list of 10 interview questions specifically for this mock interview. Each question must be relevant to the job description, job skills, job qualifications, and the user's background (projects, skills, experience). Return each question in the following strict JSON format:
-            
+
+            The mock interview type, "${mockType}", has the following stages:
+           
+            ${stages
+              .map(
+                (stage) =>
+                  `- Value: ${stage.value || "N/A"} | Label: ${
+                    stage.label
+                  } | Description: ${stage.description}`
+              )
+              .join("\n")}
+            For each stage of the mock interview, generate a set of questions that would simulate a real interview. The number of questions should vary based on the content of each stage, aiming for a reasonable amount per stage to simulate a thorough interview experience. The questions should be distinct from the existing question pool and should align with the job role, skills, qualifications, and the user’s background (projects, skills, and experience). Make sure the flow of the questions makes sense within the context of the mock interview, simulating a natural interview process.
+
+            Return the questions in the following JSON format, organized by stage:
+
             [
-              { "question": "Question 1", "tags": ["Tag1", "Tag2"] },
-              { "question": "Question 2", "tags": ["Tag3", "Tag1"] }
+              {
+                "value": "stage value",
+                "label": "Stage Label",
+                "questions": [
+                  { "question": "Question 1", "tags": ["Tag1", "Tag2"] },
+                  { "question": "Question 2", "tags": ["Tag3", "Tag1"] }
+                ]
+              },
+              {
+                "value": "stage value",
+                "label": "Next Stage Label",
+                "questions": [
+                  { "question": "Question 1", "tags": ["Tag4", "Tag5"] }
+                ]
+              }
             ]
 
-            Ensure that each question is appropriate for the mock interview's type and aligns with the job and user details provided. Include tags relevant to each question based on the user's background and the mock interview details.`,
+            Ensure the questions are tailored for each stage, simulate a natural interview, and include appropriate tags for each question based on the provided details.
+            `,
           },
         ],
         model: "gpt-4o-mini",

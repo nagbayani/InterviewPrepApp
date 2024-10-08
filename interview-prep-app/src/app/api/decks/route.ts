@@ -37,7 +37,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { title } = (await req.json()) as { title: string };
+  const { title, description } = (await req.json()) as {
+    title: string;
+    description: string;
+  };
 
   const user = await currentUser();
 
@@ -46,6 +49,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       data: {
         title,
         authorId: user.session?.user.id ?? "",
+        description: description ?? "",
       },
     });
 
