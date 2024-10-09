@@ -18,19 +18,25 @@ import { DeckData, CardData } from "@/types/data-types";
 import { Stage } from "@/_store/mock-form-slices/questions-organization-slice";
 import { add } from "date-fns";
 import GeneratedCard from "@/containers/decks-page/deckId/GeneratedCard";
+import { Question } from "@/_store/mock-form-slices/questions-slice";
 
 interface Props {
   interviewId: string;
 }
 type GeneratedQuestion = {
   question: string;
-  tags: string[];
+  tags?: string[];
 };
 
 type StageData = {
   value: string;
   label: string;
   questions: GeneratedQuestion[];
+};
+type OrganizedQuestions = {
+  value: string;
+  label: string;
+  questions: Question[];
 };
 
 export default function ChooseQuestions({ interviewId }: Props) {
@@ -152,9 +158,69 @@ export default function ChooseQuestions({ interviewId }: Props) {
     }
   };
 
+  const handleNextStep = async () => {
+    if (importedQuestions.length === 0) {
+      return increaseStep(step);
+    }
+    // Call api endpoint to organize imported questions into stages
+    // get response, add to zustand store of stageQuestions
+    try {
+      const response = await fetch("/api/generate-questions/organize", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          importedQuestions: importedQuestions.map((question) => ({
+            id: question.id,
+            text: question.text,
+          })),
+          stages: mockForm.stages,
+        }),
+      });
+
+      const data = await response.json();
+
+      // Check if the response contains backticks or markdown characters and remove them
+      let questionsText = data.organizedQuestions
+        .replace(/```json|```/g, "")
+        .trim();
+
+      // Parse the cleaned-up JSON string
+      const organizedQuestions = JSON.parse(questionsText);
+
+      console.log(
+        "Organized questions as JavaScript object:",
+        organizedQuestions
+      );
+
+      // Add organized questions to question bank and respective stages
+      organizedQuestions.forEach((stageData: OrganizedQuestions) => {
+        const { questions, label: stageLabel } = stageData;
+
+        questions.forEach((question) => {
+          const newQuestion = {
+            id: question.id,
+            text: question.text,
+            tags: question.tags,
+          };
+          // Add the question to its respective stage
+          removeQuestionFromStage("Questions", question.id);
+          addQuestionToStage(stageLabel, newQuestion);
+          console.log("Adding question to stage", stageLabel, question);
+        });
+      });
+      console.log("Stage questions", stageQuestions);
+    } catch (error) {
+      console.error("Error organizing questions:", error);
+    }
+    // After the questions have been successfully added to the stages, increase the step
+    increaseStep(step);
+  };
+
   return (
     <MockFormContainer
-      onNext={() => increaseStep(step)}
+      onNext={handleNextStep}
       onPreviousStep={() => decreaseStep(step)}
     >
       <Tabs defaultValue='generate'>

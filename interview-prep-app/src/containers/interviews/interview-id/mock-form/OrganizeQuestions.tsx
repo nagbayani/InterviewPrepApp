@@ -67,7 +67,7 @@ export default function OrganizeQuestions() {
     setStageQuestions: state.setStageQuestions,
     setOrderedQuestionsForStage: state.setOrderedQuestionsForStage,
   }));
-
+  console.log("STAGE QUESTIONS", stageQuestions);
   // Get stages based on the selected mock type
   const stages = mockForm.stages || [];
   // console.log("STAGE QUESTIONS", stageQuestions);
