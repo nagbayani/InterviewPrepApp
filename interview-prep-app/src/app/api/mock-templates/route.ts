@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       message: `Template created`,
-      status: 200,
+      status: 201,
       template,
     });
   } catch (error) {

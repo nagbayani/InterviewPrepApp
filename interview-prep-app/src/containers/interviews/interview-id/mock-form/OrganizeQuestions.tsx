@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/card";
 import MockFormContainer from "./MockFormContainer";
 import useMockFormStore from "@/_store/mock-form-store";
-import { useDeckStore } from "@/_store";
 import { DeckData, CardData } from "@/types/data-types";
 import DraggableQuestion from "../dnd/DraggableQuestion";
 import StageDropZone from "../dnd/StageDropZone";
-
+import { useDeckStore, useCardStore, useTagStore } from "@/_store/index";
+import { useMockTemplateStore } from "@/_store/mock-store";
+import { useInterviewStore } from "@/_store/interviews-store";
 import {
   DndContext,
   closestCenter,
@@ -38,23 +39,28 @@ import {
   verticalListSortingStrategy,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
-import { restrictToParentElement } from "@dnd-kit/modifiers";
-import { mock } from "node:test";
-
-export default function OrganizeQuestions() {
+import { postMockTemplate, putMockTemplate } from "@/utils/fetch";
+interface Props {
+  interviewId: string;
+}
+export default function OrganizeQuestions({ interviewId }: Props) {
   const {
     step,
     increaseStep,
+    onSubmit,
     decreaseStep,
     mockForm,
     setMockForm,
     resetMockForm,
+    resetStep,
   } = useMockFormStore((state) => state);
 
   // Access the state from the Zustand slice
   const {
     questionBank,
     stageQuestions,
+    generatedQuestions,
+    importedQuestions,
     addQuestionToStage,
     removeQuestionFromStage,
     setStageQuestions,
@@ -66,8 +72,40 @@ export default function OrganizeQuestions() {
     removeQuestionFromStage: state.removeQuestionFromStage,
     setStageQuestions: state.setStageQuestions,
     setOrderedQuestionsForStage: state.setOrderedQuestionsForStage,
+    generatedQuestions: state.generatedQuestions,
+    importedQuestions: state.importedQuestions,
   }));
-  console.log("STAGE QUESTIONS", stageQuestions);
+
+  const { decks, updateDeck, addDeck, unassignedDeck } = useDeckStore(
+    (state) => ({
+      decks: state.decks,
+      updateDeck: state.updateDeck,
+      addDeck: state.addDeck,
+      unassignedDeck: state.unassignedDeck,
+    })
+  );
+
+  const { tags, addCardTag } = useTagStore((state) => ({
+    tags: state.tags,
+    addCardTag: state.addCardTag,
+  }));
+
+  const { cards, addCard } = useCardStore((state) => ({
+    cards: state.cards,
+    addCard: state.addCard,
+  }));
+
+  const { mockTemplates, addMockTemplate, updateMockTemplate } =
+    useMockTemplateStore((state) => ({
+      mockTemplates: state.mockTemplates,
+      addMockTemplate: state.addMockTemplate,
+      updateMockTemplate: state.updateMockTemplate,
+    }));
+
+  const { interview, updateInterview } = useInterviewStore((state) => ({
+    interview: state.interviews[interviewId],
+    updateInterview: state.updateInterview,
+  }));
   // Get stages based on the selected mock type
   const stages = mockForm.stages || [];
   // console.log("STAGE QUESTIONS", stageQuestions);
@@ -191,18 +229,182 @@ export default function OrganizeQuestions() {
     setActiveId(null);
   }
 
-  const handleDragMove = (event: DragMoveEvent) => {};
+  const createCardAndTags = async (question: string, tagNames?: string[]) => {
+    try {
+      // Check if unassignedDeck is available before using it
+      if (!unassignedDeck) {
+        throw new Error("Unassigned deck is not available.");
+      }
+
+      // Create the card
+      const cardResponse = await fetch("/api/cards", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question,
+          answer: "",
+          deckId: unassignedDeck, // Cards generated here don't belong to a deck yet
+        }),
+      });
+
+      if (!cardResponse.ok) throw new Error("Failed to create card");
+
+      const newCard = await cardResponse.json();
+
+      console.log("New card created:", newCard);
+
+      if (newCard) {
+        console.log(
+          "New card created to send to CardTag API:",
+          newCard.card.id
+        );
+
+        if (tagNames) {
+          // Create the card-tag relationships
+          const tagRequests = tagNames.map(async (tagName) => {
+            const tag = Object.values(tags).find((t) => t.name === tagName);
+
+            if (tag) {
+              const tagResponse = await fetch("/api/cards/tags/card-tag", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  cardId: newCard.card.id,
+                  tagId: tag.id,
+                }),
+              });
+
+              if (!tagResponse.ok) throw new Error("Failed to create card-tag");
+
+              const cardTag = await tagResponse.json();
+
+              // Update Zustand's tagStore
+              addCardTag({ cardId: newCard.card.id, tagId: tag.id });
+            }
+          });
+          // Wait for all card-tags to be created
+          await Promise.all(tagRequests);
+        }
+      }
+
+      return newCard;
+    } catch (error) {
+      console.error("Error creating card or tags:", error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // turn all generated questions into actual cards
+    try {
+      const newCards = await Promise.all(
+        generatedQuestions.map((q) => createCardAndTags(q.text, q.tags))
+      );
+
+      // Create a mapping of original generated question IDs to new card IDs
+      // this is because generateQuestions have different IDs than the newly created cards
+      // we processed the newCards in the same order as the generatedQuestions, so we can map them by index
+      const generatedIdMap = new Map(
+        generatedQuestions.map((question, index) => [
+          question.id, // Original placeholder ID in stageQuestions
+          newCards[index].card.id, // New ID from the database
+        ])
+      );
+      //  Combine generated cards and imported cards with stage and order
+      const cardsWithStageAndOrder = stageQuestions.flatMap(
+        (stage, stageIndex) =>
+          stage.questions.map((question, orderIndex) => ({
+            // Use the new card ID if it's a generated question, otherwise keep the original ID
+            cardId: generatedIdMap.get(question.id) || question.id,
+            stage: stage.stageLabel, // Map stageLabel to the card
+            order: orderIndex + 1, // Map the correct order of the question
+          }))
+      );
+      console.log("CARDS WITH STAGE AND ORDER", cardsWithStageAndOrder);
+      // Add all new cards to the card store
+      newCards.forEach((newCard) => {
+        console.log("Adding card to card store:", newCard);
+        addCard(newCard.card); // This should immediately add the card to Zustand state
+      });
+
+      if (!unassignedDeck) {
+        throw new Error("Unassigned deck is not available.");
+      }
+
+      updateDeck(unassignedDeck, {
+        ...decks[unassignedDeck], // Copy the existing deck
+        cards: [
+          ...decks[unassignedDeck].cards,
+          ...newCards.map((card) => card.card),
+        ], // Append the new cards to the existing cards array
+      });
+      // Create Mock Template in the database (POST request)
+      const mockTemplateResponse = await postMockTemplate(
+        mockForm.title,
+        mockForm.type,
+        mockForm.description,
+        interviewId
+      );
+
+      if (mockTemplateResponse && mockTemplateResponse.status === 201) {
+        const newTemplate = { ...mockTemplateResponse.template, cards: [] };
+        // Add the mock template to Zustand
+        addMockTemplate(newTemplate);
+      } else {
+        throw new Error("Failed to create mock template in database");
+      }
+
+      // gather all card ID's for put request
+      const updatedMockTemplate = await putMockTemplate(
+        mockForm.title,
+        mockForm.type,
+        mockForm.description,
+        mockTemplateResponse.template.id,
+        cardsWithStageAndOrder
+      );
+
+      if (updatedMockTemplate) {
+        updateMockTemplate(mockTemplateResponse.template.id, {
+          ...mockTemplateResponse.template,
+          cards: [...updatedMockTemplate.template.cards],
+        });
+        // Update the interview in the Zustand store with the new mock template
+        updateInterview(interviewId, {
+          mockTemplates: [
+            ...(interview.mockTemplates || []), // Append to existing mockTemplates array
+            updatedMockTemplate.template, // Add the new template
+          ],
+        });
+      }
+
+      // Update the mock template in the database with all the cards (PUT request)
+    } catch (error) {
+      console.error("Error creating cards:", error);
+    } finally {
+      onSubmit(true);
+      resetMockForm();
+      resetStep();
+    }
+
+    // card tags of generated cards are string[] of tag names
+
+    // const matchingTags = generatedTags?.map((tagName) =>
+    //   Object.values(tags).find((tag) => tag.name === tagName)
+    // );
+
+    // create mock-template
+    // create mock-template-cards relationships for imported and generated cards
+    // update deck store of unassigned cards
+  };
 
   return (
     <MockFormContainer
-      onNext={() => increaseStep(step)}
+      onNext={handleSubmit}
       onPreviousStep={() => decreaseStep(step)}
     >
       <DndContext
         collisionDetection={rectIntersection}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-        // modifiers={[restrictToParentElement]}
         sensors={sensors}
       >
         {/* <SortableContext

@@ -356,7 +356,6 @@ export const postMockTemplate = async (
       }
     );
     const data: MockTemplateResponse = await response.json();
-    console.log("Post Mock Template Data: ", data);
     return data;
   } catch {
     console.log("Error creating mock template");
@@ -369,7 +368,9 @@ export const putMockTemplate = async (
   description: string,
   // interviewId: string,
   mockId: string,
-  cardIds: string[]
+  cardsWithStageAndOrder: { cardId: string; stage: string; order: number }[]
+
+  // cardIds: string[]
 ) => {
   try {
     const response = await fetch(
@@ -379,7 +380,13 @@ export const putMockTemplate = async (
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ mockId, title, type, description, cardIds }),
+        body: JSON.stringify({
+          mockId,
+          title,
+          type,
+          description,
+          cardsWithStageAndOrder,
+        }),
       }
     );
     const data = await response.json();

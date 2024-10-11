@@ -67,3 +67,24 @@ export const deleteCard = async (cardId: string) => {
 };
 
 export const moveCard = async (cardId: string, newDeckId: string) => {};
+
+export async function saveCardFeedback(cardId: string, feedback: any) {
+  try {
+    const serializedFeedback = JSON.stringify(feedback); // Serialize feedback object
+    console.log("Serialized feedback:", serializedFeedback);
+
+    const updatedCard = await prisma.card.update({
+      where: {
+        id: cardId,
+      },
+      data: {
+        feedback: serializedFeedback, // Save serialized feedback as string
+      },
+    });
+
+    return updatedCard;
+  } catch (error) {
+    console.error("Error saving card feedback:", error);
+    throw new Error("Failed to save feedback");
+  }
+}

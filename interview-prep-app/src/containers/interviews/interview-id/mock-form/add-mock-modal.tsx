@@ -77,7 +77,7 @@ const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
         )}
         {step === 2 && <ChooseMockDetails />}
         {step === 3 && <ChooseQuestions interviewId={interviewId} />}
-        {step === 4 && <OrganizeQuestions />}
+        {step === 4 && <OrganizeQuestions interviewId={interviewId}/>}
         {/* {step === 5 && <MockSummary />} */}
       </DialogContent>
     </Dialog>

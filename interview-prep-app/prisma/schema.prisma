@@ -108,7 +108,7 @@ model Card {
   deckId    String
   tags      CardTags[]  // each card can have multiple tags
   mockTemplates MockTemplateCard[] // Relation to MockTemplateCard for importing cards into templates
-
+  feedback  String?  // Store feedback as serialized JSON
 
 }
 
@@ -153,6 +153,8 @@ model MockTemplateCard {
   cardId     String
   template   MockTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
   card       Card         @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  stage      String?      // Stage of the interview the card is associated with
+  order      Int?         // Order of the card in the interview stage
   @@id([templateId, cardId]) // Composite primary key to ensure unique pairing
 }
 

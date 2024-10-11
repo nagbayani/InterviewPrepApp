@@ -1,3 +1,14 @@
+export type FeedbackPoint = {
+  point: string;
+  explanation: string;
+};
+
+export type Feedback = {
+  strengths: FeedbackPoint[];
+  weaknesses: FeedbackPoint[];
+  tipsForImprovement: FeedbackPoint[];
+};
+
 export type CardData = {
   id: string;
   createdAt: string;
@@ -7,6 +18,7 @@ export type CardData = {
   authorId: string;
   deckId: string;
   tags: TagData[] | null;
+  feedback?: string;
 };
 
 export type CardTagData = {
@@ -81,6 +93,8 @@ export interface MockTemplateData {
 export type MockTemplateCardData = {
   cardId: string;
   templateId: string;
+  stage: string;
+  order: number;
 };
 
 export interface InterviewData {

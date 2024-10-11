@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { NextResponse, NextRequest } from "next/server";
 import { currentUser } from "@/lib/auth";
 import { generateAnswerFeedback } from "@/utils/openai-generate-feedback";
+import { saveCardFeedback } from "@/data/cards";
 
 // Function to parse the feedback into strengths, weaknesses, and tips
 function parseFeedback(feedbackText: string) {
@@ -67,6 +68,8 @@ export async function POST(req: NextRequest) {
     // Parse the feedback response
     const parsedFeedback = parseFeedback(feedback);
     console.log("Parsed feedback:", parsedFeedback);
+
+    await saveCardFeedback(cardId, parsedFeedback);
 
     return NextResponse.json({
       message: "Successfully generated feedback",

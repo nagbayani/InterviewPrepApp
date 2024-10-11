@@ -31,9 +31,30 @@ const CardFeedback = ({ cardId }: Props) => {
     card: state.cards[cardId],
   }));
 
+  console.log("Card Feedback", card.feedback);
+
   const [genFeedbackStatus, setGenFeedbackStatus] = useState<
     "idle" | "saving" | "saved"
   >("idle");
+
+  // Utility function to safely parse JSON
+  const safeParseFeedback = (feedbackString: string) => {
+    try {
+      return JSON.parse(feedbackString);
+    } catch (error) {
+      console.error("Failed to parse feedback JSON", error);
+      return null; // If parsing fails, return null
+    }
+  };
+  // Initialize feedback from card's existing feedback when the component mounts
+  useEffect(() => {
+    if (card?.feedback) {
+      const parsedFeedback = safeParseFeedback(card.feedback);
+      if (parsedFeedback) {
+        setFeedback(parsedFeedback); // Update state only if parsing succeeds
+      }
+    }
+  }, [card]);
 
   const handleGenerateFeedback = async () => {
     setGenFeedbackStatus("saving"); // Set status to saving

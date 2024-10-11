@@ -1,5 +1,7 @@
 import React from "react";
 import { currentUser } from "@/lib/auth";
+import Mock from "@/containers/interviews/interview-id/dashboard/Mock";
+import { ContentLayout } from "@/containers/layouts/content-layout";
 
 const MockIdPage = async ({
   params,
@@ -9,10 +11,9 @@ const MockIdPage = async ({
   const userSession = await currentUser();
 
   return (
-    <div>
-      <p>Mock Template PAge</p>
-      <p> {params.mockTemplateId}</p>
-    </div>
+    <ContentLayout title={params.mockTemplateId}>
+      <Mock mockTemplateId={params.mockTemplateId} />
+    </ContentLayout>
   );
 };
 
