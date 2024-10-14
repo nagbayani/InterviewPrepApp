@@ -46,7 +46,7 @@ const MockOverview = ({ mockTemplateId }: Props) => {
   };
 
   return (
-    <div className='flex flex-col flex-1 justify-center px-8 py-6 bg-white shadow-lg rounded-lg max-w-4xl mx-auto'>
+    <div className='flex w-full flex-col flex-1 justify-center px-8 py-6 bg-white shadow-lg rounded-lg  '>
       <div className='mb-6'>
         <h1 className='font-semibold text-3xl text-gray-800'>
           {mockTemplate.title}

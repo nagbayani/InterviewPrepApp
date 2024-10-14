@@ -227,10 +227,12 @@ export default function CardDisplay({ cardDb, userTags }: Props) {
         {/* <EditorWrapper data={card} cardId={card.id} /> */}
         {/* Layout with EditorWrapper and Feedback */}
         <div className='w-full flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-8'>
-          <div className='flex-1 lg:basis-2/3'>
+          <div className='flex-1 lg:basis-[63%]'>
             <EditorWrapper data={cardDb} cardId={card.id} />
           </div>
-          <CardFeedback cardId={card.id} />
+          <div className='flex-1 lg:basis-[37%] '>
+            <CardFeedback cardId={card.id} />
+          </div>
         </div>
       </Form>
     </div>

@@ -109,6 +109,7 @@ model Card {
   tags      CardTags[]  // each card can have multiple tags
   mockTemplates MockTemplateCard[] // Relation to MockTemplateCard for importing cards into templates
   feedback  String?  // Store feedback as serialized JSON
+  keysForAnswer String?  // Store keys for improvement as serialized JSON
 
 }
 

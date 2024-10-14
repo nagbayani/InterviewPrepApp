@@ -1,6 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import { currentUser } from "@/lib/auth";
 import { createCard, getCardsByDeckId, getCardsByUserId } from "@/data/cards";
+import prisma from "@/lib/db";
+import { generateAnswerKeys } from "@/utils/openai-generate-answer-keys";
 
 export async function GET(req: NextRequest, res: NextResponse) {
   const user = await currentUser();
@@ -37,15 +39,40 @@ export async function POST(req: NextRequest, res: NextResponse) {
       authorId: user.session?.user.id ?? "",
     });
 
+    //  Generate answer keys using OpenAI
+    const resume = await prisma.userResume.findUnique({
+      where: { userId: user.session?.user.id },
+    });
+    const projects = resume?.projects || "No projects found";
+    const skills = resume?.skills || "No skills found";
+    const experience = resume?.experience || "No experiences found";
+
+    // const { keyTips, requestId, error } = await generateAnswerKeys({
+    //   question,
+    //   projects,
+    //   skills,
+    //   experience,
+    // });
+    // if (error) {
+    //   throw new Error("OpenAI Error generating answer keys");
+    // }
+    // // Parse the generated answer keys
+    // const parsedKeys = parseAnswerKeys(keyTips);
+    // // console.log("Generated answer keys:", keyTips);
+    // console.log("Parsed answer keys:", parsedKeys);
+
+ 
+
     return NextResponse.json({
       message: `Card created`,
       status: 200,
       card,
     });
-  } catch {
+  } catch (error) {
     return NextResponse.json({
-      message: `Error creating card`,
+      message: `Error creating card, ${error}`,
       status: 400,
+      error: error,
     });
   }
 }

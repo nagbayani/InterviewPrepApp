@@ -3,6 +3,7 @@ export type MockTypeValue =
   | "screening"
   | "individual"
   | "behavioral"
+  | "conceptualSkillsAssessment"
   | "technical"
   | "case"
   | "situational"
@@ -40,10 +41,18 @@ export const mockTypeList: MockType[] = [
       "Ideal for assessing how candidates have dealt with challenges and applied their skills in real-world scenarios. Designed to examine your competency, skill compatibility and cultural fit for the position and you will be prompted to provide examples that illustrate your ability to carry out certain skills or demonstrate certain behavior.",
   },
   {
+    value: "conceptualSkillsAssessment",
+    label: "Conceptual and Skills Assessment Interview",
+    description:
+      "An interview that evaluates a candidate's understanding of key concepts, principles, and models relevant to the role, alongside their ability to apply this knowledge and job-specific skills in real-world scenarios.",
+    useCase:
+      "Common in consulting, business analysis, finance, product design, and management roles where both theoretical knowledge and practical skills are essential.",
+  },
+  {
     value: "technical",
     label: "Technical Interview",
     description:
-      "An interview that assesses specific technical skills and knowledge related to the job, often involving coding challenges, problem-solving tasks, or technical questions.",
+      "An interview that assesses specific technical skills and knowledge related to the job, often involving specific challenges, problem-solving tasks, or technical questions.",
     useCase: "Common in IT, engineering, and other technical fields.",
   },
   {

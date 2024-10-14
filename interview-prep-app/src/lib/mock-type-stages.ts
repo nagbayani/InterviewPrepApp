@@ -99,6 +99,49 @@ export const mockInterviewStages = {
       description: "Final questions and next steps.",
     },
   ],
+  conceptualSkillsAssessment: [
+    {
+      value: "introduction",
+      label: "Introduction",
+      description:
+        "Introduction to the interviewer and an overview of the concepts and skills to be discussed.",
+    },
+    {
+      value: "conceptual-discussion",
+      label: "Conceptual Knowledge Discussion",
+      description:
+        "Discussion of key concepts, models, and principles relevant to the job, such as business frameworks or industry theories.",
+    },
+    {
+      value: "competency-assessment",
+      label: "Competency Assessment",
+      description:
+        "Evaluation of the candidate's ability to apply their conceptual knowledge in real-world scenarios through problem-solving or analysis.",
+    },
+    {
+      value: "skills-evaluation",
+      label: "Skills Evaluation",
+      description:
+        "Assessment of specific job-related skills, such as decision-making, problem-solving, or using relevant methodologies and frameworks.",
+    },
+    {
+      value: "deep-dive-topics",
+      label: "Deep Dive on Industry Standards",
+      description:
+        "In-depth discussion of industry standards, best practices, and methodologies relevant to the job role.",
+    },
+    {
+      value: "candidate-questions",
+      label: "Questions from the Candidate",
+      description:
+        "Opportunity for the candidate to ask questions about the team, job role, or company processes.",
+    },
+    {
+      value: "closing",
+      label: "Closing",
+      description: "Summary of key points and discussion of next steps.",
+    },
+  ],
   technical: [
     {
       value: "introduction",

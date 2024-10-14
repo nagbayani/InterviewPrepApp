@@ -79,12 +79,14 @@ const Mock = ({ mockTemplateId }: Props) => {
 
   return (
     <>
-      {/* Conditional rendering: Show the Mock Overview or Simulation */}
-      {!isInterviewVisible ? (
-        <MockOverview mockTemplateId={mockTemplateId} />
-      ) : (
-        <MockSimulation mockTemplateId={mockTemplateId} />
-      )}
+      <section className='w-full'>
+        {/* Conditional rendering: Show the Mock Overview or Simulation */}
+        {!isInterviewVisible ? (
+          <MockOverview mockTemplateId={mockTemplateId} />
+        ) : (
+          <MockSimulation mockTemplateId={mockTemplateId} />
+        )}
+      </section>
     </>
   );
 };

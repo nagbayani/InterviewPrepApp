@@ -98,7 +98,7 @@ export const TipTapEditor = ({
     editor && (
       <>
         <EditorContent
-          className='w-full p-2 rounded-[4px] flex justify-center min-h-[500px] max-h-[500px] border-black border-[1px] scrollbar-thin scrollbar-thumb-rounded overflow-y-scroll'
+          className='w-full p-2 rounded-[4px] flex justify-center max-h-[500px] border-[#dce0e5] border-[1px] scrollbar-thin scrollbar-thumb-rounded overflow-y-scroll'
           editor={editor}
         />
         <CustomBubbleMenu editor={editor} />
@@ -106,3 +106,5 @@ export const TipTapEditor = ({
     )
   );
 };
+
+// border-[#dce0e5] min-h-[500px]

@@ -161,7 +161,7 @@ export default function EditorWrapper({ data, cardId }: EditorWrapperProps) {
 
   return (
     <>
-      <div className='flex flex-col  max-h-[600px]'>
+      <div className='flex flex-col max-h-[600px]'>
         <TipTapEditor
           initialValue={value}
           onChange={handleEditorChange}

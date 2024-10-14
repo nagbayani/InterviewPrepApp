@@ -2,6 +2,7 @@
 import useMockSimulationStore from "@/_store/mock-simulation/simulation-store";
 import { useCardStore } from "@/_store";
 import CardFeedback from "@/components/card/Card-Feedback";
+import EditorWrapper from "@/components/text-editor/Editor-wrapper";
 
 interface Props {
   mockTemplateId: string;
@@ -34,8 +35,8 @@ const MockSimulation = ({ mockTemplateId }: Props) => {
   const currentCard = currentQuestion ? cards[currentQuestion.id] : null;
 
   return (
-    <div className='flex flex-col items-center justify-center px-8 py-6 bg-white shadow-lg rounded-lg max-w-4xl mx-auto'>
-      <h1 className='font-semibold text-3xl text-gray-800 mb-6'>
+    <div className='flex w-full flex-col  justify-center px-8 py-6 bg-white shadow-lg rounded-lg max-w-8xl mx-auto'>
+      <h1 className='font-semibold text-3xl text-gray-800 mb-2'>
         {currentStage.title || "Mock Interview Stage"}
       </h1>
       <p className='text-gray-600 mb-8'>{currentStage.description}</p>
@@ -45,8 +46,18 @@ const MockSimulation = ({ mockTemplateId }: Props) => {
           <p className='text-xl font-medium text-gray-800'>
             {currentCard ? currentCard.question : "No Question added"}
           </p>
-          <CardFeedback cardId={currentCard?.id} />
 
+          <div className='w-full flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0 mt-8'>
+            <div className='flex-1 lg:basis-[63%]'>
+              <EditorWrapper
+                data={cards[currentQuestion.id]}
+                cardId={currentQuestion?.id}
+              />{" "}
+            </div>
+            <div className='flex-1 lg:basis-[37%] '>
+              <CardFeedback cardId={currentQuestion?.id} />
+            </div>
+          </div>
           <div className='flex justify-between mt-6'>
             <button
               onClick={goToPrevQuestion}

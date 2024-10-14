@@ -19,6 +19,7 @@ export type CardData = {
   deckId: string;
   tags: TagData[] | null;
   feedback?: string;
+  keysForAnswer?: string;
 };
 
 export type CardTagData = {

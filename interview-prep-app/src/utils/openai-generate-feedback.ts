@@ -12,6 +12,11 @@ interface Props {
   experience?: string;
 }
 
+/**
+Analyze the user's interview answer based on the given question, projects, skills, and experience. If the question is motivational or value-based (e.g., "Why do you want this job?", "What are your career goals?"), focus the feedback on the user's alignment with the company, role, and values rather than their past projects or technical experience. For technical and experience-based questions, feel free to discuss relevant projects or skills. 
+Provide constructive feedback in a JSON format including specific strengths, weaknesses, and tips for improvement.
+
+ */
 export const generateAnswerFeedback = async ({
   question,
   answer,
@@ -26,7 +31,8 @@ export const generateAnswerFeedback = async ({
         messages: [
           {
             role: "user",
-            content: `Analyze the user's interview answer based on the given question, projects, skills, and experience. Provide constructive feedback in a JSON format including specific strengths, weaknesses, and tips for improvement.
+            content: `Analyze the user's interview answer based on the given question, projects, skills, and experience. If the question is motivational or value-based (e.g., "Why do you want this job?", "What are your career goals?"), focus the feedback on the user's alignment with the company, role, and values rather than their past projects or technical experience. For technical and experience-based questions, feel free to discuss relevant projects or skills. 
+Provide constructive feedback in a JSON format including specific strengths, weaknesses, and tips for improvement.
       
             Question: "${question}"
             User's Answer: "${answer}"

@@ -253,7 +253,11 @@ export default function OrganizeQuestions({ interviewId }: Props) {
 
       console.log("New card created:", newCard);
 
-      if (newCard) {
+      if (newCard.status === 400) {
+        throw new Error("Failed to create card", newCard.message);
+      }
+
+      if (newCard.status === 200) {
         console.log(
           "New card created to send to CardTag API:",
           newCard.card.id
@@ -344,6 +348,8 @@ export default function OrganizeQuestions({ interviewId }: Props) {
         mockForm.description,
         interviewId
       );
+
+      console.log("Mock Template Response:", mockTemplateResponse);
 
       if (mockTemplateResponse && mockTemplateResponse.status === 201) {
         const newTemplate = { ...mockTemplateResponse.template, cards: [] };
