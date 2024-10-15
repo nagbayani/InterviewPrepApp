@@ -87,7 +87,7 @@ const Carousel = React.forwardRef<
     const scrollPrev = React.useCallback(() => {
       if (api) {
         const currentIndex = api.selectedScrollSnap();
-        const prevIndex = Math.max(0, currentIndex - 3); // Scroll 3 items back
+        const prevIndex = Math.max(0, currentIndex - 4); // Scroll 4 items back
         api.scrollTo(prevIndex);
       }
     }, [api]);
@@ -96,7 +96,7 @@ const Carousel = React.forwardRef<
       if (api) {
         const snapPoints = api.scrollSnapList();
         const currentIndex = api.selectedScrollSnap();
-        const nextIndex = Math.min(snapPoints.length - 1, currentIndex + 3); // Scroll 3 items forward
+        const nextIndex = Math.min(snapPoints.length - 1, currentIndex + 4); // Scroll 4 items forward
         api.scrollTo(nextIndex);
       }
     }, [api]);
