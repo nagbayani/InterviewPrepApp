@@ -77,14 +77,29 @@ const Carousel = React.forwardRef<
       setCanScrollNext(api.canScrollNext());
     }, []);
 
+    // const scrollPrev = React.useCallback(() => {
+    //   api?.scrollPrev();
+    // }, [api]);
+
+    // const scrollNext = React.useCallback(() => {
+    //   api?.scrollNext();
+    // }, [api]);
     const scrollPrev = React.useCallback(() => {
-      api?.scrollPrev();
+      if (api) {
+        const currentIndex = api.selectedScrollSnap();
+        const prevIndex = Math.max(0, currentIndex - 3); // Scroll 3 items back
+        api.scrollTo(prevIndex);
+      }
     }, [api]);
 
     const scrollNext = React.useCallback(() => {
-      api?.scrollNext();
+      if (api) {
+        const snapPoints = api.scrollSnapList();
+        const currentIndex = api.selectedScrollSnap();
+        const nextIndex = Math.min(snapPoints.length - 1, currentIndex + 3); // Scroll 3 items forward
+        api.scrollTo(nextIndex);
+      }
     }, [api]);
-
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "ArrowLeft") {
@@ -157,7 +172,7 @@ const CarouselContent = React.forwardRef<
   const { carouselRef, orientation } = useCarousel();
 
   return (
-    <div ref={carouselRef} className='overflow-hidden'>
+    <div ref={carouselRef} className='overflow-visible'>
       <div
         ref={ref}
         className={cn(

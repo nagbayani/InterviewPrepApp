@@ -40,7 +40,7 @@ export default function MockFormFooter({
         })}
         onClick={onHandleNextStep}
       >
-        {step === 4 ? "Confirm" : "Next"}
+        {step === 5 ? "Confirm" : "Next"}
       </Button>
     </footer>
   );

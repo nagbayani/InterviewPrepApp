@@ -12,19 +12,24 @@ import createQuestionsSlice, {
 import createQuestionsOrganizationSlice, {
   QuestionsOrganizationSlice,
 } from "./mock-form-slices/questions-organization-slice";
+import createIndustrySlice, {
+  IndustrySlice,
+} from "./mock-form-slices/mock-industry-slice";
 
 const useMockFormStore = create<
   StepSlice &
     SubmitFormSlice &
     MockFormSlice &
     QuestionsSlice &
-    QuestionsOrganizationSlice
+    QuestionsOrganizationSlice &
+    IndustrySlice
 >()((...a) => ({
   ...createStepSlice(...a),
   ...createSubmitFormSlice(...a),
   ...createMockFormSlice(...a),
   ...createQuestionsSlice(...a),
   ...createQuestionsOrganizationSlice(...a),
+  ...createIndustrySlice(...a),
 }));
 
 export default useMockFormStore;

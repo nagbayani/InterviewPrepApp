@@ -1,6 +1,11 @@
-import { IndustryMockInterview } from "./types";
+import { IndustryMockInterview, Industry } from "./types";
+import { BarChart } from "lucide-react"; // Lucide icon for Data Science
 
-export const dataScience: IndustryMockInterview[] = [
+export const dataScience: Industry = {
+  value: "dataScience",
+  label: "Data Science",
+  icon: BarChart,
+  interviews: [
     {
       value: "ab_testing_basics",
       label: "A/B Testing Basics",
@@ -127,5 +132,5 @@ export const dataScience: IndustryMockInterview[] = [
         "Assess the candidate’s ability to evaluate and tune machine learning models using metrics like accuracy, precision, recall, and cross-validation.",
       description: "Evaluating and tuning ML models",
     },
-  ]
-  
+  ],
+};

@@ -63,7 +63,7 @@ const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
         onInteractOutside={(e) => {
           e.preventDefault();
         }}
-        className='min-w-[1000px]  overflow-x-auto'
+        className='min-w-[1025px] overflow-x-auto'
       >
         <DialogHeader>
           <DialogTitle>Add Mock Interview</DialogTitle>
@@ -77,7 +77,7 @@ const AddMockMenu = ({ company, interviewId }: AddMockMenuProps) => {
         )}
         {step === 2 && <ChooseMockDetails />}
         {step === 3 && <ChooseQuestions interviewId={interviewId} />}
-        {step === 4 && <OrganizeQuestions interviewId={interviewId}/>}
+        {step === 4 && <OrganizeQuestions interviewId={interviewId} />}
         {/* {step === 5 && <MockSummary />} */}
       </DialogContent>
     </Dialog>
